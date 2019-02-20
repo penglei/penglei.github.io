@@ -252,7 +252,7 @@ Password:
 运行curl来验证一下:
 
 ----
-$ curl -I https://www.google.com --resolve 'www.google.com:443:216.58.200.36'`
+$ curl -I https://www.google.com --resolve 'www.google.com:443:216.58.200.36'
 HTTP/2 302
 location: https://www.google.com.hk/url?sa=p&hl=zh-CN&pref=hkredirect&pval=yes&q=https://www.google.com.hk/&ust=1550640983822937&usg=AOvVaw3PnKH6XFhOkLB56FH7sVHc
 cache-control: private
