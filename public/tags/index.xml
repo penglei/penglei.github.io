@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on ybyte blog</title>
+    <link>/tags/</link>
+    <description>Recent content in Tags on ybyte blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 17 Feb 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Pf</title>
+      <link>/tags/pf/</link>
+      <pubDate>Sun, 17 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/pf/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Redsocks</title>
+      <link>/tags/redsocks/</link>
+      <pubDate>Sun, 17 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/redsocks/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Socks5</title>
+      <link>/tags/socks5/</link>
+      <pubDate>Sun, 17 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/socks5/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

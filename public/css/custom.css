@@ -1,0 +1,95 @@
+*, *:before, *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+table thead tr th, table tfoot tr th, table tbody tr td, table tr td, table tfoot tr td {
+    display: table-cell;
+    line-height: 1.6;
+}
+
+#toc {
+    border-bottom: 1px solid #e6e6e6;
+}
+#toctitle {
+    display: none;
+}
+
+pre, code {
+    text-rendering: optimizeSpeed;
+    tab-size: 4;
+}
+
+.post .post-content pre:not(.highlight) {
+    line-height: 1em;
+    padding: 20px 0;
+}
+
+pre .conum[data-value] {
+    position: relative;
+    top: -0.125em;
+}
+
+.conum[data-value] {
+    display: inline-block;
+    color: #fff !important;
+    background-color: rgba(0,0,0,0.8);
+    -webkit-border-radius: 100px;
+    border-radius: 100px;
+    text-align: center;
+    width: 1.67em;
+    height: 1.67em;
+    font-size: 0.75em;
+    line-height: 1.67em;
+    font-family: "Open Sans", "Sans", sans-serif;
+    font-style: normal;
+    font-weight: bold;
+}
+
+.conum[data-value]:after {
+    content: attr(data-value);
+}
+
+.conum[data-value]+b {
+    display: none;
+}
+
+.colist.arabic {
+    font-size: 16px;
+}
+.colist td:not([class]):first-child {
+    padding: 0.4em 0.75em 0;
+    padding-right: 0.5em;
+    line-height: 1;
+    vertical-align: top;
+}
+.colist td:not([class]):last-child {
+    padding: 0.25em 0;
+}
+
+.admonitionblock td.content>.title, .audioblock>.title, .exampleblock>.title, .imageblock>.title, .listingblock>.title, .literalblock>.title, .stemblock>.title, .openblock>.title, .paragraph>.title, .quoteblock>.title, table.tableblock>.title, .verseblock>.title, .videoblock>.title, .dlist>.title, .olist>.title, .ulist>.title, .qlist>.title, .hdlist>.title {
+    text-rendering: optimizeLegibility;
+    text-align: left;
+    font-style: italic;
+    font-size: 1rem;
+}
+
+.subheader, .admonitionblock td.content>.title, .audioblock>.title, .exampleblock>.title, .imageblock>.title, .listingblock>.title, .literalblock>.title, .stemblock>.title, .openblock>.title, .paragraph>.title, .quoteblock>.title, table.tableblock>.title, .verseblock>.title, .videoblock>.title, .dlist>.title, .olist>.title, .ulist>.title, .qlist>.title, .hdlist>.title {
+    line-height: 1.4;
+    color: #7a2717;
+    font-weight: normal;
+    margin-top: 0;
+    /*margin-bottom: .25em;*/
+}
+
+.primary h1>a.anchor:before, h2>a.anchor:before, h3>a.anchor:before, #toctitle>a.anchor:before, .sidebarblock>.content>.title>a.anchor:before, h4>a.anchor:before, h5>a.anchor:before, h6>a.anchor:before {
+    content: "\00A7";
+    font-size: 0.85em;
+    display: block;
+    padding-top: 0.1em;
+}
+
+.sect1 .sectionbody{
+    margin-left:1em;
+}
