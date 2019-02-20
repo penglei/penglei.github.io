@@ -91,6 +91,8 @@ pre .conum[data-value] {
     padding-top: 0.1em;
 }
 
-.sect1 .sectionbody{
+@media only screen and (min-width: 1080px) {
+  .sect1 .sectionbody{
     margin-left:1em;
+  }
 }
