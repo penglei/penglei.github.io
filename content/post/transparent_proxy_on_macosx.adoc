@@ -234,19 +234,26 @@ Password:
 +
 [source,shell]
 ----
-$ sudo su -
-Password:
-~ root#  sysctl -w net.inet.ip.forwarding=1 //<1>
-~ root#  pfctl -e                           //<2>
-~ root#  pfctl -F all                       //<3>
-~ root#  pfctl -f /etc/pf.conf              //<4>
+ $ sudo su -
+ Password:
+ ~ root#  sysctl -w net.inet.ip.forwarding=1 //<1>
+ net.inet.ip.forwarding: 1 -> 1
+ ~ root#  pfctl -e                           //<2>
+ ...
+ pf enabled
+ ~ root#  pfctl -F all                       //<3>
+ ~ root#  pfctl -f /etc/pf.conf              //<4>
+ pfctl: Use of -f option, could result in flushing of rules
+ present in the main ruleset added by the system at startup.
+ ...
+ ALTQ related functions disabled
 ----
 <1> 开启IP转发功能
 <2> 开启pf(默认是关闭的)
 <3> 情况所有配置
 <4> 加载配置文件
 
-. 如果想停止使用透明代理访问，禁用pf(`sudo pf -D`)或者清空pf规则(`sudo pf -F all`)即可。
+. 如果想停止使用透明代理访问，禁用pf(`sudo pf -d`)或者清空pf规则(`sudo pf -F all`)即可。
 
 服务运行之后，我们的macOS就已经有了透明代理的功能，
 运行curl来验证一下:

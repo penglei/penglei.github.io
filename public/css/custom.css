@@ -4,6 +4,12 @@
     box-sizing: border-box;
 }
 
+pre, code {
+    text-rendering: optimizeSpeed;
+    tab-size: 4;
+    overflow-wrap: unset;
+}
+
 table thead tr th, table tfoot tr th, table tbody tr td, table tr td, table tfoot tr td {
     display: table-cell;
     line-height: 1.6;
@@ -16,11 +22,9 @@ table thead tr th, table tfoot tr th, table tbody tr td, table tr td, table tfoo
     display: none;
 }
 
-pre, code {
-    text-rendering: optimizeSpeed;
-    tab-size: 4;
+.post .post-content pre, .post .post-content code {
+    word-wrap: unset;
 }
-
 .post .post-content pre:not(.highlight) {
     line-height: 1em;
     padding: 20px 0;
