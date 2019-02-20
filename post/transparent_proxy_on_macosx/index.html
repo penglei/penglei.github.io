@@ -75,7 +75,7 @@
 
 <meta itemprop="datePublished" content="2019-02-17T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-02-17T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="2686">
+<meta itemprop="wordCount" content="2681">
 
 
 
@@ -497,9 +497,9 @@ $ mv redsocks2 /opt/bin/redsocks</code></pre>
 <p>redsocks通过访问 <code>/dev/pf</code> 来获取连接的原始目标地址，因此需要 <code>root</code> 权限来运行:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-shell" data-lang="shell">$ sudo su -
-Password:
-~ root# /opt/bin/redsocks -c /opt/etc/redsocks.conf</code></pre>
+<pre class="highlight"><code class="language-shell" data-lang="shell"> $ sudo su -
+ Password:
+ root# /opt/bin/redsocks -c /opt/etc/redsocks.conf</code></pre>
 </div>
 </div>
 </li>
@@ -509,13 +509,13 @@ Password:
 <div class="content">
 <pre class="highlight"><code class="language-shell" data-lang="shell"> $ sudo su -
  Password:
- ~ root#  sysctl -w net.inet.ip.forwarding=1 <i class="conum" data-value="1"></i><b>(1)</b>
+ root#  sysctl -w net.inet.ip.forwarding=1 <i class="conum" data-value="1"></i><b>(1)</b>
  net.inet.ip.forwarding: 1 -&gt; 1
- ~ root#  pfctl -e                           <i class="conum" data-value="2"></i><b>(2)</b>
+ root#  pfctl -e                           <i class="conum" data-value="2"></i><b>(2)</b>
  ...
  pf enabled
- ~ root#  pfctl -F all                       <i class="conum" data-value="3"></i><b>(3)</b>
- ~ root#  pfctl -f /etc/pf.conf              <i class="conum" data-value="4"></i><b>(4)</b>
+ root#  pfctl -F all                       <i class="conum" data-value="3"></i><b>(3)</b>
+ root#  pfctl -f /etc/pf.conf              <i class="conum" data-value="4"></i><b>(4)</b>
  pfctl: Use of -f option, could result in flushing of rules
  present in the main ruleset added by the system at startup.
  ...
