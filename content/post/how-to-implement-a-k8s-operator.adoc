@@ -1,0 +1,6 @@
+---
+title: 实现k8s operator
+date: 2019-02-17
+draft: true
+categories: [k8s]
+---

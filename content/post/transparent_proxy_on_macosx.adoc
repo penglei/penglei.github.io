@@ -1,0 +1,288 @@
+////
+title: macOS 透明代理配置
+date: 2019-02-17
+draft: false
+categories: [macOS, proxy, network]
+tags: [pf, redsocks, socks5]
+////
+
+= macOS 全局透明代理
+:toc:
+//:sectanchors:
+:icons: font
+:openbsd-pf-uri: https://www.openbsd.org/faq/pf/
+:macOS-pf-manual: https://murusfirewall.com/Documentation/OS%20X%20PF%20Manual.pdf
+
+我厂办公环境只能通过「HTTP代理」连接外网，作为程序猿，MacBook上有形形色色需要连接外网的软件，
+这些软件支持的代理协议、代理的设置方式可能都有所不同，给这些软件设置代理成为了一件繁琐的事情。
+下班离开公司，MacBook网络环境改变，可能还需要切换或取消公司的代理设置，这极大地增加了程序猿的心智负担。
+因此我一直想寻求灵活统一的全局代理设置方式，这中间尝试过 `Proxifier` 、 `proxychains` 等，但并不满意。
+想到Linux通过iptables实现科学上网的透明代理非常容易，研究了一下macOS的包过滤机制，
+发现 {openbsd-pf-uri}[pf^] 可以实现类似的方案，因此分享一下。如果您不了解 `pf` ，
+可以通过执行 `man pf.conf` 或查看Murus的 {macOS-pf-manual}[macOS pf手册^] 进行学习。
+
+//<!--more-->
+
+== 关于代理
+
+比较流行的代理协议有 `SOCKS5` 和 `HTTP` ，不同的软件对代理的支持没有统一的标准：
+
+* 大部软件支持 `HTTP` 代理，一般可以通过 `HTTP_PROXY` 环境变量进行设置；
+* 有些软件不支持代理，或者只支持 `SOCKS5` 或 `HTTP` 代理中的一种；
+* 虚拟机常常需要在 guest os 里面设置代理，host 上的代理配置并没有什么作用；
+* ... 其它奇奇怪怪的场景
+
+显示地在应用程序中设置代理非常繁琐，与此对应，如果在系统层面统一设置代理，让应用程序不需要感知代理的存在，则非常自然友好，我们常常将后者称为透明代理(`Transparent Proxy`)。
+
+[[architecture]]
+== 方案架构
+
+我们希望在应用程序访问目标地址(eg: 1.2.3.4)时，`pf` 劫持流量，将其转发到本地透明代理上，透明代理再连接远端代理服务器，进而访问到目标地址。
+
+架构示意图：
+
+----
+
+  ..............................macOS...............................
+  .                                                                .
+  . +----------+                                                   .
+  . |   APP    |                                                   .
+  . +----------+                                                   .
+  .      | eg: 1.2.3.4            pf rdr-to  +------------------+  .  +---------------+
+  .      |                      +----------->| transprant proxy +---->| socks5 server +--->outside world
+  .      v                      |            +------------------+  .  +---------------+    (eg: 1.2.3.4)
+  .  +----+--+               +--+--+         127.0.0.1:12345       .
+  .  |  en0  +-------------->| lo0 |                               .
+  .  +-------+  pf route-to  +-----+                               .
+  .                                                                .
+  ..................................................................
+
+----
+
+透明代理使用SOCKS5服务器作为它的上游服务器，同时 `transparent proxy` 连接 `socks5 server` 一般也是需要经过 `en0` 接口，图中并没有画出。
+
+不像iptables redirect可以配置在OUTPUT链中，pf *rdr-to* 只对ingress流量起作用，如果想要把本机的egress流量劫持到透明代理上，需要将其路由到另一个interface，转变为后者的ingress流量，再利用 *rdr-to* 进行流量转发(在这里我们利用了本地lo0)。
+
+.pf rules:
+[source,pf]
+----
+rdr pass on lo0 proto tcp from any to 1.2.3.4 -> 127.0.0.1 port 12345
+pass out route-to (lo0 127.0.0.1) proto tcp from any to 1.2.3.4
+----
+* 第二条规则 *route-to* 表示将本地任何地址访问1.2.3.4的TCP流量路由到另一个地址；
+* 第一条规则 *rdr-to* 表示将进入lo0接口上的流量转发到另一个地址；
+
+当然，这个方案其实有一些缺陷：
+
+. 未考虑IPv6；
+. 只支持TCP协议；
+. DNS 污染问题需要单独解决；
+
+前面两个问题目前影响不大，但第3个问题却会影响日常使用，将来我会在本文中补充一下我的解决方案。
+
+从前面的示意图中可以看出，透明代理的核心思路非常简单，如果看到这里您已经明白如何去实现透明代理，可以不用再看下文的啰嗦流程。
+
+== 详细流程
+
+现实世界总是要复杂一点，透明代理还有一些细节问题需要解决：
+
+. 需要考虑哪些流量需要经过代理？ (访问代理服务器的流量不能再走代理)
+. 透明代理用什么程序实现？
+. 由于某些原因，本机可能不能直接连接远端SOCKS5代理服务器，如何处理？
+
+更真实的架构：
+
+----
+
+  ..............................macOS...............................
+  .                                                                .
+  . +----------+                                                   .
+  . |   APP    |                                                   .
+  . +----------+                             127.0.0.1:12345       .
+  .      | eg: 1.2.3.4            pf rdr-to  +------------------+  .
+  .      |                      +----------->|     redsocks     |  .
+  .      v                      |            +---------+--------+  .
+  .  +----+--+               +--+--+                   |           .
+  .  |  en0  +-------------->| lo0 |                   |           .
+  .  +-------+  pf route-to  +-----+                   |           .
+  .                                                    v           .
+  .                                          127.0.0.1:1080        .
+  .                                          +------------------+  .      +---------------+
+  .                                          |     ss-local     +-------->|  ss-server    +--->outside world
+  .                                          +------------------+  .      +---------------+    (eg: 1.2.3.4)
+  .                                                                .      SERVER_IP:PORT
+  ..................................................................
+
+----
+
+=== A. 配置pf.conf
+
+我习惯使用系统默认位置的配置文件，直接编辑 `/etc/pf.conf` (默认需要root权限)，按如下进行配置：
+
+./etc/pf.conf
+[source,pf,role="copy"]
+----
+
+scrub-anchor "com.apple/*"
+
+table <direct_cidr> persist file "/opt/etc/direct_cidr.txt" //<1>
+
+nat-anchor "com.apple/*"
+
+rdr-anchor "com.apple/*"
+rdr pass on lo0 proto tcp from any to !<direct_cidr> -> 127.0.0.1 port 12345 //<3>
+
+pass out route-to (lo0 127.0.0.1) proto tcp from any to !<direct_cidr> //<2>
+
+dummynet-anchor "com.apple/*"
+
+anchor "com.apple/*"
+load anchor "com.apple" from "/etc/pf.anchors/com.apple"
+
+----
+<1> 加载直接连接的IP白名单，存入`dicrect_cidr`表中；
+<2> 将所有非直连的流量路由到本地lo0接口上；
+<3> 对于*进入*lo0接口的流量，如果是目标地址是非直连IP，转发到本地透明代理(127.0.0.1:12345)；
+
+=== B. 创建直连IP白名单文件
+
+前面的配置文件 `/etc/pf.conf` 使用pf的table语法引用了直连IP白名单文件，需要自行创建该文件：
+
+./opt/etc/direct_cidr.txt
+[source,role="copy"]
+----
+# lan
+192.31.196.0/24
+192.52.193.0/24
+127.0.0.0/8
+192.175.48.0/24
+192.0.0.0/24
+198.18.0.0/15
+203.0.113.0/24
+100.64.0.0/10
+240.0.0.0/4
+0.0.0.0/8
+192.88.99.0/24
+172.16.0.0/12
+192.168.0.0/16
+198.51.100.0/24
+255.255.255.255
+192.0.2.0/24
+169.254.0.0/16
+224.0.0.0/4
+10.0.0.0/8
+
+# put your proxy server here
+# eg: 35.x.x.x //<1>
+----
+<1> 需要将你的远端服务器地址加入IP直连白名单
+
+=== C. 配置redsocks
+
+redsocks监听 `127.0.0.1:12345` 地址，将流量转发到本地的 `127.0.0.1:29090` (SOCKS5代理服务器)
+
+./opt/etc/redsocks.conf
+[source,role="copy"]
+----
+base {
+  log_debug = off;
+  log_info = on;
+  daemon = off;
+  redirector = pf;
+}
+
+redsocks {
+  local_ip = 127.0.0.1;
+  local_port = 12345;
+  ip = 127.0.0.1;
+  port = 29090;
+  type = socks5;
+}
+----
+
+=== D. 编译安装redsocks
+
+原版redsocks年久失修，对新版macOS支持并不好，有网友fork之后进行了修正将其命名为redsocks2，但是对于最新的macOS编译还是有一点小问题，因此我又进行了一次fork，但不保证以后是否能正常编译。
+
+编译redsocks2，将其安装到 `/opt/bin/redsocks`:
+
+[source,shell]
+----
+$ mkdir -p /opt/bin
+$ git clone https://github.com/penglei/redsocks.git redsocks2.git && cd redsocks2.git && make OSX_VERSION=master
+$ mv redsocks2 /opt/bin/redsocks
+----
+
+=== E. 安装配置SOCKS5服务(client和server)
+
+这个步骤有很多方法，比如 ssh -L 建立SOCKS5代理，或者使用ss, v2ray等等软件都可以，相信大部分人都知道应该怎么做。
+需要注意的是SOCKS5服务监听地址是 `127.0.0.1:29090` ，redsocks的配置指明了将流量转发到该地址。
+
+=== F. 运行服务
+
+. SOCKS5 服务需要根据自己的实际情况运行；
+. redsocks通过访问 `/dev/pf` 来获取连接的原始目标地址，因此需要 `root` 权限来运行:
++
+[source,shell]
+----
+$ sudo su -
+Password:
+~ root# /opt/bin/redsocks -c /opt/etc/redsocks.conf
+----
+
+. 配置pf同样需要 `root` 权限，创建一个新的terminal窗口运行:
++
+[source,shell]
+----
+$ sudo su -
+Password:
+~ root#  sysctl -w net.inet.ip.forwarding=1 //<1>
+~ root#  pfctl -e                           //<2>
+~ root#  pfctl -F all                       //<3>
+~ root#  pfctl -f /etc/pf.conf              //<4>
+----
+<1> 开启IP转发功能
+<2> 开启pf(默认是关闭的)
+<3> 情况所有配置
+<4> 加载配置文件
+
+. 如果想停止使用透明代理访问，禁用pf(`sudo pf -D`)或者清空pf规则(`sudo pf -F all`)即可。
+
+服务运行之后，我们的macOS就已经有了透明代理的功能，
+运行curl来验证一下:
+
+----
+$ curl -I https://www.google.com --resolve 'www.google.com:443:216.58.200.36'`
+HTTP/2 302
+location: https://www.google.com.hk/url?sa=p&hl=zh-CN&pref=hkredirect&pval=yes&q=https://www.google.com.hk/&ust=1550640983822937&usg=AOvVaw3PnKH6XFhOkLB56FH7sVHc
+cache-control: private
+content-type: text/html; charset=UTF-8
+p3p: CP="This is not a P3P policy! See g.co/p3phelp for more info."
+date: Wed, 20 Feb 2019 05:35:53 GMT
+server: gws
+content-length: 372
+x-xss-protection: 1; mode=block
+x-frame-options: SAMEORIGIN
+set-cookie: 1P_JAR=2019-02-20-05; expires=Fri, 22-Mar-2019 05:35:53 GMT; path=/; domain=.google.com
+set-cookie: NID=160=U44fC0UHxupm7ClkYUGknQQR8gT8JmqDIhrL3VDquqo6wFketgeSCqBEgNHea2cClfa8pyYwo1u2X44uU7vIaEd5Bxeoakgtwq0aauu5Kzv5hX0N65TNmPH7LYTaESyQAT5lVMSu_RO9JarbeukX2oNoVBL_y3q0d8sty2_u7eU; expires=Thu, 22-Aug-2019 05:35:53 GMT; path=/; domain=.google.com; HttpOnly
+alt-svc: quic=":443"; ma=2592000; v="44,43,39"
+----
+
+Good. It worked!
+
+////
+== 解决DNS污染(TODO)
+
+TODO
+
+////
+
+== 总结
+
+对于普通用户，这个方法太过折腾，其维护成本高，带来的收益却不明显，甚至还需要解决DNS的问题，
+不如在chrome里面通过SwitchyOmega配置SOCKS5代理来得方便，所以并不推荐普通用户使用。
+如果您像我一样爱偷懒，这个方法倒是可能有一些帮助。
+
+最后，我厂只能通过HTTP代理访问外网怎么办呢？ 最简单的方法把HTTP代理转发成SOCKS5代理，`goproxy` 可以做到，
+当然，我是通过HTTP代理连接另一台外网server来实现SOCKS5代理的，但这方法不具有通用型，就不再赘述。
+

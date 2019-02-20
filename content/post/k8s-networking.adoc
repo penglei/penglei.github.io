@@ -1,0 +1,31 @@
+////
+title: k8s 网络模型
+date: 2019-02-17
+draft: true
+categories: [proxy, network]
+////
+
+= k8s 网络模型
+
+:shell-cni-plugin: https://page.pikeszfish.me/2018/01/26/write-cni-plugin-with-shell/
+
+* All pods can communicate with all other pods without NAT
+* All nodes running pods can communicate with all pods (and vice-versa) without NAT
+* IP that a pod sees itself as is the same IP that other pods see it as
+
+
+////
+哈哈哈，内容中也支持写评论了
+////
+
+----
+abc //<1>
+----
+<1> test
+
+--
+* abc
+* cdb
+--
+
+== cilium
