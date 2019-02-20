@@ -22,9 +22,6 @@ table thead tr th, table tfoot tr th, table tbody tr td, table tr td, table tfoo
     display: none;
 }
 
-.post .post-content pre, .post .post-content code {
-    word-wrap: unset;
-}
 .post .post-content pre:not(.highlight) {
     line-height: 1em;
     padding: 20px 0;
