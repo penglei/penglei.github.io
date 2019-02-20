@@ -75,7 +75,7 @@
 
 <meta itemprop="datePublished" content="2019-02-17T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-02-17T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="2667">
+<meta itemprop="wordCount" content="2652">
 
 
 
@@ -346,7 +346,7 @@ pass out route-to (lo0 127.0.0.1) proto tcp from any to 1.2.3.4</code></pre>
   .  |  en0  +--------------&gt;| lo0 |                   |           .
   .  +-------+  pf route-to  +-----+                   |           .
   .                                                    v           .
-  .                                          127.0.0.1:1080        .
+  .                                          127.0.0.1:29090       .
   .                                          +------------------+  .      +---------------+
   .                                          |     ss-local     +--------&gt;|  ss-server    +---&gt;outside world
   .                                          +------------------+  .      +---------------+    (eg: 1.2.3.4)
@@ -383,7 +383,7 @@ load anchor "com.apple" from "/etc/pf.anchors/com.apple"</code></pre>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>加载直接连接的IP白名单，存入`dicrect_cidr`表中；</td>
+<td>加载直接连接的IP白名单，存入 <code>direct_cidr</code> 表中；</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -391,7 +391,7 @@ load anchor "com.apple" from "/etc/pf.anchors/com.apple"</code></pre>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>对于*进入*lo0接口的流量，如果是目标地址是非直连IP，转发到本地透明代理(127.0.0.1:12345)；</td>
+<td>对于 <strong>进入</strong> lo0接口的流量，如果是目标地址是非直连IP，转发到本地透明代理(127.0.0.1:12345)；</td>
 </tr>
 </table>
 </div>
