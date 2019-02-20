@@ -225,9 +225,9 @@ $ mv redsocks2 /opt/bin/redsocks
 +
 [source,shell]
 ----
-$ sudo su -
-Password:
-~ root# /opt/bin/redsocks -c /opt/etc/redsocks.conf
+ $ sudo su -
+ Password:
+ root# /opt/bin/redsocks -c /opt/etc/redsocks.conf
 ----
 
 . 配置pf同样需要 `root` 权限，创建一个新的terminal窗口运行:
@@ -236,13 +236,13 @@ Password:
 ----
  $ sudo su -
  Password:
- ~ root#  sysctl -w net.inet.ip.forwarding=1 //<1>
+ root#  sysctl -w net.inet.ip.forwarding=1 //<1>
  net.inet.ip.forwarding: 1 -> 1
- ~ root#  pfctl -e                           //<2>
+ root#  pfctl -e                           //<2>
  ...
  pf enabled
- ~ root#  pfctl -F all                       //<3>
- ~ root#  pfctl -f /etc/pf.conf              //<4>
+ root#  pfctl -F all                       //<3>
+ root#  pfctl -f /etc/pf.conf              //<4>
  pfctl: Use of -f option, could result in flushing of rules
  present in the main ruleset added by the system at startup.
  ...
