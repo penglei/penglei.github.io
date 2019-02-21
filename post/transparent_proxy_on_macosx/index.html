@@ -75,11 +75,11 @@
 
 <meta itemprop="datePublished" content="2019-02-17T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-02-17T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="2678">
+<meta itemprop="wordCount" content="2681">
 
 
 
-<meta itemprop="keywords" content="pf,redsocks,socks5," />
+<meta itemprop="keywords" content="pf,redsocks2,socks5," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="macOS 透明代理配置"/>
 <meta name="twitter:description" content="
@@ -195,6 +195,7 @@
 </ul>
 </li>
 <li><a href="#_总结">总结</a></li>
+<li><a href="#_references">References</a></li>
 </ul>
 </div>
 <div id="preamble">
@@ -248,19 +249,19 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>  ..............................macOS...............................
-  .                                                                .
-  . +----------+                                                   .
-  . |   APP    |                                                   .
-  . +----------+                                                   .
-  .      | eg: 1.2.3.4            pf rdr-to  +------------------+  .  +---------------+
-  .      |                      +-----------&gt;| transprant proxy +----&gt;| socks5 server +---&gt;outside world
-  .      v                      |            +------------------+  .  +---------------+    (eg: 1.2.3.4)
-  .  +----+--+               +--+--+         127.0.0.1:12345       .
-  .  |  en0  +--------------&gt;| lo0 |                               .
-  .  +-------+  pf route-to  +-----+                               .
-  .                                                                .
-  ..................................................................</pre>
+<pre>  ..............................macOS..............................
+  .                                                               .
+  . +----------+                                                  .
+  . |   APP    |                                                  .
+  . +----------+                                                  .
+  .      | eg: 1.2.3.4            pf rdr-to  +------------------+ .  +---------------+
+  .      |                      +-----------&gt;| transprant proxy +---&gt;| socks5 server +---&gt;outside world
+  .      v                      |            +------------------+ .  +---------------+    (eg: 1.2.3.4)
+  .  +----+--+               +--+--+         127.0.0.1:12345      .
+  .  |  en0  +--------------&gt;| lo0 |                              .
+  .  +-------+  pf route-to  +-----+                              .
+  .                                                               .
+  .................................................................</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -334,24 +335,24 @@ pass out route-to (lo0 127.0.0.1) proto tcp from any to 1.2.3.4</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>  ..............................macOS...............................
-  .                                                                .
-  . +----------+                                                   .
-  . |   APP    |                                                   .
-  . +----------+                             127.0.0.1:12345       .
-  .      | eg: 1.2.3.4            pf rdr-to  +------------------+  .
-  .      |                      +-----------&gt;|     redsocks     |  .
-  .      v                      |            +---------+--------+  .
-  .  +----+--+               +--+--+                   |           .
-  .  |  en0  +--------------&gt;| lo0 |                   |           .
-  .  +-------+  pf route-to  +-----+                   |           .
-  .                                                    v           .
-  .                                          127.0.0.1:29090       .
-  .                                          +------------------+  .      +---------------+
-  .                                          |     ss-local     +--------&gt;|  ss-server    +---&gt;outside world
-  .                                          +------------------+  .      +---------------+    (eg: 1.2.3.4)
-  .                                                                .      SERVER_IP:PORT
-  ..................................................................</pre>
+<pre>  ..............................macOS..............................
+  .                                                               .
+  . +----------+                                                  .
+  . |   APP    |                                                  .
+  . +----------+                             127.0.0.1:12345      .
+  .      | eg: 1.2.3.4            pf rdr-to  +------------------+ .
+  .      |                      +-----------&gt;|     redsocks     | .
+  .      v                      |            +---------+--------+ .
+  .  +----+--+               +--+--+                   |          .
+  .  |  en0  +--------------&gt;| lo0 |                   |          .
+  .  +-------+  pf route-to  +-----+                   |          .
+  .                                                    v          .
+  .                                          127.0.0.1:29090      .
+  .                                          +------------------+ .   +---------------+
+  .                                          |     ss-local     +----&gt;|  ss-server    +---&gt;outside world
+  .                                          +------------------+ .   +---------------+    (eg: 1.2.3.4)
+  .                                                               .   SERVER_IP:PORT
+  .................................................................</pre>
 </div>
 </div>
 <div class="sect2">
@@ -590,13 +591,25 @@ alt-svc: quic=":443"; ma=2592000; v="44,43,39"</code></pre>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_references">References</h2>
+<div class="sectionbody">
+<div class="ulist bibliography">
+<ul class="bibliography">
+<li>
+<p><a href="https://www.zfl9.com/ss-redir.html" class="bare">https://www.zfl9.com/ss-redir.html</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
     </div>
 
     
 <footer class="post-footer">
       <div class="post-tags">
           <a href="/tags/pf/">pf</a>
-          <a href="/tags/redsocks/">redsocks</a>
+          <a href="/tags/redsocks2/">redsocks2</a>
           <a href="/tags/socks5/">socks5</a>
           </div>
       <nav class="post-nav">
