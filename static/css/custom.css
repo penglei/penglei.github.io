@@ -10,6 +10,10 @@ pre, code {
     overflow-wrap: unset;
 }
 
+code[data-lang=shell] .bash ,code[data-lang=console] .bash {
+    color: #c7254e; 
+}
+
 table thead tr th, table tfoot tr th, table tbody tr td, table tr td, table tfoot tr td {
     display: table-cell;
     line-height: 1.6;
@@ -27,6 +31,14 @@ table thead tr th, table tfoot tr th, table tbody tr td, table tr td, table tfoo
     padding: 20px 0;
 }
 
+.post .post-content code {
+    color: #c7254e;
+}
+.post .post-content code[data-lang] {
+    color: #350410;
+}
+
+/* ------------------- callouts (from asciidoctor.org) ---------------------*/
 pre .conum[data-value] {
     position: relative;
     top: -0.125em;
@@ -90,9 +102,11 @@ pre .conum[data-value] {
     display: block;
     padding-top: 0.1em;
 }
+/* -------------------- ----------------------- */
 
 @media only screen and (min-width: 1080px) {
   .sect1 .sectionbody{
     margin-left:1em;
   }
 }
+

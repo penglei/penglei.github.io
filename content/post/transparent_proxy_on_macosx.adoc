@@ -250,7 +250,7 @@ $ mv redsocks2 /opt/bin/redsocks
 ----
 <1> 开启IP转发功能
 <2> 开启pf(默认是关闭的)
-<3> 情况所有配置
+<3> 清空所有配置
 <4> 加载配置文件
 
 . 如果想停止使用透明代理访问，禁用pf(`sudo pf -d`)或者清空pf规则(`sudo pf -F all`)即可。
@@ -258,6 +258,7 @@ $ mv redsocks2 /opt/bin/redsocks
 服务运行之后，我们的macOS就已经有了透明代理的功能，
 运行curl来验证一下:
 
+[source,console]
 ----
 $ curl -I https://www.google.com --resolve 'www.google.com:443:216.58.200.36'
 HTTP/2 302
@@ -291,5 +292,5 @@ TODO
 如果您像我一样爱偷懒，这个方法倒是可能有一些帮助。
 
 最后，我厂只能通过HTTP代理访问外网怎么办呢？ 最简单的方法把HTTP代理转发成SOCKS5代理，`goproxy` 可以做到，
-当然，我是通过HTTP代理连接另一台外网server来实现SOCKS5代理的，但这方法不具有通用型，就不再赘述。
+我是通过HTTP代理连接另一台外网server来实现SOCKS5代理的，但这方法不具有通用型，就不再赘述。
 
