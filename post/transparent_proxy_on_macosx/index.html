@@ -75,7 +75,7 @@
 
 <meta itemprop="datePublished" content="2019-02-17T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-02-17T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="2681">
+<meta itemprop="wordCount" content="2678">
 
 
 
@@ -534,7 +534,7 @@ $ mv redsocks2 /opt/bin/redsocks</code></pre>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>情况所有配置</td>
+<td>清空所有配置</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
@@ -554,7 +554,7 @@ $ mv redsocks2 /opt/bin/redsocks</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>$ curl -I https://www.google.com --resolve 'www.google.com:443:216.58.200.36'
+<pre class="highlight"><code class="language-console" data-lang="console">$ curl -I https://www.google.com --resolve 'www.google.com:443:216.58.200.36'
 HTTP/2 302
 location: https://www.google.com.hk/url?sa=p&amp;hl=zh-CN&amp;pref=hkredirect&amp;pval=yes&amp;q=https://www.google.com.hk/&amp;ust=1550640983822937&amp;usg=AOvVaw3PnKH6XFhOkLB56FH7sVHc
 cache-control: private
@@ -567,7 +567,7 @@ x-xss-protection: 1; mode=block
 x-frame-options: SAMEORIGIN
 set-cookie: 1P_JAR=2019-02-20-05; expires=Fri, 22-Mar-2019 05:35:53 GMT; path=/; domain=.google.com
 set-cookie: NID=160=U44fC0UHxupm7ClkYUGknQQR8gT8JmqDIhrL3VDquqo6wFketgeSCqBEgNHea2cClfa8pyYwo1u2X44uU7vIaEd5Bxeoakgtwq0aauu5Kzv5hX0N65TNmPH7LYTaESyQAT5lVMSu_RO9JarbeukX2oNoVBL_y3q0d8sty2_u7eU; expires=Thu, 22-Aug-2019 05:35:53 GMT; path=/; domain=.google.com; HttpOnly
-alt-svc: quic=":443"; ma=2592000; v="44,43,39"</pre>
+alt-svc: quic=":443"; ma=2592000; v="44,43,39"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -586,7 +586,7 @@ alt-svc: quic=":443"; ma=2592000; v="44,43,39"</pre>
 </div>
 <div class="paragraph">
 <p>最后，我厂只能通过HTTP代理访问外网怎么办呢？ 最简单的方法把HTTP代理转发成SOCKS5代理，<code>goproxy</code> 可以做到，
-当然，我是通过HTTP代理连接另一台外网server来实现SOCKS5代理的，但这方法不具有通用型，就不再赘述。</p>
+我是通过HTTP代理连接另一台外网server来实现SOCKS5代理的，但这方法不具有通用型，就不再赘述。</p>
 </div>
 </div>
 </div>
