@@ -1,3 +1,4 @@
+/* --------------- common -----------------*/
 *, *:before, *:after {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -11,7 +12,7 @@ pre, code {
 }
 
 code[data-lang=shell] .bash ,code[data-lang=console] .bash {
-    color: #c7254e; 
+    color: #c7254e;
 }
 
 table thead tr th, table tfoot tr th, table tbody tr td, table tr td, table tfoot tr td {
@@ -19,12 +20,7 @@ table thead tr th, table tfoot tr th, table tbody tr td, table tr td, table tfoo
     line-height: 1.6;
 }
 
-#toc {
-    border-bottom: 1px solid #e6e6e6;
-}
-#toctitle {
-    display: none;
-}
+/* ---------------- pre or code ------------------ */
 
 .post .post-content pre:not(.highlight) {
     line-height: 1em;
@@ -33,10 +29,22 @@ table thead tr th, table tfoot tr th, table tbody tr td, table tr td, table tfoo
 
 .post .post-content code {
     color: #c7254e;
+    overflow: visible;
 }
 .post .post-content code[data-lang] {
     color: #350410;
 }
+
+
+/*---------------- toc style -----------------*/
+
+#toc {
+    border-bottom: 1px solid #e6e6e6;
+}
+#toctitle {
+    display: none;
+}
+
 
 /* ------------------- callouts (from asciidoctor.org) ---------------------*/
 pre .conum[data-value] {
@@ -102,8 +110,9 @@ pre .conum[data-value] {
     display: block;
     padding-top: 0.1em;
 }
-/* -------------------- ----------------------- */
 
+
+/* -------------------- Responsive ---------------------- */
 @media only screen and (min-width: 1080px) {
   .sect1 .sectionbody{
     margin-left:1em;
