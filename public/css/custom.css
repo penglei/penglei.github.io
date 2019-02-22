@@ -6,15 +6,15 @@
 }
 
 body {
+  text-rendering: optimizeLegibility;
   border-top-color: #c05b4d;
   border-top-width: 2px;
 }
 
 pre, code {
     border-radius: 4px;
-    text-rendering: optimizeSpeed;
     tab-size: 4;
-    overflow-wrap: unset;
+    /*overflow-wrap: unset;*/
 }
 
 table thead tr th, table tfoot tr th, table tbody tr td, table tr td, table tfoot tr td {
@@ -56,16 +56,15 @@ pre.highlight {
 }
 
 .post .post-content code {
-    color: rgba(0,0,0,.9);
-    font-family: "Droid Sans Mono","DejaVu Sans Mono",monospace;
-    overflow: visible;
+    /*color: rgba(0,0,0,.9);*/
+    /*overflow: visible;*/
 }
 .post .post-content code[data-lang] {
     /*color: #350410;*/
 }
 
 code[data-lang=shell] .bash ,code[data-lang=console] .bash {
-    color: #d14; /* github style */
+    color: #2156a5;
 }
 
 .listingblock .content > pre{
@@ -146,7 +145,7 @@ pre .conum[data-value] {
 
 
 /*  --------------------- header -----------------------*/
-h1, h2, h3, #toctitle, .sidebarblock>.content>.title, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, #toctitle, .sidebarblock>.content>.title {
     font-family: "Open Sans","DejaVu Sans",sans-serif;
     font-weight: 300;
     font-style: normal;
@@ -156,7 +155,14 @@ h1, h2, h3, #toctitle, .sidebarblock>.content>.title, h4, h5, h6 {
     margin-bottom: .5em;
     line-height: 1.0125em;
 }
-.post .post-content h1>a.link, .post .post-content h2>a.link, .post .post-content h3>a.link, #toctitle>a.link, .sidebarblock>.content>.title>a.link, .post .post-content h4>a.link, .post .post-content h5>a.link, .post .post-content h6>a.link {
+.post .post-content h1>a.link,
+.post .post-content h2>a.link,
+.post .post-content h3>a.link,
+.post .post-content h4>a.link,
+.post .post-content h5>a.link,
+.post .post-content h6>a.link ,
+#toctitle>a.link,
+.sidebarblock>.content>.title>a.link {
     color: #ba3925;
     text-decoration: none;
 }
@@ -175,23 +181,29 @@ h1, h2, h3, #toctitle, .sidebarblock>.content>.title, h4, h5, h6 {
   content: none;
 }
 
-h1>a.anchor, h2>a.anchor, h3>a.anchor, #toctitle>a.anchor, .sidebarblock>.content>.title>a.anchor, h4>a.anchor, h5>a.anchor, h6>a.anchor {
-    position: absolute;
-    z-index: 1001;
-    width: 1.5ex;
-    margin-left: -1.5ex;
-    display: block;
-    text-decoration: none!important;
-    visibility: hidden;
-    text-align: center;
-    font-weight: 400;
-}
 
 /* -------------------- Responsive ---------------------- */
 @media only screen and (min-width: 1080px) {
-  .sect1 .sectionbody{
-    margin-left:0em;
+
+  .post .post-content h1>a.anchor,
+  .post .post-content h2>a.anchor,
+  .post .post-content h3>a.anchor,
+  .post .post-content h4>a.anchor,
+  .post .post-content h5>a.anchor,
+  .post .post-content h6>a.anchor,
+  #toctitle>a.anchor,
+  .post .post-content .sidebarblock>.content>.title>a.anchor {
+      position: absolute;
+      z-index: 1001;
+      width: 1.5ex;
+      margin-left: -1.5ex;
+      display: block;
+      text-decoration: none!important;
+      visibility: visible;
+      text-align: center;
+      font-weight: 400;
   }
+
   h1:hover>a.anchor,
   h1>a.anchor:hover,
   h2:hover>a.anchor,
@@ -209,14 +221,26 @@ h1>a.anchor, h2>a.anchor, h3>a.anchor, #toctitle>a.anchor, .sidebarblock>.conten
   .sidebarblock>.content>.title:hover>a.anchor,
   .sidebarblock>.content>.title>a.anchor:hover
   {
-    visibility: visible;
+      color: #2156a5;
+      /*visibility: visible;*/
   }
 
-  h1>a.anchor::before, h2>a.anchor::before, h3>a.anchor::before, #toctitle>a.anchor::before, .sidebarblock>.content>.title>a.anchor::before, h4>a.anchor::before, h5>a.anchor::before, h6>a.anchor::before {
+  h1>a.anchor::before,
+  h2>a.anchor::before,
+  h3>a.anchor::before,
+  h4>a.anchor::before,
+  h5>a.anchor::before,
+  h6>a.anchor::before,
+  #toctitle>a.anchor::before,
+  .sidebarblock>.content>.title>a.anchor::before
+  {
       content: "\00A7";
       font-size: .85em;
       display: block;
       /*padding-top: .1em;*/
+  }
+  h3>a.anchor::before {
+    margin-top:-1px;
   }
 }
 
