@@ -5,20 +5,48 @@
     box-sizing: border-box;
 }
 
+body {
+  border-top-color: #c05b4d;
+  border-top-width: 2px;
+}
+
 pre, code {
+    border-radius: 4px;
     text-rendering: optimizeSpeed;
     tab-size: 4;
     overflow-wrap: unset;
-}
-
-code[data-lang=shell] .bash ,code[data-lang=console] .bash {
-    color: #c7254e;
 }
 
 table thead tr th, table tfoot tr th, table tbody tr td, table tr td, table tfoot tr td {
     display: table-cell;
     line-height: 1.6;
 }
+
+
+/* ---------------- code copy button ---------------- */
+pre.highlight {
+    position: relative;
+    /*padding-right: 75px;*/
+}
+.highlight-copy-btn {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    border: 0;
+    border-radius: 4px;
+    padding: 1px;
+    font-size: 0.7em;
+    line-height: 1.8;
+    color: #2859c78c;
+    background-color: #b5b5b547;
+    min-width: 55px;
+    text-align: center;
+}
+.highlight-copy-btn:hover {
+    color: #fff;
+    background-color: #666;
+}
+
 
 /* ---------------- pre or code ------------------ */
 
@@ -28,11 +56,20 @@ table thead tr th, table tfoot tr th, table tbody tr td, table tr td, table tfoo
 }
 
 .post .post-content code {
-    color: #c7254e;
+    color: rgba(0,0,0,.9);
+    font-family: "Droid Sans Mono","DejaVu Sans Mono",monospace;
     overflow: visible;
 }
 .post .post-content code[data-lang] {
-    color: #350410;
+    /*color: #350410;*/
+}
+
+code[data-lang=shell] .bash ,code[data-lang=console] .bash {
+    color: #d14; /* github style */
+}
+
+.listingblock .content > pre{
+  margin-top: 0.2em;
 }
 
 
@@ -41,8 +78,27 @@ table thead tr th, table tfoot tr th, table tbody tr td, table tr td, table tfoo
 #toc {
     border-bottom: 1px solid #e6e6e6;
 }
+#toc ul { margin-top: 0; margin-left: 1.25em; list-style-type: none; padding-left:0;}
+#toc>ul {
+    margin-left: .125em;
+}
+#toc a {
+    color: #2156a5;
+}
+#toc li {
+    font-size: 0.975em;
+    line-height: 1.3334;
+    margin-top: .3334em;
+}
 #toctitle {
-    display: none;
+    font-weight: 300;
+    font-style: normal;
+    margin-top: 1em;
+    color: #7a2518;
+    font-size: 1.25em;
+    line-height: 1.2;
+    margin-bottom: .5em;
+    word-spacing: -.05em;
 }
 
 
@@ -63,7 +119,6 @@ pre .conum[data-value] {
     height: 1.67em;
     font-size: 0.75em;
     line-height: 1.67em;
-    font-family: "Open Sans", "Sans", sans-serif;
     font-style: normal;
     font-weight: bold;
 }
@@ -89,33 +144,79 @@ pre .conum[data-value] {
     padding: 0.25em 0;
 }
 
-.admonitionblock td.content>.title, .audioblock>.title, .exampleblock>.title, .imageblock>.title, .listingblock>.title, .literalblock>.title, .stemblock>.title, .openblock>.title, .paragraph>.title, .quoteblock>.title, table.tableblock>.title, .verseblock>.title, .videoblock>.title, .dlist>.title, .olist>.title, .ulist>.title, .qlist>.title, .hdlist>.title {
+
+/*  --------------------- header -----------------------*/
+h1, h2, h3, #toctitle, .sidebarblock>.content>.title, h4, h5, h6 {
+    font-family: "Open Sans","DejaVu Sans",sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    color: #ba3925;
     text-rendering: optimizeLegibility;
-    text-align: left;
-    font-style: italic;
-    font-size: 1rem;
+    margin-top: 1em;
+    margin-bottom: .5em;
+    line-height: 1.0125em;
+}
+.post .post-content h1>a.link, .post .post-content h2>a.link, .post .post-content h3>a.link, #toctitle>a.link, .sidebarblock>.content>.title>a.link, .post .post-content h4>a.link, .post .post-content h5>a.link, .post .post-content h6>a.link {
+    color: #ba3925;
+    text-decoration: none;
 }
 
-.subheader, .admonitionblock td.content>.title, .audioblock>.title, .exampleblock>.title, .imageblock>.title, .listingblock>.title, .literalblock>.title, .stemblock>.title, .openblock>.title, .paragraph>.title, .quoteblock>.title, table.tableblock>.title, .verseblock>.title, .videoblock>.title, .dlist>.title, .olist>.title, .ulist>.title, .qlist>.title, .hdlist>.title {
-    line-height: 1.4;
-    color: #7a2717;
-    font-weight: normal;
-    margin-top: 0;
-    /*margin-bottom: .25em;*/
+/* home page */
+.post .post-header .post-title  a {
+    color: #ba3925;
 }
 
-.primary h1>a.anchor:before, h2>a.anchor:before, h3>a.anchor:before, #toctitle>a.anchor:before, .sidebarblock>.content>.title>a.anchor:before, h4>a.anchor:before, h5>a.anchor:before, h6>a.anchor:before {
-    content: "\00A7";
-    font-size: 0.85em;
+/* a */
+.post .post-content .read-more .read-more-link:hover,
+.post .post-content a:hover {
+  border-bottom: none;
+}
+.post .post-header .post-link:before {
+  content: none;
+}
+
+h1>a.anchor, h2>a.anchor, h3>a.anchor, #toctitle>a.anchor, .sidebarblock>.content>.title>a.anchor, h4>a.anchor, h5>a.anchor, h6>a.anchor {
+    position: absolute;
+    z-index: 1001;
+    width: 1.5ex;
+    margin-left: -1.5ex;
     display: block;
-    padding-top: 0.1em;
+    text-decoration: none!important;
+    visibility: hidden;
+    text-align: center;
+    font-weight: 400;
 }
-
 
 /* -------------------- Responsive ---------------------- */
 @media only screen and (min-width: 1080px) {
   .sect1 .sectionbody{
-    margin-left:1em;
+    margin-left:0em;
+  }
+  h1:hover>a.anchor,
+  h1>a.anchor:hover,
+  h2:hover>a.anchor,
+  h2>a.anchor:hover,
+  h3:hover>a.anchor,
+  h3>a.anchor:hover,
+  h4:hover>a.anchor,
+  h4>a.anchor:hover,
+  h5:hover>a.anchor,
+  h5>a.anchor:hover,
+  h6:hover>a.anchor,
+  h6>a.anchor:hover,
+  #toctitle:hover>a.anchor,
+  #toctitle>a.anchor:hover,
+  .sidebarblock>.content>.title:hover>a.anchor,
+  .sidebarblock>.content>.title>a.anchor:hover
+  {
+    visibility: visible;
+  }
+
+  h1>a.anchor::before, h2>a.anchor::before, h3>a.anchor::before, #toctitle>a.anchor::before, .sidebarblock>.content>.title>a.anchor::before, h4>a.anchor::before, h5>a.anchor::before, h6>a.anchor::before {
+      content: "\00A7";
+      font-size: .85em;
+      display: block;
+      /*padding-top: .1em;*/
   }
 }
 

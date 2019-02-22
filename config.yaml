@@ -19,9 +19,10 @@ enableGitInfo: true
 #pygmentsCodeFences: true
 #pygmentsUseClasses: true # Use CSS classes to format highlighted code
 #pygmentsCodefencesGuessSyntax: true
-
 #pygmentsOptions: "linenos=table"
-pygmentsStyle: monokai    # github,paraiso-light,monokai
+#pygmentsStyle: monokai    # github,paraiso-light,monokai
+
+#asciidoctor: -a linkcss --no-header-footer --safe --trace -
 
 # language support # en / zh-cn / other... translations present in i18n/
 defaultContentLanguage: en           # Default language to use
@@ -85,7 +86,7 @@ params:
   #   (relative to /static/css and /static/js respectively)
   customCSS:               # if ['custom.css'], load '/static/css/custom.css' file
     - highlightjs/github.css
-    - copy.css
+  # - asciidoctor.css
     - custom.css
   customJS:                # if ['custom.js'], load '/static/js/custom.js' file
     - highlight.pack.js

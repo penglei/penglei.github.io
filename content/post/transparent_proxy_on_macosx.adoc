@@ -8,7 +8,8 @@ tags: [pf, redsocks2, socks5]
 
 = macOS 全局透明代理
 :toc:
-//:sectanchors:
+:sectanchors:
+:sectlinks:
 :icons: font
 :openbsd-pf-uri: https://www.openbsd.org/faq/pf/
 :macOS-pf-manual: https://murusfirewall.com/Documentation/OS%20X%20PF%20Manual.pdf
@@ -213,7 +214,7 @@ $ git clone https://github.com/penglei/redsocks.git redsocks2.git && cd redsocks
 $ mv redsocks2 /opt/bin/redsocks
 ----
 
-=== E. 安装配置SOCKS5服务(client和server)
+=== E. 安装配置SOCKS5服务
 
 这个步骤有很多方法，比如 ssh -L 建立SOCKS5代理，或者使用ss, v2ray等等软件都可以，相信大部分人都知道应该怎么做。
 需要注意的是SOCKS5服务监听地址是 `127.0.0.1:29090` ，redsocks的配置指明了将流量转发到该地址。
