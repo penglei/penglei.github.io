@@ -1,4 +1,4 @@
-(function() {
+function initCodeCopy() {
   'use strict';
 
   if(!document.queryCommandSupported('copy')) {
@@ -50,4 +50,4 @@
   // Add copy button to code blocks
   var highlightBlocks = document.querySelectorAll('.copy pre.highlight');
   Array.prototype.forEach.call(highlightBlocks, addCopyButton);
-})();
+}

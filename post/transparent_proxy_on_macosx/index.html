@@ -35,10 +35,9 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-<link href="/dist/even.b73d650c.min.css" rel="stylesheet">
+<link href="/dist/even.4e6c5489.min.css" rel="stylesheet">
 
 <link rel="stylesheet" href="/css/highlightjs/github.css">
-<link rel="stylesheet" href="/css/copy.css">
 <link rel="stylesheet" href="/css/custom.css">
 
 
@@ -75,7 +74,7 @@
 
 <meta itemprop="datePublished" content="2019-02-17T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-02-21T16:20:42&#43;08:00" />
-<meta itemprop="wordCount" content="2681">
+<meta itemprop="wordCount" content="2651">
 
 
 
@@ -190,7 +189,7 @@
 <li><a href="#_b_创建直连ip白名单文件">B. 创建直连IP白名单文件</a></li>
 <li><a href="#_c_配置redsocks">C. 配置redsocks</a></li>
 <li><a href="#_d_编译安装redsocks">D. 编译安装redsocks</a></li>
-<li><a href="#_e_安装配置socks5服务client和server">E. 安装配置SOCKS5服务(client和server)</a></li>
+<li><a href="#_e_安装配置socks5服务">E. 安装配置SOCKS5服务</a></li>
 <li><a href="#_f_运行服务">F. 运行服务</a></li>
 </ul>
 </li>
@@ -212,7 +211,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_关于代理">关于代理</h2>
+<h2 id="_关于代理"><a class="anchor" href="#_关于代理"></a><a class="link" href="#_关于代理">关于代理</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>比较流行的代理协议有 <code>SOCKS5</code> 和 <code>HTTP</code> ，不同的软件对代理的支持没有统一的标准：</p>
@@ -239,7 +238,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="architecture">方案架构</h2>
+<h2 id="architecture"><a class="anchor" href="#architecture"></a><a class="link" href="#architecture">方案架构</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>我们希望在应用程序访问目标地址(eg: 1.2.3.4)时，<code>pf</code> 劫持流量，将其转发到本地透明代理上，透明代理再连接远端代理服务器，进而访问到目标地址。</p>
@@ -312,7 +311,7 @@ pass out route-to (lo0 127.0.0.1) proto tcp from any to 1.2.3.4</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_详细流程">详细流程</h2>
+<h2 id="_详细流程"><a class="anchor" href="#_详细流程"></a><a class="link" href="#_详细流程">详细流程</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>现实世界总是要复杂一点，透明代理还有一些细节问题需要解决：</p>
@@ -356,7 +355,7 @@ pass out route-to (lo0 127.0.0.1) proto tcp from any to 1.2.3.4</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_a_配置pf_conf">A. 配置pf.conf</h3>
+<h3 id="_a_配置pf_conf"><a class="anchor" href="#_a_配置pf_conf"></a><a class="link" href="#_a_配置pf_conf">A. 配置pf.conf</a></h3>
 <div class="paragraph">
 <p>我习惯使用系统默认位置的配置文件，直接编辑 <code>/etc/pf.conf</code> (默认需要root权限)，按如下进行配置：</p>
 </div>
@@ -398,7 +397,7 @@ load anchor "com.apple" from "/etc/pf.anchors/com.apple"</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_b_创建直连ip白名单文件">B. 创建直连IP白名单文件</h3>
+<h3 id="_b_创建直连ip白名单文件"><a class="anchor" href="#_b_创建直连ip白名单文件"></a><a class="link" href="#_b_创建直连ip白名单文件">B. 创建直连IP白名单文件</a></h3>
 <div class="paragraph">
 <p>前面的配置文件 <code>/etc/pf.conf</code> 使用pf的table语法引用了直连IP白名单文件，需要自行创建该文件：</p>
 </div>
@@ -440,7 +439,7 @@ load anchor "com.apple" from "/etc/pf.anchors/com.apple"</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_c_配置redsocks">C. 配置redsocks</h3>
+<h3 id="_c_配置redsocks"><a class="anchor" href="#_c_配置redsocks"></a><a class="link" href="#_c_配置redsocks">C. 配置redsocks</a></h3>
 <div class="paragraph">
 <p>redsocks监听 <code>127.0.0.1:12345</code> 地址，将流量转发到本地的 <code>127.0.0.1:29090</code> (SOCKS5代理服务器)</p>
 </div>
@@ -465,7 +464,7 @@ redsocks {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_d_编译安装redsocks">D. 编译安装redsocks</h3>
+<h3 id="_d_编译安装redsocks"><a class="anchor" href="#_d_编译安装redsocks"></a><a class="link" href="#_d_编译安装redsocks">D. 编译安装redsocks</a></h3>
 <div class="paragraph">
 <p>原版redsocks年久失修，对新版macOS支持并不好，有网友fork之后进行了修正将其命名为redsocks2，但是对于最新的macOS编译还是有一点小问题，因此我又进行了一次fork，但不保证以后是否能正常编译。</p>
 </div>
@@ -481,14 +480,14 @@ $ mv redsocks2 /opt/bin/redsocks</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_e_安装配置socks5服务client和server">E. 安装配置SOCKS5服务(client和server)</h3>
+<h3 id="_e_安装配置socks5服务"><a class="anchor" href="#_e_安装配置socks5服务"></a><a class="link" href="#_e_安装配置socks5服务">E. 安装配置SOCKS5服务</a></h3>
 <div class="paragraph">
 <p>这个步骤有很多方法，比如 ssh -L 建立SOCKS5代理，或者使用ss, v2ray等等软件都可以，相信大部分人都知道应该怎么做。
 需要注意的是SOCKS5服务监听地址是 <code>127.0.0.1:29090</code> ，redsocks的配置指明了将流量转发到该地址。</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_f_运行服务">F. 运行服务</h3>
+<h3 id="_f_运行服务"><a class="anchor" href="#_f_运行服务"></a><a class="link" href="#_f_运行服务">F. 运行服务</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -578,7 +577,7 @@ alt-svc: quic=":443"; ma=2592000; v="44,43,39"</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_总结">总结</h2>
+<h2 id="_总结"><a class="anchor" href="#_总结"></a><a class="link" href="#_总结">总结</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>对于普通用户，这个方法太过折腾，其维护成本高，带来的收益却不明显，甚至还需要解决DNS的问题，
@@ -592,7 +591,7 @@ alt-svc: quic=":443"; ma=2592000; v="44,43,39"</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_references">References</h2>
+<h2 id="_references"><a class="anchor" href="#_references"></a><a class="link" href="#_references">References</a></h2>
 <div class="sectionbody">
 <div class="ulist bibliography">
 <ul class="bibliography">
