@@ -15,7 +15,7 @@ p, blockquote, dt, td.content, span.alt {
 
 pre, code {
     white-space: pre;
-    /*overflow-wrap: unset;*/
+    overflow-wrap: unset;
 }
 pre code, pre pre {
     line-height: 1.25rem;
@@ -75,8 +75,9 @@ code[data-lang=shell] .bash ,code[data-lang=console] .bash {
 }
 
 @media screen and (min-width: 1280px) {
-.literalblock pre, .listingblock > .content > pre {
-    font-size: 0.825em;
+  .literalblock pre, .listingblock > .content > pre {
+      font-size: 0.825em;
+  }
 }
 
 
