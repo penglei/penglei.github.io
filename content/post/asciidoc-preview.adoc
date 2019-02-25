@@ -1,0 +1,131 @@
+////
+title: AsciiDoc theme style
+date: 2019-02-23
+draft: true
+////
+
+= AsciiDoc theme style
+
+:experimental:
+:icons: font
+
+== 23. Tables
+
+.Simple table
+[.table-wrapper]
+|===
+| Cell in column 1, row 1 | Cell in column 2, row 1
+| Cell in column 1, row 2 | Cell in column 2, row 2
+| Cell in column 1, row 3 | Cell in column 2, row 3
+|===
+
+
+== 32. Admonition
+
+https://blog.olowolo.com/example-site/post/shortcodes/#admonition
+
+https://github.com/asciidoctor/asciidoctor-extensions-lab/issues/9
+
+[.exampleblock]
+****
+WARNING: Wolpertingers are known to nest in server racks.
+Enter at your own risk
+****
+
+
+WARNING: Wolpertingers are known to nest in server racks.
+Enter at your own risk
+
+[quote, Monty Python and the Holy Grail]
+____
+Dennis: Come and see the violence inherent in the system. Help! Help! I'm being repressed!
+
+King Arthur: Bloody peasant!
+
+Dennis: Oh, what a giveaway! Did you hear that? Did you hear that, eh? That's what I'm on about! Did you see him repressing me? You saw him, Didn't you?
+____
+
+== 33. Sidebar
+
+.After landing the cloaked Klingon bird of prey in Golden Gate park: 
+[quote, Captain James T. Kirk, Star Trek IV: The Voyage Home]     
+Everybody remember where we parked.
+
+.AsciiDoc history
+****
+AsciiDoc was first released in Nov 2002 by Stuart Rackham.
+It was designed from the start to be a shorthand syntax
+for producing professional documents like DocBook and LaTeX.
+****
+
+== 40. Passthroughs
+
+=== 40.1. Passthrough Macros
+
+pass:[content like #{variable} passed directly to the output] followed by normal content.
+
+content with only select substitutions applied: pass:c,a[__<{email}>__]
+
+=== 40.2. Passthrough Blocks
+
+
+[pass]
+<u>underline me</u> is underlined.
+
+
+== 44. User Interface Macros
+
+kbd:[Ctrl+Shift+N]
+
+== 47. Callouts
+
+打开 `:icon: font` 属性，配合如下的CSS属性。
+
+[source,css]
+----
+pre .conum[data-value] {
+    position: relative;
+    top: -0.125em;
+}
+
+.conum[data-value] {
+    display: inline-block;
+    color: #fff !important;
+    background-color: rgba(0,0,0,0.8);
+    -webkit-border-radius: 100px;
+    border-radius: 100px;
+    text-align: center;
+    width: 1.67em;
+    height: 1.67em;
+    font-size: 0.75em;
+    line-height: 1.67em;
+    font-style: normal;
+    font-weight: bold;
+}
+
+.conum[data-value]:after {
+    content: attr(data-value);
+}
+
+.conum[data-value]+b {
+    display: none;
+}
+
+.colist.arabic {
+    font-size: 16px;
+}
+.colist td:not([class]):first-child {
+    padding: 0.4em 0.75em 0;
+    padding-right: 0.5em;
+    line-height: 1;
+    vertical-align: top;
+}
+.colist td:not([class]):last-child {
+    padding: 0.25em 0;
+}
+----
+
+== demo
+
+https://dave.cheney.net/practical-go/presentations/qcon-china.html
+

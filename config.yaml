@@ -22,7 +22,7 @@ enableGitInfo: true
 #pygmentsOptions: "linenos=table"
 #pygmentsStyle: monokai    # github,paraiso-light,monokai
 
-#asciidoctor: -a linkcss --no-header-footer --safe --trace -
+asciidoctor: --no-header-footer --safe --trace -
 
 # language support # en / zh-cn / other... translations present in i18n/
 defaultContentLanguage: en           # Default language to use
@@ -82,11 +82,13 @@ params:
   contentCopyright: '<a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a>'
   postMetaInFooter: true   # contain author, lastMod, markdown link, license           # 包含作者，上次修改时间，markdown链接，许可信息
 
+  defaultsCSS:
+    - asciidoctor.css
+
   # Link custom CSS and JS assets
   #   (relative to /static/css and /static/js respectively)
   customCSS:               # if ['custom.css'], load '/static/css/custom.css' file
     - highlightjs/github.css
-  # - asciidoctor.css
     - custom.css
   customJS:                # if ['custom.js'], load '/static/js/custom.js' file
     - highlight.pack.js

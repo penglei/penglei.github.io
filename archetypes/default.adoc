@@ -4,8 +4,17 @@ date: {{ .Date }}
 draft: true
 ////
 
-= title
+= blog title
 :toc:
+:experimental:
+:icons: font
 
-<!--more-->
+put summary here
+// <!--more-->
+
+== SubTitle 1
+
+
+== SubTitle 2
+
 

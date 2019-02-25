@@ -35,7 +35,12 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 
 
-<link href="/dist/even.4af50205.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="/css/asciidoctor.css" />
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+<link href="/dist/even.920d5445.min.css" rel="stylesheet">
 
 <link rel="stylesheet" href="/css/highlightjs/github.css">
 <link rel="stylesheet" href="/css/custom.css">
@@ -56,7 +61,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/post/transparent_proxy_on_macosx/" />
 <meta property="article:published_time" content="2019-02-17T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2019-02-22T16:26:10&#43;08:00"/>
+<meta property="article:modified_time" content="2019-02-23T00:30:25&#43;08:00"/>
 
 <meta itemprop="name" content="macOS 透明代理配置">
 <meta itemprop="description" content="
@@ -73,7 +78,7 @@
 
 
 <meta itemprop="datePublished" content="2019-02-17T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2019-02-22T16:26:10&#43;08:00" />
+<meta itemprop="dateModified" content="2019-02-23T00:30:25&#43;08:00" />
 <meta itemprop="wordCount" content="2651">
 
 
@@ -130,7 +135,7 @@
   </ul>
 </nav>
   <div class="container" id="mobile-panel">
-    <header id="header" class="header">
+    <header id="even-header" class="even-header">
         <div class="logo-wrapper">
   <a href="/" class="logo">ybyte</a>
 </div>
@@ -172,11 +177,12 @@
     </header>
 
     <div class="post-toc" id="post-toc">
-  <h2 class="post-toc-title">Contents</h2>
+  
   <div class="post-toc-content always-active">
     
   </div>
 </div>
+
     <div class="post-content">
       <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -248,19 +254,19 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>  ..............................macOS..............................
-  .                                                               .
-  . +----------+                                                  .
-  . |   APP    |                                                  .
-  . +----------+                                                  .
-  .      | eg: 1.2.3.4            pf rdr-to  +------------------+ .  +---------------+
-  .      |                      +-----------&gt;| transprant proxy +---&gt;| socks5 server +---&gt;outside world
-  .      v                      |            +------------------+ .  +---------------+    (eg: 1.2.3.4)
-  .  +----+--+               +--+--+         127.0.0.1:12345      .
-  .  |  en0  +--------------&gt;| lo0 |                              .
-  .  +-------+  pf route-to  +-----+                              .
-  .                                                               .
-  .................................................................</pre>
+<pre>..............................macOS..............................
+.                                                               .
+. +----------+                                                  .
+. |   APP    |                                                  .
+. +----------+                                                  .
+.      | eg: 1.2.3.4            pf rdr-to  +------------------+ .  +---------------+
+.      |                      +-----------&gt;| transprant proxy +---&gt;| socks5 server +---&gt;outside world
+.      v                      |            +------------------+ .  +---------------+    (eg: 1.2.3.4)
+.  +----+--+               +--+--+         127.0.0.1:12345      .
+.  |  en0  +--------------&gt;| lo0 |                              .
+.  +-------+  pf route-to  +-----+                              .
+.                                                               .
+.................................................................</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -334,24 +340,24 @@ pass out route-to (lo0 127.0.0.1) proto tcp from any to 1.2.3.4</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>  ..............................macOS..............................
-  .                                                               .
-  . +----------+                                                  .
-  . |   APP    |                                                  .
-  . +----------+                             127.0.0.1:12345      .
-  .      | eg: 1.2.3.4            pf rdr-to  +------------------+ .
-  .      |                      +-----------&gt;|     redsocks     | .
-  .      v                      |            +---------+--------+ .
-  .  +----+--+               +--+--+                   |          .
-  .  |  en0  +--------------&gt;| lo0 |                   |          .
-  .  +-------+  pf route-to  +-----+                   |          .
-  .                                                    v          .
-  .                                          127.0.0.1:29090      .
-  .                                          +------------------+ .   +---------------+
-  .                                          |     ss-local     +----&gt;|  ss-server    +---&gt;outside world
-  .                                          +------------------+ .   +---------------+    (eg: 1.2.3.4)
-  .                                                               .   SERVER_IP:PORT
-  .................................................................</pre>
+<pre>..............................macOS..............................
+.                                                               .
+. +----------+                                                  .
+. |   APP    |                                                  .
+. +----------+                             127.0.0.1:12345      .
+.      | eg: 1.2.3.4            pf rdr-to  +------------------+ .
+.      |                      +-----------&gt;|     redsocks     | .
+.      v                      |            +---------+--------+ .
+.  +----+--+               +--+--+                   |          .
+.  |  en0  +--------------&gt;| lo0 |                   |          .
+.  +-------+  pf route-to  +-----+                   |          .
+.                                                    v          .
+.                                          127.0.0.1:29090      .
+.                                          +------------------+ .   +---------------+
+.                                          |     ss-local     +----&gt;|  ss-server    +---&gt;outside world
+.                                          +------------------+ .   +---------------+    (eg: 1.2.3.4)
+.                                                               .   SERVER_IP:PORT
+.................................................................</pre>
 </div>
 </div>
 <div class="sect2">
@@ -612,8 +618,8 @@ alt-svc: quic=":443"; ma=2592000; v="44,43,39"</code></pre>
   <p class="copyright-item">
     <span class="item-title">LastMod</span>
     <span class="item-content">
-        2019-02-22
-        <a href="https://github.com/penglei/penglei.github.io/commit/f5a9c26bef39ba50c4c85cc8cfd1814a6e0d0e3f" title="update theme">(f5a9c26)</a>
+        2019-02-23
+        <a href="https://github.com/penglei/penglei.github.io/commit/ead658069ec98b62d8154c9e3e18058e4a6f9f50" title="update theme">(ead6580)</a>
     </span>
   </p>
   
@@ -659,7 +665,7 @@ alt-svc: quic=":443"; ma=2592000; v="44,43,39"</code></pre>
       </div>
     </main>
 
-    <footer id="footer" class="footer">
+    <footer id="even-footer" class="even-footer">
       <div class="social-links">
       <a href="https://github.com/penglei" class="iconfont icon-github" title="github"></a>
   <a href="/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>

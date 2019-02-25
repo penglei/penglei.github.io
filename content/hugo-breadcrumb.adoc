@@ -1,0 +1,10 @@
+////
+draft: true
+////
+
+= theme 流程
+
+`themes/<theme>/static` 下的文件会全部放到web root 目录，这个目录里的文件可以自由设定，通常可由react生成。
+
+`themes/<theme>/data/` 下的文件会被parse成数据，比如：
+`themes/even/data/assets/even.json` 可以在模板（`themes/even/layouts/index.html`）里面用变量 `.Site.data.even.assets.even` 进行读取。
