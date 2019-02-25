@@ -40,6 +40,17 @@ pre.highlight > code { /* avoid shake when .hljs class is set */
     font-size: 1em;
 }
 
+.listingblock > .content > pre {
+  word-wrap: unset;
+}
+
+@media screen and (min-width: 1280px) {
+  .literalblock pre, .listingblock > .content > pre {
+      font-size: 0.825em;
+  }
+}
+
+
 /* ---------------- code copy button ---------------- */
 pre.highlight {
     position: relative;
@@ -72,12 +83,6 @@ pre.highlight {
 
 code[data-lang=shell] .bash ,code[data-lang=console] .bash {
     color: #2156a5; /* user input text use blue color */
-}
-
-@media screen and (min-width: 1280px) {
-  .literalblock pre, .listingblock > .content > pre {
-      font-size: 0.825em;
-  }
 }
 
 
