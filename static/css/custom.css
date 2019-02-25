@@ -15,7 +15,7 @@ p, blockquote, dt, td.content, span.alt {
 
 pre, code {
     white-space: pre;
-    /*overflow-wrap: unset;*/
+    overflow-wrap: unset;
 }
 pre code, pre pre {
     line-height: 1.25rem;
