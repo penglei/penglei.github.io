@@ -40,7 +40,7 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 
-<link href="/dist/even.920d5445.min.css" rel="stylesheet">
+<link href="/dist/even.d232bf53.min.css" rel="stylesheet">
 
 <link rel="stylesheet" href="/css/highlightjs/github.css">
 <link rel="stylesheet" href="/css/custom.css">
@@ -254,7 +254,7 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>..............................macOS..............................
+<pre class="nowrap">..............................macOS..............................
 .                                                               .
 . +----------+                                                  .
 . |   APP    |                                                  .
@@ -278,7 +278,7 @@
 <div class="listingblock">
 <div class="title">pf rules:</div>
 <div class="content">
-<pre class="highlight"><code class="language-pf" data-lang="pf">rdr pass on lo0 proto tcp from any to 1.2.3.4 -&gt; 127.0.0.1 port 12345
+<pre class="highlight nowrap"><code class="language-pf" data-lang="pf">rdr pass on lo0 proto tcp from any to 1.2.3.4 -&gt; 127.0.0.1 port 12345
 pass out route-to (lo0 127.0.0.1) proto tcp from any to 1.2.3.4</code></pre>
 </div>
 </div>
@@ -340,7 +340,7 @@ pass out route-to (lo0 127.0.0.1) proto tcp from any to 1.2.3.4</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>..............................macOS..............................
+<pre class="nowrap">..............................macOS..............................
 .                                                               .
 . +----------+                                                  .
 . |   APP    |                                                  .
@@ -368,7 +368,7 @@ pass out route-to (lo0 127.0.0.1) proto tcp from any to 1.2.3.4</code></pre>
 <div class="listingblock copy">
 <div class="title">/etc/pf.conf</div>
 <div class="content">
-<pre class="highlight"><code class="language-pf" data-lang="pf">scrub-anchor "com.apple/*"
+<pre class="highlight nowrap"><code class="language-pf" data-lang="pf">scrub-anchor "com.apple/*"
 
 table &lt;direct_cidr&gt; persist file "/opt/etc/direct_cidr.txt" <i class="conum" data-value="1"></i><b>(1)</b>
 
@@ -410,7 +410,7 @@ load anchor "com.apple" from "/etc/pf.anchors/com.apple"</code></pre>
 <div class="listingblock copy">
 <div class="title">/opt/etc/direct_cidr.txt</div>
 <div class="content">
-<pre class="highlight"><code># lan
+<pre class="highlight nowrap"><code># lan
 192.31.196.0/24
 192.52.193.0/24
 127.0.0.0/8
@@ -452,7 +452,7 @@ load anchor "com.apple" from "/etc/pf.anchors/com.apple"</code></pre>
 <div class="listingblock copy">
 <div class="title">/opt/etc/redsocks.conf</div>
 <div class="content">
-<pre class="highlight"><code>base {
+<pre class="highlight nowrap"><code>base {
   log_debug = off;
   log_info = on;
   daemon = off;
@@ -479,7 +479,7 @@ redsocks {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-shell" data-lang="shell">$ mkdir -p /opt/bin
+<pre class="highlight nowrap"><code class="language-shell" data-lang="shell">$ mkdir -p /opt/bin
 $ git clone https://github.com/penglei/redsocks.git redsocks2.git &amp;&amp; cd redsocks2.git &amp;&amp; make OSX_VERSION=master
 $ mv redsocks2 /opt/bin/redsocks</code></pre>
 </div>
@@ -503,7 +503,7 @@ $ mv redsocks2 /opt/bin/redsocks</code></pre>
 <p>redsocks通过访问 <code>/dev/pf</code> 来获取连接的原始目标地址，因此需要 <code>root</code> 权限来运行:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-shell" data-lang="shell">$ sudo su -
+<pre class="highlight nowrap"><code class="language-shell" data-lang="shell">$ sudo su -
 Password:
 root# /opt/bin/redsocks -c /opt/etc/redsocks.conf</code></pre>
 </div>
@@ -513,7 +513,7 @@ root# /opt/bin/redsocks -c /opt/etc/redsocks.conf</code></pre>
 <p>配置pf同样需要 <code>root</code> 权限，创建一个新的terminal窗口运行:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-shell" data-lang="shell">$ sudo su -
+<pre class="highlight nowrap"><code class="language-shell" data-lang="shell">$ sudo su -
 Password:
 root#  sysctl -w net.inet.ip.forwarding=1 <i class="conum" data-value="1"></i><b>(1)</b>
 net.inet.ip.forwarding: 1 -&gt; 1
@@ -560,7 +560,7 @@ ALTQ related functions disabled</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-console" data-lang="console">$ curl -I https://www.google.com --resolve 'www.google.com:443:216.58.200.36'
+<pre class="highlight nowrap"><code class="language-console" data-lang="console">$ curl -I https://www.google.com --resolve 'www.google.com:443:216.58.200.36'
 HTTP/2 302
 location: https://www.google.com.hk/url?sa=p&amp;hl=zh-CN&amp;pref=hkredirect&amp;pval=yes&amp;q=https://www.google.com.hk/&amp;ust=1550640983822937&amp;usg=AOvVaw3PnKH6XFhOkLB56FH7sVHc
 cache-control: private
