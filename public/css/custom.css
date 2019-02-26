@@ -13,10 +13,17 @@ p, blockquote, dt, td.content, span.alt {
     font-size: 1em;
 }
 
+/*
+pre {
+  border: 1px solid #ddd;
+  border-left: 4px solid #e6522c;
+}
+
 pre, code {
     white-space: pre;
     overflow-wrap: unset;
 }
+*/
 pre code, pre pre {
     line-height: 1.25rem;
 }
@@ -139,16 +146,6 @@ h1, h2, h3, h4, h5, h6,
     margin-bottom: 1em;
 }
 
-
-/* -------------------- Responsive ---------------------- */
-@media only screen and (min-width: 768px) {
-  h2>a.anchor::before {
-    margin-top:1px;
-  }
-  h3>a.anchor::before {
-    margin-top:-1px;
-  }
-}
 
 /*for Callouts*/
 .colist.arabic {

@@ -7,10 +7,14 @@ tags: [pf, redsocks2, socks5]
 ////
 
 = macOS 全局透明代理
+:prewrap!:
 :toc:
 :sectanchors:
 :sectlinks:
 :icons: font
+//:source-highlighter: highlightjs
+//:highlightjsdir: static/highlight
+//:source-highlighter: pygments
 //https://github.com/asciidoctor/asciidoctor.org/blob/master/docs/_includes/icons.adoc
 :openbsd-pf-uri: https://www.openbsd.org/faq/pf/
 :macOS-pf-manual: https://murusfirewall.com/Documentation/OS%20X%20PF%20Manual.pdf
@@ -43,6 +47,7 @@ tags: [pf, redsocks2, socks5]
 
 架构示意图：
 
+[options="nowrap"]
 ----
 
 ..............................macOS..............................
@@ -260,7 +265,7 @@ ALTQ related functions disabled
 服务运行之后，我们的macOS就已经有了透明代理的功能，
 运行curl来验证一下:
 
-[source,console]
+[source%nowrap,console]
 ----
 $ curl -I https://www.google.com --resolve 'www.google.com:443:216.58.200.36'
 HTTP/2 302

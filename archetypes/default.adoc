@@ -5,6 +5,9 @@ draft: true
 ////
 
 = blog title
+// https://github.com/asciidoctor/asciidoctor.org/blob/master/docs/_includes/listing-wrap.adoc
+// https://asciidoctor.org/docs/user-manual/#to-wrap-or-to-scroll
+:prewrap!:
 :toc:
 :experimental:
 :icons: font
