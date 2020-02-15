@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on ybyte blog</title>
@@ -12,7 +12,7 @@
     
     
     <item>
-      <title>Pf</title>
+      <title>pf</title>
       <link>/tags/pf/</link>
       <pubDate>Sun, 17 Feb 2019 00:00:00 +0000</pubDate>
       
@@ -21,7 +21,7 @@
     </item>
     
     <item>
-      <title>Redsocks2</title>
+      <title>redsocks2</title>
       <link>/tags/redsocks2/</link>
       <pubDate>Sun, 17 Feb 2019 00:00:00 +0000</pubDate>
       
@@ -30,7 +30,7 @@
     </item>
     
     <item>
-      <title>Socks5</title>
+      <title>socks5</title>
       <link>/tags/socks5/</link>
       <pubDate>Sun, 17 Feb 2019 00:00:00 +0000</pubDate>
       
