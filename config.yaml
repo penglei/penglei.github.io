@@ -82,7 +82,7 @@ params:
   contentCopyright: '<a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a>'
   postMetaInFooter: true   # contain author, lastMod, markdown link, license           # 包含作者，上次修改时间，markdown链接，许可信息
 
-  defaultsCSS:
+  defaultCSS:
     - asciidoctor.css
 
   # Link custom CSS and JS assets
@@ -101,3 +101,4 @@ params:
 privacy:
   disqus:
     disable: false
+
