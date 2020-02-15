@@ -1,13 +1,16 @@
 ////
 title: AsciiDoc theme style
-date: 2019-02-23
-draft: true
+date: 2018-01-01
+draft: false
+tags: [asciidoc]
 ////
 
 = AsciiDoc theme style
 
 :experimental:
 :icons: font
+//must specify! it's convennient for us to copy all files in the public to static/{FILENAME} for previewing.
+:imagesoutdir: static/post/asciidoc-preview
 
 == 23. Tables
 
@@ -129,3 +132,51 @@ pre .conum[data-value] {
 
 https://dave.cheney.net/practical-go/presentations/qcon-china.html
 
+== bibliography
+
+插入引用
+
+cite:[gidenstam2010efficient]
+
+显示某个引用
+
+bibitem:[gidenstam2010efficient]
+
+
+显示引用列表
+
+bibliography::[]
+
+== ascii diagram
+
+[ditaa]
+....
+                   +-------------+
+                   | Asciidoctor |-------+
+                   |   diagram   |       |
+                   +-------------+       | PNG out
+                       ^                 |
+                       | ditaa in        |
+                       |                 v
+ +--------+   +--------+----+    /---------------\
+ |        | --+ Asciidoctor +--> |               |
+ |  Text  |   +-------------+    |   Beautiful   |
+ |Document|   |   !magic!   |    |    Output     |
+ |     {d}|   |             |    |               |
+ +---+----+   +-------------+    \---------------/
+     :                                   ^
+     |          Lots of work             |
+     +-----------------------------------+
+....
+
+[plantuml, diagram-classes, png]
+....
+class BlockProcessor
+class DiagramBlock
+class DitaaBlock
+class PlantUmlBlock
+
+BlockProcessor <|-- DiagramBlock
+DiagramBlock <|-- DitaaBlock
+DiagramBlock <|-- PlantUmlBlock
+....
