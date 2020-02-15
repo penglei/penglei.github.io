@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on ybyte blog</title>
@@ -6,12 +6,13 @@
     <description>Recent content in Categories on ybyte blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
+    <lastBuildDate>Sun, 17 Feb 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Macos</title>
+      <title>macOS</title>
       <link>/categories/macos/</link>
       <pubDate>Sun, 17 Feb 2019 00:00:00 +0000</pubDate>
       
@@ -20,7 +21,7 @@
     </item>
     
     <item>
-      <title>Network</title>
+      <title>network</title>
       <link>/categories/network/</link>
       <pubDate>Sun, 17 Feb 2019 00:00:00 +0000</pubDate>
       
@@ -29,7 +30,7 @@
     </item>
     
     <item>
-      <title>Proxy</title>
+      <title>proxy</title>
       <link>/categories/proxy/</link>
       <pubDate>Sun, 17 Feb 2019 00:00:00 +0000</pubDate>
       

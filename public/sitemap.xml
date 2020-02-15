@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
@@ -10,79 +9,94 @@
   </url>
   
   <url>
-    <loc>/post/transparent_proxy_on_macosx/</loc>
-    <lastmod>2019-02-25T13:56:18+08:00</lastmod>
+    <loc>/categories/</loc>
+    <lastmod>2019-02-26T20:24:40+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/categories/</loc>
+    <loc>/categories/macos/</loc>
+    <lastmod>2019-02-26T20:24:40+08:00</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/categories/macos/</loc>
-    <lastmod>2019-02-25T13:56:18+08:00</lastmod>
+    <loc>/post/transparent_proxy_on_macosx/</loc>
+    <lastmod>2019-02-26T20:24:40+08:00</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/categories/network/</loc>
-    <lastmod>2019-02-25T13:56:18+08:00</lastmod>
+    <lastmod>2019-02-26T20:24:40+08:00</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/tags/pf/</loc>
-    <lastmod>2019-02-25T13:56:18+08:00</lastmod>
+    <lastmod>2019-02-26T20:24:40+08:00</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2019-02-25T13:56:18+08:00</lastmod>
+    <lastmod>2020-02-16T00:36:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/categories/proxy/</loc>
-    <lastmod>2019-02-25T13:56:18+08:00</lastmod>
+    <lastmod>2019-02-26T20:24:40+08:00</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/tags/redsocks2/</loc>
-    <lastmod>2019-02-25T13:56:18+08:00</lastmod>
+    <lastmod>2019-02-26T20:24:40+08:00</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/tags/socks5/</loc>
-    <lastmod>2019-02-25T13:56:18+08:00</lastmod>
+    <lastmod>2019-02-26T20:24:40+08:00</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/tags/</loc>
-    <lastmod>2019-02-25T13:56:18+08:00</lastmod>
+    <lastmod>2020-02-16T00:36:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0</priority>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>/</loc>
-    <lastmod>2019-02-20T15:35:43+08:00</lastmod>
+    <lastmod>2020-02-16T00:36:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0</priority>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/asciidoc/</loc>
+    <lastmod>2020-02-16T00:36:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>/post/asciidoc-preview/</loc>
+    <lastmod>2020-02-16T00:36:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
 </urlset>

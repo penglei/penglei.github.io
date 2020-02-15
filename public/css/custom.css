@@ -35,12 +35,15 @@ pre.highlight > code { /* avoid shake when .hljs class is set */
     padding: 0.5em;
     overflow-x: auto;
 }
-
-#header, #content, #footnotes, #footer {
+/*#header*/
+#content, #footnotes, #footer {
     margin-top: 0;
     margin-bottom: 0;
     padding-left: 0;
     padding-right: 0;
+}
+#footer {
+    background: rgba(0, 0, 0, 0);
 }
 
 #preamble > .sectionbody > [class="paragraph"]:first-of-type p {
@@ -117,7 +120,7 @@ code[data-lang=shell] .bash ,code[data-lang=console] .bash {
 
 
 /*  --------------------- header -----------------------*/
-h1, h2, h3, h4, h5, h6,
+.post .post-content h1, .post .post-content h2, .post .post-content h3, .post .post-content h4, .post .post-content h5, .post .post-content h6,
 #toctitle,
 .sidebarblock>.content>.title {
     font-family: "Open Sans","DejaVu Sans",sans-serif;
@@ -141,7 +144,7 @@ h1, h2, h3, h4, h5, h6,
   border-bottom: none;
 }
 
-.even-header .site-navbar .menu {
+.header .site-navbar .menu {
     margin-top: 1em;
     margin-bottom: 1em;
 }
