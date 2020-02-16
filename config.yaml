@@ -1,3 +1,7 @@
+##
+#依赖: asciidoctor-bibtex, asciidoctor-diagram, graphviz, plantuml
+##
+
 baseurl: /
 title: ybyte blog
 languageCode: zh-cn
