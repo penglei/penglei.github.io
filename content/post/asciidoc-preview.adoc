@@ -11,6 +11,7 @@ tags: [asciidoc]
 :icons: font
 //must specify! it's convennient for us to copy all files in the public to static/{FILENAME} for previewing.
 :imagesoutdir: static/post/asciidoc-preview
+:stem:
 
 == 23. Tables
 
@@ -149,7 +150,8 @@ bibliography::[]
 
 == ascii diagram
 
-[ditaa]
+.ditaa
+[ditaa, format="svg"]
 ....
                    +-------------+
                    | Asciidoctor |-------+
@@ -169,7 +171,8 @@ bibliography::[]
      +-----------------------------------+
 ....
 
-[plantuml, diagram-classes, png]
+.plantuml
+[plantuml, "diagram-classes-demo", svg]
 ....
 class BlockProcessor
 class DiagramBlock
@@ -180,3 +183,48 @@ BlockProcessor <|-- DiagramBlock
 DiagramBlock <|-- DitaaBlock
 DiagramBlock <|-- PlantUmlBlock
 ....
+
+.graphviz
+[graphviz, format="svg"]
+---------------------------------------------------------------------
+digraph automata_0 {
+  size ="8.5, 11";
+  node [shape = circle];
+  0 [ style = filled, color=lightgrey ];
+  2 [ shape = doublecircle ];
+  0 -> 2 [ label = "a " ];
+  0 -> 1 [ label = "other " ];
+  1 -> 2 [ label = "a " ];
+  1 -> 1 [ label = "other " ];
+  2 -> 2 [ label = "a " ];
+  2 -> 1 [ label = "other " ];
+  "Machine: a" [ shape = plaintext ];
+}
+---------------------------------------------------------------------
+
+== math
+
+[source,asciidoc]
+----
+[stem]
+++++
+sqrt(4) = 2
+++++
+----
+
+[stem]
+++++
+sqrt(4) = 2
+++++
+
+Water (stem:[H_2O]) is a critical component.
+
+.asciimath
+[asciimath]
+++++
+sqrt(4) = 2
+++++
+
+.latexmath
+latexmath:[C = \alpha + \beta Y^{\gamma} + \epsilon]
+
