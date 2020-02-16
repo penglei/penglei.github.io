@@ -17,7 +17,7 @@
       <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate>
       
       <guid>/post/asciidoc-preview/</guid>
-      <description>23. Tables Table 1. Simple table Cell in column 1, row 1 Cell in column 2, row 1 Cell in column 1, row 2 Cell in column 2, row 2 Cell in column 1, row 3 Cell in column 2, row 3 32. Admonition https://blog.olowolo.com/example-site/post/shortcodes/#admonition https://github.com/asciidoctor/asciidoctor-extensions-lab/issues/9 Wolpertingers are known to nest in server racks. Enter at your own risk Wolpertingers are known to nest in server racks. Enter at your</description>
+      <description>23. Tables Table 1. Simple table Cell in column 1, row 1 Cell in column 2, row 1 Cell in column 1, row 2 Cell in column 2, row 2 Cell in column 1, row 3 Cell in column 2, row 3 32. Admonition https://blog.olowolo.com/example-site/post/shortcodes/#admonition https://github.com/asciidoctor/asciidoctor-extensions-lab/issues/9 exampleblock important content Wolpertingers are known to nest in server racks. Enter at your own risk Dennis: Come and see the violence inherent in</description>
     </item>
     
   </channel>
