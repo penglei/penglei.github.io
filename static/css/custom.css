@@ -1,6 +1,6 @@
 /* --------------- common -----------------*/
 html {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
 }
 
@@ -28,14 +28,15 @@ pre code, pre pre {
     line-height: 1.25rem;
 }
 
-/* avoid shake when hljs class is set
-pre.highlight > code[class^=language-][data-lang]
-*/
+/* avoid shake when hljs class is set ---- */
+/* pre.highlight > code[class^=language-][data-lang] */
+
 pre.highlight > code { /* avoid shake when .hljs class is set */
     padding: 0.5em;
     overflow-x: auto;
 }
-/*#header*/
+
+/* #header, #content, #footnotes, #footer */
 #content, #footnotes, #footer {
     margin-top: 0;
     margin-bottom: 0;
@@ -150,7 +151,29 @@ code[data-lang=shell] .bash ,code[data-lang=console] .bash {
 }
 
 
-/*for Callouts*/
+/*for Callouts ---- */
 .colist.arabic {
     font-size: 0.835em;
+}
+
+/* for Admonition ---- */
+.quoteblock {
+  margin-left: 0.75em;
+}
+.quoteblock blockquote:before {
+  font-size: 1.5em;
+  line-height: 1.2em;
+}
+.quoteblock > .title {
+  margin-left: auto;
+}
+.quoteblock > .title:first-of-type + blockquote {
+  margin-left: 1em;
+}
+
+
+/* for even-admonition ---- */
+.admonition > .admonition-title:first-of-type + p {
+  margin-top: 1em;
+  margin-bottom: 1em;
 }

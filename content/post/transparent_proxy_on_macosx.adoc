@@ -7,6 +7,7 @@ tags: [pf, redsocks2, socks5]
 ////
 
 = macOS 全局透明代理
+// Disable wrapping in listing and literal blocks.
 :prewrap!:
 :toc:
 :sectanchors:
