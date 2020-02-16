@@ -1,5 +1,5 @@
-.PHONE: render publish
-all: render publish
+.PHONE: render publish server
+all: render
 
 render:
 	#generate static resource (e.g. asciidoctor-diagram) first
@@ -14,3 +14,7 @@ publish:
 	git add .
 	git commit -m Update
 	git push origin master
+	git checkout source
+
+server:
+	hugo server
