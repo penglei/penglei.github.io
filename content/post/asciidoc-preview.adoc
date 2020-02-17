@@ -262,7 +262,7 @@ digraph automata_0 {
 }
 ---------------------------------------------------------------------
 
-== math
+== stem
 
 [source,asciidoc]
 ----
@@ -288,3 +288,6 @@ sqrt(4) = 2
 .latexmath
 latexmath:[C = \alpha + \beta Y^{\gamma} + \epsilon]
 
+http://www.wiris.com/editor/demo/en/developers
+
+latexmath:[\equiv]

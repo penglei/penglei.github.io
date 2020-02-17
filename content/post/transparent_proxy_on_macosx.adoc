@@ -2,8 +2,8 @@
 title: macOS 透明代理配置
 date: 2019-02-17
 draft: false
-categories: [macOS, proxy, network]
-tags: [pf, redsocks2, socks5]
+categories: [proxy, network]
+tags: [macOS, pf, redsocks2, socks5]
 ////
 
 = macOS 全局透明代理
