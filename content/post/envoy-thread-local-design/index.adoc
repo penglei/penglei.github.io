@@ -1,0 +1,22 @@
+////
+title: Envoy Thread Local Storage
+date: 2020-02-17
+draft: false
+categories: [concurrency, cpp]
+tags: [C++, thread_local]
+////
+
+Envoy Thread Local Storage
+==========================
+Author Name  <penglei>
+v1, 2020-02-17
+:prewrap!:
+:toc:
+:sectanchors:
+:sectlinks:
+:icons: font
+:cpp-cdr-rule: https://en.cppreference.com/w/cpp/language/definition
+
+
+thread local设计
+
