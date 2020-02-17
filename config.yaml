@@ -17,13 +17,12 @@ googleAnalytics:          # UA-XXXXXXXX-X
 copyright:                # default: author.name ↓        # 默认为下面配置的author.name ↓
 enableGitInfo: true
 
-# Shortcode
 #pygmentsUseClassic: true
 #pygmentsCodeFences: true
 #pygmentsUseClasses: true # Use CSS classes to format highlighted code
 #pygmentsCodefencesGuessSyntax: true
 #pygmentsOptions: "linenos=table"
-#pygmentsStyle: monokai    # github,paraiso-light,monokai
+pygmentsStyle: github    # github,paraiso-light,monokai
 
 # language support # en / zh-cn / other... translations present in i18n/
 

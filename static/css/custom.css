@@ -172,7 +172,7 @@ code[data-lang=shell] .bash ,code[data-lang=console] .bash {
 
 
 /* for even-admonition ---- */
-.admonition > .admonition-title:first-of-type + p {
+.admonition p {
   margin-top: 0.5em;
   margin-bottom: 0.5em;
 }
