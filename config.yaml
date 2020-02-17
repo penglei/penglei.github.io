@@ -71,7 +71,7 @@ params:
   sourceGitBranch: source
   # site info (optional)                                  # 站点信息（可选，不需要的可以直接注释掉）
   logoTitle: "ybyte"        # default: the title value    # 默认值: 上面设置的title值
-  keywords: ["k8s", "linux","docker"]
+  keywords: ["linux", "kubernetes", "docker", "istio", "servicemesh", "sidecar"]
   description: "记录点滴"
 
   # The date format to use; for a list of valid formats, see https://gohugo.io/functions/format/
@@ -94,7 +94,6 @@ params:
     - custom.css
   customJS:                # if ['custom.js'], load '/static/js/custom.js' file
     - highlight.pack.js
-    - copy.js
     - init.js
 
   social:
