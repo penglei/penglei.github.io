@@ -2,8 +2,8 @@
 title: Envoy Thread Local Storage
 date: 2020-02-17
 draft: false
-categories: [concurrency, cpp]
-tags: [C++, thread_local]
+categories: [concurrency, C++]
+tags: [thread_local]
 ////
 
 Envoy Thread Local Storage
@@ -16,7 +16,15 @@ v1, 2020-02-17
 :sectlinks:
 :icons: font
 :cpp-cdr-rule: https://en.cppreference.com/w/cpp/language/definition
+:cpp-declaration: https://en.cppreference.com/w/cpp/language/declarations
+:thread-local: http://eel.is/c++draft/basic.stc.thread
+:storage-duration: http://eel.is/c++draft/basic.stc
+:storage_duration: https://en.cppreference.com/w/cpp/language/storage_duration
 
 
 thread local设计
+
+[quot]
+- All variables declared with the thread_­local keyword have thread storage duration. The storage for these entities lasts for the duration of the thread in which they are created. There is a distinct object or reference per thread, and use of the declared name refers to the entity associated with the current thread.
+- [ Note: A variable with thread storage duration is initialized as specified in [basic.start.static], [basic.start.dynamic], and [stmt.dcl] and, if constructed, is destroyed on thread exit ([basic.start.term]). — end note ]
 

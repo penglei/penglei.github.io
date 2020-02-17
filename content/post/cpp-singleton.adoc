@@ -1,0 +1,23 @@
+////
+title: C++ singleton initialization
+date: 2020-02-17
+draft: false
+categories: [concurrency, C++]
+tags: [singleton, initialization]
+////
+
+C++ singleton initialization
+============================
+:static-initialization-spec: https://timsong-cpp.github.io/cppwp/n3337/stmt.dcl#4
+
+[quote]
+----
+The zero-initialization ([dcl.init]) of all block-scope variables with static storage duration ([basic.stc.static]) or thread storage duration ([basic.stc.thread]) is performed before any other initialization takes place. Constant initialization ([basic.start.init]) of a block-scope entity with static storage duration, if applicable, is performed before its block is first entered. An implementation is permitted to perform early initialization of other block-scope variables with static or thread storage duration under the same conditions that an implementation is permitted to statically initialize a variable with static or thread storage duration in namespace scope ([basic.start.init]). Otherwise such a variable is initialized the first time control passes through its declaration; such a variable is considered initialized upon the completion of its initialization. If the initialization exits by throwing an exception, the initialization is not complete, so it will be tried again the next time control enters the declaration. If control enters the declaration concurrently while the variable is being initialized, the concurrent execution shall wait for completion of the initialization.88 If control re-enters the declaration recursively while the variable is being initialized, the behavior is undefined. [ Example:
+
+int foo(int i) {
+  static int s = foo(2*i);      // recursive call - undefined
+  return i+1;
+}
+ — end example ]
+----
+
