@@ -1,14 +1,17 @@
 ////
-title: C++ singleton initialization
+title: C++ Fragmented Thinking
 date: 2020-02-17
 draft: false
-categories: [concurrency, C++]
-tags: [singleton, initialization]
+categories: [C++]
+tags: [singleton, initialization, constructor]
 ////
 
-C++ singleton initialization
-============================
+C++ Fragmented Thinking
+=======================
 :static-initialization-spec: https://timsong-cpp.github.io/cppwp/n3337/stmt.dcl#4
+:dynamic-concurrency: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2008/n2660.htm
+
+Dynamic Initialization and Destruction with Concurrency
 
 [quote]
 ----
@@ -21,3 +24,14 @@ int foo(int i) {
  — end example ]
 ----
 
+
+== Constructor, invariants and NPE
+
+https://matklad.github.io/2019/07/16/perils-of-constructors.html
+https://softwareengineering.stackexchange.com/questions/257938/why-is-there-no-default-constructor-generated-if-you-define-an-explicit-construc/257948
+
+----
+A constructor with arguments isn't just a handy shorthand for using setters. You write a constructor in order to ensure that an object will never, ever exist without certain data being present.
+
+If there is no such requirement, fine. But if there is one, as indicated by the fact that you've written such a constructor, then it would be irresponsible to generate a default constructor, through which a client could circumvent the "no object without data" rule. Doubly so, because the auto-generated default constructor is invisible to a casual code reader, which hides the fact that it exists! No, if you want constructors with arguments and a default constructor, you must write the default constructor yourself. It's not as if it's a lot of effort to write an empty block, anyway.
+----
