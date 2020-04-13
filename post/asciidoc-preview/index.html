@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="penglei" /><meta name="description" content="23. Tables Table 1. Simple table Cell in column 1, row 1 Cell in column 2, row 1 Cell in column 1, row 2 Cell in column 2, row 2 Cell in column 1, row 3 Cell in column 2, row 3 32. Admonition https://blog.olowolo.com/example-site/post/shortcodes/#admonition https://github.com/asciidoctor/asciidoctor-extensions-lab/issues/9 exampleblock important content Wolpertingers are known to nest in server racks. Enter at your own risk Dennis: Come and see the violence inherent in" /><meta name="keywords" content="k8s, linux, docker" />
+<meta name="author" content="penglei" /><meta name="description" content="Table of Contents 23. Tables 32. Admonition 33. Sidebar 40. Passthroughs 40.1. Passthrough Macros 40.2. Passthrough Blocks youtube 44. User Interface Macros 47. Callouts demo bibliography ascii diagram stem 23. Tables Table 1. Simple table Cell in column 1, row 1 Cell in column 2, row 1 Cell in column 1, row 2 Cell in column 2, row 2 Cell in column 1, row 3 Cell in column 2, row" /><meta name="keywords" content="linux, kubernetes, docker, istio, servicemesh, sidecar" />
 
 
 
@@ -38,7 +38,7 @@
 
 
 
-<link href="/dist/even.0acb7d57.min.css" rel="stylesheet">
+<link href="/dist/even.52886a66.min.css" rel="stylesheet">
 
 <link rel="stylesheet" href="/css/highlightjs/github.css">
 <link rel="stylesheet" href="/css/custom.css">
@@ -47,22 +47,22 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <meta property="og:title" content="AsciiDoc theme style" />
-<meta property="og:description" content="23. Tables Table 1. Simple table Cell in column 1, row 1 Cell in column 2, row 1 Cell in column 1, row 2 Cell in column 2, row 2 Cell in column 1, row 3 Cell in column 2, row 3 32. Admonition https://blog.olowolo.com/example-site/post/shortcodes/#admonition https://github.com/asciidoctor/asciidoctor-extensions-lab/issues/9 exampleblock important content Wolpertingers are known to nest in server racks. Enter at your own risk Dennis: Come and see the violence inherent in" />
+<meta property="og:description" content="Table of Contents 23. Tables 32. Admonition 33. Sidebar 40. Passthroughs 40.1. Passthrough Macros 40.2. Passthrough Blocks youtube 44. User Interface Macros 47. Callouts demo bibliography ascii diagram stem 23. Tables Table 1. Simple table Cell in column 1, row 1 Cell in column 2, row 1 Cell in column 1, row 2 Cell in column 2, row 2 Cell in column 1, row 3 Cell in column 2, row" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/post/asciidoc-preview/" />
 <meta property="article:published_time" content="2018-01-01T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-02-16T20:37:26+08:00" />
+<meta property="article:modified_time" content="2020-02-17T23:54:50+08:00" />
 <meta itemprop="name" content="AsciiDoc theme style">
-<meta itemprop="description" content="23. Tables Table 1. Simple table Cell in column 1, row 1 Cell in column 2, row 1 Cell in column 1, row 2 Cell in column 2, row 2 Cell in column 1, row 3 Cell in column 2, row 3 32. Admonition https://blog.olowolo.com/example-site/post/shortcodes/#admonition https://github.com/asciidoctor/asciidoctor-extensions-lab/issues/9 exampleblock important content Wolpertingers are known to nest in server racks. Enter at your own risk Dennis: Come and see the violence inherent in">
+<meta itemprop="description" content="Table of Contents 23. Tables 32. Admonition 33. Sidebar 40. Passthroughs 40.1. Passthrough Macros 40.2. Passthrough Blocks youtube 44. User Interface Macros 47. Callouts demo bibliography ascii diagram stem 23. Tables Table 1. Simple table Cell in column 1, row 1 Cell in column 2, row 1 Cell in column 1, row 2 Cell in column 2, row 2 Cell in column 1, row 3 Cell in column 2, row">
 <meta itemprop="datePublished" content="2018-01-01T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-02-16T20:37:26&#43;08:00" />
-<meta itemprop="wordCount" content="502">
+<meta itemprop="dateModified" content="2020-02-17T23:54:50&#43;08:00" />
+<meta itemprop="wordCount" content="593">
 
 
 
 <meta itemprop="keywords" content="asciidoc," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="AsciiDoc theme style"/>
-<meta name="twitter:description" content="23. Tables Table 1. Simple table Cell in column 1, row 1 Cell in column 2, row 1 Cell in column 1, row 2 Cell in column 2, row 2 Cell in column 1, row 3 Cell in column 2, row 3 32. Admonition https://blog.olowolo.com/example-site/post/shortcodes/#admonition https://github.com/asciidoctor/asciidoctor-extensions-lab/issues/9 exampleblock important content Wolpertingers are known to nest in server racks. Enter at your own risk Dennis: Come and see the violence inherent in"/>
+<meta name="twitter:description" content="Table of Contents 23. Tables 32. Admonition 33. Sidebar 40. Passthroughs 40.1. Passthrough Macros 40.2. Passthrough Blocks youtube 44. User Interface Macros 47. Callouts demo bibliography ascii diagram stem 23. Tables Table 1. Simple table Cell in column 1, row 1 Cell in column 2, row 1 Cell in column 1, row 2 Cell in column 2, row 2 Cell in column 1, row 3 Cell in column 2, row"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -125,7 +125,7 @@
 
     <main id="main" class="main">
       <div class="content-wrapper">
-        <div id="content" class="content">
+          <div id="content" class="content markup-adoc">
           <article class="post">
     
     <header class="post-header">
@@ -138,15 +138,32 @@
       </div>
     </header>
 
-    <div class="post-toc" id="post-toc" style="display:none">
-  <h2 class="post-toc-title">Contents</h2>
-  <div class="post-toc-content always-active">
     
-  </div>
-</div>
+
 
     <div class="post-content">
-      <div class="sect1">
+      <div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_23_tables">23. Tables</a></li>
+<li><a href="#_32_admonition">32. Admonition</a></li>
+<li><a href="#_33_sidebar">33. Sidebar</a></li>
+<li><a href="#_40_passthroughs">40. Passthroughs</a>
+<ul class="sectlevel2">
+<li><a href="#_40_1_passthrough_macros">40.1. Passthrough Macros</a></li>
+<li><a href="#_40_2_passthrough_blocks">40.2. Passthrough Blocks</a></li>
+<li><a href="#_youtube">youtube</a></li>
+</ul>
+</li>
+<li><a href="#_44_user_interface_macros">44. User Interface Macros</a></li>
+<li><a href="#_47_callouts">47. Callouts</a></li>
+<li><a href="#_demo">demo</a></li>
+<li><a href="#_bibliography">bibliography</a></li>
+<li><a href="#_ascii_diagram">ascii diagram</a></li>
+<li><a href="#_stem">stem</a></li>
+</ul>
+</div>
+<div class="sect1">
 <h2 id="_23_tables">23. Tables</h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch table-wrapper">
@@ -348,6 +365,16 @@ biu biu biu.
 </p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_youtube">youtube</h3>
+<div class="paragraph">
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/wC5pJm8RAu4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -465,10 +492,28 @@ biu biu biu.
 </div>
 <div class="title">Figure 3. graphviz</div>
 </div>
+<div class="paragraph">
+<p>最推荐的几个绘图工具：</p>
+</div>
+<div class="paragraph">
+<p>ascii to svg
+<a href="https://github.com/ivanceras/svgbob" class="bare">https://github.com/ivanceras/svgbob</a></p>
+</div>
+<div class="paragraph">
+<p>流程图、UML图( vs plantUML）、甘特图 、轨道图
+<a href="https://github.com/mermaidjs/mermaid.cli" class="bare">https://github.com/mermaidjs/mermaid.cli</a></p>
+</div>
+<div class="paragraph">
+<p>graphviz 画结构图（DAG等等）</p>
+</div>
+<div class="paragraph">
+<p>digital timing diagram
+<a href="https://github.com/wavedrom/wavedrom" class="bare">https://github.com/wavedrom/wavedrom</a></p>
+</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_math">math</h2>
+<h2 id="_stem">stem</h2>
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
@@ -496,6 +541,12 @@ sqrt(4) = 2
 <div class="title">latexmath</div>
 <p>\(C = \alpha + \beta Y^{\gamma} + \epsilon\)</p>
 </div>
+<div class="paragraph">
+<p><a href="http://www.wiris.com/editor/demo/en/developers" class="bare">http://www.wiris.com/editor/demo/en/developers</a></p>
+</div>
+<div class="paragraph">
+<p>\(\equiv\)</p>
+</div>
 </div>
 </div>
 
@@ -509,8 +560,8 @@ sqrt(4) = 2
   <p class="copyright-item">
     <span class="item-title">LastMod</span>
     <span class="item-content">
-        2020-02-16
-        <a href="https://github.com/penglei/penglei.github.io/commit/74e641be946bc7bada5bd0fc64b88353e361e88d" title="Optimize quote and admonition style">(74e641b)</a>
+        2020-02-17
+        <a href="https://github.com/penglei/penglei.github.io/commit/49b1e1d023ae46c8896dfcf60cb7177c30e88f56" title="Add posts">(49b1e1d)</a>
     </span>
   </p>
   
@@ -530,12 +581,16 @@ sqrt(4) = 2
           <a href="/tags/asciidoc/">asciidoc</a>
           </div>
       <nav class="post-nav">
-        <a class="prev" href="/post/transparent_proxy_on_macosx/">
+        <a class="prev" href="/post/markdown-demos/hidden-post/">
             <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">macOS 透明代理配置</span>
+            <span class="prev-text nav-default">This is a hidden post.</span>
             <span class="prev-text nav-mobile">Prev</span>
           </a>
-        
+        <a class="next" href="/post/markdown-demos/english-preview/">
+            <span class="next-text nav-default">[English] Creating a New Theme</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
       </nav>
     </footer>
   </article>
@@ -599,7 +654,7 @@ sqrt(4) = 2
   <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
   
-<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+<script type="text/javascript" src="/dist/even.a890af35.min.js"></script>
 
 
 
@@ -607,7 +662,6 @@ sqrt(4) = 2
 
 
 <script src="/js/highlight.pack.js"></script>
-<script src="/js/copy.js"></script>
 <script src="/js/init.js"></script>
 
 
@@ -615,7 +669,8 @@ sqrt(4) = 2
 MathJax.Hub.Config({
   messageStyle: "none",
   tex2jax: {
-    inlineMath: [["\\(", "\\)"]],
+    inlineMath: [['\\(', '\\)'], ['$', '$']],
+    //inlineMath: [["\\(", "\\)"]],
     displayMath: [["\\[", "\\]"]],
     ignoreClass: "nostem|nolatexmath"
   },

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>JS Flowchart Diagrams - ybyte blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="penglei" /><meta name="description" content="Usage st=&amp;gt;start: Start|past:&amp;gt;http://www.google.com[blank] e=&amp;gt;end: End:&amp;gt;http://www.google.com op1=&amp;gt;operation: My Operation|past op2=&amp;gt;operation: Stuff|current sub1=&amp;gt;subroutine: My Subroutine|invalid cond=&amp;gt;condition: Yes or No?|approved:&amp;gt;http://www.google.com c2=&amp;gt;condition: Good idea|rejected io=&amp;gt;inputoutput: catch something...|request st-&amp;gt;op1(right)-&amp;gt;cond cond(yes, right)-&amp;gt;c2 cond(no)-&amp;gt;sub1(left)-&amp;gt;op1 c2(yes)-&amp;gt;io-&amp;gt;e c2(no)-&amp;gt;op2-&amp;gt;e " /><meta name="keywords" content="linux, kubernetes, docker, istio, servicemesh, sidecar" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.64.1 with theme even" />
+
+
+<link rel="canonical" href="/post/markdown-demos/js-flowchart-diagrams/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link rel="stylesheet" href="/css/asciidoctor.css">
+
+
+
+<link href="/dist/even.52886a66.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="/css/highlightjs/github.css">
+<link rel="stylesheet" href="/css/custom.css">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<meta property="og:title" content="JS Flowchart Diagrams" />
+<meta property="og:description" content="Usage
+st=&gt;start: Start|past:&gt;http://www.google.com[blank]
+e=&gt;end: End:&gt;http://www.google.com
+op1=&gt;operation: My Operation|past
+op2=&gt;operation: Stuff|current
+sub1=&gt;subroutine: My Subroutine|invalid
+cond=&gt;condition: Yes
+or No?|approved:&gt;http://www.google.com
+c2=&gt;condition: Good idea|rejected
+io=&gt;inputoutput: catch something...|request
+
+st-&gt;op1(right)-&gt;cond
+cond(yes, right)-&gt;c2
+cond(no)-&gt;sub1(left)-&gt;op1
+c2(yes)-&gt;io-&gt;e
+c2(no)-&gt;op2-&gt;e
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/markdown-demos/js-flowchart-diagrams/" />
+<meta property="article:published_time" content="2015-03-04T21:57:50+08:00" />
+<meta property="article:modified_time" content="2015-03-04T21:57:50+08:00" />
+<meta itemprop="name" content="JS Flowchart Diagrams">
+<meta itemprop="description" content="Usage
+st=&gt;start: Start|past:&gt;http://www.google.com[blank]
+e=&gt;end: End:&gt;http://www.google.com
+op1=&gt;operation: My Operation|past
+op2=&gt;operation: Stuff|current
+sub1=&gt;subroutine: My Subroutine|invalid
+cond=&gt;condition: Yes
+or No?|approved:&gt;http://www.google.com
+c2=&gt;condition: Good idea|rejected
+io=&gt;inputoutput: catch something...|request
+
+st-&gt;op1(right)-&gt;cond
+cond(yes, right)-&gt;c2
+cond(no)-&gt;sub1(left)-&gt;op1
+c2(yes)-&gt;io-&gt;e
+c2(no)-&gt;op2-&gt;e
+">
+<meta itemprop="datePublished" content="2015-03-04T21:57:50&#43;08:00" />
+<meta itemprop="dateModified" content="2015-03-04T21:57:50&#43;08:00" />
+<meta itemprop="wordCount" content="221">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="JS Flowchart Diagrams"/>
+<meta name="twitter:description" content="Usage
+st=&gt;start: Start|past:&gt;http://www.google.com[blank]
+e=&gt;end: End:&gt;http://www.google.com
+op1=&gt;operation: My Operation|past
+op2=&gt;operation: Stuff|current
+sub1=&gt;subroutine: My Subroutine|invalid
+cond=&gt;condition: Yes
+or No?|approved:&gt;http://www.google.com
+c2=&gt;condition: Good idea|rejected
+io=&gt;inputoutput: catch something...|request
+
+st-&gt;op1(right)-&gt;cond
+cond(yes, right)-&gt;c2
+cond(no)-&gt;sub1(left)-&gt;op1
+c2(yes)-&gt;io-&gt;e
+c2(no)-&gt;op2-&gt;e
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">ybyte</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">ybyte</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+          <div id="content" class="content markup-md">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">JS Flowchart Diagrams</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2015-03-04 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="toc" id="toc">
+  <div id="toctitle">Table of Contents</div>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#legacy-usage">Legacy Usage</a></li>
+    <li><a href="#configuration">Configuration</a></li>
+  </ul>
+</nav>
+</div>
+
+
+    <div class="post-content">
+      <h2 id="usage">Usage</h2>
+<pre><code class="language-flow" data-lang="flow">st=&gt;start: Start|past:&gt;http://www.google.com[blank]
+e=&gt;end: End:&gt;http://www.google.com
+op1=&gt;operation: My Operation|past
+op2=&gt;operation: Stuff|current
+sub1=&gt;subroutine: My Subroutine|invalid
+cond=&gt;condition: Yes
+or No?|approved:&gt;http://www.google.com
+c2=&gt;condition: Good idea|rejected
+io=&gt;inputoutput: catch something...|request
+
+st-&gt;op1(right)-&gt;cond
+cond(yes, right)-&gt;c2
+cond(no)-&gt;sub1(left)-&gt;op1
+c2(yes)-&gt;io-&gt;e
+c2(no)-&gt;op2-&gt;e
+</code></pre><pre><code class="language-linenos=table" data-lang="linenos=table">```flow
+st=>start: Start|past:>http://www.google.com[blank]
+e=>end: End:>http://www.google.com
+op1=>operation: My Operation|past
+op2=>operation: Stuff|current
+sub1=>subroutine: My Subroutine|invalid
+cond=>condition: Yes
+or No?|approved:>http://www.google.com
+c2=>condition: Good idea|rejected
+io=>inputoutput: catch something...|request
+
+st->op1(right)->cond
+cond(yes, right)->c2
+cond(no)->sub1(left)->op1
+c2(yes)->io->e
+c2(no)->op2->e
+```</code></pre>
+<h2 id="legacy-usage">Legacy Usage</h2>
+<pre><code class="language-flowchart" data-lang="flowchart">st=&gt;start: Start|past:&gt;http://www.google.com[blank]
+e=&gt;end: End:&gt;http://www.google.com
+op1=&gt;operation: My Operation|past
+op2=&gt;operation: Stuff|current
+sub1=&gt;subroutine: My Subroutine|invalid
+cond=&gt;condition: Yes
+or No?|approved:&gt;http://www.google.com
+c2=&gt;condition: Good idea|rejected
+io=&gt;inputoutput: catch something...|request
+
+st-&gt;op1(right)-&gt;cond
+cond(yes, right)-&gt;c2
+cond(no)-&gt;sub1(left)-&gt;op1
+c2(yes)-&gt;io-&gt;e
+c2(no)-&gt;op2-&gt;e
+</code></pre><pre><code>```flowchart
+st=&gt;start: Start|past:&gt;http://www.google.com[blank]
+e=&gt;end: End:&gt;http://www.google.com
+op1=&gt;operation: My Operation|past
+op2=&gt;operation: Stuff|current
+sub1=&gt;subroutine: My Subroutine|invalid
+cond=&gt;condition: Yes
+or No?|approved:&gt;http://www.google.com
+c2=&gt;condition: Good idea|rejected
+io=&gt;inputoutput: catch something...|request
+
+st-&gt;op1(right)-&gt;cond
+cond(yes, right)-&gt;c2
+cond(no)-&gt;sub1(left)-&gt;op1
+c2(yes)-&gt;io-&gt;e
+c2(no)-&gt;op2-&gt;e
+```
+</code></pre>
+<h2 id="configuration">Configuration</h2>
+<p>Configure for all home and regular pages:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-toml" data-lang="toml">[params.flowchartDiagrams]
+  enable = <span style="color:#000;font-weight:bold">true</span>
+  options = <span style="color:#d14">&#34;&#34;</span>
+</code></pre></div><p>Configure for a single post in the front matter (<strong>Params in front matter have higher precedence</strong>):</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#000;font-weight:bold">flowchartDiagrams</span>:<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#bbb">  </span><span style="color:#000;font-weight:bold">enable</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#000;font-weight:bold">options</span>:<span style="color:#bbb"> </span><span style="color:#d14">&#34;{
+</span><span style="color:#d14">              &#39;x&#39;: 0,
+</span><span style="color:#d14">              &#39;y&#39;: 0,
+</span><span style="color:#d14">              &#39;line-width&#39;: 3,
+</span><span style="color:#d14">              &#39;line-length&#39;: 50,
+</span><span style="color:#d14">              &#39;text-margin&#39;: 10,
+</span><span style="color:#d14">              &#39;font-size&#39;: 14,
+</span><span style="color:#d14">              &#39;font-color&#39;: &#39;black&#39;,
+</span><span style="color:#d14">              &#39;line-color&#39;: &#39;black&#39;,
+</span><span style="color:#d14">              &#39;element-color&#39;: &#39;black&#39;,
+</span><span style="color:#d14">              &#39;fill&#39;: &#39;white&#39;,
+</span><span style="color:#d14">              &#39;yes-text&#39;: &#39;yes&#39;,
+</span><span style="color:#d14">              &#39;no-text&#39;: &#39;no&#39;,
+</span><span style="color:#d14">              &#39;arrow-end&#39;: &#39;block&#39;,
+</span><span style="color:#d14">              &#39;scale&#39;: 1,
+</span><span style="color:#d14">              &#39;i-am-a-comment-1&#39;: &#39;Do not use /​/!&#39;,
+</span><span style="color:#d14">              &#39;i-am-a-comment-2&#39;: &#39;style symbol types&#39;,
+</span><span style="color:#d14">              &#39;symbols&#39;: {
+</span><span style="color:#d14">                  &#39;start&#39;: {
+</span><span style="color:#d14">                    &#39;font-color&#39;: &#39;red&#39;,
+</span><span style="color:#d14">                    &#39;element-color&#39;: &#39;green&#39;,
+</span><span style="color:#d14">                    &#39;fill&#39;: &#39;yellow&#39;
+</span><span style="color:#d14">                  },
+</span><span style="color:#d14">                  &#39;end&#39;: {
+</span><span style="color:#d14">                      &#39;class&#39;: &#39;end-element&#39;
+</span><span style="color:#d14">                  }
+</span><span style="color:#d14">              },
+</span><span style="color:#d14">              &#39;i-am-a-comment-3&#39;: &#39;even flowstate support ;-)&#39;,
+</span><span style="color:#d14">              &#39;flowstate&#39;: {
+</span><span style="color:#d14">                &#39;request&#39;: {&#39;fill&#39;: &#39;blue&#39;}
+</span><span style="color:#d14">              }
+</span><span style="color:#d14">            }&#34;</span><span style="color:#bbb">
+</span></code></pre></div><p>See more information from <a href="https://github.com/adrai/flowchart.js">https://github.com/adrai/flowchart.js</a>.</p>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">penglei</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2015-03-04
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">Source</span>
+    <span class="item-content">
+        <a href="https://github.com/penglei/penglei.github.io/blob/source/content/post/markdown-demos/js-flowchart-diagrams.md" target="_blank">js-flowchart-diagrams.md</a>
+    </span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/markdown-demos/shortcodes/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Shortcodes</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/markdown-demos/js-sequence-diagrams/">
+            <span class="next-text nav-default">JS Sequence Diagrams</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'ybyte';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://github.com/penglei" class="iconfont icon-github" title="github"></a>
+  <a href="/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">penglei</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script>window.flowchartDiagramsOptions = { 'x': 0, 'y': 0, 'line-width': 3, 'line-length': 50, 'text-margin': 10, 'font-size': 14, 'font-color': 'black', 'line-color': 'black', 'element-color': 'black', 'fill': 'white', 'yes-text': 'yes', 'no-text': 'no', 'arrow-end': 'block', 'scale': 1, 'i-am-a-comment-1': 'Do not use //!', 'i-am-a-comment-2': 'style symbol types', 'symbols': { 'start': { 'font-color': 'red', 'element-color': 'green', 'fill': 'yellow' }, 'end': { 'class': 'end-element' } }, 'i-am-a-comment-3': 'even flowstate support ;-)', 'flowstate': { 'request': {'fill': 'blue'} } };</script><script src="/lib/flowchartDiagrams/raphael-2.2.7.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script>
+    <script src="/lib/flowchartDiagrams/flowchart-1.8.0.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/dist/even.a890af35.min.js"></script>
+
+
+
+
+
+
+<script src="/js/highlight.pack.js"></script>
+<script src="/js/init.js"></script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  messageStyle: "none",
+  tex2jax: {
+    inlineMath: [['\\(', '\\)'], ['$', '$']],
+    //inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]],
+    ignoreClass: "nostem|nolatexmath"
+  },
+  asciimath2jax: {
+    delimiters: [["\\$", "\\$"]],
+    ignoreClass: "nostem|noasciimath"
+  },
+  TeX: { equationNumbers: { autoNumber: "none" } }
+})
+MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready", function () {
+  MathJax.InputJax.AsciiMath.postfilterHooks.Add(function (data, node) {
+    if ((node = data.script.parentNode) && (node = node.parentNode) && node.classList.contains('stemblock')) {
+      data.math.root.display = "block"
+    }
+    return data
+  })
+})
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
+
+</body>
+</html>

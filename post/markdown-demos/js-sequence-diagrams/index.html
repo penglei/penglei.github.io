@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>JS Sequence Diagrams - ybyte blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="penglei" /><meta name="description" content="Usage Andrew-&amp;gt;China: Says Hello Note right of China: China thinks\nabout it China--&amp;gt;Andrew: How are you? Andrew-&amp;gt;&amp;gt;China: I am good thanks! " /><meta name="keywords" content="linux, kubernetes, docker, istio, servicemesh, sidecar" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.64.1 with theme even" />
+
+
+<link rel="canonical" href="/post/markdown-demos/js-sequence-diagrams/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link rel="stylesheet" href="/css/asciidoctor.css">
+
+
+
+<link href="/dist/even.52886a66.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="/css/highlightjs/github.css">
+<link rel="stylesheet" href="/css/custom.css">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<meta property="og:title" content="JS Sequence Diagrams" />
+<meta property="og:description" content="Usage
+Andrew-&gt;China: Says Hello
+Note right of China: China thinks\nabout it
+China--&gt;Andrew: How are you?
+Andrew-&gt;&gt;China: I am good thanks!
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/markdown-demos/js-sequence-diagrams/" />
+<meta property="article:published_time" content="2015-03-04T21:57:45+08:00" />
+<meta property="article:modified_time" content="2015-03-04T21:57:45+08:00" />
+<meta itemprop="name" content="JS Sequence Diagrams">
+<meta itemprop="description" content="Usage
+Andrew-&gt;China: Says Hello
+Note right of China: China thinks\nabout it
+China--&gt;Andrew: How are you?
+Andrew-&gt;&gt;China: I am good thanks!
+">
+<meta itemprop="datePublished" content="2015-03-04T21:57:45&#43;08:00" />
+<meta itemprop="dateModified" content="2015-03-04T21:57:45&#43;08:00" />
+<meta itemprop="wordCount" content="244">
+
+
+
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="JS Sequence Diagrams"/>
+<meta name="twitter:description" content="Usage
+Andrew-&gt;China: Says Hello
+Note right of China: China thinks\nabout it
+China--&gt;Andrew: How are you?
+Andrew-&gt;&gt;China: I am good thanks!
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">ybyte</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">ybyte</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+          <div id="content" class="content markup-md">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">JS Sequence Diagrams</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2015-03-04 </span>
+        
+        
+      </div>
+    </header>
+
+    <div class="toc" id="toc">
+  <div id="toctitle">Table of Contents</div>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#usage">Usage</a>
+      <ul>
+        <li><a href="#options">Options</a></li>
+      </ul>
+    </li>
+    <li><a href="#examples">Examples</a></li>
+  </ul>
+</nav>
+</div>
+
+
+    <div class="post-content">
+      <h2 id="usage">Usage</h2>
+<pre><code class="language-sequence" data-lang="sequence">Andrew-&gt;China: Says Hello
+Note right of China: China thinks\nabout it
+China--&gt;Andrew: How are you?
+Andrew-&gt;&gt;China: I am good thanks!
+</code></pre><pre><code class="language-sequence" data-lang="sequence">    Andrew-&gt;China: Says Hello
+    Note right of China: China thinks\nabout it
+    China--&gt;Andrew: How are you?
+    Andrew-&gt;&gt;China: I am good thanks!
+    ```
+
+## Configuration
+
+Configure for all home and regular pages:
+
+```toml
+[params.sequenceDiagrams]
+  enable = true
+  options = &quot;{theme: 'hand'}&quot;
+</code></pre><p>Configure for a single post in the front matter (<strong>Params in front matter have higher precedence</strong>):</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#000;font-weight:bold">sequenceDiagrams</span>:<span style="color:#bbb"> </span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#000;font-weight:bold">enable</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#000;font-weight:bold">options</span>:<span style="color:#bbb"> </span><span style="color:#d14">&#34;{theme: &#39;hand&#39;}&#34;</span><span style="color:#bbb">
+</span></code></pre></div><h3 id="options">Options</h3>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">options <span style="color:#000;font-weight:bold">=</span> {
+  <span style="color:#998;font-style:italic">// Change the styling of the diagram, typically one of &#39;simple&#39;, &#39;hand&#39;. New themes can be registered with registerTheme(...).
+</span><span style="color:#998;font-style:italic"></span>  theme<span style="color:#000;font-weight:bold">:</span> string,
+
+  <span style="color:#998;font-style:italic">// CSS style to apply to the diagram&#39;s svg tag. (Only supported if using snap.svg)
+</span><span style="color:#998;font-style:italic"></span>  css_class<span style="color:#000;font-weight:bold">:</span> string,
+}
+</code></pre></div><p>See more information from <a href="https://github.com/bramp/js-sequence-diagrams">https://github.com/bramp/js-sequence-diagrams</a>.</p>
+<h2 id="examples">Examples</h2>
+<pre><code class="language-sequence" data-lang="sequence">Title: Here is a title
+A-&gt;B: Normal line
+B--&gt;C: Dashed line
+C-&gt;&gt;D: Open arrow
+D--&gt;&gt;A: Dashed open arrow
+</code></pre><pre><code>```sequence
+Title: Here is a title
+A-&gt;B: Normal line
+B--&gt;C: Dashed line
+C-&gt;&gt;D: Open arrow
+D--&gt;&gt;A: Dashed open arrow
+```
+</code></pre>
+<hr>
+<pre><code class="language-sequence" data-lang="sequence"># Example of a comment.
+Note left of A: Note to the\n left of A
+Note right of A: Note to the\n right of A
+Note over A: Note over A
+Note over A,B: Note over both A and B
+</code></pre><pre><code>```sequence
+# Example of a comment.
+Note left of A: Note to the\n left of A
+Note right of A: Note to the\n right of A
+Note over A: Note over A
+Note over A,B: Note over both A and B
+```
+</code></pre>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">penglei</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2015-03-04
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">Source</span>
+    <span class="item-content">
+        <a href="https://github.com/penglei/penglei.github.io/blob/source/content/post/markdown-demos/js-sequence-diagrams.md" target="_blank">js-sequence-diagrams.md</a>
+    </span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      
+      <nav class="post-nav">
+        <a class="prev" href="/post/markdown-demos/js-flowchart-diagrams/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">JS Flowchart Diagrams</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/markdown-demos/syntax-highlighting/">
+            <span class="next-text nav-default">Syntax Highlighting</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'ybyte';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://github.com/penglei" class="iconfont icon-github" title="github"></a>
+  <a href="/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">penglei</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script>window.sequenceDiagramsOptions = {theme: 'hand'};</script><script src="/lib/js-sequence-diagrams/webfontloader-1.6.28.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script>
+    <script src="/lib/js-sequence-diagrams/snap.svg-0.5.1.min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script>
+    <script src="/lib/js-sequence-diagrams/underscore-1.8.3.min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script>
+    <script src="/lib/js-sequence-diagrams/sequence-diagram-2.0.1.min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/lib/js-sequence-diagrams/sequence-diagram-2.0.1.min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.a890af35.min.js"></script>
+
+
+
+
+
+
+<script src="/js/highlight.pack.js"></script>
+<script src="/js/init.js"></script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  messageStyle: "none",
+  tex2jax: {
+    inlineMath: [['\\(', '\\)'], ['$', '$']],
+    //inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]],
+    ignoreClass: "nostem|nolatexmath"
+  },
+  asciimath2jax: {
+    delimiters: [["\\$", "\\$"]],
+    ignoreClass: "nostem|noasciimath"
+  },
+  TeX: { equationNumbers: { autoNumber: "none" } }
+})
+MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready", function () {
+  MathJax.InputJax.AsciiMath.postfilterHooks.Add(function (data, node) {
+    if ((node = data.script.parentNode) && (node = node.parentNode) && node.classList.contains('stemblock')) {
+      data.math.root.display = "block"
+    }
+    return data
+  })
+})
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
+
+</body>
+</html>

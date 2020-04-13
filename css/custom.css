@@ -107,10 +107,7 @@ code[data-lang=shell] .bash ,code[data-lang=console] .bash {
     border-bottom: 1px solid #e6e6e6;
 }
 
-#toc ul { margin-top: 0; margin-left: 1.25em; list-style-type: none; padding-left:0;}
-#toc>ul {
-    margin-left: .125em;
-}
+#toc ul { margin-top: 0; margin-left: 1.25em; margin-bottom: 0; list-style-type: none; padding-left:0;}
 #toc a {
     color: #2156a5;
 }
@@ -118,6 +115,8 @@ code[data-lang=shell] .bash ,code[data-lang=console] .bash {
     line-height: 1.3334;
     margin-top: .3334em;
 }
+/* -------------- asciidoc, markdown -------------------*/
+#toc>ul, #TableOfContents>ul { margin-left: .125em; }
 
 
 /*  --------------------- header -----------------------*/
@@ -173,7 +172,7 @@ code[data-lang=shell] .bash ,code[data-lang=console] .bash {
 
 
 /* for even-admonition ---- */
-.admonition > .admonition-title:first-of-type + p {
-  margin-top: 1em;
-  margin-bottom: 1em;
+.admonition p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }

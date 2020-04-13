@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>initialization on ybyte blog</title>
+    <link>/tags/initialization/</link>
+    <description>Recent content in initialization on ybyte blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 17 Feb 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/initialization/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>C&#43;&#43; Fragmented Thinking</title>
+      <link>/post/cpp-fragmented-thinking/</link>
+      <pubDate>Mon, 17 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/cpp-fragmented-thinking/</guid>
+      <description>Dynamic Initialization and Destruction with Concurrency
+ The zero-initialization ([dcl.init]) of all block-scope variables with static storage duration ([basic.stc.static]) or thread storage duration ([basic.stc.thread]) is performed before any other initialization takes place. Constant initialization ([basic.start.init]) of a block-scope entity with static storage duration, if applicable, is performed before its block is first entered. An implementation is permitted to perform early initialization of other block-scope variables with static or thread storage duration under the same conditions that an implementation is permitted to statically initialize a variable with static or thread storage duration in namespace scope ([basic.</description>
+    </item>
+    
+  </channel>
+</rss>

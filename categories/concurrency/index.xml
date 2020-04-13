@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>concurrency on ybyte blog</title>
+    <link>/categories/concurrency/</link>
+    <description>Recent content in concurrency on ybyte blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 17 Feb 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/concurrency/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Envoy Thread Local Storage</title>
+      <link>/post/envoy-thread-local-design/</link>
+      <pubDate>Mon, 17 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/envoy-thread-local-design/</guid>
+      <description>thread local设计 All variables declared with the thread_­local keyword have thread storage duration. The storage for these entities lasts for the duration of the thread in which they are created. There is a distinct object or reference per thread, and use of the declared name refers to the entity associated with the</description>
+    </item>
+    
+    <item>
+      <title>理解lock-free队列</title>
+      <link>/post/understand-a-lock-free-queue/</link>
+      <pubDate>Sun, 16 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/understand-a-lock-free-queue/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

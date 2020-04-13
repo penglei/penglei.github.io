@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>C&#43;&#43; on ybyte blog</title>
+    <link>/categories/c&#43;&#43;/</link>
+    <description>Recent content in C&#43;&#43; on ybyte blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 17 Feb 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/c++/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>C&#43;&#43; Fragmented Thinking</title>
+      <link>/post/cpp-fragmented-thinking/</link>
+      <pubDate>Mon, 17 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/cpp-fragmented-thinking/</guid>
+      <description>Dynamic Initialization and Destruction with Concurrency
+ The zero-initialization ([dcl.init]) of all block-scope variables with static storage duration ([basic.stc.static]) or thread storage duration ([basic.stc.thread]) is performed before any other initialization takes place. Constant initialization ([basic.start.init]) of a block-scope entity with static storage duration, if applicable, is performed before its block is first entered. An implementation is permitted to perform early initialization of other block-scope variables with static or thread storage duration under the same conditions that an implementation is permitted to statically initialize a variable with static or thread storage duration in namespace scope ([basic.</description>
+    </item>
+    
+    <item>
+      <title>Envoy Thread Local Storage</title>
+      <link>/post/envoy-thread-local-design/</link>
+      <pubDate>Mon, 17 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/envoy-thread-local-design/</guid>
+      <description>thread local设计 All variables declared with the thread_­local keyword have thread storage duration. The storage for these entities lasts for the duration of the thread in which they are created. There is a distinct object or reference per thread, and use of the declared name refers to the entity associated with the</description>
+    </item>
+    
+  </channel>
+</rss>
