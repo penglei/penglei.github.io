@@ -1,7 +1,7 @@
 ////
 title: AsciiDoc theme style
 date: 2018-01-01
-draft: false
+draft: true
 tags: [asciidoc]
 ////
 
@@ -25,14 +25,40 @@ endif::[]
 
 == 23. Tables
 
-.Simple table
+.希腊字母
 [.table-wrapper]
 |===
-| Cell in column 1, row 1 | Cell in column 2, row 1
-| Cell in column 1, row 2 | Cell in column 2, row 2
-| Cell in column 1, row 3 | Cell in column 2, row 3
+|希腊字母小写、大写 |   LaTeX形式               |   MathJax
+
+|       α A         | \alpha A                  | $\alpha$ $A$ `$\alpha$` `$A$`
+|       β B         | \beta B                   | $\beta$  $B$
+|       γ Γ         | \gamma \Gamma             | $\gamma$ $\Gamma$
+|       δ Δ         | \delta \Delta             | $\delta$ $\Delta$
+|      ϵ ε E        | \epsilon \varepsilon E    | $\epsilon$ $\varepsilon$ $E$
+|       ζ Z         | \zeta Z                   | $\zeta$ $Z$
+|       η H         | \eta H                    | $\eta$ $H$
+|      θ ϑ Θ        | \theta \vartheta \Theta   | $\theta$ $\vartheta$ $\Theta$
+|       ι I         | \iota I                   | $\iota$ $I$
+|       κ K         | \kappa K                  | $\kappa$ $K$
+|       λ Λ         | \lambda \Lambda           | $\lambda$ $\Lambda$
+|       μ M         | \mu M                     | $\mu$ $M$
+|       ν Ν         | \nu N                     | $\nu$ $N$
+|       ξ Ξ         | \xi \Xi                   | $\xi$ $\Xi$
+|       o Ο         | o O                       | $o$ $O$
+|       π Π         | \pi \Pi                   | $\pi$ $\Pi$
+|      ρ ϱ P        | \rho \varrho P            | $\rho$ $\varrho$ $P$
+|       σ Σ         | \sigma \Sigma             | $\sigma$ $\Sigma$
+|       τ T         | \tau T                    | $\tau$ $T$
+|       υ Υ         | \upsilon \Upsilon         | $\upsilon$ $\Upsilon$
+|      ϕ φ Φ        | \phi \varphi \Phi         | $\phi$ $\varphi$ $\Phi$
+|       χ X         | \chi X                    | $\chi$ $X$
+|       ψ Ψ         | \psi \Psi                 | $\psi$ $\Psi$
+|       ω Ω         | \omega \Omega             | $\omega$ $\Omega$
 |===
 
+https://zh.wikipedia.org/wiki/%E5%B8%8C%E8%85%8A%E5%AD%97%E6%AF%8D
+
+https://blog.csdn.net/xxzhangx/article/details/52778539
 
 == 32. Admonition
 
@@ -266,6 +292,20 @@ digraph automata_0 {
   "Machine: a" [ shape = plaintext ];
 }
 ---------------------------------------------------------------------
+
+最推荐的几个绘图工具：
+
+ascii to svg
+https://github.com/ivanceras/svgbob
+
+
+流程图、UML图( vs plantUML）、甘特图 、轨道图
+https://github.com/mermaidjs/mermaid.cli
+
+graphviz 画结构图（DAG等等）
+
+digital timing diagram
+https://github.com/wavedrom/wavedrom
 
 == stem
 

@@ -1,0 +1,107 @@
+////
+title: "Istio遥测架构的进化"
+date: 2020-03-01T11:13:37+08:00
+draft: true
+////
+
+= Istio遥测架构的进化
+// https://github.com/asciidoctor/asciidoctor.org/blob/master/docs/_includes/listing-wrap.adoc
+// https://asciidoctor.org/docs/user-manual/#to-wrap-or-to-scroll
+:prewrap!:
+:toc:
+:experimental:
+:icons: font
+
+put summary here
+// <!--more-->
+
+
+metadata_exchange proposal
+https://docs.google.com/document/d/1IlsWQlUBcojhIwe_v9HDE-kLdMUt4EJqksdWEcSuRJ4/edit
+https://docs.google.com/document/d/1bWQAsrBZguk5HCmBVDEgEMVGS91r9uh3SIr7D7ELZBk/edit
+
+https://yunlzheng.gitbook.io/prometheus-book/
+
+== 简介
+
+== mixer telemetry
+
+=== 架构
+=== 灵活性
+=== 性能
+
+== TelemetryV2
+
+=== 架构
+
+=== 基于时序数据的监控
+
+==== 系统状态的基石 -- 样本
+
+---
+[metric] [timestamp] [value]
+---
+
+.metrics
+
+.labels
+
+Demo: 如何计算QPS，只需要对请求总量做
+
+=== envoy stats 架构
+
+counter, gauge, histogram
+
+==== metrics
+
+* requests_total
+* request_duration_milliseconds
+* request_bytes
+* response_bytes
+* tcp_sent_bytes_total
+* tcp_received_bytes_total
+* tcp_connections_opened_total
+* tcp_connections_closed_total
+
+==== tags(labels)
+
+* reporter
+* source_workload
+* source_workload_namespace
+* source_principal
+* source_app
+* source_version
+* source_canonical_service
+* source_canonical_revision
+* destination_workload
+* destination_workload_namespace
+* destination_principal
+* destination_app
+* destination_version
+* destination_service
+* destination_service_name
+* destination_service_namespace
+* destination_canonical_service
+* destination_canonical_revision
+* request_protocol
+* response_code
+* grpc_response_status
+* response_flags
+* connection_security_policy
+
+=== 实现
+
+==== envoy filter 介绍
+
+.灵活性新引擎之wasm
+
+==== wasm stats的架构
+
+. initialization
+. callbacks
+. host interfaces -- abi
+
+.性能
+
+.未来发展
+

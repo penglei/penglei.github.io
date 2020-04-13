@@ -1,7 +1,7 @@
 ////
 title: C++ Fragmented Thinking
 date: 2020-02-17
-draft: false
+draft: true
 categories: [C++]
 tags: [singleton, initialization, constructor]
 ////

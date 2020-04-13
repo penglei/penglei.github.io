@@ -1,0 +1,231 @@
+////
+title: envoy转发架构
+date: 2020-03-23T22:05:48+08:00
+draft: true
+////
+
+= envoy转发架构
+// https://github.com/asciidoctor/asciidoctor.org/blob/master/docs/_includes/listing-wrap.adoc
+// https://asciidoctor.org/docs/user-manual/#to-wrap-or-to-scroll
+:prewrap!:
+:toc:
+:experimental:
+:icons: font
+:imagesoutdir: static/post/envoy-structure
+
+envoy作为一个高性能的代理，同时有非常好的可扩展性。本文分析其源代码来加深对其架构的理解。
+
+// <!--more-->
+
+== content
+
+////
+.sequence-diagram demo
+[plantuml, "demo", svg]
+....
+@startuml
+skinparam backgroundColor #EEEBDC
+skinparam handwritten true
+
+skinparam sequence {
+	ArrowColor DeepSkyBlue
+	ActorBorderColor DeepSkyBlue
+	LifeLineBorderColor blue
+	LifeLineBackgroundColor #A9DCDF
+
+	ParticipantBorderColor DeepSkyBlue
+	ParticipantBackgroundColor DodgerBlue
+	ParticipantFontName Impact
+	ParticipantFontSize 17
+	ParticipantFontColor #A9DCDF
+
+	ActorBackgroundColor aqua
+	ActorFontColor DeepSkyBlue
+	ActorFontSize 17
+	ActorFontName Aapex
+}
+
+actor User
+participant "First Class" as A
+participant "Second Class" as B
+participant "Last Class" as C
+
+User -> A: DoWork
+activate A
+
+A -> B: Create Request
+activate B
+
+B -> C: DoWork
+activate C
+C --> B: WorkDone
+destroy C
+
+B --> A: Request Created
+deactivate B
+
+A --> User: Done
+deactivate A
+
+@enduml
+....
+////
+
+.envoy network sequence diagram
+[plantuml, "envoy-network-flow", svg]
+....
+@startuml
+hide footbox
+
+loop N workers
+  ListenerManagerImpl -> WorkerImpl: addListener(config)
+    WorkerImpl -> ConnectionHandlerImpl: addListener(config)
+
+      activate ConnectionHandlerImpl
+        ConnectionHandlerImpl -> ActiveTcpListener: new
+
+        activate ActiveTcpListener
+        ActiveTcpListener -> ListenSocketFactoryImpl: getListenSocket
+
+          activate ListenSocketFactoryImpl
+          alt ssocket is not created
+            ListenSocketFactoryImpl -> ListenSocketFactoryImpl: createListenSocketAndApplyOptions
+          end
+          return Socket
+
+        ActiveTcpListener -> DispatcherImpl: createListener(socket, this, bool bindToPort)
+        activate DispatcherImpl
+        DispatcherImpl -> ActiveTcpListener: ListenerImpl
+        deactivate DispatcherImpl
+
+        ActiveTcpListener -> ConnectionBalancerImpl: registerHandler(this)
+
+        return ActiveTcpListener
+
+      ConnectionHandlerImpl -> ConnectionHandlerImpl: listeners_.emplace_back(listener)
+      return
+end
+
+== Dealing connection ==
+
+participant ListnerImpl #99FF99
+activate ActiveTcpListener
+ListnerImpl --> ActiveTcpListener: onAccept
+ActiveTcpListener -[#0000FF]> ActiveTcpListener: onAcceptWorker
+deactivate ActiveTcpListener
+
+@enduml
+....
+
+.envoy network sequence diagram
+[plantuml, "envoy-network-filters-flow", svg]
+....
+@startuml
+hide footbox
+
+actor ListenerImpl
+
+ListenerImpl -[#0000FF]> ActiveTcpListener: onAcceptWorker(socket, ?, false)
+activate ActiveTcpListener
+
+  ActiveTcpListener -> ActiveTcpSocket : new(this:Listner, socket)
+  activate ActiveTcpSocket
+  return
+
+  ActiveTcpListener -> ListenerImpl : createListenerFilterChain(*socket)
+  ListenerImpl -> ActiveTcpListener
+
+  ActiveTcpListener -> ActiveTcpSocket: continueFilterChain(true)
+  activate ActiveTcpSocket
+
+    loop N filters && status ne StopIteration
+      ActiveTcpSocket -> ListenerFilter : onAccept
+      activate ListenerFilter
+      return status
+    end
+
+    ActiveTcpSocket -> ActiveTcpSocket: newConnection()
+    activate ActiveTcpSocket
+      alt localAddressRestored
+      ActiveTcpSocket -> ConnectionHandlerImpl : findActiveTcpListenerByAddress()
+      ConnectionHandlerImpl -> ActiveTcpSocket
+      end
+
+      alt has new_listener
+        ActiveTcpSocket -[#0000FF]> ActiveTcpListener: onAcceptWorker(socket, false, true)
+      else has no new_listener
+        ActiveTcpSocket -> ActiveTcpListener: newConnection
+        activate ActiveTcpListener
+          ActiveTcpListener -> DispatcherImpl: createServerConnection(socket, transport_socket, time_source)
+          activate DispatcherImpl
+          return
+
+          ActiveTcpListener -> ActiveTcpConnection: new
+          activate ActiveTcpConnection
+          return connection
+
+          ActiveTcpListener -> FilterChainFactory: createNetworkFilterChain(connection, filterFactories)
+          FilterChainFactory -> ActiveTcpListener
+
+          participant ConnectionImpl #99FF99
+          ActiveTcpListener -> ConnectionImpl: addConnectionCallbacks(connection)
+          ConnectionImpl -> ActiveTcpListener
+
+        deactivate
+      end
+
+  return
+
+return
+
+....
+
+
+.envoy read event callback flow
+[plantuml, "envoy-read-data-flow", svg]
+....
+@startuml
+hide footbox
+
+actor FileEventImpl
+FileEventImpl -> ConnectionImpl: callback
+
+activate ConnectionImpl
+ConnectionImpl -> ConnectionImpl: onFileEvent(events)
+ConnectionImpl -> ConnectionImpl: onReadReady
+ConnectionImpl -> TransportSocket: doRead
+activate TransportSocket
+return data
+
+ConnectionImpl -> ConnectionImpl: onRead(buffer_size)
+ConnectionImpl -> FilterManagerImpl
+activate FilterManagerImpl
+  FilterManagerImpl -> FilterManagerImpl: onContinueReading(filter, buffer_source)
+  loop filters: ActiveReadFilter && status ne StopIteration
+    alt filter has initialized
+      FilterManagerImpl -> ReadFilter: onNewConnection()
+    end
+
+    FilterManagerImpl -> ReadFilter: onData(buffer, end_stream: bool)
+    activate ReadFilter
+    return status
+  end
+....
+
+.envoy-wasm get value from host
+[plantuml, "envoy-wasm-get-value", svg]
+....
+
+@startuml
+hide footbox
+
+actor Request
+Request -> WasmFilter: Callbacks
+  WasmFilter -> wasm_sdk: getValue
+  wasm_sdk -> wasm_sdk: getProperty
+  wasm_sdk -> host_env: proxy_get_property
+
+  participant "Common::Wasm::Context[HTTP/TCP Filter]" as WasmHostContext
+  host_env -> WasmHostContext: getProperty
+
+....

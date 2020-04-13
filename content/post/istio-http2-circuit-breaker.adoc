@@ -1,6 +1,6 @@
 ////
-title: "{{ replace .Name "-" " " | title }}"
-date: {{ .Date }}
+title: "Istio Http2 Circuit Breaker"
+date: 2020-03-23T22:05:48+08:00
 draft: true
 ////
 
@@ -18,3 +18,4 @@ summary
 
 == content
 
+max_http_requests in api/envoy/api/v2/cluster/circuit_breaker.proto
