@@ -54,14 +54,14 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/post/latency-optimization-for-istio-proxy-based-on-envoy/" />
 <meta property="article:published_time" content="2020-02-28T17:43:24+08:00" />
-<meta property="article:modified_time" content="2020-04-13T10:44:15+08:00" />
+<meta property="article:modified_time" content="2020-04-13T22:28:06+08:00" />
 <meta itemprop="name" content="Istio proxy性能优化阶段总结">
 <meta itemprop="description" content="2017下半年，非侵入式微服务架构迅速吸引开发者眼球， ServiceMesh 进入飞速发展通道，至今已近三年。
 这中间，各路势力迅猛崛起，第一代服务网格框架Linkerd还未普及就被淘汰，2017年5月，新生的Istio迅速抢占了大部分关注ServiceMesh的开发者的目光。
 随后，Istio快速迭代，只经历了14个月便从0.1进化到1.0版本，这赶上了Kubernetes崛起时的迭代速度。我们在TKE容器产品上，基于Istio开发了TKE Mesh，帮助用户在云上更加容易地使用ServiceMesh架构。">
 <meta itemprop="datePublished" content="2020-02-28T17:43:24&#43;08:00" />
-<meta itemprop="dateModified" content="2020-04-13T10:44:15&#43;08:00" />
-<meta itemprop="wordCount" content="7740">
+<meta itemprop="dateModified" content="2020-04-13T22:28:06&#43;08:00" />
+<meta itemprop="wordCount" content="7751">
 
 
 
@@ -379,7 +379,7 @@ pilot等其它控制面组件使用一个节点进行部署； nighthawk和mesh-
 <p><img src="async-worker-report.svg" alt=""></p>
 <p>经过优化之后，Envoy内部的延时分布有明显改善：</p>
 <p><img src="envoy-latency-optimized-distribution.png" alt=""></p>
-<p>总体延时也有一些改善：</p>
+<p>总体延时也有一些改善(下图浅蓝色为优化后)：</p>
 <p><img src="e2e-latency-optimized-compare.png" alt=""></p>
 <p>通过异步化处理遥测上报操作，我们虽然在延时上获得了明显的优化，
 但对envoy占用的CPU资源却没有改善，这对大部份应用来说还是不可接受的，
