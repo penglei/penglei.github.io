@@ -1,5 +1,5 @@
 ---
-title: "Istio proxy性能优化阶段总结"
+title: "Istio数据面性能测试与优化"
 date: 2020-02-28T17:43:24+08:00
 lastmod: 2020-02-28T17:43:24+08:00
 draft: false
@@ -34,36 +34,25 @@ sequenceDiagrams:
 
 ---
 
-2017下半年，非侵入式微服务架构迅速吸引开发者眼球， ServiceMesh 进入飞速发展通道，至今已近三年。
-这中间，各路势力迅猛崛起，第一代服务网格框架Linkerd还未普及就被淘汰，2017年5月，新生的Istio迅速抢占了大部分关注ServiceMesh的开发者的目光。
-随后，Istio快速迭代，只经历了14个月便从0.1进化到1.0版本，这赶上了Kubernetes崛起时的迭代速度。我们在TKE容器产品上，基于Istio开发了TKE Mesh，帮助用户在云上更加容易地使用ServiceMesh架构。
-
+2017下半年，非侵入式微服务架构迅速吸引开发者眼球， ServiceMesh 进入飞速发展通道，至今已近三年。Istio快速迭代，只经历了14个月便从0.1进化到1.0版本，这赶上了Kubernetes崛起时的迭代速度。本文分享了一些对Istio数据面进行性能测试与优化的经验，加深对Istio的理解。
 <!--more-->
-
 ## 背景动机
 
-<!--
-从2018年7月到现在，Istio没能复制Kubernetes高速发展的情形，反而各种ServiceMesh框架如雨后春笋般出现。虽然Istio继续保持着绝对影响力，但它没有成为事实标准，很多用户亦一直处于对其调研的过程中，我们不得不接受这样的现状：引领ServiceMesh的Istio处于叫好不叫座的境地，没有被普遍接受使用。
--->
-
-除了复杂性，「性能不好」可能是用户不敢大规模使用Istio架构的关键因素。Istio社区和官方都对性能进行了一些测试，对其性能同样不太满意， 更是加重了大家对Istio甚至ServiceMesh的观望态度。
-在阅读了一些测试报告和文章时，我们发现很难深刻理解Istio性能问题的原因。Istio官方博客中对性能测试报告描述过于简单。
-在1.5版本以前的《performance-and-scalability》文章的描述中，数据面sidecar给服务间调用增加了6ms的延迟。
-直观上，我们觉得这样的性能损耗过大，有点不可思议。 通过对社区和官方的测试报告进行定性分析之后，我们发现Istio数据面代理对服务间调用的延时影响较大可能已经形成共识，
-较大的延时同时意味着它很可能消耗了过多的CPU资源，对吞吐量（QPS）也将造成影响。 因此，我们希望更细致地测试分析Istio数据面性能，得到一些有价值的经验和数据指标，为优化TKE Mesh提供一些指引。
-
-
+从2018年7月到现在一路高速发展，却没能复制Kubernetes的历史，成为标准。虽然Istio继续保持着绝对影响力，但很多用户一直处于对其调研的过程中，并没有广泛地使用起来。这其中的原因有很多，「性能不好」可能是用户不敢大规模使用Istio架构的关键因素之一。Istio社区和官方都对性能进行了一些测试，对其性能同样不太满意， 更是加重了大家对Istio甚至ServiceMesh的观望态度。在阅读了一些测试报告和文章时，我们发现Istio数据面代理对服务间调用的延时影响较大可能已经形成共识，但通过社区的资料，很难深刻理解Istio性能问题的原因。因此，我们希望更细致地测试分析Istio数据面性能，得到一些有价值的经验和数据，以期在此基础上进行一些优化。
 
 ## 架构简介
 
 Istio在设计上分为了控制面和数据面。
-控制面可以理解为各种配置管理和协调服务。比如，控制面自动从Kubernetes中提取Service信息，使用xDS协议将其下发到数据面，帮助数据面代理完成服务发现。Mixer同样被划分为控制面组件，它既是一个执行授权策略的服务，也是数据面遥测信息的集散中心。
+
+控制面可以理解为各种配置管理和协调服务。比如，控制面自动从Kubernetes中提取Service信息，使用xDS协议将其下发到数据面，帮助数据面代理完成服务发现。
+
+数据面完成各种具体的动作。如路由、熔断等流量管理，收集遥测信息等。
 
 ![Istio架构][istio-structure]
 
 _图1: Istio架构示意图_
 
-Istio数据面完成了流量管理、遥测信息收集的任务。数据面以sidecar模式实现，这是Istio为微服务带来强大能力却不用修改服务本身的关键：即在每一个服务实例旁，它都会运行一个envoy代理程序，将原来需要在服务内实现（如服务发现、负载均衡、监控追踪等）的功能移到独立进程中完成。
+数据面以sidecar模式实现，这是Istio为微服务带来强大能力却不用修改服务本身的关键：即在每一个服务实例旁，它都会运行一个envoy代理程序，将原来需要在服务内实现（如服务发现、负载均衡、监控追踪等）的功能移到独立进程中完成。
 
 ![数据面示意][data-plane-diagram]
 
@@ -107,24 +96,19 @@ istio数据面有作为ingressgateway的envoy，也有作为sidecar管理服务�
 
 + 需要深入理解压测工具的模型
 
-    压测工具的线程模型、发包模型也有区别，比如fortio使用gorouting来进行并发，适合模拟大量连接的场景；
-    大多数压测工具有Coordinated Omission问题，导致压测报告的结果比实际环境中要好；
-    压测工具如果使用带GC语言的实现，可能也会影响测量时间的精度，导致结果不稳定。
+    压测工具的线程模型、发包模型也有区别，比如fortio使用gorouting来进行并发，适合模拟大量连接的场景；大多数压测工具有Coordinated Omission问题，导致压测报告的结果比实际环境中要好；压测工具如果使用带GC语言的实现，可能也会影响测量时间的精度，导致结果不稳定。
 
 #### Coordinated Omission 问题
 
-什么是Coordinated Omission？简单地说就是我们进行压测时，可能只是测量了「服务时间」，忽略了「排队等待时间」。而真实用户体验到的延时是「响应时间」，包含了「服务时间」与「排队等待时间」之和。
+什么是Coordinated Omission？简单地说就是我们进行压测时，可能只是测量了「服务时间」，忽略了「排队等待时间」。而真实用户体验到的延时是「响应时间」，包含「服务时间」与「排队等待时间」两者之和。
 
 ![OC Problem][oc-problem-graph]
 
-*图中queue只是一种抽象，例如它可以来源于链路中的buffer，并发系统中的资源竞争等*
+*(图中queue只是一种抽象，例如它可以来源于链路中的buffer，并发系统中的资源竞争等)*
 
-压测工具通常没有处理OC问题，它们大多定时发送一个请求，记录开始时间(`begin_time`)，然后接收响应并记录结束时间(`end_time`)，这样便得到一个请求的延时(`end_time - start_time`)。
-当新的发送周期到来时，继续发送下一个请求，记录延时，如此循环...
+压测工具通常没有处理OC问题，它们大多定时发送一个请求，记录开始时间(`begin_time`)，然后接收响应并记录结束时间(`end_time`)，这样便得到一个请求的延时(`end_time - start_time`)。当新的发送周期到来时，继续发送下一个请求，记录延时，如此循环...
 
-这种发包策略下当某个请求出现响应过慢，其响应时间点已经超过下一个发包周期开始时间点，导致压测工具延后了原本应该发送的请求，降低了实际测试RPS。
-最终，我们测量的数据中只有少部分请求的延时增加了（发生阻塞的那些请求），而真实环境中则可能有多个排队中的请求因为前面的请求阻塞而出现延时增加，
-用户体验到响应变慢的概率比压测环境报告的数据更大！
+这种发包策略下当某个请求出现响应过慢，其响应时间点已经超过下一个发包周期开始时间点，导致压测工具延后了原本应该发送的请求，降低了实际测试RPS。最终，我们测量的数据中只有少部分请求的延时增加了（发生阻塞的那些请求），而真实环境中则可能有多个排队中的请求因为前面的请求阻塞而出现延时增加，用户体验到响应变慢的概率比压测环境报告的数据更大！
 
 ![OC Problem latency comparing][hdr-oc-problem]
 
@@ -145,12 +129,9 @@ nighthawk由在性能测试领域具有丰富经验的工程师所开发，它�
 
 #### 自动化脚本
 
-在调优测试过程中，我们会不停地进行 `假设-->开发-->测试-->数据对比-->再假设` 循环，因此，开发好自动化脚本，
-将每一次测试用例的参数，环境，结果等信息进行记录保存是非常必要的，否则在大量的测试之后，我们很快就会迷失在各种测试用例的数据中。
+在调优测试过程中，我们会不停地进行 `假设-->开发-->测试-->数据对比-->再假设` 循环，因此，开发好自动化脚本，将每一次测试用例的参数，环境，结果等信息进行记录保存是非常必要的，否则在大量的测试之后，我们很快就会迷失在各种测试用例的数据中。
 
-测试过程需要调整sidecar的yaml配置参数，包括envoy镜像地址、资源、启动参数等等，甚至还需要增加挂载host目录来保存envoy打点数据。
-修改这些配置是一个麻烦的事情，因为相应的yaml配置都是由istio通过模板render生成。虽然我们可以直接修改模板来实现对测试参数的修改，
-但这会有非常多的缺点:
+测试过程需要调整sidecar的yaml配置参数，包括envoy镜像地址、资源、启动参数等等，甚至还需要增加挂载host目录来保存envoy打点数据。修改这些配置是一个麻烦的事情，因为相应的yaml配置都是由istio通过模板render生成。虽然我们可以直接修改模板来实现对测试参数的修改，但这会有非常多的缺点:
 
 + 不同的istio版本需要分别修改，管理复杂；
 + 模板中增加的配置需要注入render时的参数，这些参数值在注入sidecar时如何传递进去非常麻烦，甚至需要修改自动注入组件；
@@ -234,30 +215,23 @@ kustomize 支持插件，某些操作内置的plugin无法完成，可以通过�
 
 #### 环境
 
-测试环境使用5台8C16G节点的tke集群。
-istio-telmetry组件消耗的资源较多，服务端mixs消耗较多，数据面每1000QPS时，mixs大概消耗1.2vCPU，因此使用两个节点，以满足超过7000QPS的测试压力；
-pilot等其它控制面组件使用一个节点进行部署； nighthawk和mesh-mocker分别占用一个节点。自动化脚本打包在一个镜像中，每次在控制面组件所在节点运行。
+测试环境使用5台8C16G节点的tke集群。istio-telmetry组件消耗的资源较多，服务端mixs消耗较多，1000QPS大概需要消耗1200m CPU，因此使用两个节点，以满足超过7000QPS的测试压力；pilot等其它控制面组件使用一个节点进行部署； nighthawk和mesh-mocker分别占用一个节点。自动化脚本打包在一个镜像中，每次在控制面组件所在节点运行。
 
-测试中限制了nighthawk、mesh-mocker、envoy都使用2vCPU。同时，考虑到相同资源下，多核机器上worker线程数对并发度有直接影响，最终也会影响延时，
-因此我们对每个组件的工作线程数也限制为2。这样配置后，在OS调度下，几乎所有组件都是独立运行，不会互相影响，更容易评估使用Istio后envoy产生的影响。
+测试中限制了nighthawk、mesh-mocker、envoy都使用2vCPU。同时，考虑到相同资源下，多核机器上worker线程数对并发度有直接影响，最终也会影响延时，因此我们对每个组件的工作线程数也限制为2。这样配置后，在OS调度下，几乎所有组件都是独立运行，不会互相影响，更容易评估使用Istio后envoy产生的影响。
 
 ![测试环境][test-env]
 
 ### Envoy打点
 
-Istio数据面带来了明显的延时，把消息在链路中各个阶段的延时统计出来，是进行优化的重要依据。
-一开始我们思考利用内核态工具如bpftrace进行分析，但请求消息在envoy中进行了多次转发，内核态很难追踪应用层会话，统计时间并不方便，
-因此我们决定在envoy内部打点记录时间，测试结束后通过离线脚本计算消息在envoy中进行处理的延时。
+Istio数据面带来了明显的延时，把消息在链路中各个阶段的延时统计出来，是进行优化的重要依据。一开始我们思考利用内核态工具如bpftrace进行分析，但请求消息在envoy中进行了多次转发，内核态很难追踪应用层会话，统计时间并不方便，因此我们决定在envoy内部打点记录时间，测试结束后通过离线脚本计算消息在envoy中进行处理的延时。
 
 ![envoy内部打点][envoy-record-time]
 
 client请求server是，每条消息Request依次经过envoy中的`3`，`4`，`5`，`6`几处，通过readv和writev系统调用读取或发送消息，Response以相反的顺序经过envoy。
 
-我们将Request经过打点位置的时间戳记录为`t(*)`，将Response经过的时间戳记录为`t'(*)`，
-则一条消息在两个sidecar(envoy)中消耗的时间总计为：`t(4)-t(3) + t'(3)-t'(4) + t(6)-t(5) + t'(5)-t'(6)`。
+我们将Request经过打点位置的时间戳记录为`t(*)`，将Response经过的时间戳记录为`t'(*)`，则一条消息在两个sidecar(envoy)中消耗的时间总计为：`t(4)-t(3) + t'(3)-t'(4) + t(6)-t(5) + t'(5)-t'(6)`。
 
-为了防止打点带来过多的额外损耗，时间戳直接记录在预分配的连续内存（数组）中，如果使用1w QPS测试10分钟，每个envoy最多占用280MB内存，我们增加了istio-proxy容器的内存资源配置，以保存这些时间戳数据。
-时间戳应该记录在内存中什么具体位置呢？这是通过给每条消息增加唯一`x-idx`作为其数组下标实现的，每条消息的打点时间戳直接写入指定位置内存，非常高效。
+为了防止打点带来过多的额外损耗，时间戳直接记录在预分配的连续内存（数组）中，如果使用1w QPS测试10分钟，每个envoy最多占用280MB内存，我们增加了proxy容器的内存资源配置，以保存这些时间戳数据。时间戳应该记录在内存中什么具体位置呢？这是通过给每条消息增加唯一`x-idx`作为其数组下标实现的，每条消息的打点时间戳直接写入指定位置内存，非常高效。
 
 ### 测试结果
 
@@ -265,14 +239,11 @@ envoy延时分布
 
 ![Envoy延时分布][envoy-latency-distribution]
 
-我们使用2000QPS进行测试，利用Envoy打点得到了上面的延时分布。从这个分布中，我们发现了一个关键信息：图中`1ms ~ 2ms`之间的延时分布有隆起现象。
-高延时部份应该是一些长尾请求造成，应该符合典型的幂律分布，但测试结果表明Envoy造成的延时分布不符合这个特征！
+我们使用2000QPS进行测试，利用Envoy打点得到了上面的延时分布。从这个分布中，我们发现了一个关键信息：图中`1ms ~ 2ms`之间的延时分布有隆起现象。高延时部份应该是一些长尾请求造成，应该符合典型的幂律分布，但测试结果表明Envoy造成的延时分布不符合这个特征！
 
 ### 分析优化
 
-经过一些测试之后，我们发现测试过程中CPU资源是Envoy的性能瓶颈，遂猜测Envoy里面有某种任务在长时间运行，来不及转发in-flight的消息，造成这些消息转发不及时。
-随后，我们对高延时部份的数据在时间分布上进行分析，发现其分布较均匀，因此将目光转移到一些周期性运行的定时任务上。
-在对Envoy(istio-proxy)代码进行分析后，我们发现istio遥测功能(mixer)在sidecar中会消耗较多的CPU，符合猜测:
+经过一些测试之后，我们发现测试过程中CPU资源是Envoy的性能瓶颈，遂猜测Envoy里面有某种任务在长时间运行，来不及转发in-flight的消息，造成这些消息转发不及时。随后，我们对高延时部份的数据在时间分布上进行分析，发现其分布较均匀，因此将目光转移到一些周期性运行的定时任务上。在对Envoy(istio-proxy)代码进行分析后，我们发现istio遥测功能(mixer)在sidecar中会消耗较多的CPU，符合猜测:
 
 * 属性提取中有大量的map操作和字符串拷贝操作
 
@@ -299,16 +270,11 @@ envoy延时分布
 
 ![][envoy-latency-optimized-distribution]
 
-总体延时也有一些改善：
+总体延时也有一些改善(下图浅蓝色为优化后)：
 
 ![][e2e-latency-optimized-compare]
 
-通过异步化处理遥测上报操作，我们虽然在延时上获得了明显的优化，
-但对envoy占用的CPU资源却没有改善，这对大部份应用来说还是不可接受的，
-随着mixer-less的落地，我们将优化方向转移到降低Envoy CPU消耗，
-在下一个tke-mesh版本中提供一个性能更好的sidecar。
-当前的AsyncWorker架构则可以作为通用组件继续保留，与以后的优化进行融合，
-以达到最低的延时。
+通过异步化处理遥测上报操作，我们虽然在延时上获得了明显的优化，但对envoy占用的CPU资源却没有改善，这对大部份应用来说还是不可接受的，随着mixer-less的落地，我们将优化方向转移到降低Envoy CPU消耗，当前的AsyncWorker架构则可以作为通用组件继续保留，与后续优化进行融合，以达到最低的延时。
 
 
 ## Istio数据测试对比(已更新，包含1.5遥测)
@@ -339,8 +305,7 @@ envoy延时分布
 
 ![QPS maximum][rps-qps-relation]
 
-2vCPU测试下，1.3版本使用mixer实现遥测(1.3-mixer-telemetry)，其最大QPS大约为7000左右；1.5版本使用nullvm的方式(1.5-telemetry-nullvm)则有2000QPS的提升，达到9000左右；
-关闭telemtry之后(1.3-no-telemetry)，QPS峰值达到13000左右；tke-mesh阻塞优化版的QPS有所下降，只有6000左右，这是因为将上报任务的数据迁移到异步线程中有所消耗。
+2vCPU测试下，1.3版本使用mixer实现遥测(1.3-mixer-telemetry)，其最大QPS大约为7000左右；1.5版本使用nullvm的方式(1.5-telemetry-nullvm)则有2000QPS的提升，达到9000左右；关闭telemtry之后(1.3-no-telemetry)，QPS峰值达到13000左右；tke-mesh阻塞优化版的QPS有所下降，只有6000左右，这是因为将上报任务的数据迁移到异步线程中有所消耗。
 
 QPS达到峰值时的CPU资源已成为瓶颈，实际生产环境中我们并不会让系统在如此搞负载下运行。下文的图表中我们只关注5000QPS以下的数据。
 
@@ -353,8 +318,7 @@ P90延时
 P99延时
 ![!P99 Latency][qps-latency-p99]
 
-使用istio之后，较低QPS负载下延时增加不多，随着QPS的增加延时逐步增大。其中，使用mixer实现的遥测对调用延时影响最明显，即使tke-mesh进行一些优化后，在高负载情况(5000)下，P99也明显增加。
-istio-1.5使用mixer-less的方案，其延时有明显的改善。
+使用istio之后，较低QPS负载下延时增加不多，随着QPS的增加延时逐步增大。其中，使用mixer实现的遥测对调用延时影响最明显，即使tke-mesh进行一些优化后，在高负载情况(5000)下，P99也明显增加。istio-1.5使用mixer-less的方案，其延时有明显的改善。
 
 ### Envoy cpu 消耗
 
@@ -375,11 +339,13 @@ client-side memory
 
 Envoy消耗的内存不多，并没有随QPS增加而增加，AsyncWorker方案大约增加了10MB的内存占用，没有太大的影响。
 
-## 后记
+## 总结
 
-ServiceMesh发展至今，性能问题横在面前，阻碍着其大规模应用。 从2019年下开始，我们Istio在性能方面逐步投入了更多的精力进行研究优化，
-回头来看，走过的路弯弯折折，虽成果不多，但收获不少经验，希望它可以帮助我们对今后前进的方向提供一些帮助。
+ServiceMesh发展至今，性能问题横在面前，阻碍着其大规模应用。Istio各版本中对性能的一些优化措施没有太好的效果，属于填初期设计的坑：Mixer Cache降低Check对Server的压力，但在实际中可能并有什么效果；遥测上报数据进行delta-Encoding和Compress优化操作，以降低遥测功能产生的网络流量，但带来复杂性的同时又消耗掉可观的CPU；如今推倒重来用Wasm在proxy中实现原来mixer的功能，去掉了mixer-server组件能节约一大笔资源，但数据面性能优化却不是主要目标，其性能并没有质的改变，反而随着Wasm引入而带来的灵活性，大家的目光反而被可扩展性引开。Istio在性能上的缓慢改进的表现，不知道又会损害多少工程师对它的信心，影响其发展速度。
 
+从2019年下半年开始，我们在Istio性能方面逐步投入了更多的精力进行研究，年初大概完成了文中的工作，但Istio发展太快，我们随后将精力放在mixer-less版本的调研上，一直没有总结，回头来看，走过的路弯弯折折，虽成果不多，但收获不少经验，这帮助我们理解了Istio数据面性能极限在哪，有多少优化空间，因此我们也决定在接下来的tke-mesh版本中，独立开发数据面的遥测组件，以提供一个性能更好的sidecar代理。
+
+<!--
 最后，再谈一谈对Istio发展缓慢的理解：
 
 * `Service Mesh` 本身有一定的入门门槛。Istio本身架构实现过于复杂，加重了部署推广的难度。
@@ -389,32 +355,32 @@ ServiceMesh发展至今，性能问题横在面前，阻碍着其大规模应用
 
 * `Service Mesh`架构面对的问题域对性能十分敏感，其核心功能需要侵入业务网络流量进行分析、导流，然而Istio社区对性能的重视程度较低，导致使用者顾虑较多。
 
-    Istio各版本中对性能的一些优化措施没有太好的效果，属于填初期设计的坑：Mixer Cache降低Check对Server的压力，但在实际中可能并有什么效果；遥测上报数据进行delta-Encoding和Compress优化操作，以降低遥测功能产生的网络流量，带来复杂性的同时又消耗掉可观的CPU；如今推倒重来用Wasm在proxy中实现原来mixer的功能，去掉了mixer-server组件能节约一大笔资源，但数据面性能优化却不是主要目标，其性能并没有质的改变，反而随着Wasm引入而带来的灵活性，大家的目光反而被可扩展性引开。
+    Istio各版本中对性能的一些优化措施没有太好的效果，属于填初期设计的坑：Mixer Cache降低Check对Server的压力，但在实际中可能并有什么效果；遥测上报数据进行delta-Encoding和Compress优化操作，以降低遥测功能产生的网络流量，带来复杂性的同时又消耗掉可观的CPU；如今推倒重来用Wasm在proxy中实现原来mixer的功能，去掉了mixer-server组件能节约一大笔资源，但数据面性能优化却不是主要目标，其性能并没有质的改变，反而随着Wasm引入而带来的灵活性，大家的目光反而被可扩展性引开。Istio在性能上的缓慢改进的表现，不知道又会损害多少工程师对它的信心，进一步影响发展速度。
 
     再看看Kubernetes的做法：作为编排工具，Kubernetes大部分功能是运维管理性的，不会直接对业务造成明显的性能损害，其对性能最敏感的Runtime和Network部份则全部用插件实现，CNI简化到只剩标准接口，社区和企业可以自由地进行实现。
     **Istio**不一样，基于Envoy实现的sidecar跟控制面有较强的耦合，利用xDS标准单独实现一个代理也仅仅存在于理论之中（udpa很有漫长的路要走），复杂度和没有统一的标准都是实现自定义代理拦路虎，暂不具备可操作性。
-    而Istio在性能上的缓慢改进的表现，不知道又会损害多少工程师对它的信心，进一步影响发展速度。
+-->
+
 
 [istio-proxy]: http://github.com/istio/proxy
-[data-plane-diagram]: data-plane-diagram.png
-[istio-structure]: istio-structure.png
+[data-plane-diagram]: https://penglei.github.io/post/latency-optimization-for-istio-proxy-based-on-envoy/data-plane-diagram.png
+[istio-structure]: https://penglei.github.io/post/latency-optimization-for-istio-proxy-based-on-envoy/istio-structure.png
 [hdr-oc-problem]: https://bravenewgeek.com/wp-content/uploads/2016/02/coordinated_omission.png
-[oc-problem-graph]: oc-problem-in-queue-system.svg
-[test-env]: test-env.svg
-[golang-json-patch]: https://github.com/evanphx/json-patch
-[envoy-record-time]: envoy-record-time.svg
-[envoy-latency-distribution]: envoy-latency-distribution.png
-[istio-mixer-attribute-building]: istio-mixer-attribute-building.png
-[istio-mixer-attribute-batch-compress]:istio-mixer-attribute-batch-compress.png
-[rps-qps-relation]: rps-qps-relation.png
-[qps-latency-p90]: qps-latency-p90.png
-[qps-latency-p99]: qps-latency-p99.png
-[qps-server-side-cpu-usage]: qps-server-side-cpu-usage.png
-[qps-server-side-memory-usage]: qps-server-side-memory-usage.png
-[qps-client-side-cpu-usage]: qps-client-side-cpu-usage.png
-[qps-client-side-memory-usage]:qps-client-side-memory-usage.png
-[envoy-worker-structure]: envoy-worker-structure.png
-[async-worker-report]: async-worker-report.svg
-[envoy-latency-optimized-distribution]: envoy-latency-optimized-distribution.png
-[e2e-latency-optimized-compare]: e2e-latency-optimized-compare.png
-
+[oc-problem-graph]: https://penglei.github.io/post/latency-optimization-for-istio-proxy-based-on-envoy/oc-problem-in-queue-system.svg
+[test-env]: https://penglei.github.io/post/latency-optimization-for-istio-proxy-based-on-envoy/test-env.svg
+[golang-json-patch]: https://penglei.github.io/post/latency-optimization-for-istio-proxy-based-on-envoy/https://github.com/evanphx/json-patch
+[envoy-record-time]: https://penglei.github.io/post/latency-optimization-for-istio-proxy-based-on-envoy/envoy-record-time.svg
+[envoy-latency-distribution]: https://penglei.github.io/post/latency-optimization-for-istio-proxy-based-on-envoy/envoy-latency-distribution.png
+[istio-mixer-attribute-building]: https://penglei.github.io/post/latency-optimization-for-istio-proxy-based-on-envoy/istio-mixer-attribute-building.png
+[istio-mixer-attribute-batch-compress]: https://penglei.github.io/post/latency-optimization-for-istio-proxy-based-on-envoy/istio-mixer-attribute-batch-compress.png
+[rps-qps-relation]: https://penglei.github.io/post/latency-optimization-for-istio-proxy-based-on-envoy/rps-qps-relation.png
+[qps-latency-p90]: https://penglei.github.io/post/latency-optimization-for-istio-proxy-based-on-envoy/qps-latency-p90.png
+[qps-latency-p99]: https://penglei.github.io/post/latency-optimization-for-istio-proxy-based-on-envoy/qps-latency-p99.png
+[qps-server-side-cpu-usage]: https://penglei.github.io/post/latency-optimization-for-istio-proxy-based-on-envoy/qps-server-side-cpu-usage.png
+[qps-server-side-memory-usage]: https://penglei.github.io/post/latency-optimization-for-istio-proxy-based-on-envoy/qps-server-side-memory-usage.png
+[qps-client-side-cpu-usage]: https://penglei.github.io/post/latency-optimization-for-istio-proxy-based-on-envoy/qps-client-side-cpu-usage.png
+[qps-client-side-memory-usage]: https://penglei.github.io/post/latency-optimization-for-istio-proxy-based-on-envoy/qps-client-side-memory-usage.png
+[envoy-worker-structure]: https://penglei.github.io/post/latency-optimization-for-istio-proxy-based-on-envoy/envoy-worker-structure.png
+[async-worker-report]: https://penglei.github.io/post/latency-optimization-for-istio-proxy-based-on-envoy/async-worker-report.svg
+[envoy-latency-optimized-distribution]: https://penglei.github.io/post/latency-optimization-for-istio-proxy-based-on-envoy/envoy-latency-optimized-distribution.png
+[e2e-latency-optimized-compare]: https://penglei.github.io/post/latency-optimization-for-istio-proxy-based-on-envoy/e2e-latency-optimized-compare.png
