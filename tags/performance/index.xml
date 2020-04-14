@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Performance on ybyte blog</title>
+    <link>/tags/performance/</link>
+    <description>Recent content in Performance on ybyte blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 28 Feb 2020 17:43:24 +0800</lastBuildDate>
+    
+	<atom:link href="/tags/performance/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Istio数据面性能测试与优化</title>
+      <link>/post/latency-optimization-for-istio-proxy-based-on-envoy/</link>
+      <pubDate>Fri, 28 Feb 2020 17:43:24 +0800</pubDate>
+      
+      <guid>/post/latency-optimization-for-istio-proxy-based-on-envoy/</guid>
+      <description>&lt;p&gt;2017下半年，非侵入式微服务架构迅速吸引开发者眼球， ServiceMesh 进入飞速发展通道，至今已近三年。Istio快速迭代，只经历了14个月便从0.1进化到1.0版本，这赶上了Kubernetes崛起时的迭代速度。本文分享了一些对Istio数据面进行性能测试与优化的经验，加深对Istio的理解。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
