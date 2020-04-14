@@ -5,7 +5,7 @@ lastmod: 2020-02-28T17:43:24+08:00
 draft: false
 keywords: []
 description: ""
-tags: [C++]
+tags: [Istio, Envoy, Performance, Sidecar]
 categories: [servicemsh]
 author: "penglei"
 
@@ -46,7 +46,7 @@ Istio在设计上分为了控制面和数据面。
 
 控制面可以理解为各种配置管理和协调服务。比如，控制面自动从Kubernetes中提取Service信息，使用xDS协议将其下发到数据面，帮助数据面代理完成服务发现。
 
-数据面完成各种具体的动作。如路由、熔断等流量管理，收集遥测信息等。
+数据面完成各种具体的动作。如路由、熔断等流量管理，生成遥测信息进行上报，策略实施等。
 
 ![Istio架构][istio-structure]
 
