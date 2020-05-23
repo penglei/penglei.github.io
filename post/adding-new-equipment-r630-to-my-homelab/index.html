@@ -59,7 +59,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/post/adding-new-equipment-r630-to-my-homelab/" />
 <meta property="article:published_time" content="2020-05-20T00:00:00+00:00" />
-<meta property="article:modified_time" content="2020-05-23T21:58:02+08:00" />
+<meta property="article:modified_time" content="2020-05-23T22:17:45+08:00" />
 <meta itemprop="name" content="Homelab增加新玩具R630">
 <meta itemprop="description" content="
 
@@ -70,8 +70,8 @@
 在此记录分享下折腾的过程。
 ">
 <meta itemprop="datePublished" content="2020-05-20T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2020-05-23T21:58:02&#43;08:00" />
-<meta itemprop="wordCount" content="2776">
+<meta itemprop="dateModified" content="2020-05-23T22:17:45&#43;08:00" />
+<meta itemprop="wordCount" content="2842">
 
 
 
@@ -296,9 +296,16 @@ installer发现eno4有接线并且有DHCP服务，于是自动加到了配置中
 </div>
 <div class="paragraph">
 <p>使用这个功能最简单的是在iDRAC里面打开USB NIC模式（iDRAC设置 &gt; 网络 &gt; 操作系统至 iDRAC 直通），USB NIC 模式的原理是直通链接通过内部USB总线建立。
-设定好通道之后，在操作系统内安装ISM服务模块即可，ISM没有Ubuntu 20.04对应的版本，直接下载老版本的deb包也可以安装成功：
-<a href="https://linux.dell.com/repo/community/openmanage/iSM/351/stretch/pool/main/d/dcism-osc/dcism-osc_5.0.0_amd64.deb" target="_blank" rel="noopener">dcism-osc_5.0.0_amd64.deb</a> 、
-<a href="https://linux.dell.com/repo/community/openmanage/iSM/351/stretch/pool/main/d/dcism/dcism_3.5.1_amd64.deb" target="_blank" rel="noopener">dcism_3.5.1_amd64.deb</a> 。</p>
+设定好通道之后，在操作系统内安装ISM服务模块即可，ISM没有Ubuntu 20.04对应的版本，直接下载官方版本，用其中Ubuntu18文件夹中的deb包进行安装：
+<a href="https://dl.dell.com/FOLDER06164899M/1/OM-iSM-Dell-Web-LX-351-1949_A00.tar.gz" target="_blank" rel="noopener">iSM3.5.1</a> 。
+另外，还需要手动安装dcism-osc依赖包，
+<a href="https://linux.dell.com/repo/community/openmanage/iSM/351/stretch/pool/main/d/dcism-osc/dcism-osc_5.0.0_amd64.deb" target="_blank" rel="noopener">dcism-osc_5.0.0_amd64.deb</a> ，两者安装好之后，打开dcismeng服务：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console">#: systemctl start dcismeng
+#: systemctl enable dcismeng</code></pre>
+</div>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -320,7 +327,7 @@ installer发现eno4有接线并且有DHCP服务，于是自动加到了配置中
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">#: iperf3 -s</pre>
+<pre class="highlight nowrap"><code class="language-console" data-lang="console">#: iperf3 -s</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -328,7 +335,7 @@ installer发现eno4有接线并且有DHCP服务，于是自动加到了配置中
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">#: iperf3 -c nas t 30s -i 1s
+<pre class="highlight nowrap"><code class="language-console" data-lang="console">#: iperf3 -c nas t 30s -i 1s
 
 iperf3 -c nas t 30s -i 1s
 Connecting to host nas, port 5201
@@ -347,7 +354,7 @@ Connecting to host nas, port 5201
 - - - - - - - - - - - - - - - - - - - - - - - - -
 [ ID] Interval           Transfer     Bitrate         Retr
 [  5]   0.00-10.00  sec  1.09 GBytes   932 Mbits/sec  180             sender
-[  5]   0.00-10.00  sec  1.08 GBytes   930 Mbits/sec                  receiver</pre>
+[  5]   0.00-10.00  sec  1.08 GBytes   930 Mbits/sec                  receiver</code></pre>
 </div>
 </div>
 </div>
@@ -363,7 +370,7 @@ Connecting to host nas, port 5201
     <span class="item-title">LastMod</span>
     <span class="item-content">
         2020-05-23
-        <a href="https://github.com/penglei/penglei.github.io/commit/98913302b11936d4eb0fe7f935712877fa6b583f" title="Post adding-new-equipment-r630-to-my-homelab">(9891330)</a>
+        <a href="https://github.com/penglei/penglei.github.io/commit/9c7068b2ee0fdb99b8b77ce88acfc76f545f5f9f" title="up">(9c7068b)</a>
     </span>
   </p>
   
