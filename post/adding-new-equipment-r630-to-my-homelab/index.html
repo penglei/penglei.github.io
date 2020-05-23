@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Homelab增加新玩具R630 - ybyte blog</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="penglei" /><meta name="description" content="几年前用J3710组装了一台NAS，同时虚拟化了一个VM安装OpenWRT来承担家庭网络路由的功能，一直稳定运行至今。 然而J3710性能实在太低，无法做诸如性能测试、开发编译等事情，并且如果不小心搞挂了NAS，家里的网络也就中断了，实在不方便。 因此考虑添加一台机器，做个简陋的Homelab。新机器当然是不可能去买的，银子不够，于是去垃圾场捡了一台24核48线程的R630回来。 在此记录分享下折腾的过程。
+" /><meta name="keywords" content="linux, kubernetes, docker, istio, servicemesh, sidecar" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.64.1 with theme even" />
+
+
+<link rel="canonical" href="/post/adding-new-equipment-r630-to-my-homelab/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+<link rel="stylesheet" href="/css/asciidoctor.css">
+
+
+
+<link href="/dist/even.52886a66.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="/css/highlightjs/github.css">
+<link rel="stylesheet" href="/css/custom.css">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<meta property="og:title" content="Homelab增加新玩具R630" />
+<meta property="og:description" content="
+
+
+几年前用J3710组装了一台NAS，同时虚拟化了一个VM安装OpenWRT来承担家庭网络路由的功能，一直稳定运行至今。
+然而J3710性能实在太低，无法做诸如性能测试、开发编译等事情，并且如果不小心搞挂了NAS，家里的网络也就中断了，实在不方便。
+因此考虑添加一台机器，做个简陋的Homelab。新机器当然是不可能去买的，银子不够，于是去垃圾场捡了一台24核48线程的R630回来。
+在此记录分享下折腾的过程。
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/adding-new-equipment-r630-to-my-homelab/" />
+<meta property="article:published_time" content="2020-05-20T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-05-23T21:58:02+08:00" />
+<meta itemprop="name" content="Homelab增加新玩具R630">
+<meta itemprop="description" content="
+
+
+几年前用J3710组装了一台NAS，同时虚拟化了一个VM安装OpenWRT来承担家庭网络路由的功能，一直稳定运行至今。
+然而J3710性能实在太低，无法做诸如性能测试、开发编译等事情，并且如果不小心搞挂了NAS，家里的网络也就中断了，实在不方便。
+因此考虑添加一台机器，做个简陋的Homelab。新机器当然是不可能去买的，银子不够，于是去垃圾场捡了一台24核48线程的R630回来。
+在此记录分享下折腾的过程。
+">
+<meta itemprop="datePublished" content="2020-05-20T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-05-23T21:58:02&#43;08:00" />
+<meta itemprop="wordCount" content="2776">
+
+
+
+<meta itemprop="keywords" content="r630,linux," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Homelab增加新玩具R630"/>
+<meta name="twitter:description" content="
+
+
+几年前用J3710组装了一台NAS，同时虚拟化了一个VM安装OpenWRT来承担家庭网络路由的功能，一直稳定运行至今。
+然而J3710性能实在太低，无法做诸如性能测试、开发编译等事情，并且如果不小心搞挂了NAS，家里的网络也就中断了，实在不方便。
+因此考虑添加一台机器，做个简陋的Homelab。新机器当然是不可能去买的，银子不够，于是去垃圾场捡了一台24核48线程的R630回来。
+在此记录分享下折腾的过程。
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">ybyte</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">About</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">ybyte</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">About</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+          <div id="content" class="content markup-adoc">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Homelab增加新玩具R630</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-05-20 </span>
+        <div class="post-category">
+            <a href="/categories/homelab/"> homelab </a>
+            <a href="/categories/network/"> network </a>
+            </div>
+        
+      </div>
+    </header>
+
+    
+
+
+    <div class="post-content">
+      <div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_准备">准备</a></li>
+<li><a href="#_擦亮r630">擦亮R630</a>
+<ul class="sectlevel2">
+<li><a href="#_升级">升级</a></li>
+<li><a href="#_操作系统">操作系统</a></li>
+<li><a href="#_idrac直通">iDRAC直通</a></li>
+</ul>
+</li>
+<li><a href="#_测试带宽">测试带宽</a></li>
+</ul>
+</div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>几年前用J3710组装了一台NAS，同时虚拟化了一个VM安装OpenWRT来承担家庭网络路由的功能，一直稳定运行至今。
+然而J3710性能实在太低，无法做诸如性能测试、开发编译等事情，并且如果不小心搞挂了NAS，家里的网络也就中断了，实在不方便。
+因此考虑添加一台机器，做个简陋的Homelab。新机器当然是不可能去买的，银子不够，于是去垃圾场捡了一台24核48线程的R630回来。
+在此记录分享下折腾的过程。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_准备"><a class="anchor" href="#_准备"></a><a class="link" href="#_准备">准备</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>在买新玩具前，考虑过买E5 CPU来组装。研究了一番，发现CPU有ES版和QS版，可选主板也比较少，再加上内存、Raid卡、电源等配件，单独选择非常麻烦，
+还是不如直接捡淘汰的垃圾来得简单。事实证明，这个选择是明智的。</p>
+</div>
+<div class="paragraph">
+<p>二手淘汰的服务器有非常多的选择，我主要的需求是CPU和内存，一圈看下来选择了DELL的R630。在此需要提醒一下，1U的 <code>U</code> 指的是 <code>unit</code> ，
+服务器都有标准的长（深）、宽、高（厚），1U指的是厚度只有 <code>4.45cm</code> ，这类服务器的存储扩展性会差一些，可选显卡也比较少，毕竟厚度在那限制。
+Homelab通常选择1U就可以了，薄一点，竖立放置占的空间少一点。但是如果对显卡有需求，还是需要注意，可能1U的服务器没法安装想要的的显卡。</p>
+</div>
+<div class="paragraph">
+<p>R630平放需要占用 45cm * 80cm 左右的面积。买之前要想好怎么安置机器，如果使用机柜来安装，最好选择长（深）达到90cm的机柜，这个大小的柜子将占很大一片空间。
+我最终放弃了机柜，将服务器靠墙竖立放置，节省很多空间。</p>
+</div>
+<div class="paragraph">
+<p>R630是双路CPU的机器，很多店家支持自由选择配置，我选择了两块E5-2680、96G内存、H730 Raid卡+4块1T的机械盘组成Raid-10模式。
+这些配置足够平时开虚拟机模拟集群、编译大型工程等任务。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="r630.jpg" alt="R630">
+</div>
+<div class="title">Figure 1: R630机器</div>
+</div>
+<div class="paragraph">
+<p>机器成色还不错，内部很干净。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_擦亮r630"><a class="anchor" href="#_擦亮r630"></a><a class="link" href="#_擦亮r630">擦亮R630</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>收到R630的时候，发现没有HDMI接口，没显示器怎么初始化系统。结果是自己太无知了，原来DELL服务器有iDRAC，专门用来管理服务器，
+只需要接入网络，用身边的笔记本即可完成装系统、关机、唤醒等操作，完全不需要一个显示器。</p>
+</div>
+<div class="paragraph">
+<p>R630的iDRAC可以使用专门配备的网络接口，也可以使用LOM接口&#8212;&#8203;即主板上的网络接口。如果交换机接口不够用了，可用采用LOM模式来节省一个交换机的网口。
+iDRAC默认的IP地址是 <code>192.168.0.120</code> ，用户名和密码分别是 <code>root</code> 、 <code>calvin</code> 。
+当然这些默认配置都可以进入iDRAC后自行更改，比如我使用的是DHCP模式，由路由器统一管理IP地址分配（我家里所有设备都规划在同一个lan下面，方便管理）。</p>
+</div>
+<div class="paragraph">
+<p>iDRAC有一个「虚拟控制台」功能，类似VNC，但比VNC更强大。在iDRAC 网页控制台里找到 "启动虚拟控制台" 入口，单击下载一个带有认证过会话的 <code>viewer.jnlp</code> 文件，
+安装jre后直接双击该文件即可运行，中间的证书提示一路允许即可。另外需要注意，系统网络代理可能会影响连接通路，导致虚拟控制台连不上服务器。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="idrac-virtual-console-client.png" alt="Virtual Console Client">
+</div>
+<div class="title">Figure 2: Virual Console Client运行窗口</div>
+</div>
+<div class="sect2">
+<h3 id="_升级"><a class="anchor" href="#_升级"></a><a class="link" href="#_升级">升级</a></h3>
+<div class="paragraph">
+<p>二手服务器iDRAC版本比较低，虚拟控制台可能无法启动！这时候需要升级iDRAC，把二手服务器擦亮一点！升级iDRAC有两种方法：</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>本地升级。这种方式是用一个客户端控制系统连上远端的服务器，自动地把升级文件发送过去进行升级。</p>
+</li>
+<li>
+<p>远程升级。在iDRAC网页上传升级包，iDRAC会提取相应的升级文件，自动执行升级。</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>机器少，采用远程升级的方式比较简单。
+DELL各种驱动可以在官方下载，比如R630的驱动可以在 <a href="https://www.dell.com/support/home/zh-cn/product-support/product/poweredge-r630/drivers" target="_blank" rel="noopener">这里搜索</a> ，
+升级方法可以参考 <a href="https://www.dell.com/support/article/zh-cn/sln307185/%E4%BD%BF%E7%94%A8idrac-web%E7%95%8C%E9%9D%A2%E6%9B%B4%E6%96%B0idrac%E5%9B%BA%E4%BB%B6?lang=zh" target="_blank" rel="noopener">使用iDRAC WEB界面更新iDRAC固件</a> 。
+如果iDRAC版本过低，无法一次跨太多版本进行升级。比如遇到这个错误 <a href="https://www.dell.com/support/article/zh-cn/sln316137/idrac7-idrac8-red007-error-when-applying-latest-idrac-firmware-from-out-of-band-interface?lang=en" target="_blank" rel="noopener"><code>RED007: Unable to verify Update Package signature</code> </a> ，或者上传失败错误等，都有可能是版本跨度太大。
+我的R630按照 <a href="https://dl.dell.com/FOLDER03526203M/3/iDRAC-with-Lifecycle-Controller_Firmware_5GCHC_WN64_2.30.30.30_A00.EXE" target="_blank" rel="noopener">2.30.30.30</a>
+&#8594; <a href="https://dl.dell.com/FOLDER03884128M/2/iDRAC-with-Lifecycle-Controller_Firmware_2091K_WN64_2.40.40.40_A00.EXE" target="_blank" rel="noopener">2.40.40.40</a>
+&#8594; <a href="https://dl.dell.com/FOLDER05889092M/1/iDRAC-with-Lifecycle-Controller_Firmware_DNH17_WN64_2.70.70.70_A00.EXE" target="_blank" rel="noopener">2.70.70.70</a> 的版本顺序才成功将iDRAC升级到最新版本，
+还可以按类似的方法升级BIOS、H730 Raid卡的固件。升级完成之后，虚拟控制台便可以正常工作了。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_操作系统"><a class="anchor" href="#_操作系统"></a><a class="link" href="#_操作系统">操作系统</a></h3>
+<div class="paragraph">
+<p>使用虚拟控制台可以挂载本地的ISO进行操作系统的安装（ <a href="https://www.dell.com/support/article/zh-hk/sln296648/using-the-virtual-media-function-on-idrac-6-7-8-and-9?lang=en" target="_blank" rel="noopener">参考文档</a> ）。
+服务器厂商一般有明确支持的 <a href="https://www.dell.com/support/home/zh-hk/drivers/supportedos/poweredge-r630" target="_blank" rel="noopener">操作系统列表</a> ，这些操作系统大多是付费的，好处就是安装非常容易，不会遇到一些奇怪的问题。
+一些用户可能喜欢EXSi，可以下载 <a href="https://www.dell.com/support/article/zh-cn/sln288152/dell-technologies-customized-vmware-esxi-embedded-iso-image-availability-and-download-instructions?lang=en#DownloadtheDell-customizedESXiISOImagefromDellSupport">DELL定制版</a> 进行安装，其中的驱动比较完善。</p>
+</div>
+<div class="paragraph">
+<p>使用EXSi或者Proxmox之类的虚拟机管理软件虽然使用比较方便，但丧失了灵活性。多出来的虚拟机管理层，也需要更多的精力和知识去学习，得不偿失。
+我比较习惯直接使用Linux，虚拟机用libvirt进行管理，很多测试也可以不用虚拟机，直接在host上进行。
+DELL有官方支持的Ubuntu Server，不过此刻(2020-05)还没有20.04对应的版本。我选择了Ubuntu-20.04的版本，安装过程虽然有各种报错，但最终还是顺利装上。
+装上Ubuntu Server 20.04 LTS之后发现启动总是很慢，使用 <code>systemctl blame</code> 发现是 systemd-networkd-wait-online.service 等待时间非常长。
+执行 <code>networkctl list</code> 检查发现eno4接口配置失败，一直处于 <code>configuring</code> 状态。于是打开 <code>/etc/netplan/00-installer-config.yaml</code> 文件，
+检查配置，原来eno4配置了DHCP，但我的eno4网口并没有接路由器，所以配置失败了。那为什么eno4会在配置文件中呢？这是因为安装的时候我配置了另一个路由器到eno4进行测试，
+installer发现eno4有接线并且有DHCP服务，于是自动加到了配置中。安装完成之后我拔eno4上的网线，就导致了这个问题，删掉eno4的DHCP配置，执行 <code>netplan apply</code> 后重启，一切就正常了。
+以前的机器只有一个网口，不容易遇到这种问题。 更多的网络配置可以参看 <a href="https://ubuntu.com/server/docs/network-configuration" target="_blank" rel="noopener">ubuntu network configuration</a> 。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_idrac直通"><a class="anchor" href="#_idrac直通"></a><a class="link" href="#_idrac直通">iDRAC直通</a></h3>
+<div class="paragraph">
+<p>iDRAC直通具有在iDRAC里监控一些OS的信息、共享操作系统信息等功能，可以参看这里的文档介绍（
+安装指引 <a href="https://www.dell.com/support/manuals/hk/zh/hkdhs1/idrac-service-module-v3.3/ism_3.3_users_guide/%E6%94%AF%E6%8C%81%E7%9A%84%E5%8A%9F%E8%83%BD-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%80%BC%E8%A1%A8?guid=guid-c0b9a6e4-e2a5-4384-b905-ceecc2633133&amp;lang=zh-cn" target="_blank" rel="noopener">Dell EMC iDRAC Service Module</a> ）。</p>
+</div>
+<div class="paragraph">
+<p>使用这个功能最简单的是在iDRAC里面打开USB NIC模式（iDRAC设置 &gt; 网络 &gt; 操作系统至 iDRAC 直通），USB NIC 模式的原理是直通链接通过内部USB总线建立。
+设定好通道之后，在操作系统内安装ISM服务模块即可，ISM没有Ubuntu 20.04对应的版本，直接下载老版本的deb包也可以安装成功：
+<a href="https://linux.dell.com/repo/community/openmanage/iSM/351/stretch/pool/main/d/dcism-osc/dcism-osc_5.0.0_amd64.deb" target="_blank" rel="noopener">dcism-osc_5.0.0_amd64.deb</a> 、
+<a href="https://linux.dell.com/repo/community/openmanage/iSM/351/stretch/pool/main/d/dcism/dcism_3.5.1_amd64.deb" target="_blank" rel="noopener">dcism_3.5.1_amd64.deb</a> 。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="host-network-interfaces.png" alt="Host OS network interfaces">
+</div>
+<div class="title">Figure 3: iDRAC中可以查看OS的网络接口</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_测试带宽"><a class="anchor" href="#_测试带宽"></a><a class="link" href="#_测试带宽">测试带宽</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>R630和原来的NAS通过JGS516PE交换机相连，网线是自己以前夹的，测试网络能达到1Gbps，不错。</p>
+</div>
+<div class="paragraph">
+<p>server(nas):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">#: iperf3 -s</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>client(R630):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">#: iperf3 -c nas t 30s -i 1s
+
+iperf3 -c nas t 30s -i 1s
+Connecting to host nas, port 5201
+[  5] local 192.168.101.170 port 59676 connected to 192.168.101.110 port 5201
+[ ID] Interval           Transfer     Bitrate         Retr  Cwnd
+[  5]   0.00-1.00   sec   115 MBytes   961 Mbits/sec    3    308 KBytes
+[  5]   1.00-2.00   sec   112 MBytes   937 Mbits/sec    0    478 KBytes
+[  5]   2.00-3.00   sec   111 MBytes   927 Mbits/sec   41    226 KBytes
+[  5]   3.00-4.00   sec   110 MBytes   926 Mbits/sec   14    252 KBytes
+[  5]   4.00-5.00   sec   112 MBytes   936 Mbits/sec   19    270 KBytes
+[  5]   5.00-6.00   sec   109 MBytes   916 Mbits/sec   15    216 KBytes
+[  5]   6.00-7.00   sec   107 MBytes   896 Mbits/sec   83    260 KBytes
+[  5]   7.00-8.00   sec   113 MBytes   946 Mbits/sec    3    247 KBytes
+[  5]   8.00-9.00   sec   112 MBytes   938 Mbits/sec    0    460 KBytes
+[  5]   9.00-10.00  sec   112 MBytes   937 Mbits/sec    2    396 KBytes
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bitrate         Retr
+[  5]   0.00-10.00  sec  1.09 GBytes   932 Mbits/sec  180             sender
+[  5]   0.00-10.00  sec  1.08 GBytes   930 Mbits/sec                  receiver</pre>
+</div>
+</div>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">Author</span>
+    <span class="item-content">penglei</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">LastMod</span>
+    <span class="item-content">
+        2020-05-23
+        <a href="https://github.com/penglei/penglei.github.io/commit/98913302b11936d4eb0fe7f935712877fa6b583f" title="Post adding-new-equipment-r630-to-my-homelab">(9891330)</a>
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">Source</span>
+    <span class="item-content">
+        <a href="https://github.com/penglei/penglei.github.io/blob/source/content/post/adding-new-equipment-r630-to-my-homelab/index.adoc" target="_blank">index.adoc</a>
+    </span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">License</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/r630/">r630</a>
+          <a href="/tags/linux/">linux</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/latency-optimization-for-istio-proxy-based-on-envoy/">
+            <span class="next-text nav-default">Istio数据面性能测试与优化</span>
+            <span class="next-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'ybyte';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="https://github.com/penglei" class="iconfont icon-github" title="github"></a>
+  <a href="/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    2017 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">penglei</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  <script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  
+<script type="text/javascript" src="/dist/even.a890af35.min.js"></script>
+
+
+
+
+
+
+<script src="/js/highlight.pack.js"></script>
+<script src="/js/init.js"></script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  messageStyle: "none",
+  tex2jax: {
+    inlineMath: [['\\(', '\\)'], ['$', '$']],
+    //inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]],
+    ignoreClass: "nostem|nolatexmath"
+  },
+  asciimath2jax: {
+    delimiters: [["\\$", "\\$"]],
+    ignoreClass: "nostem|noasciimath"
+  },
+  TeX: { equationNumbers: { autoNumber: "none" } }
+})
+MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready", function () {
+  MathJax.InputJax.AsciiMath.postfilterHooks.Add(function (data, node) {
+    if ((node = data.script.parentNode) && (node = node.parentNode) && node.classList.contains('stemblock')) {
+      data.math.root.display = "block"
+    }
+    return data
+  })
+})
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
+
+</body>
+</html>
