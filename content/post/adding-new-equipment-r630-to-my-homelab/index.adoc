@@ -96,9 +96,16 @@ iDRAC直通具有在iDRAC里监控一些OS的信息、共享操作系统信息�
 安装指引 https://www.dell.com/support/manuals/hk/zh/hkdhs1/idrac-service-module-v3.3/ism_3.3_users_guide/%E6%94%AF%E6%8C%81%E7%9A%84%E5%8A%9F%E8%83%BD-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%80%BC%E8%A1%A8?guid=guid-c0b9a6e4-e2a5-4384-b905-ceecc2633133&lang=zh-cn[Dell EMC iDRAC Service Module^] ）。
 
 使用这个功能最简单的是在iDRAC里面打开USB NIC模式（iDRAC设置 > 网络 > 操作系统至 iDRAC 直通），USB NIC 模式的原理是直通链接通过内部USB总线建立。
-设定好通道之后，在操作系统内安装ISM服务模块即可，ISM没有Ubuntu 20.04对应的版本，直接下载老版本的deb包也可以安装成功：
-https://linux.dell.com/repo/community/openmanage/iSM/351/stretch/pool/main/d/dcism-osc/dcism-osc_5.0.0_amd64.deb[dcism-osc_5.0.0_amd64.deb^] 、
-https://linux.dell.com/repo/community/openmanage/iSM/351/stretch/pool/main/d/dcism/dcism_3.5.1_amd64.deb[dcism_3.5.1_amd64.deb^] 。
+设定好通道之后，在操作系统内安装ISM服务模块即可，ISM没有Ubuntu 20.04对应的版本，直接下载官方版本，用其中Ubuntu18文件夹中的deb包进行安装：
+https://dl.dell.com/FOLDER06164899M/1/OM-iSM-Dell-Web-LX-351-1949_A00.tar.gz[iSM3.5.1^] 。
+另外，还需要手动安装dcism-osc依赖包，
+https://linux.dell.com/repo/community/openmanage/iSM/351/stretch/pool/main/d/dcism-osc/dcism-osc_5.0.0_amd64.deb[dcism-osc_5.0.0_amd64.deb^] ，两者安装好之后，打开dcismeng服务：
+
+[source,console]
+----
+#: systemctl start dcismeng
+#: systemctl enable dcismeng
+----
 
 .iDRAC中可以查看OS的网络接口
 [caption="Figure {counter:global}: "]
@@ -110,12 +117,14 @@ R630和原来的NAS通过JGS516PE交换机相连，网线是自己以前夹的�
 
 server(nas):
 
+[source,console]
 ----
 #: iperf3 -s
 ----
 
 client(R630):
 
+[source,console]
 ----
 #: iperf3 -c nas t 30s -i 1s
 
