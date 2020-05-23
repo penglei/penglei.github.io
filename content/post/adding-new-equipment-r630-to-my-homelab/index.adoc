@@ -1,0 +1,141 @@
+////
+title: Homelab增加新玩具R630
+date: 2020-05-20
+draft: false
+categories: [homelab, network]
+tags: [r630, linux]
+////
+
+= Homelab增加新玩具R630
+:prewrap!:
+:toc:
+:sectanchors:
+:sectlinks:
+:icons: font
+:figure-caption:
+//:imagesdir: /adding-new-equipment-r630-to-my-homelab/
+
+几年前用J3710组装了一台NAS，同时虚拟化了一个VM安装OpenWRT来承担家庭网络路由的功能，一直稳定运行至今。
+然而J3710性能实在太低，无法做诸如性能测试、开发编译等事情，并且如果不小心搞挂了NAS，家里的网络也就中断了，实在不方便。
+因此考虑添加一台机器，做个简陋的Homelab。新机器当然是不可能去买的，银子不够，于是去垃圾场捡了一台24核48线程的R630回来。
+在此记录分享下折腾的过程。
+
+//<!--more-->
+
+== 准备
+
+在买新玩具前，考虑过买E5 CPU来组装。研究了一番，发现CPU有ES版和QS版，可选主板也比较少，再加上内存、Raid卡、电源等配件，单独选择非常麻烦，
+还是不如直接捡淘汰的垃圾来得简单。事实证明，这个选择是明智的。
+
+二手淘汰的服务器有非常多的选择，我主要的需求是CPU和内存，一圈看下来选择了DELL的R630。在此需要提醒一下，1U的 `U` 指的是 `unit` ，
+服务器都有标准的长（深）、宽、高（厚），1U指的是厚度只有 `4.45cm` ，这类服务器的存储扩展性会差一些，可选显卡也比较少，毕竟厚度在那限制。
+Homelab通常选择1U就可以了，薄一点，竖立放置占的空间少一点。但是如果对显卡有需求，还是需要注意，可能1U的服务器没法安装想要的的显卡。
+
+R630平放需要占用 45cm * 80cm 左右的面积。买之前要想好怎么安置机器，如果使用机柜来安装，最好选择长（深）达到90cm的机柜，这个大小的柜子将占很大一片空间。
+我最终放弃了机柜，将服务器靠墙竖立放置，节省很多空间。
+
+R630是双路CPU的机器，很多店家支持自由选择配置，我选择了两块E5-2680、96G内存、H730 Raid卡+4块1T的机械盘组成Raid-10模式。
+这些配置足够平时开虚拟机模拟集群、编译大型工程等任务。
+
+.R630机器
+[caption="Figure {counter:global}: "]
+image::r630.jpg[R630]
+
+机器成色还不错，内部很干净。
+
+== 擦亮R630
+
+收到R630的时候，发现没有HDMI接口，没显示器怎么初始化系统。结果是自己太无知了，原来DELL服务器有iDRAC，专门用来管理服务器，
+只需要接入网络，用身边的笔记本即可完成装系统、关机、唤醒等操作，完全不需要一个显示器。
+
+R630的iDRAC可以使用专门配备的网络接口，也可以使用LOM接口--即主板上的网络接口。如果交换机接口不够用了，可用采用LOM模式来节省一个交换机的网口。
+iDRAC默认的IP地址是 `192.168.0.120` ，用户名和密码分别是 `root` 、 `calvin` 。
+当然这些默认配置都可以进入iDRAC后自行更改，比如我使用的是DHCP模式，由路由器统一管理IP地址分配（我家里所有设备都规划在同一个lan下面，方便管理）。
+
+iDRAC有一个「虚拟控制台」功能，类似VNC，但比VNC更强大。在iDRAC 网页控制台里找到 "启动虚拟控制台" 入口，单击下载一个带有认证过会话的 `viewer.jnlp` 文件，
+安装jre后直接双击该文件即可运行，中间的证书提示一路允许即可。另外需要注意，系统网络代理可能会影响连接通路，导致虚拟控制台连不上服务器。
+
+.Virual Console Client运行窗口
+[caption="Figure {counter:global}: "]
+image::idrac-virtual-console-client.png[Virtual Console Client]
+
+=== 升级
+
+二手服务器iDRAC版本比较低，虚拟控制台可能无法启动！这时候需要升级iDRAC，把二手服务器擦亮一点！升级iDRAC有两种方法：
+
+. 本地升级。这种方式是用一个客户端控制系统连上远端的服务器，自动地把升级文件发送过去进行升级。
+. 远程升级。在iDRAC网页上传升级包，iDRAC会提取相应的升级文件，自动执行升级。
+
+机器少，采用远程升级的方式比较简单。
+DELL各种驱动可以在官方下载，比如R630的驱动可以在 https://www.dell.com/support/home/zh-cn/product-support/product/poweredge-r630/drivers[这里搜索^] ，
+升级方法可以参考 https://www.dell.com/support/article/zh-cn/sln307185/%E4%BD%BF%E7%94%A8idrac-web%E7%95%8C%E9%9D%A2%E6%9B%B4%E6%96%B0idrac%E5%9B%BA%E4%BB%B6?lang=zh[使用iDRAC WEB界面更新iDRAC固件^] 。
+如果iDRAC版本过低，无法一次跨太多版本进行升级。比如遇到这个错误 https://www.dell.com/support/article/zh-cn/sln316137/idrac7-idrac8-red007-error-when-applying-latest-idrac-firmware-from-out-of-band-interface?lang=en[`RED007: Unable to verify Update Package signature` ^] ，或者上传失败错误等，都有可能是版本跨度太大。
+我的R630按照 https://dl.dell.com/FOLDER03526203M/3/iDRAC-with-Lifecycle-Controller_Firmware_5GCHC_WN64_2.30.30.30_A00.EXE[2.30.30.30^]
+-> https://dl.dell.com/FOLDER03884128M/2/iDRAC-with-Lifecycle-Controller_Firmware_2091K_WN64_2.40.40.40_A00.EXE[2.40.40.40^]
+-> https://dl.dell.com/FOLDER05889092M/1/iDRAC-with-Lifecycle-Controller_Firmware_DNH17_WN64_2.70.70.70_A00.EXE[2.70.70.70^] 的版本顺序才成功将iDRAC升级到最新版本，
+还可以按类似的方法升级BIOS、H730 Raid卡的固件。升级完成之后，虚拟控制台便可以正常工作了。
+
+=== 操作系统
+
+使用虚拟控制台可以挂载本地的ISO进行操作系统的安装（ https://www.dell.com/support/article/zh-hk/sln296648/using-the-virtual-media-function-on-idrac-6-7-8-and-9?lang=en[参考文档^] ）。
+服务器厂商一般有明确支持的 https://www.dell.com/support/home/zh-hk/drivers/supportedos/poweredge-r630[操作系统列表^] ，这些操作系统大多是付费的，好处就是安装非常容易，不会遇到一些奇怪的问题。
+一些用户可能喜欢EXSi，可以下载 https://www.dell.com/support/article/zh-cn/sln288152/dell-technologies-customized-vmware-esxi-embedded-iso-image-availability-and-download-instructions?lang=en#DownloadtheDell-customizedESXiISOImagefromDellSupport[DELL定制版] 进行安装，其中的驱动比较完善。
+
+使用EXSi或者Proxmox之类的虚拟机管理软件虽然使用比较方便，但丧失了灵活性。多出来的虚拟机管理层，也需要更多的精力和知识去学习，得不偿失。
+我比较习惯直接使用Linux，虚拟机用libvirt进行管理，很多测试也可以不用虚拟机，直接在host上进行。
+DELL有官方支持的Ubuntu Server，不过此刻(2020-05)还没有20.04对应的版本。我选择了Ubuntu-20.04的版本，安装过程虽然有各种报错，但最终还是顺利装上。
+装上Ubuntu Server 20.04 LTS之后发现启动总是很慢，使用 `systemctl blame` 发现是 systemd-networkd-wait-online.service 等待时间非常长。
+执行 `networkctl list` 检查发现eno4接口配置失败，一直处于 `configuring` 状态。于是打开 `/etc/netplan/00-installer-config.yaml` 文件，
+检查配置，原来eno4配置了DHCP，但我的eno4网口并没有接路由器，所以配置失败了。那为什么eno4会在配置文件中呢？这是因为安装的时候我配置了另一个路由器到eno4进行测试，
+installer发现eno4有接线并且有DHCP服务，于是自动加到了配置中。安装完成之后我拔eno4上的网线，就导致了这个问题，删掉eno4的DHCP配置，执行 `netplan apply` 后重启，一切就正常了。
+以前的机器只有一个网口，不容易遇到这种问题。 更多的网络配置可以参看 https://ubuntu.com/server/docs/network-configuration[ubuntu network configuration^] 。
+
+=== iDRAC直通
+
+iDRAC直通具有在iDRAC里监控一些OS的信息、共享操作系统信息等功能，可以参看这里的文档介绍（
+安装指引 https://www.dell.com/support/manuals/hk/zh/hkdhs1/idrac-service-module-v3.3/ism_3.3_users_guide/%E6%94%AF%E6%8C%81%E7%9A%84%E5%8A%9F%E8%83%BD-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%80%BC%E8%A1%A8?guid=guid-c0b9a6e4-e2a5-4384-b905-ceecc2633133&lang=zh-cn[Dell EMC iDRAC Service Module^] ）。
+
+使用这个功能最简单的是在iDRAC里面打开USB NIC模式（iDRAC设置 > 网络 > 操作系统至 iDRAC 直通），USB NIC 模式的原理是直通链接通过内部USB总线建立。
+设定好通道之后，在操作系统内安装ISM服务模块即可，ISM没有Ubuntu 20.04对应的版本，直接下载老版本的deb包也可以安装成功：
+https://linux.dell.com/repo/community/openmanage/iSM/351/stretch/pool/main/d/dcism-osc/dcism-osc_5.0.0_amd64.deb[dcism-osc_5.0.0_amd64.deb^] 、
+https://linux.dell.com/repo/community/openmanage/iSM/351/stretch/pool/main/d/dcism/dcism_3.5.1_amd64.deb[dcism_3.5.1_amd64.deb^] 。
+
+.iDRAC中可以查看OS的网络接口
+[caption="Figure {counter:global}: "]
+image::host-network-interfaces.png[Host OS network interfaces]
+
+== 测试带宽
+
+R630和原来的NAS通过JGS516PE交换机相连，网线是自己以前夹的，测试网络能达到1Gbps，不错。
+
+server(nas):
+
+----
+#: iperf3 -s
+----
+
+client(R630):
+
+----
+#: iperf3 -c nas t 30s -i 1s
+
+iperf3 -c nas t 30s -i 1s
+Connecting to host nas, port 5201
+[  5] local 192.168.101.170 port 59676 connected to 192.168.101.110 port 5201
+[ ID] Interval           Transfer     Bitrate         Retr  Cwnd
+[  5]   0.00-1.00   sec   115 MBytes   961 Mbits/sec    3    308 KBytes
+[  5]   1.00-2.00   sec   112 MBytes   937 Mbits/sec    0    478 KBytes
+[  5]   2.00-3.00   sec   111 MBytes   927 Mbits/sec   41    226 KBytes
+[  5]   3.00-4.00   sec   110 MBytes   926 Mbits/sec   14    252 KBytes
+[  5]   4.00-5.00   sec   112 MBytes   936 Mbits/sec   19    270 KBytes
+[  5]   5.00-6.00   sec   109 MBytes   916 Mbits/sec   15    216 KBytes
+[  5]   6.00-7.00   sec   107 MBytes   896 Mbits/sec   83    260 KBytes
+[  5]   7.00-8.00   sec   113 MBytes   946 Mbits/sec    3    247 KBytes
+[  5]   8.00-9.00   sec   112 MBytes   938 Mbits/sec    0    460 KBytes
+[  5]   9.00-10.00  sec   112 MBytes   937 Mbits/sec    2    396 KBytes
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bitrate         Retr
+[  5]   0.00-10.00  sec  1.09 GBytes   932 Mbits/sec  180             sender
+[  5]   0.00-10.00  sec  1.08 GBytes   930 Mbits/sec                  receiver
+----
+
