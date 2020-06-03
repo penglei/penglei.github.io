@@ -6,7 +6,7 @@
     <description>Recent content in asciidoc on ybyte blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 01 Jan 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 15 Nov 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/asciidoc/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,10 +14,10 @@
     <item>
       <title>AsciiDoc theme style</title>
       <link>/post/asciidoc-preview/</link>
-      <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 15 Nov 2018 00:00:00 +0000</pubDate>
       
       <guid>/post/asciidoc-preview/</guid>
-      <description>Table of Contents 23. Tables 32. Admonition 33. Sidebar 40. Passthroughs 40.1. Passthrough Macros 40.2. Passthrough Blocks youtube 44. User Interface Macros 47. Callouts demo bibliography ascii diagram stem 23. Tables Table 1. Simple table Cell in column 1, row 1 Cell in column 2, row 1 Cell in column 1, row 2 Cell in column 2, row 2 Cell in column 1, row 3 Cell in column 2, row</description>
+      <description>Table of Contents Tables Mathematical Symbols stem asciimath latexmath wiris (online editor) Admonition Passthroughs Passthrough Macros Passthrough Blocks Youtube User Interface Macros bibliography Ascii Diagram Tables Table 1. 希腊字母 希腊字母小写、大写 LaTeX形式 MathJax α A \alpha A $\alpha$: $\alpha$, $A$: $A$ β B \beta B $\beta$: $\beta$, $B$: $B$ γ Γ \gamma \Gamma $\gamma$:</description>
     </item>
     
   </channel>
