@@ -1,0 +1,32 @@
+////
+title: "虚拟机numa调优"
+date: 2020-03-23T22:05:48+08:00
+draft: true
+////
+
+=
+:prewrap!:
+:toc:
+:experimental:
+:icons: font
+
+summary
+
+// <!--more-->
+
+== content
+
+内存压测工具：
+https://software.intel.com/content/www/us/en/develop/articles/intelr-memory-latency-checker.html
+https://software.intel.com/content/www/us/en/develop/articles/optimizing-memory-bandwidth-on-stream-triad.html
+
+参考：
+https://cloud.tencent.com/developer/article/1452341
+
+
+== 工具
+
+virsh vcpuinfo $DOMAIN
+numactl -H
+lscpu
+lsmem

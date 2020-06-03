@@ -1,7 +1,7 @@
 ////
 title: AsciiDoc theme style
-date: 2018-01-01
-draft: true
+date: 2018-11-15
+draft: false
 tags: [asciidoc]
 ////
 
@@ -23,48 +23,108 @@ endif::[]
 :imagesoutdir: static/post/asciidoc-preview
 :stem:
 
-== 23. Tables
+== Tables
 
 .希腊字母
-[.table-wrapper]
+[cols="^1,3,5"]
 |===
-|希腊字母小写、大写 |   LaTeX形式               |   MathJax
+|希腊字母小写、大写 |   LaTeX形式             |     MathJax
 
-|       α A         | \alpha A                  | $\alpha$ $A$ `$\alpha$` `$A$`
-|       β B         | \beta B                   | $\beta$  $B$
-|       γ Γ         | \gamma \Gamma             | $\gamma$ $\Gamma$
-|       δ Δ         | \delta \Delta             | $\delta$ $\Delta$
-|      ϵ ε E        | \epsilon \varepsilon E    | $\epsilon$ $\varepsilon$ $E$
-|       ζ Z         | \zeta Z                   | $\zeta$ $Z$
-|       η H         | \eta H                    | $\eta$ $H$
-|      θ ϑ Θ        | \theta \vartheta \Theta   | $\theta$ $\vartheta$ $\Theta$
-|       ι I         | \iota I                   | $\iota$ $I$
-|       κ K         | \kappa K                  | $\kappa$ $K$
-|       λ Λ         | \lambda \Lambda           | $\lambda$ $\Lambda$
-|       μ M         | \mu M                     | $\mu$ $M$
-|       ν Ν         | \nu N                     | $\nu$ $N$
-|       ξ Ξ         | \xi \Xi                   | $\xi$ $\Xi$
-|       o Ο         | o O                       | $o$ $O$
-|       π Π         | \pi \Pi                   | $\pi$ $\Pi$
-|      ρ ϱ P        | \rho \varrho P            | $\rho$ $\varrho$ $P$
-|       σ Σ         | \sigma \Sigma             | $\sigma$ $\Sigma$
-|       τ T         | \tau T                    | $\tau$ $T$
-|       υ Υ         | \upsilon \Upsilon         | $\upsilon$ $\Upsilon$
-|      ϕ φ Φ        | \phi \varphi \Phi         | $\phi$ $\varphi$ $\Phi$
-|       χ X         | \chi X                    | $\chi$ $X$
-|       ψ Ψ         | \psi \Psi                 | $\psi$ $\Psi$
-|       ω Ω         | \omega \Omega             | $\omega$ $\Omega$
+|       α A         | \alpha A                |   `$\alpha$`: $\alpha$, `$A$`: $A$
+|       β B         | \beta B                 |   `$\beta$`: $\beta$, `$B$`: $B$
+|       γ Γ         | \gamma \Gamma           |   `$\gamma$`: $\gamma$, `$\Gamma$`: $\Gamma$
+|       δ Δ         | \delta \Delta           |   `$\delta$`: $\delta$, `$\Delta$`: $\Delta$
+|      ϵ ε E        | \epsilon \varepsilon E  |   `$\epsilon$`: $\epsilon$, `$\varepsilon$`: $\varepsilon$, `$E$`: $E$
+|       ζ Z         | \zeta Z                 |   `$\zeta$`: $\zeta$, `$Z$`: $Z$
+|       η H         | \eta H                  |   `$\eta$`: $\eta$, `$H$`: $H$
+|      θ ϑ Θ        | \theta \vartheta \Theta |   `$\theta$`: $\theta$, `$\vartheta$`: $\vartheta$, `$\Theta$`: $\Theta$
+|       ι I         | \iota I                 |   `$\iota$`: $\iota$, `$I$`: $I$
+|       κ K         | \kappa K                |   `$\kappa$`: $\kappa$, `$K$`: $K$
+|       λ Λ         | \lambda \Lambda         |   `$\lambda$`: $\lambda$, `$\Lambda$`: $\Lambda$
+|       μ M         | \mu M                   |   `$\mu$`: $\mu$, `$M$`: $M$
+|       ν Ν         | \nu N                   |   `$\nu$`: $\nu$, `$N$`: $N$
+|       ξ Ξ         | \xi \Xi                 |   `$\xi$`: $\xi$, `$\Xi$`: $\Xi$
+|       o Ο         | o O                     |   `$o$`: $o$, `$O$`: $O$
+|       π Π         | \pi \Pi                 |   `$\pi$`: $\pi$, `$\Pi$`: $\Pi$
+|      ρ ϱ P        | \rho \varrho P          |   `$\rho$`: $\rho$, `$\varrho$`: $\varrho$, `$P$`: $P$
+|       σ Σ         | \sigma \Sigma           |   `$\sigma$`: $\sigma$, `$\Sigma$`: $\Sigma$
+|       τ T         | \tau T                  |   `$\tau$`: $\tau$, `$T$`: $T$
+|       υ Υ         | \upsilon \Upsilon       |   `$\upsilon$`: $\upsilon$, `$\Upsilon$`: $\Upsilon$
+|      ϕ φ Φ        | \phi \varphi \Phi       |   `$\phi$`: $\phi$, `$\varphi$`: $\varphi$, `$\Phi$`: $\Phi$
+|       χ X         | \chi X                  |   `$\chi$`: $\chi$, `$X$`: $X$
+|       ψ Ψ         | \psi \Psi               |   `$\psi$`: $\psi$, `$\Psi$`: $\Psi$
+|       ω Ω         | \omega \Omega           |   `$\omega$`: $\omega$, `$\Omega$`: $\Omega$
 |===
 
 https://zh.wikipedia.org/wiki/%E5%B8%8C%E8%85%8A%E5%AD%97%E6%AF%8D
 
-https://blog.csdn.net/xxzhangx/article/details/52778539
+== Mathematical Symbols
 
-== 32. Admonition
+=== stem
 
-https://blog.olowolo.com/example-site/post/shortcodes/#admonition
+* block
++
+[source,asciidoc]
+----
+[stem]
+++++
+sqrt(4) = 2
+++++
+----
++
+Render result:
++
+[stem]
+++++
+sqrt(4) = 2
+++++
 
-https://github.com/asciidoctor/asciidoctor-extensions-lab/issues/9
+* inline steam
++
+Water (stem:[H_2O]) is a critical component.
+
+=== asciimath
+
+[source,asciimath]
+----
+[asciimath]
+++++
+sqrt(4) = 2
+++++
+----
+
+Render result:
+
+[asciimath]
+++++
+sqrt(4) = 2
+++++
+
+=== latexmath
+
+[source,latexmath]
+----
+latexmath:[C = \alpha + \beta Y^{\gamma} + \epsilon]
+
+latexmath:[\equiv]
+----
+
+Render result:
+
+latexmath:[C = \alpha + \beta Y^{\gamma} + \epsilon]
+
+latexmath:[\equiv]
+
+=== wiris (online editor)
+
+http://www.wiris.com/editor/demo/en/developers
+
+
+== Admonition
+
+//https://blog.olowolo.com/example-site/post/shortcodes/#admonition
+
+//https://github.com/asciidoctor/asciidoctor-extensions-lab/issues/9
 
 .exampleblock
 ****
@@ -84,36 +144,8 @@ King Arthur: Bloody peasant!
 Dennis: Oh, what a giveaway! Did you hear that? Did you hear that, eh? That's what I'm on about! Did you see him repressing me? You saw him, Didn't you?
 ____
 
-== 33. Sidebar
-
-.After landing the cloaked Klingon bird of prey in Golden Gate park:
-[quote, Captain James T. Kirk, Star Trek IV: The Voyage Home]
-Everybody remember where we parked.
-
-.AsciiDoc history
-****
-AsciiDoc was first released in Nov 2002 by Stuart Rackham.
-It was designed from the start to be a shorthand syntax
-for producing professional documents like DocBook and LaTeX.
-****
-
-== 40. Passthroughs
-
-=== 40.1. Passthrough Macros
-
-pass:[content like #{variable} passed directly to the output] followed by normal content.
-
-content with only select substitutions applied: pass:c,a[__<{email}>__]
-
-=== 40.2. Passthrough Blocks
-
-
-[pass]
-<u>underline me</u> is underlined.
-
-
 //passthrough, hugo will render it
-even admonition: https://blog.olowolo.com/example-site/post/shortcodes/
+// even admonition: https://blog.olowolo.com/example-site/post/shortcodes/
 
 ++++
 {{% admonition note "I'm title!" false %}}
@@ -161,68 +193,29 @@ biu biu biu.
 {{% /admonition %}}
 ++++
 
-=== youtube
+== Passthroughs
 
-pass:[{{< youtube "wC5pJm8RAu4" >}}]
+=== Passthrough Macros
 
-== 44. User Interface Macros
+pass:[content like #{variable} passed directly to the output] followed by normal content.
+
+content with only select substitutions applied: pass:c,a[__<{email}>__]
+
+=== Passthrough Blocks
+[pass]
+<u>underline me</u> is underlined by html tag &lt;u&gt;..&lt;/u&gt;
+
+=== Youtube
+
+pass:[{{< youtube "6Sa-wSwCkY8" >}}]
+
+== User Interface Macros
 
 kbd:[Ctrl+Shift+N]
 
 
 Press the btn:[OK] button when you are finished.
 
-== 47. Callouts
-
-打开 `:icon: font` 属性，配合如下的CSS属性。
-
-[source,css]
-----
-pre .conum[data-value] {
-    position: relative;
-    top: -0.125em;
-}
-
-.conum[data-value] {
-    display: inline-block;
-    color: #fff !important;
-    background-color: rgba(0,0,0,0.8);
-    -webkit-border-radius: 100px;
-    border-radius: 100px;
-    text-align: center;
-    width: 1.67em;
-    height: 1.67em;
-    font-size: 0.75em;
-    line-height: 1.67em;
-    font-style: normal;
-    font-weight: bold;
-}
-
-.conum[data-value]:after {
-    content: attr(data-value);
-}
-
-.conum[data-value]+b {
-    display: none;
-}
-
-.colist.arabic {
-    font-size: 16px;
-}
-.colist td:not([class]):first-child {
-    padding: 0.4em 0.75em 0;
-    padding-right: 0.5em;
-    line-height: 1;
-    vertical-align: top;
-}
-.colist td:not([class]):last-child {
-    padding: 0.25em 0;
-}
-----
-
-== demo
-
-https://dave.cheney.net/practical-go/presentations/qcon-china.html
 
 == bibliography
 
@@ -239,7 +232,7 @@ bibitem:[gidenstam2010efficient]
 
 bibliography::[]
 
-== ascii diagram
+== Ascii Diagram
 
 .ditaa
 [ditaa, format="svg"]
@@ -289,50 +282,13 @@ digraph automata_0 {
   1 -> 1 [ label = "other " ];
   2 -> 2 [ label = "a " ];
   2 -> 1 [ label = "other " ];
-  "Machine: a" [ shape = plaintext ];
 }
 ---------------------------------------------------------------------
 
-最推荐的几个绘图工具：
+一些绘图工具：
 
-ascii to svg
-https://github.com/ivanceras/svgbob
+* ascii to svg: https://github.com/ivanceras/svgbob
+* 流程图、UML图( vs plantUML）、甘特图 、轨道图: https://github.com/mermaidjs/mermaid.cli
+* 结构图、DAG等等(graphviz): https://www.graphviz.org/
+* digital timing diagram : https://github.com/wavedrom/wavedrom
 
-
-流程图、UML图( vs plantUML）、甘特图 、轨道图
-https://github.com/mermaidjs/mermaid.cli
-
-graphviz 画结构图（DAG等等）
-
-digital timing diagram
-https://github.com/wavedrom/wavedrom
-
-== stem
-
-[source,asciidoc]
-----
-[stem]
-++++
-sqrt(4) = 2
-++++
-----
-
-[stem]
-++++
-sqrt(4) = 2
-++++
-
-Water (stem:[H_2O]) is a critical component.
-
-.asciimath
-[asciimath]
-++++
-sqrt(4) = 2
-++++
-
-.latexmath
-latexmath:[C = \alpha + \beta Y^{\gamma} + \epsilon]
-
-http://www.wiris.com/editor/demo/en/developers
-
-latexmath:[\equiv]
