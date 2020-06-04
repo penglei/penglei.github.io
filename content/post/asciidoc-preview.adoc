@@ -56,12 +56,19 @@ endif::[]
 |       ω Ω         | \omega \Omega           |   `$\omega$`: $\omega$, `$\Omega$`: $\Omega$
 |===
 
-http://detexify.kirelabs.org/symbols.html
-https://pic.plover.com/MISC/symbols.pdf
 https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference
+
 https://zh.wikipedia.org/wiki/%E5%B8%8C%E8%85%8A%E5%AD%97%E6%AF%8D
 
 == Mathematical Symbols
+
+Mathematical logic: https://en.wikipedia.org/wiki/List_of_logic_symbols
+
+http://detexify.kirelabs.org/symbols.html
+
+https://pic.plover.com/MISC/symbols.pdf
+
+https://tex.stackexchange.com/questions/58098/what-are-all-the-font-styles-i-can-use-in-math-mode
 
 === stem
 
@@ -110,6 +117,8 @@ sqrt(4) = 2
 latexmath:[C = \alpha + \beta Y^{\gamma} + \epsilon]
 
 latexmath:[\equiv]
+
+\mathfrak{ABCDEFGHIJKLMNOPQRSTUVWXYZ}
 ----
 
 Render result:
@@ -118,10 +127,28 @@ latexmath:[C = \alpha + \beta Y^{\gamma} + \epsilon]
 
 latexmath:[\equiv]
 
-=== wiris (online editor)
+latexmath:[\mathfrak{ABCDEFGHIJKLMNOPQRSTUVWXYZ}]
 
-http://www.wiris.com/editor/demo/en/developers
+=== Mathematical logic
 
+[latexmath]
+++++
+\frac{
+ \begin{matrix}
+ \frac{}{A \ true} u \\
+ \vdots \\
+ P \ true
+ \end{matrix}
+ \quad
+ \begin{matrix}
+ \frac{}{A \ true} u \\
+ \vdots \\
+ \lnot P \ true
+ \end{matrix}
+}{\lnot A \ true} \lnot I^u
+\qquad
+\frac{\lnot A \ true \quad A \ true}{C \ true} \lnot E
+++++
 
 == Admonition
 
@@ -238,6 +265,7 @@ bibliography::[]
 == Ascii Diagram
 
 .ditaa
+https://github.com/stathissideris/ditaa
 [ditaa, format="svg"]
 ....
                    +-------------+

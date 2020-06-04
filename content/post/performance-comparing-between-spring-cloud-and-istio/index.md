@@ -1,8 +1,13 @@
 ---
-draft: true
----
 
-# Spring Cloud与 Istio的性能测试对比
+title: Spring Cloud与 Istio的性能测试对比
+draft: true
+date: 2020-05-10T17:43:24+08:00
+tags: [Istio, Performance, Sidecar, SpringCloud]
+categories: [servicemsh]
+author: "penglei"
+
+---
 
 Spring Cloud 是基于JVM生态的微服务架构解决方案，在行业内使用非常广泛。Spring Cloud通过SDK提供服务注册、服务发现、遥测监控、链路跟踪等服务治理的功能，Istio通过sidecar模式提供服务治理功能。sidecar模式的性能一直为人诟病，通过下面的测试，我们获得了两者的性能差异。
 
@@ -23,7 +28,7 @@ Spring Cloud 是基于JVM生态的微服务架构解决方案，在行业内使�
     在基准测试的基础上，使用Spring Cloud生态的组件实现服务治理（ Eureka完成服务注册/服务发现，Sleuth上报链路跟踪信息，Prometheus SDK生成遥测指标）。
 
 * 网格测试（Istio）
-    在基准测试的基础上，引入Istio实现服务治理。 
+    在基准测试的基础上，引入Istio实现服务治理。
 
 在每种测试场景中，增加了细化的TLS对比。对于网格测试场景，额外增加了优化版遥测和官方版遥测的对比。
 
@@ -45,14 +50,14 @@ client和server都运行于S2.LARGE8 (4C4)服务器上，所有机器都使用TK
 2. 终端延时（P99）
     ![](image003.png)
     *RPS超过3000时，延时明显增加，超过5000时达到机器处理上限。 SpringCloud增加TLS后，延时变得很差。*
-    
+
    上图中可以看出Istio对延时的影响更明显，测试环境用的4C机器，超过3000QPS的数据没有太大意义，低QPS下Istio与Spring Cloud的延时对比更具有价值：
    ![](image004.png)
     **随着压力的上升，Istio对延时的影响更加明显。**
     _1000 QPS下，SpringCloud在Baseline的基础上增加1ms延时，Istio在Baseline的基础上增加2ms延时；_
     _2000 QPS下，SpringCloud在Baseline的基础上增加2ms延时，Istio在Baseline的基础上增加 6ms延时；_
     _3000 QPS下，SpringCloud在Baseline的基础上增加6.3ms延时，Istio在Baseline的基础上增加 15ms延时；_
-   
+
 3. server资源消耗
     测试架构中的server侧主要提供接口服务，服务治理的逻辑比较简单（不用初始化链路跟踪信息，不访问其它服务），最能体现不同的服务治理方式消耗的资源量。
     **注：下面的图表中不再以请求RPS为横坐标，而是以实际QPS为横坐标。**
