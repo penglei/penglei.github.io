@@ -38,7 +38,7 @@
 
 
 
-<link href="/dist/even.52886a66.min.css" rel="stylesheet">
+<link href="/dist/even.0d23965c.min.css" rel="stylesheet">
 
 <link rel="stylesheet" href="/css/highlightjs/github.css">
 <link rel="stylesheet" href="/css/custom.css">
@@ -67,6 +67,8 @@
 
 </head>
 <body>
+  
+
   <div id="mobile-navbar" class="mobile-navbar">
   <div class="mobile-header-logo">
     <a href="/" class="logo">ybyte</a>
@@ -113,6 +115,7 @@
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
@@ -166,6 +169,7 @@
     <span class="author">penglei</span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
@@ -188,18 +192,35 @@
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
-  messageStyle: "none",
+  jax: ["input/TeX","output/CommonHTML"],
+  //displayAlign: "left",
+  extensions: ["tex2jax.js","AssistiveMML.js"], // "MathMenu.js","MathZoom.js", "a11y/accessibility-menu.js"
+  TeX: {
+    extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"],
+    equationNumbers: { autoNumber: "none" }
+  },
   tex2jax: {
-    inlineMath: [['\\(', '\\)'], ['$', '$']],
     //inlineMath: [["\\(", "\\)"]],
+    inlineMath: [['\\(', '\\)'], ['$', '$']],
     displayMath: [["\\[", "\\]"]],
-    ignoreClass: "nostem|nolatexmath"
+    ignoreClass: "nostem|nolatexmath",
+    processEscapes: true,
+    balanceBraces: true
   },
   asciimath2jax: {
     delimiters: [["\\$", "\\$"]],
     ignoreClass: "nostem|noasciimath"
   },
-  TeX: { equationNumbers: { autoNumber: "none" } }
+  showMathMenu: false,
+  showMathMenuMSIE: false,
+  menuSettings: {
+      inTabOrder: false,
+      zoom: "None"
+  },
+  'HTML-CSS': {
+      availableFonts: [],
+      webFont: 'TeX',
+  }
 })
 MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready", function () {
   MathJax.InputJax.AsciiMath.postfilterHooks.Add(function (data, node) {
@@ -208,9 +229,30 @@ MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready", function () {
     }
     return data
   })
-})
+});
+
+MathJax.Hub.Register.MessageHook("Math Processing Error", function (message) {
+    console.log(message)
+});
+MathJax.Hub.Register.MessageHook("TeX Jax - parse error", function (message) {
+    console.log(message)
+});
+
+(function () {
+  var EXT = MathJax.Extension, mm, mz;
+        MathJax.Hub.Register.StartupHook("End Typeset",function () {
+          mm = EXT.MathMenu; mz = EXT.MathZoom;
+          EXT.MathMenu = EXT.MathZoom = {};
+        });
+  MathJax.Hub.Queue(function () {
+    if (mm) {EXT.MathMenu = mm} else {delete EXT.MathMenu}
+    if (mm) {EXT.MathZoom = mz} else {delete EXT.MathZoom}
+  });
+})();
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
+
+
 
 </body>
 </html>

@@ -6,10 +6,28 @@
     <description>Recent content in Posts on ybyte blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 05 Jun 2020 10:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 08 Sep 2020 21:00:00 +0800</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Specifying Systems 笔记2 Liveness &amp; Fairness</title>
+      <link>/post/specifying-systems-notes-2/</link>
+      <pubDate>Tue, 08 Sep 2020 21:00:00 +0800</pubDate>
+      
+      <guid>/post/specifying-systems-notes-2/</guid>
+      <description>&lt;div id=&#34;preamble&#34;&gt;
+&lt;div class=&#34;sectionbody&#34;&gt;
+&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;Specifying Systems的1-7章层层推进，在实例中穿插着原理讲解，深入浅出地讲解了Specification是什么，以及如何规约系统设计。
+这些Specification表明了系统的Safety属性&amp;#8201;&amp;#8212;&amp;#8201;即系统行为被约束在一定范围内，不会做出一些不被允许的行为(something &lt;strong&gt;bad&lt;/strong&gt; does not happen)。
+在TLA+中，通常使用公式 \(Spec \triangleq Init \land \Box [Next]_{vars}\) 来描述系统的Safety属性(约束)。
+Safety属性说明了系统中什么不能发生，但无法表达系统中&lt;strong&gt;最终会发生&lt;/strong&gt;的这类属性，而Liveness便可以表达(&#34;something &lt;strong&gt;good&lt;/strong&gt; eventully happen&#34;)。
+Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公式 \(Spec \triangleq Init \land \Box [Next]_{vars} \land F\) 来同时描述其对Safety和Liveness的要求，
+公式末尾的 $F$ 便是描述Liveness属性的公式。&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</description>
+    </item>
     
     <item>
       <title>Dubbo 集成 Istio 的方案</title>

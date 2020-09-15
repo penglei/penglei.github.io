@@ -176,3 +176,15 @@ code[data-lang=shell] .bash ,code[data-lang=console] .bash {
   margin-top: 0.5em;
   margin-bottom: 0.5em;
 }
+
+/* Remove the outline when clicking on math formulas
+ * see https://github.com/mathjax/MathJax/issues/1423 */
+/*
+.mjx-chtml[tabindex]:focus, body :focus .mjx-chtml[tabindex] {
+  display: inline-table;
+  outline: none!important;
+}
+*/
+/* another solution, by https://pron.github.io/css/main.css */
+.MathJax:focus, .mjx-chtml:focus, .MathJax_SVG:focus { outline: 0px solid gray; }
+

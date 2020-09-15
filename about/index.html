@@ -39,7 +39,7 @@
 
 
 
-<link href="/dist/even.52886a66.min.css" rel="stylesheet">
+<link href="/dist/even.0d23965c.min.css" rel="stylesheet">
 
 <link rel="stylesheet" href="/css/highlightjs/github.css">
 <link rel="stylesheet" href="/css/custom.css">
@@ -79,6 +79,95 @@
 
 </head>
 <body>
+  
+<div style="display: none">
+<script type="math/tex; mode=display">
+\newcommand{\sc}[1]{\mathrm{\small{#1}}\;}
+\newcommand{\comment}[1]{\bbox[lightgrey,2pt]{\text{#1}}}
+\newcommand{\str}[1]{``\mathsf{#1}\!"}
+\newcommand{\nested}[1]{\!\!\rlap{\begin{aligned}\begin{alignat}{1}#1\end{alignat}\end{aligned}}}
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\seq}[1]{\langle #1 \rangle}
+\newcommand{\llbracket}{[\![}
+\newcommand{\rrbracket}{]\!]}
+\newcommand{\sem}[1]{\llbracket #1 \rrbracket}
+\newcommand{\H}{-\!\!\!}
+\newcommand{\UR}{\lower 4.3pt {\urcorner}\!\!}
+\newcommand{\UL}{\lower 4.3pt {\ulcorner}\!\!\!}
+\newcommand{\LR}{\raise 2.5pt {\lrcorner}}
+\newcommand{\LL}{\raise 2.5pt {\llcorner}\!\!\!}
+\newcommand{\defeq}{\triangleq}
+\newcommand{\E}{\exists\,}
+\newcommand{\A}{\forall\,}
+\newcommand{\EE}{\pmb{\pmb{\boldsymbol{\boldsymbol{\exists}}}}\,}
+\newcommand{\AA}{\pmb{\pmb{\boldsymbol{\boldsymbol{\forall}}}}\,}
+\newcommand{\implies}{\Rightarrow}
+\newcommand{\whileop}{\overset{+}{-}\!\!\triangleright\; }
+\let\savedBox=\Box
+\renewcommand{\Box}{\raise1mu{\small \square} }
+\renewcommand{\Diamond}{ {\Large \diamond} }
+\newcommand{\LET}{\sc{LET}}
+\newcommand{\IN}{\sc{IN}}
+\newcommand{\RECURSIVE}{\sc{RECURSIVE}}
+\newcommand{\LAMBDA}{\sc{LAMBDA}}
+\newcommand{\IF}{\sc{IF}}
+\newcommand{\THEN}{\sc{THEN}}
+\newcommand{\ELSE}{\sc{ELSE}}
+\newcommand{\CASE}{\sc{CASE}}
+\newcommand{\OTHER}{\sc{OTHER}}
+\newcommand{\CHOOSE}{\sc{CHOOSE}}
+\newcommand{\BOOLEAN}{\sc{BOOLEAN}}
+\newcommand{\TRUE}{\sc{TRUE}}
+\newcommand{\FALSE}{\sc{FALSE}}
+\newcommand{\DOMAIN}{\sc{DOMAIN}}
+\newcommand{\EXCEPT}{\sc{EXCEPT}}
+\newcommand{\STRING}{\sc{STRING}}
+\newcommand{\MODULE}{\sc{MODULE}}
+\newcommand{\LOCAL}{\sc{LOCAL}}
+\newcommand{\INSTANCE}{\sc{INSTANCE}}
+\newcommand{\WITH}{\sc{WITH}}
+\newcommand{\EXTENDS}{\sc{EXTENDS}}
+\newcommand{\ASSUME}{\sc{ASSUME}}
+\newcommand{\VARIABLE}{\sc{VARIABLE}}
+\newcommand{\VARIABLES}{\sc{VARIABLES}}
+\newcommand{\CONSTANT}{\sc{CONSTANT}}
+\newcommand{\CONSTANTS}{\sc{CONSTANTS}}
+%\newcommand{\CONSTANTS}{\sc{\color{red}{CONSTANTS}}}
+\newcommand{\UNION}{\sc{UNION}}
+\newcommand{\SUBSET}{\sc{SUBSET}}
+\newcommand{\UNCHANGED}{\sc{UNCHANGED}}
+\newcommand{\ENABLED}{\sc{ENABLED}}
+\newcommand{\WF}{\text{WF}}
+\newcommand{\SF}{\text{SF}}
+\newcommand{\THEOREM}{\sc{THEOREM}}
+\newcommand{\LEMMA}{\sc{LEMMA}}
+\newcommand{\COROLLARY}{\sc{COROLLARY}}
+\newcommand{\PROPOSITION}{\sc{PROPOSITION}}
+\newcommand{\AXIOM}{\sc{AXIOM}}
+\newcommand{\PROOF}{\sc{PROOF}}
+\newcommand{\ASSUME}{\sc{ASSUME}}
+\newcommand{\PROVE}{\sc{PROVE}}
+\newcommand{\QED}{\sc{QED}}
+\newcommand{\BY}{\sc{BY}}
+\newcommand{\DEF}{\sc{DEF}}
+\newcommand{\DEFS}{\sc{DEFS}}
+\newcommand{\OBVIOUS}{\sc{OBVIOUS}}
+\newcommand{\OMITTED}{\sc{OMITTED}}
+\newcommand{\NEW}{\sc{NEW}}
+\newcommand{\STATE}{\sc{STATE}}
+\newcommand{\ACTION}{\sc{ACTION}}
+\newcommand{\TEMPORAL}{\sc{TEMPORAL}}
+\newcommand{\USE}{\sc{USE}}
+\newcommand{\DEFINE}{\sc{DEFINE}}
+\newcommand{\SUFFICES}{\sc{SUFFICES}}
+\newcommand{\HAVE}{\sc{HAVE}}
+\newcommand{\TAKE}{\sc{TAKE}}
+\newcommand{\PICK}{\sc{PICK}}
+\newcommand{\WITNESS}{\sc{WITNESS}}
+\newcommand{\HIDE}{\sc{HIDE}}
+</script>
+</div>
+
   <div id="mobile-navbar" class="mobile-navbar">
   <div class="mobile-header-logo">
     <a href="/" class="logo">ybyte</a>
@@ -125,6 +214,7 @@
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
@@ -172,6 +262,7 @@
     <span class="author">penglei</span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
@@ -194,18 +285,35 @@
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
-  messageStyle: "none",
+  jax: ["input/TeX","output/CommonHTML"],
+  //displayAlign: "left",
+  extensions: ["tex2jax.js","AssistiveMML.js"], // "MathMenu.js","MathZoom.js", "a11y/accessibility-menu.js"
+  TeX: {
+    extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"],
+    equationNumbers: { autoNumber: "none" }
+  },
   tex2jax: {
-    inlineMath: [['\\(', '\\)'], ['$', '$']],
     //inlineMath: [["\\(", "\\)"]],
+    inlineMath: [['\\(', '\\)'], ['$', '$']],
     displayMath: [["\\[", "\\]"]],
-    ignoreClass: "nostem|nolatexmath"
+    ignoreClass: "nostem|nolatexmath",
+    processEscapes: true,
+    balanceBraces: true
   },
   asciimath2jax: {
     delimiters: [["\\$", "\\$"]],
     ignoreClass: "nostem|noasciimath"
   },
-  TeX: { equationNumbers: { autoNumber: "none" } }
+  showMathMenu: false,
+  showMathMenuMSIE: false,
+  menuSettings: {
+      inTabOrder: false,
+      zoom: "None"
+  },
+  'HTML-CSS': {
+      availableFonts: [],
+      webFont: 'TeX',
+  }
 })
 MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready", function () {
   MathJax.InputJax.AsciiMath.postfilterHooks.Add(function (data, node) {
@@ -214,9 +322,30 @@ MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready", function () {
     }
     return data
   })
-})
+});
+
+MathJax.Hub.Register.MessageHook("Math Processing Error", function (message) {
+    console.log(message)
+});
+MathJax.Hub.Register.MessageHook("TeX Jax - parse error", function (message) {
+    console.log(message)
+});
+
+(function () {
+  var EXT = MathJax.Extension, mm, mz;
+        MathJax.Hub.Register.StartupHook("End Typeset",function () {
+          mm = EXT.MathMenu; mz = EXT.MathZoom;
+          EXT.MathMenu = EXT.MathZoom = {};
+        });
+  MathJax.Hub.Queue(function () {
+    if (mm) {EXT.MathMenu = mm} else {delete EXT.MathMenu}
+    if (mm) {EXT.MathZoom = mz} else {delete EXT.MathZoom}
+  });
+})();
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
+
+
 
 </body>
 </html>

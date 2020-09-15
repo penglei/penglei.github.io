@@ -40,7 +40,7 @@
 
 
 
-<link href="/dist/even.52886a66.min.css" rel="stylesheet">
+<link href="/dist/even.0d23965c.min.css" rel="stylesheet">
 
 <link rel="stylesheet" href="/css/highlightjs/github.css">
 <link rel="stylesheet" href="/css/custom.css">
@@ -52,7 +52,7 @@
 <meta property="og:description" content="表达真实的自己" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="/" />
-<meta property="og:updated_time" content="2020-06-05T10:00:00+08:00" />
+<meta property="og:updated_time" content="2020-09-08T21:00:00+08:00" />
 <meta itemprop="name" content="ybyte blog">
 <meta itemprop="description" content="表达真实的自己"><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="ybyte blog"/>
@@ -69,6 +69,8 @@
 
 </head>
 <body>
+  
+
   <div id="mobile-navbar" class="mobile-navbar">
   <div class="mobile-header-logo">
     <a href="/" class="logo">ybyte</a>
@@ -115,12 +117,43 @@
       </li>
   </ul>
 </nav>
+
     </header>
 
     <main id="main" class="main">
       <div class="content-wrapper">
           <div id="content" class="content ">
           <section id="posts" class="posts">
+    <article class="post">
+  <header class="post-header">
+    <h1 class="post-title"><a class="post-link" href="/post/specifying-systems-notes-2/">Specifying Systems 笔记2 Liveness &amp; Fairness</a></h1>
+    <div class="post-meta">
+      <span class="post-time"> 2020-09-08 </span>
+      <div class="post-category">
+          <a href="/categories/formal/"> Formal </a>
+          </div>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <div class="post-summary">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Specifying Systems的1-7章层层推进，在实例中穿插着原理讲解，深入浅出地讲解了Specification是什么，以及如何规约系统设计。
+这些Specification表明了系统的Safety属性&#8201;&#8212;&#8201;即系统行为被约束在一定范围内，不会做出一些不被允许的行为(something <strong>bad</strong> does not happen)。
+在TLA+中，通常使用公式 \(Spec \triangleq Init \land \Box [Next]_{vars}\) 来描述系统的Safety属性(约束)。
+Safety属性说明了系统中什么不能发生，但无法表达系统中<strong>最终会发生</strong>的这类属性，而Liveness便可以表达("something <strong>good</strong> eventully happen")。
+Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公式 \(Spec \triangleq Init \land \Box [Next]_{vars} \land F\) 来同时描述其对Safety和Liveness的要求，
+公式末尾的 $F$ 便是描述Liveness属性的公式。</p>
+</div></div></div>
+    </div>
+    <div class="read-more">
+      <a href="/post/specifying-systems-notes-2/" class="read-more-link">Read more...</a>
+    </div>
+  </div>
+</article>
+
     <article class="post">
   <header class="post-header">
     <h1 class="post-title"><a class="post-link" href="/post/dubbo-integrate-with-istio/">Dubbo 集成 Istio 的方案</a></h1>
@@ -281,6 +314,7 @@
     <span class="author">penglei</span>
   </span>
 </div>
+
     </footer>
 
     <div class="back-to-top" id="back-to-top">
@@ -303,18 +337,35 @@
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
-  messageStyle: "none",
+  jax: ["input/TeX","output/CommonHTML"],
+  //displayAlign: "left",
+  extensions: ["tex2jax.js","AssistiveMML.js"], // "MathMenu.js","MathZoom.js", "a11y/accessibility-menu.js"
+  TeX: {
+    extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"],
+    equationNumbers: { autoNumber: "none" }
+  },
   tex2jax: {
-    inlineMath: [['\\(', '\\)'], ['$', '$']],
     //inlineMath: [["\\(", "\\)"]],
+    inlineMath: [['\\(', '\\)'], ['$', '$']],
     displayMath: [["\\[", "\\]"]],
-    ignoreClass: "nostem|nolatexmath"
+    ignoreClass: "nostem|nolatexmath",
+    processEscapes: true,
+    balanceBraces: true
   },
   asciimath2jax: {
     delimiters: [["\\$", "\\$"]],
     ignoreClass: "nostem|noasciimath"
   },
-  TeX: { equationNumbers: { autoNumber: "none" } }
+  showMathMenu: false,
+  showMathMenuMSIE: false,
+  menuSettings: {
+      inTabOrder: false,
+      zoom: "None"
+  },
+  'HTML-CSS': {
+      availableFonts: [],
+      webFont: 'TeX',
+  }
 })
 MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready", function () {
   MathJax.InputJax.AsciiMath.postfilterHooks.Add(function (data, node) {
@@ -323,9 +374,30 @@ MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready", function () {
     }
     return data
   })
-})
+});
+
+MathJax.Hub.Register.MessageHook("Math Processing Error", function (message) {
+    console.log(message)
+});
+MathJax.Hub.Register.MessageHook("TeX Jax - parse error", function (message) {
+    console.log(message)
+});
+
+(function () {
+  var EXT = MathJax.Extension, mm, mz;
+        MathJax.Hub.Register.StartupHook("End Typeset",function () {
+          mm = EXT.MathMenu; mz = EXT.MathZoom;
+          EXT.MathMenu = EXT.MathZoom = {};
+        });
+  MathJax.Hub.Queue(function () {
+    if (mm) {EXT.MathMenu = mm} else {delete EXT.MathMenu}
+    if (mm) {EXT.MathZoom = mz} else {delete EXT.MathZoom}
+  });
+})();
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
+
+
 
 </body>
 </html>
