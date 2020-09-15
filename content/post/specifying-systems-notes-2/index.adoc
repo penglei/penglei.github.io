@@ -1,0 +1,139 @@
+////
+title: "Specifying Systems 笔记2 Liveness & Fairness"
+date: 2020-09-08T21:00:00+08:00
+
+draft: false
+categories: [Formal]
+tags: [TLA+]
+////
+
+= Specifying Systems 笔记2 -- Liveness & Fairness
+// Disable wrapping in listing and literal blocks.
+:prewrap!:
+:toc:
+:sectanchors:
+:sectlinks:
+:icons: font
+
+Specifying Systems的1-7章层层推进，在实例中穿插着原理讲解，深入浅出地讲解了Specification是什么，以及如何规约系统设计。
+这些Specification表明了系统的Safety属性 -- 即系统行为被约束在一定范围内，不会做出一些不被允许的行为(something **bad** does not happen)。
+在TLA+中，通常使用公式 latexmath:[Spec \triangleq Init \land \Box [Next\]_{vars}] 来描述系统的Safety属性(约束)。
+Safety属性说明了系统中什么不能发生，但无法表达系统中**最终会发生**的这类属性，而Liveness便可以表达("something **good** eventully happen")。
+Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公式 latexmath:[Spec \triangleq Init \land \Box [Next\]_{vars} \land F] 来同时描述其对Safety和Liveness的要求，
+公式末尾的 $F$ 便是描述Liveness属性的公式。
+
+//<!--more-->
+
+== 一些概念
+
+.state
+state是对一些变量进行赋值(的结果)，如 $[hr=1]$，$[hr=2]$ 等等。
+//A state is an assignment of values to variables.
+
+.step
+step是状态间直接变化的步骤。假如 $s_n$, $s_{n+1}$ 分别是两个相邻的 _state_ ，那么 $s_n -> s_{n+1}$ 就是表示 从 $s_n$ 直接变化到 $s_{n+1}$的step，无论 _state_ 中有多少个变量，这个变化都是原子的，不会产生其它中间状态。
+//A step is a pair of states.
+
+.behavior
+behavior是 _state_ 组成的无穷序列，如 $\sigma \defeq [hr=1] -> [hr=2] -> [hr=3] -> ...$ 。需要注意的是，一个系统可能有多个behavior，比如并发系统可能有多种执行顺序，产生不同的behavior。
+// A behavior is an infinite sequence of states; the steps of a behavior are its successive pairs of states.
+
+.primed variable
+变量发生变化后的值，如 $hr'=hr+1$ 表示 `hr` 变量经过一个 _step_ 之后，其值等于原先的值加 `1` 。
+//Unprimed variables refer to the variables’ values in the first state of the step;
+//primed variables refer to their values in the second state.
+
+.state function
+_state function_ 不包含 _prime variable_ 的表达式，可以包含 _variable_ 和 _constant_ 。function表示了一个 _value_ ，这个 _value_ 可以是集合，可以是Boolean值。
+
+.state predicate
+_value_ 为 `Boolean` 类型的 _state function_ 。 state predicate作用于states进行真值判断。
+//State predicates are actions with no primed variables.
+// A state predicate is a formula whose meaning is a predicate (Boolean-valued function) on states.
+
+.action
+包含 _primed variable_ 和 _unprimed variable_ 的 formula。 action 作用于 _step_ 进行真值判断。
+//In TLA, actions are written as formulas containing primed and unprimed variables.
+//An action is a formula whose meaning is a predicate on steps.
+
+.formula
+值为TRUE或FALSE的逻辑表达式（数理逻辑中的「公式」）
+//We often conflate a formula and its meaning.
+//For example, if A is an action, then an A-step is defined to be a step that satisfies A.
+//(Formally, the step satisfies the meaning of A, not the formula A.)
+
+---
+
+这些定义的形式和语义都不一定准确，只是帮助加深理解TLA+。精确定义详见Specifying Systems，尤其是 Chapter 16 有许多描述。
+
+== 逻辑基础
+
+=== 命题逻辑
+
+命题逻辑语法可以用如下BNF表示：
+
+[latexmath]
+++++
+\phi ::= p | (\lnot\phi) | (\phi\land\phi) | (\phi\lor\phi) | (\phi\to\phi)
+++++
+
+
+
+自然演绎：
+
+[latexmath]
+++++
+++++
+
+
+=== 谓词逻辑
+
+PTL: Propositional Temporal Logic ，是LTL的另一种简称，参考 https://en.wikipedia.org/wiki/Linear_temporal_logic
+http://discuss.tlapl.us/msg00894.html
+
+== Temporal Logic 简介
+
+时态公式是行为的真值判断式。对于一个行为 $\sigma$ ，以及一个时态公式 $F$ ，如果 $\sigma$ 满足 $F$ ，则可以表示为：
+[latexmath]
+++++
+\sigma \models F
+++++
+也可称作时态公式 $F$ 对于行为 $\sigma$ 是真的。
+
+TIP: 为了便于叙述，我们将“时态公式”简称为“公式”。
+
+
+公式可以通过连接词进行组合，也可使用量词进行修饰。组合公式的含义如下：
+
+* $\sigma \models (F \land G) \;\defeq \;(\sigma \models F) \land (\sigma \models G)$
+* $\sigma \models (F \lor G) \;\defeq \;(\sigma \models F) \lor (\sigma \models G)$
+* $\sigma \models (F => G) \;\defeq \;(\sigma \models F) => (\sigma \models G)$
+* $\sigma \models \lnot F \;\defeq \;\lnot (\sigma \models F)$
+* $\sigma \models (\forall r \in S: F) \;\defeq \;\forall r \in S : (\sigma \models F)$
+
+上面出现的公式 $F$, $G$ 都未加定义和解释。通常，公式有三种形式，对应各自的语义解释：
+
+* $P$
++
+_state predicate_。 P是一个「状态谓词」，如果将 $P$ 看作时态公式， 那么 $P$ 满足 _behavior_ 当且仅当 _behavior_ 中的第一个 _state_ 满足 $P$
+* $\Box P$
++
+其中 $P$ 是 _state predicate_ 。$\Box P$ 满足 _behavior_ 当且仅当 _behavior_ 中所有 _state_ 满足 $P$
+* $\Box[N]_\color{red}v$
++
+其中 $N$ 是 __action__ ，$_\color{red}v$ 是 __state function__ 。 该公式满足 __behavior__ 当且仅当 __behavior__ 中每一对相继的states是一个满足 $[N]_v$ 的step。
++
+注意： $[N]_v$ 中的 $_v$ 可以是 __state function__ ，并不限定于 variables（如 $\seq{hr ,\, val}$)。 __state function__ 可以增加 prime 运算符形成 __transition function__ 。$[N]_v$ 等价于 $ N \lor (v' = v)$ 。详见 Spcifying Systems 16.2.3。
+
+三种公式
+
+////
+== 阅读资料
+
+* Specifying Systems
+* tla2-guide
+* How to Write a 21st Century Proof
+* Safety, Liveness, and Fairness
+////
+
+待续...

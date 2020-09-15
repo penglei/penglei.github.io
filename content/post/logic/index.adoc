@@ -1,0 +1,116 @@
+////
+title: 数理逻辑一些概念
+date: 2020-09-08T21:00:00+08:00
+
+draft: false
+categories: [Formal]
+tags: [Logic]
+////
+
+= 数理逻辑
+// Disable wrapping in listing and literal blocks.
+:prewrap!:
+:toc:
+:sectanchors:
+:sectlinks:
+:icons: font
+:logic-soundness: https://en.wikipedia.org/wiki/Soundness
+
+形式化方法已经有大量的应用，如计算机辅助证明、模型检查、系统规约化语言（如TLA+），这些技术的基础都离不开数理逻辑。
+现代逻辑学已经发展得非常广泛：
+https://en.wikipedia.org/wiki/Propositional_calculus[Propositional logic^]（命题逻辑），
+https://en.wikipedia.org/wiki/First-order_logic[First-order logic^]（也称 Predicate logic），
+https://en.wikipedia.org/wiki/Second-order_logic[Second-order logic^]，
+https://en.wikipedia.org/wiki/Higher-order_logic[Higher-order logic^]，
+https://en.wikipedia.org/wiki/Intuitionistic_logic[Constructive logic^]（也称 Intuitionistic logic），
+https://en.wikipedia.org/wiki/Modal_logic[Modal logic^]（模态逻辑），
+https://en.wikipedia.org/wiki/Temporal_logic[Temporal logic^]（时态逻辑是模态逻辑的一个分支），
+https://plato.stanford.edu/entries/logic-free/[Free logic^]，
+https://plato.stanford.edu/entries/plural-quant/[Plural logic^]，
+https://en.wikipedia.org/wiki/Paraconsistent_logic[Paraconsistent logic^]（次协调逻辑），
+https://en.wikipedia.org/wiki/Quantum_logic[Quantum logic^]（量子逻辑）。
+逻辑学与其它理论也有非常紧密的联系，如集合论、证明论、模型论、计算理论等。
+在计算机技术领域，学习一阶逻辑、时态逻辑等，可以帮助我们更好地运用形式化方法。
+
+//<!--more-->
+
+++++
+<div style="display: none"><script type="math/tex; mode=display">
+\newcommand{\F}[1]{\!\!{#1}}
+</script></div>
+++++
+
+== 谓词逻辑
+
+自然演绎规则：
+
+[latexmath]
+++++
+\dfrac{f: \forall \alpha. \alpha\to\alpha \vdash f : \color{green}{\tau} \to \color{blue}{\tau'} \qquad f: \forall \alpha. \alpha\to\alpha \vdash f : \color{blue}{\tau'}}
+      {f: \forall \alpha. \alpha\to\alpha \vdash f \, f : \color{blue}{\tau'}}
+  \textsf{(T-App)}
+++++
+
+== 形式系统的一致性和完全性
+
+背景： 希尔伯特为了解决数学基础问题，希望将数学建立在可靠的逻辑系统之上。
+
+=== 一致性（consistent）
+
+_有些文献里面将一致性称作「协调性」_ 。 有三种一致性：
+
+* 古典一致性（ $ \nvdash\!{A} \land \lnot A$ ）
++
+系统 $s$ 中不存在公式 $A$ ，使得 $A$ 和 $\lnot A$ 都在该系统中 *可证* 。
+
+* 语法一致性（ $\exists \psi \in S :\; \nvdash\!\psi$ ）
++
+系统中不是任何公式都 *可证* 的，或者说至少有一个公式 $A$ 是 *不可证* 的。如果系统中 *每个* 公式都是 *可证* 的（句句是真理），那么这个系统就没有什么用处了。
+
+* 语义一致性（ $\Gamma \vdash\F{A} \; => \; \Gamma \models\F{A}$ ）
++
+也称作可靠性({logic-soundness}[soundness^])，凡是 *可证* 的（或称作 _valid_ ，即 *有效的* )公式都真的。
+
+古典一致性和语法一致性都在 _句法_ 和 _规则_ 范围内，弱于语义一致性。如果系统的语义一致性得到证明，那么古典一致性和语法一致性也是满足的。
+因此， *一致性* 通常指 *语义一致性* ，也即 *可靠性(soundness)* 。
+*一致性* 的证明比较简单，其主要思路是：所有公理(axioms)是真的，推理规则(rules)是保真的，通过对证明序列进行归纳，即可得证。
+
+
+=== 完全性
+
+完全性也有三种：
+
+* 古典完全性（ $\vdash\F A $ 或者 $ \vdash\lnot A$ ）
++
+系统$s$中任一个公式 $A$ ，要么 $A$ 是可证的，要么 $\lnot A$ 是可证的。
+
+* 语法完全性
++
+如果把系统中的任一不可证公式作为公理增加到已有的系统中，导致系统变得不一致，则称该系统是语法完全的（或绝对完备的）。
+
+* 语义完全性（ $\Gamma \models\F A \; => \; \Gamma \vdash\F A $ ）
++
+如果在一个形式系统的所有模型中都真的公式在该系统中都可以得到证明，则称该系统是语义完全的（相对完备的）。
+
+语义完全性(completeness)是语义一致性的的逆命题，我们一般讨论的 *完全性* 都指「语义完全性」。
+*完全性* 的证明比较复杂， https://en.wikipedia.org/wiki/G%C3%B6del%27s_completeness_theorem[Wiki^] 中有一些概括，证明过程需要理解演绎定理(Deduction Theoream)。
+证明思路为：
+
+. 证明 $\phi_1,\phi_2,...,\phi_n \models\!\psi \; => \; \models \phi_1 -> \phi_2 -> ... -> \phi_n -> \psi $
++
+即如果 $\psi$ 是 $\Gamma \defeq \phi_1,\phi_2,...,\phi_n$ 的语义后承，那么 $\phi_1 -> \phi_2 -> ... -> \phi_n -> \psi$ 是重言式（永真式）。
+. 证明 $\models\!\eta \; => \;\; \vdash\!\eta$
++
+即证明重言式都存在一个证明序列。
+. 证明 $\phi_1 -> \phi_2 -> ... -> \phi_n -> \psi \; => \; \phi_1,\phi_2,...,\phi_n \vdash\!\psi$
++
+将 $\phi_1,\phi_2,...,\phi_n$ 当作前提，然后运用蕴含消除规则，最终即可得证 $\phi_1,\phi_2,...,\phi_n \vdash\!\psi$
+
+== 演绎定理
+
+https://en.m.wikipedia.org/wiki/Deduction_theorem[演绎定理^] 是重要的元定理。在命题逻辑中，可以如此表述：$\Gamma \cup \{ A \} \vdash\F{B} \; => \; \Gamma \vdash\F{A} -> B$ 。
+如果 $\Gamma$ 是空集，则 $ A \vdash\F{B} \; => \; \vdash\F{A}->B$
+
+== 参考资料
+
+https://en.m.wikipedia.org/wiki/Natural_deduction

@@ -1,0 +1,69 @@
+////
+title: Specifying Systems 学习笔记
+date: 2020-09-01
+draft: true
+categories: [Formal]
+tags: [TLA+]
+////
+
+= Specifying Systems 学习笔记
+// Disable wrapping in listing and literal blocks.
+:prewrap!:
+:toc:
+:sectanchors:
+:sectlinks:
+:icons: font
+//:source-highlighter: highlightjs
+//:highlightjsdir: static/highlight
+//:source-highlighter: pygments
+:specifying-systems-book: https://lamport.azurewebsites.net/tla/book.html#download
+:pron-blog-part1: https://pron.github.io/posts/tlaplus_part1
+:pron-blog-part2: https://pron.github.io/posts/tlaplus_part2
+:tlaintex: https://github.com/hengxin/tla2tex/blob/master/tla2tex-readme.md
+
+分布式系统常常非常难以理解，如果用脑子模拟，一会就会被纷扰的状态转变绕晕。我们常说的“可靠性”、“正确行”等概念不精确，非常难以把握。
+Specifying Sytems中详细介绍了Safety和Liveness属性，可以分而治之地去理解系统状态变化须满足的约束，使复杂的系统变得可以理解（没有这两个概念的话脑袋里常常就是一团乱麻）。
+分布式算法**直觉**上非常难把握其“正确性”，一种可行的办法是证明出系统规约中的约束，通过理解证明流程来直觉上把握系统/算法的“正确性”。
+所以，大部分文章都没法让读者真的理解Paxos这样的算法(包括我的学习笔记），要真正理解响应的算法，不但要在现实中实践，更要从理论上进行分析和理解。
+
+//<!--more-->
+
+== 笔记
+
+
+[source,latexmath]
+----
+
+Inv == /\ TypeOK
+       /\ \A i \in Procs :
+       /\ (pc[i] \in {"e2", "e3", "e6", "cs"}) => x[i]
+       /\ \A j \in Procs \ {i} :
+             Past(i, j) => ~Past(j, i) /\ x[i]
+----
+
+
+== tlaps
+
+update java config
+
+----
+/usr/local/lib/tlaps/Isabelle2011-1/contrib/jre1.6_x86-darwin/etc/settings
+----
+
+We could then write the theorem:
+
+++++
+<script type="math/tex; mode=display">\THEOREM IntQs(\geq)!QuickSort \implies \Box(done \implies Ordered(A, \geq))</script>
+++++
+
+[source,tla+]
+----
+--------------------------- MODULE A ---------------------------------------
+(***************************************************************************)
+(* Greatest common divisor of m and n                                      *)
+(***************************************************************************)
+GCD(m, n) == SetMax(DivisorsOf(m) \cap DivisorsOf(n))
+=============================================================================
+----
+
+

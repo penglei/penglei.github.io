@@ -1,0 +1,30 @@
+////
+title: 理解 Paxos 共识算法
+date: 2020-09-10
+draft: true
+categories: [Formal]
+tags: [TLA+, Paxos]
+////
+
+= 理解 Paxos 共识算法
+// Disable wrapping in listing and literal blocks.
+:prewrap!:
+:toc:
+:sectanchors:
+:sectlinks:
+:icons: font
+
+共识问题（Consensus）是分布式系统的核心问题
+
+//<!--more-->
+
+== 笔记
+[source,latexmath]
+----
+
+Inv == /\ TypeOK
+       /\ \A i \in Procs :
+       /\ (pc[i] \in {"e2", "e3", "e6", "cs"}) => x[i]
+       /\ \A j \in Procs \ {i} :
+             Past(i, j) => ~Past(j, i) /\ x[i]
+----

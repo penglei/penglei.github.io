@@ -182,7 +182,7 @@ latexmath:[\mathfrak{ABCDEFGHIJKLMNOPQRSTUVWXYZ}]
 &\rlap{\LL\H\H\H\H\H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\LR}
 \end{alignat} %]]></script>
 
-<script type="math/tex; mode=display">% <![CDATA[ \\
+<script type="math/tex">% <![CDATA[ \\
 \begin{alignat}{1}
 &\phantom{XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}\\
 \rlap{\UL\H\H \H\H \H\H\H\H \H\H \H\H \H\H  \H\H \H\H \H\H \H\H \H\;\;\MODULE Vector3D \H\H\H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\!\H \UR}\\

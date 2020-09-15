@@ -1,0 +1,105 @@
+////
+title: "MacOS上搭建Latex环境"
+date: 2020-09-01T21:38:52+08:00
+
+draft: true
+comment: false
+mathjax: false
+////
+
+= MacOS上搭建Latex环境
+
+:ref1: https://blog.yangl1996.com/post/imported_from_old_blog_72/
+:ref2-vscode: https://zhuanlan.zhihu.com/p/35498361
+:font-1: https://stone-zeng.github.io/2018-08-08-use-opentype-fonts/
+:font-2: https://stone-zeng.github.io/2019-07-06-use-opentype-fonts-ii/
+
+最近在学TLA+，TLA+代码可以转变为PDF文件，具有更高的可读性。转换TLA+用的是LaTex排版系统。
+
+//<!--more-->
+
+== 安装
+
+latex, pdflatex, xelatex, lualatex
+
+MacTeX是TeXLive的Mac版
+
+安装MacTex会安装TexShop、 LaTeXiT
+
+https://blog.csdn.net/chen_shiqiang/article/details/52101836
+
+The GUI section of MacTeX contains four front ends and utilities. These programs are often updated, so it is best to get them directly from their respective web pages. Here are links:
+TeXShop, a front end: TeXShop
+LaTeXiT, a package which typesets equations to be pasted into Keynote, etc.: LaTeXiT
+TeX Live Utility, a program to update and maintain TeX Live: TeX Live Utility
+BibDesk, a program to handle bibliographies: BibDesk
+
+pdflatex 比较古老，对 unicode 支持不是很好；
+xelatex 对unicode的支持更好；
+优选xelatex， lualatex还不够成熟；
+
+tlmgr 安装目录:
+
+/usr/local/texlive/2020basic/texmf-dist/tex/ get pods | grep gateway-http-dynamic-svrlatex
+
+.install texlive
+
+----
+Time used for installing the packages: 101:06
+running mktexlsr /usr/local/texlive/2020/texmf-dist ...
+mktexlsr: Updating /usr/local/texlive/2020/texmf-dist/ls-R...
+mktexlsr: Done.
+writing fmtutil.cnf to /usr/local/texlive/2020/texmf-dist/web2c/fmtutil.cnf
+writing updmap.cfg to /usr/local/texlive/2020/texmf-dist/web2c/updmap.cfg
+writing language.dat to /usr/local/texlive/2020/texmf-var/tex/generic/config/language.dat
+writing language.def to /usr/local/texlive/2020/texmf-var/tex/generic/config/language.def
+writing language.dat.lua to /usr/local/texlive/2020/texmf-var/tex/generic/config/language.dat.lua
+running mktexlsr /usr/local/texlive/2020/texmf-var /usr/local/texlive/2020/texmf-config /usr/local/texlive/2020/texmf-dist ...
+mktexlsr: Updating /usr/local/texlive/2020/texmf-config/ls-R...
+mktexlsr: Updating /usr/local/texlive/2020/texmf-dist/ls-R...
+mktexlsr: Updating /usr/local/texlive/2020/texmf-var/ls-R...
+mktexlsr: Done.
+running updmap-sys --nohash ...done
+re-running mktexlsr /usr/local/texlive/2020/texmf-var /usr/local/texlive/2020/texmf-config ...
+mktexlsr: Updating /usr/local/texlive/2020/texmf-config/ls-R...
+mktexlsr: Updating /usr/local/texlive/2020/texmf-var/ls-R...
+mktexlsr: Done.
+setting up ConTeXt cache: running mtxrun --generate ...done
+pre-generating all format files, be patient...
+running fmtutil-sys --no-error-if-no-engine=luajithbtex,luajittex,mfluajit --no-strict --all ...done
+running package-specific postactions
+finished with package-specific postactions
+
+
+Welcome to TeX Live!
+
+
+See /usr/local/texlive/2020/index.html for links to documentation.
+The TeX Live web site (https://tug.org/texlive/) contains any updates and
+corrections. TeX Live is a joint project of the TeX user groups around the
+world; please consider supporting it by joining the group best for you. The
+list of groups is available on the web at https://tug.org/usergroups.html.
+
+
+Add /usr/local/texlive/2020/texmf-dist/doc/man to MANPATH.
+Add /usr/local/texlive/2020/texmf-dist/doc/info to INFOPATH.
+Most importantly, add /usr/local/texlive/2020/bin/x86_64-darwin
+to your PATH for current and future sessions.
+Logfile: /usr/local/texlive/2020/install-tl.log
+----
+
+
+== 中文
+
+
+== 方案
+
+== 一些问题
+
+----
+
+! Package ctex Error: Support package expl3 too old.
+! Undefined control sequence. \ctex_file_input:n #1->\cctab_begin:N LaTeX
+
+#: tlmgr update --self --all --reinstall-forcibly-removed
+----

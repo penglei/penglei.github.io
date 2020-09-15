@@ -1,0 +1,22 @@
+////
+title: "FLP不可能定理"
+date: 2020-09-08T21:00:00+08:00
+
+draft: true
+categories: [Formal]
+tags: [TLA+]
+////
+
+= Specifying Systems 笔记2 -- Liveness & Fairness
+// Disable wrapping in listing and literal blocks.
+:prewrap!:
+:toc:
+:sectanchors:
+:sectlinks:
+:icons: font
+
+FLP
+
+//<!--more-->
+
+== 一些概念
