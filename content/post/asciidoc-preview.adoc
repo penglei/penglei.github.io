@@ -150,6 +150,58 @@ latexmath:[\mathfrak{ABCDEFGHIJKLMNOPQRSTUVWXYZ}]
 \frac{\lnot A \ true \quad A \ true}{C \ true} \lnot E
 ++++
 
+
+++++
+<script type="math/tex; mode=document">% <![CDATA[
+\begin{alignat}{1}
+
+\newcommand{\moduleLeftDash}{\hspace*{-\boxsep}\raisebox{-\boxlineht}[0pt][0pt]{\rule[.5ex]{\boxrulewd}{\boxlineht}}\boxrule\hspace*{.4em }}
+\newcommand{\boxrule}{\leaders\hrule height \boxruleht depth \boxruledp \hfill\mbox{}}
+
+\newcommand{\implies}{\Rightarrow}
+
+\Rightarrow
+
+\lower 4.3pt \ulcorner\!\! \;AAA
+
+\end{alignat} %]]></script>
+
+<script type="math/tex; mode=display">% <![CDATA[ \\
+\begin{alignat}{1}
+&&\phantom{XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}\\
+&\rlap{\UL\H\H \H\H \H\H\H\H \H\H \H\H \H\H  \H\H \H\H \H\H \H\H \H\;\;\MODULE Vector3D \H\H\H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\!\H \UR}\\
+& & \CONSTANTS ElemPlus(\_,\_), ElemMinus(\_,\_)\\
+& & \LOCAL ConsVector1(seq) \defeq [x \mapsto seq[1], y \mapsto seq[2], z \mapsto seq[3]]\\
+& & \LOCAL Elem1(v, i) \defeq \CASE i = 1 \to v.x \;\Box\; i = 2 \to v.y \;\Box\;i=3 \to v.z\\
+& &\\
+& & \comment{Export $``$opaque" operators}\\
+& & ConsVector(seq) \defeq ConsVector1(seq)\\
+& & Elem(v, i) \defeq Elem1(v, i)\\
+& &\\
+& & \INSTANCE VectorSpace \;\;\;\;\WITH Dim \leftarrow 3\\
+&\rlap{\LL\H\H\H\H\H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\LR}
+\end{alignat} %]]></script>
+
+<script type="math/tex; mode=display">% <![CDATA[ \\
+\begin{alignat}{1}
+&\phantom{XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}\\
+\rlap{\UL\H\H \H\H \H\H\H\H \H\H \H\H \H\H  \H\H \H\H \H\H \H\H \H\;\;\MODULE Vector3D \H\H\H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\!\H \UR}\\
+ & \CONSTANTS ElemPlus(\_,\_), ElemMinus(\_,\_)\\
+ & \INSTANCE VectorSpace \;\;\;\;\WITH Dim \leftarrow 3\\
+\rlap{\LL\H\H\H\H\H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H \H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\H\LR}
+\end{alignat} %]]></script>
+++++
+
+
+++++
+<script type="math/tex; mode=display">% <![CDATA[ \\
+\begin{alignat}{1}
+\sigma_1  &= x + y                                   & \sigma_2  &= \frac{x}{y} \\
+\sigma_1' &= \frac{\partial x + y}{\partial x} \quad & \sigma_2' &= \frac{\partial \frac{x}{y}}{\partial x} \\
+\end{alignat}
+</script>
+++++
+
 == Admonition
 
 //https://blog.olowolo.com/example-site/post/shortcodes/#admonition
