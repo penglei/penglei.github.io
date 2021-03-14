@@ -1,0 +1,23 @@
+////
+title: PDF Blog
+date: 2021-03-12
+draft: false
+tags: [asciidoc]
+////
+
+
+= PDF Blog
+// Disable wrapping in listing and literal blocks.
+:prewrap!:
+//:toc:
+:sectanchors:
+:sectlinks:
+:icons: font
+
+//<!--more-->
+
+++++
+<div style="text-align: center">
+<canvas style="border: 1px solid black; direction: ltr;" id="pdf-content" value="main.pdf"></canvas>
+</div>
+++++

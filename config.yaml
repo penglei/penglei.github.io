@@ -92,6 +92,7 @@ params:
     - highlightjs/github.css
     - custom.css
   customJS:                # if ['custom.js'], load '/static/js/custom.js' file
+    - pdfpost.js
     - highlight.pack.js
     - init.js
 
