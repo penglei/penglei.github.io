@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Specifying Systems 笔记2 Liveness &amp; Fairness - ybyte blog</title>
+  <title>一阶逻辑备忘 - ybyte blog</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,8 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="penglei" /><meta name="description" content="Specifying Systems的1-7章层层推进，在实例中穿插着原理讲解，深入浅出地讲解了Specification是什么，以及如何规约系统设计。 这些Specification表明了系统的Safety属性&amp;#8201;&amp;#8212;&amp;#8201;即系统行为被约束在一定范围内，不会做出一些不被允许的行为(something bad does not happen)。 在TLA&#43;中，通常使用公式 \(Spec \triangleq Init \land \Box [Next]_{vars}\) 来描述系统的Safety属性(约束)。 Safety属性说明了系统中什么不能发生，但无法表达系统中最终会发生的这类属性，而Liveness便可以表达(&#34;something good eventully happen&#34;)。 Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公式 \(Spec \triangleq Init \land \Box [Next]_{vars} \land F\) 来同时描述其对Safety和Liveness的要求， 公式末尾的 $F$ 便是描述Liveness属性的公式。
-" /><meta name="keywords" content="linux, kubernetes, docker, istio, servicemesh, sidecar" />
+<meta name="author" content="penglei" /><meta name="description" content="" /><meta name="keywords" content="linux, kubernetes, docker, istio, servicemesh, sidecar" />
 
 
 
@@ -27,7 +26,7 @@
 <meta name="generator" content="Hugo 0.64.1 with theme even" />
 
 
-<link rel="canonical" href="/post/specifying-systems-notes-2/" />
+<link rel="canonical" href="/post/first-order-logic-notes/" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -47,49 +46,25 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<meta property="og:title" content="Specifying Systems 笔记2 Liveness &amp; Fairness" />
+<meta property="og:title" content="一阶逻辑备忘" />
 <meta property="og:description" content="
-
-
-Specifying Systems的1-7章层层推进，在实例中穿插着原理讲解，深入浅出地讲解了Specification是什么，以及如何规约系统设计。
-这些Specification表明了系统的Safety属性&#8201;&#8212;&#8201;即系统行为被约束在一定范围内，不会做出一些不被允许的行为(something bad does not happen)。
-在TLA&#43;中，通常使用公式 \(Spec \triangleq Init \land \Box [Next]_{vars}\) 来描述系统的Safety属性(约束)。
-Safety属性说明了系统中什么不能发生，但无法表达系统中最终会发生的这类属性，而Liveness便可以表达(&#34;something good eventully happen&#34;)。
-Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公式 \(Spec \triangleq Init \land \Box [Next]_{vars} \land F\) 来同时描述其对Safety和Liveness的要求，
-公式末尾的 $F$ 便是描述Liveness属性的公式。
 " />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/post/specifying-systems-notes-2/" />
+<meta property="og:url" content="/post/first-order-logic-notes/" />
 <meta property="article:published_time" content="2020-09-08T21:00:00+08:00" />
-<meta property="article:modified_time" content="2020-09-15T21:39:18+08:00" />
-<meta itemprop="name" content="Specifying Systems 笔记2 Liveness &amp; Fairness">
+<meta property="article:modified_time" content="2020-09-08T21:00:00+08:00" />
+<meta itemprop="name" content="一阶逻辑备忘">
 <meta itemprop="description" content="
-
-
-Specifying Systems的1-7章层层推进，在实例中穿插着原理讲解，深入浅出地讲解了Specification是什么，以及如何规约系统设计。
-这些Specification表明了系统的Safety属性&#8201;&#8212;&#8201;即系统行为被约束在一定范围内，不会做出一些不被允许的行为(something bad does not happen)。
-在TLA&#43;中，通常使用公式 \(Spec \triangleq Init \land \Box [Next]_{vars}\) 来描述系统的Safety属性(约束)。
-Safety属性说明了系统中什么不能发生，但无法表达系统中最终会发生的这类属性，而Liveness便可以表达(&#34;something good eventully happen&#34;)。
-Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公式 \(Spec \triangleq Init \land \Box [Next]_{vars} \land F\) 来同时描述其对Safety和Liveness的要求，
-公式末尾的 $F$ 便是描述Liveness属性的公式。
 ">
 <meta itemprop="datePublished" content="2020-09-08T21:00:00&#43;08:00" />
-<meta itemprop="dateModified" content="2020-09-15T21:39:18&#43;08:00" />
-<meta itemprop="wordCount" content="1352">
+<meta itemprop="dateModified" content="2020-09-08T21:00:00&#43;08:00" />
+<meta itemprop="wordCount" content="196">
 
 
 
 <meta itemprop="keywords" content="TLA&#43;," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Specifying Systems 笔记2 Liveness &amp; Fairness"/>
+<meta name="twitter:title" content="一阶逻辑备忘"/>
 <meta name="twitter:description" content="
-
-
-Specifying Systems的1-7章层层推进，在实例中穿插着原理讲解，深入浅出地讲解了Specification是什么，以及如何规约系统设计。
-这些Specification表明了系统的Safety属性&#8201;&#8212;&#8201;即系统行为被约束在一定范围内，不会做出一些不被允许的行为(something bad does not happen)。
-在TLA&#43;中，通常使用公式 \(Spec \triangleq Init \land \Box [Next]_{vars}\) 来描述系统的Safety属性(约束)。
-Safety属性说明了系统中什么不能发生，但无法表达系统中最终会发生的这类属性，而Liveness便可以表达(&#34;something good eventully happen&#34;)。
-Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公式 \(Spec \triangleq Init \land \Box [Next]_{vars} \land F\) 来同时描述其对Safety和Liveness的要求，
-公式末尾的 $F$ 便是描述Liveness属性的公式。
 "/>
 
 <!--[if lte IE 9]>
@@ -247,7 +222,7 @@ Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">Specifying Systems 笔记2 Liveness &amp; Fairness</h1>
+      <h1 class="post-title">一阶逻辑备忘</h1>
 
       <div class="post-meta">
         <span class="post-time"> 2020-09-08 </span>
@@ -265,135 +240,44 @@ Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公
       <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_一些概念">一些概念</a></li>
-<li><a href="#_temporal_logic_简介">Temporal Logic 简介</a></li>
+<li><a href="#_形式系统的一致性和完备性">形式系统的一致性和完备性</a></li>
 </ul>
 </div>
 <div id="preamble">
 <div class="sectionbody">
-<div class="paragraph">
-<p>Specifying Systems的1-7章层层推进，在实例中穿插着原理讲解，深入浅出地讲解了Specification是什么，以及如何规约系统设计。
-这些Specification表明了系统的Safety属性&#8201;&#8212;&#8201;即系统行为被约束在一定范围内，不会做出一些不被允许的行为(something <strong>bad</strong> does not happen)。
-在TLA+中，通常使用公式 \(Spec \triangleq Init \land \Box [Next]_{vars}\) 来描述系统的Safety属性(约束)。
-Safety属性说明了系统中什么不能发生，但无法表达系统中<strong>最终会发生</strong>的这类属性，而Liveness便可以表达("something <strong>good</strong> eventully happen")。
-Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公式 \(Spec \triangleq Init \land \Box [Next]_{vars} \land F\) 来同时描述其对Safety和Liveness的要求，
-公式末尾的 $F$ 便是描述Liveness属性的公式。</p>
-</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_一些概念"><a class="anchor" href="#_一些概念"></a><a class="link" href="#_一些概念">一些概念</a></h2>
+<h2 id="_形式系统的一致性和完备性"><a class="anchor" href="#_形式系统的一致性和完备性"></a><a class="link" href="#_形式系统的一致性和完备性">形式系统的一致性和完备性</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<div class="title">state</div>
-<p>state是对一些变量进行赋值(的结果)，如 $[hr=1]$，$[hr=2]$ 等等。</p>
+<p>希尔伯特为了解决数学基础问题，希望将数学建立在可靠的逻辑系统之上。
+形式语言（命题逻辑），增加量词</p>
 </div>
 <div class="paragraph">
-<div class="title">step</div>
-<p>step是状态间直接变化的步骤。假如 $s_n$, $s_{n+1}$ 分别是两个相邻的 <em>state</em> ，那么 $s_n &#8594; s_{n+1}$ 就是表示 从 $s_n$ 直接变化到 $s_{n+1}$的step，无论 <em>state</em> 中有多少个变量，这个变化都是原子的，不会产生其它中间状态。</p>
-</div>
-<div class="paragraph">
-<div class="title">behavior</div>
-<p>behavior是 <em>state</em> 组成的无穷序列，如 $\sigma \defeq [hr=1] &#8594; [hr=2] &#8594; [hr=3] &#8594; &#8230;&#8203;$ 。需要注意的是，一个系统可能有多个behavior，比如并发系统可能有多种执行顺序，产生不同的behavior。</p>
-</div>
-<div class="paragraph">
-<div class="title">primed variable</div>
-<p>变量发生变化后的值，如 $hr'=hr+1$ 表示 <code>hr</code> 变量经过一个 <em>step</em> 之后，其值等于原先的值加 <code>1</code> 。</p>
-</div>
-<div class="paragraph">
-<div class="title">state function</div>
-<p><em>state function</em> 不包含 <em>prime variable</em> 的表达式，可以包含 <em>variable</em> 和 <em>constant</em> 。function表示了一个 <em>value</em> ，这个 <em>value</em> 可以是集合，可以是Boolean值。</p>
-</div>
-<div class="paragraph">
-<div class="title">state predicate</div>
-<p><em>value</em> 为 <code>Boolean</code> 类型的 <em>state function</em> 。 state predicate作用于states进行真值判断。</p>
-</div>
-<div class="paragraph">
-<div class="title">action</div>
-<p>包含 <em>primed variable</em> 和 <em>unprimed variable</em> 的 formula。 action 作用于 <em>step</em> 进行真值判断。</p>
-</div>
-<div class="paragraph">
-<div class="title">formula</div>
-<p>值为TRUE或FALSE的逻辑表达式（数理逻辑中的「公式」）</p>
-</div>
-<hr>
-<div class="paragraph">
-<p>这些定义的形式和语义都不一定准确，只是帮助加深理解TLA+。精确定义详见Specifying Systems，尤其是 Chapter 16 有许多描述。</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_temporal_logic_简介"><a class="anchor" href="#_temporal_logic_简介"></a><a class="link" href="#_temporal_logic_简介">Temporal Logic 简介</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>时态公式是行为的真值判断式。对于一个行为 $\sigma$ ，以及一个时态公式 $F$ ，如果 $\sigma$ 满足 $F$ ，则可以表示为：</p>
-</div>
-<div class="stemblock">
-<div class="content">
-\[\sigma \models F\]
-</div>
-</div>
-<div class="paragraph">
-<p>也可称作时态公式 $F$ 对于行为 $\sigma$ 是真的。</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-为了便于叙述，我们将“时态公式”简称为“公式”。
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>公式可以通过连接词进行组合，也可使用量词进行修饰。组合公式的含义如下：</p>
+<p>一致性通常含义：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>$\sigma \models (F \land G) \;\defeq \;(\sigma \models F) \land (\sigma \models G)$</p>
-</li>
-<li>
-<p>$\sigma \models (F \lor G) \;\defeq \;(\sigma \models F) \lor (\sigma \models G)$</p>
-</li>
-<li>
-<p>$\sigma \models (F &#8658; G) \;\defeq \;(\sigma \models F) &#8658; (\sigma \models G)$</p>
-</li>
-<li>
-<p>$\sigma \models \lnot F \;\defeq \;\lnot (\sigma \models F)$</p>
-</li>
-<li>
-<p>$\sigma \models (\forall r \in S: F) \;\defeq \;\forall r \in S : (\sigma \models F)$</p>
-</li>
-</ul>
-</div>
+<p>古典一致性（ $ \nvdash_s A \land \lnot A$ ）</p>
 <div class="paragraph">
-<p>上面出现的公式 $F$, $G$ 都未加定义和解释。通常，公式有三种形式，对应各自的语义解释：</p>
+<p>系统 $s$ 中不存在公式 $A$ ，使得 $A$ 和 $\lnot A$ 都在该系统中 <strong>可证</strong> 。</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>$P$ ，<em>state predicate</em>。 P是一个「状态谓词」，如果将 $P$ 看作时态公式， 那么 $P$ 满足 <em>behavior</em> 当且仅当 <em>behavior</em> 中的第一个 <em>state</em> 满足 $P$</p>
 </li>
 <li>
-<p>$\Box P$ ，其中 $P$ 是 <em>state predicate</em> 。$\Box P$ 满足 <em>behavior</em> 当且仅当 <em>behavior</em> 中所有 <em>state</em> 满足 $P$</p>
-</li>
-<li>
-<p>$\Box[N]<em>{v}$，其中 $N$ 是 <em>action</em> ，$_v$ 是 <em>state function</em> 。 该公式满足 _behavior</em> 当且仅当 <em>behavior</em> 中每一对相继的states是一个满足 $[N]_v$ 的step。</p>
+<p>语法一致性（ $\exists a \in S :\; \nvdash_s a$ ）</p>
 <div class="paragraph">
-<p>注意： $[N]_v$ 中的 $_v$ 可以是 <em>state function</em> ，并不限定于variables（如 $\seq{hr ,\, val}$)。 <em>state function</em> 可以增加 prime 运算符形成 <em>transition function</em> 。$[N]_v$ 等价于 $ N \lor (v' = v)$ 。详见 Spcifying Systems 16.2.3。</p>
+<p>系统中不是任何公式都可证的，或者说至少有一个公式 $A$ 是不可证的。</p>
+</div>
+</li>
+<li>
+<p>语义一致性</p>
+<div class="paragraph">
+<p>也称作可靠性，凡是有效的公式都在该系统中是可证的</p>
 </div>
 </li>
 </ul>
-</div>
-<div class="paragraph">
-<p>三种公式</p>
-</div>
-<div class="paragraph">
-<p>待续&#8230;&#8203;</p>
 </div>
 </div>
 </div>
@@ -407,15 +291,15 @@ Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公
   <p class="copyright-item">
     <span class="item-title">LastMod</span>
     <span class="item-content">
-        2020-09-15
-        <a href="https://github.com/penglei/penglei.github.io/commit/9f5caa861982c4e94825c1df0aca09f59a158bc6" title="add many drafts">(9f5caa8)</a>
+        2020-09-08
+        
     </span>
   </p>
   
   <p class="copyright-item">
     <span class="item-title">Source</span>
     <span class="item-content">
-        <a href="https://github.com/penglei/penglei.github.io/blob/source/content/post/specifying-systems-notes-2/index.adoc" target="_blank">index.adoc</a>
+        <a href="https://github.com/penglei/penglei.github.io/blob/source/content/post/first-order-logic-notes/index.adoc" target="_blank">index.adoc</a>
     </span>
   </p>
   <p class="copyright-item">
@@ -428,9 +312,13 @@ Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公
           <a href="/tags/tla&#43;/">TLA&#43;</a>
           </div>
       <nav class="post-nav">
-        
-        <a class="next" href="/post/first-order-logic-notes/">
-            <span class="next-text nav-default">一阶逻辑备忘</span>
+        <a class="prev" href="/post/specifying-systems-notes-2/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Specifying Systems 笔记2 Liveness &amp; Fairness</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/dubbo-integrate-with-istio/">
+            <span class="next-text nav-default">Dubbo 集成 Istio 的方案</span>
             <span class="next-text nav-mobile">Next</span>
             <i class="iconfont icon-right"></i>
           </a>
