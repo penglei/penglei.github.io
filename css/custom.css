@@ -49,6 +49,8 @@ pre.highlight > code { /* avoid shake when .hljs class is set */
 
 #preamble > .sectionbody > [class="paragraph"]:first-of-type p {
     font-size: 1em;
+    word-break: keep-all;
+    text-align: justify;
 }
 
 .listingblock > .content > pre {

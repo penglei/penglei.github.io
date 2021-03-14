@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Specifying Systems 笔记2 Liveness &amp; Fairness - ybyte blog</title>
+  <title>数理逻辑一些概念 - ybyte blog</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="penglei" /><meta name="description" content="Specifying Systems的1-7章层层推进，在实例中穿插着原理讲解，深入浅出地讲解了Specification是什么，以及如何规约系统设计。 这些Specification表明了系统的Safety属性&amp;#8201;&amp;#8212;&amp;#8201;即系统行为被约束在一定范围内，不会做出一些不被允许的行为(something bad does not happen)。 在TLA&#43;中，通常使用公式 \(Spec \triangleq Init \land \Box [Next]_{vars}\) 来描述系统的Safety属性(约束)。 Safety属性说明了系统中什么不能发生，但无法表达系统中最终会发生的这类属性，而Liveness便可以表达(&#34;something good eventully happen&#34;)。 Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公式 \(Spec \triangleq Init \land \Box [Next]_{vars} \land F\) 来同时描述其对Safety和Liveness的要求， 公式末尾的 $F$ 便是描述Liveness属性的公式。
+<meta name="author" content="penglei" /><meta name="description" content="形式化方法已经有大量的应用，如计算机辅助证明、模型检查、系统规约化语言（如TLA&#43;），这些技术的基础都离不开数理逻辑。 现代逻辑学已经发展得非常广泛： Propositional logic（命题逻辑）， First-order logic（也称 Predicate logic）， Second-order logic， Higher-order logic， Constructive logic（也称 Intuitionistic logic）， Modal logic（模态逻辑）， Temporal logic（时态逻辑是模态逻辑的一个分支）， Free logic， Plural logic， Paraconsistent logic（次协调逻辑）， Quantum logic（量子逻辑）。 逻辑学与其它理论也有非常紧密的联系，如集合论、证明论、模型论、计算理论等。 在计算机技术领域，学习一阶逻辑、时态逻辑等，可以帮助我们更好地运用形式化方法。
 " /><meta name="keywords" content="linux, kubernetes, docker, istio, servicemesh, sidecar" />
 
 
@@ -26,7 +26,7 @@
 <meta name="generator" content="Hugo 0.64.1 with theme even" />
 
 
-<link rel="canonical" href="/post/specifying-systems-notes-2/" />
+<link rel="canonical" href="/post/logic/" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -46,49 +46,76 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<meta property="og:title" content="Specifying Systems 笔记2 Liveness &amp; Fairness" />
+<meta property="og:title" content="数理逻辑一些概念" />
 <meta property="og:description" content="
 
 
-Specifying Systems的1-7章层层推进，在实例中穿插着原理讲解，深入浅出地讲解了Specification是什么，以及如何规约系统设计。
-这些Specification表明了系统的Safety属性&#8201;&#8212;&#8201;即系统行为被约束在一定范围内，不会做出一些不被允许的行为(something bad does not happen)。
-在TLA&#43;中，通常使用公式 \(Spec \triangleq Init \land \Box [Next]_{vars}\) 来描述系统的Safety属性(约束)。
-Safety属性说明了系统中什么不能发生，但无法表达系统中最终会发生的这类属性，而Liveness便可以表达(&#34;something good eventully happen&#34;)。
-Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公式 \(Spec \triangleq Init \land \Box [Next]_{vars} \land F\) 来同时描述其对Safety和Liveness的要求，
-公式末尾的 $F$ 便是描述Liveness属性的公式。
+形式化方法已经有大量的应用，如计算机辅助证明、模型检查、系统规约化语言（如TLA&#43;），这些技术的基础都离不开数理逻辑。
+现代逻辑学已经发展得非常广泛：
+Propositional logic（命题逻辑），
+First-order logic（也称 Predicate logic），
+Second-order logic，
+Higher-order logic，
+Constructive logic（也称 Intuitionistic logic），
+Modal logic（模态逻辑），
+Temporal logic（时态逻辑是模态逻辑的一个分支），
+Free logic，
+Plural logic，
+Paraconsistent logic（次协调逻辑），
+Quantum logic（量子逻辑）。
+逻辑学与其它理论也有非常紧密的联系，如集合论、证明论、模型论、计算理论等。
+在计算机技术领域，学习一阶逻辑、时态逻辑等，可以帮助我们更好地运用形式化方法。
 " />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/post/specifying-systems-notes-2/" />
+<meta property="og:url" content="/post/logic/" />
 <meta property="article:published_time" content="2020-09-08T21:00:00+08:00" />
 <meta property="article:modified_time" content="2020-09-08T21:00:00+08:00" />
-<meta itemprop="name" content="Specifying Systems 笔记2 Liveness &amp; Fairness">
+<meta itemprop="name" content="数理逻辑一些概念">
 <meta itemprop="description" content="
 
 
-Specifying Systems的1-7章层层推进，在实例中穿插着原理讲解，深入浅出地讲解了Specification是什么，以及如何规约系统设计。
-这些Specification表明了系统的Safety属性&#8201;&#8212;&#8201;即系统行为被约束在一定范围内，不会做出一些不被允许的行为(something bad does not happen)。
-在TLA&#43;中，通常使用公式 \(Spec \triangleq Init \land \Box [Next]_{vars}\) 来描述系统的Safety属性(约束)。
-Safety属性说明了系统中什么不能发生，但无法表达系统中最终会发生的这类属性，而Liveness便可以表达(&#34;something good eventully happen&#34;)。
-Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公式 \(Spec \triangleq Init \land \Box [Next]_{vars} \land F\) 来同时描述其对Safety和Liveness的要求，
-公式末尾的 $F$ 便是描述Liveness属性的公式。
+形式化方法已经有大量的应用，如计算机辅助证明、模型检查、系统规约化语言（如TLA&#43;），这些技术的基础都离不开数理逻辑。
+现代逻辑学已经发展得非常广泛：
+Propositional logic（命题逻辑），
+First-order logic（也称 Predicate logic），
+Second-order logic，
+Higher-order logic，
+Constructive logic（也称 Intuitionistic logic），
+Modal logic（模态逻辑），
+Temporal logic（时态逻辑是模态逻辑的一个分支），
+Free logic，
+Plural logic，
+Paraconsistent logic（次协调逻辑），
+Quantum logic（量子逻辑）。
+逻辑学与其它理论也有非常紧密的联系，如集合论、证明论、模型论、计算理论等。
+在计算机技术领域，学习一阶逻辑、时态逻辑等，可以帮助我们更好地运用形式化方法。
 ">
 <meta itemprop="datePublished" content="2020-09-08T21:00:00&#43;08:00" />
 <meta itemprop="dateModified" content="2020-09-08T21:00:00&#43;08:00" />
-<meta itemprop="wordCount" content="1422">
+<meta itemprop="wordCount" content="1283">
 
 
 
-<meta itemprop="keywords" content="TLA&#43;," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Specifying Systems 笔记2 Liveness &amp; Fairness"/>
+<meta itemprop="keywords" content="Logic," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="数理逻辑一些概念"/>
 <meta name="twitter:description" content="
 
 
-Specifying Systems的1-7章层层推进，在实例中穿插着原理讲解，深入浅出地讲解了Specification是什么，以及如何规约系统设计。
-这些Specification表明了系统的Safety属性&#8201;&#8212;&#8201;即系统行为被约束在一定范围内，不会做出一些不被允许的行为(something bad does not happen)。
-在TLA&#43;中，通常使用公式 \(Spec \triangleq Init \land \Box [Next]_{vars}\) 来描述系统的Safety属性(约束)。
-Safety属性说明了系统中什么不能发生，但无法表达系统中最终会发生的这类属性，而Liveness便可以表达(&#34;something good eventully happen&#34;)。
-Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公式 \(Spec \triangleq Init \land \Box [Next]_{vars} \land F\) 来同时描述其对Safety和Liveness的要求，
-公式末尾的 $F$ 便是描述Liveness属性的公式。
+形式化方法已经有大量的应用，如计算机辅助证明、模型检查、系统规约化语言（如TLA&#43;），这些技术的基础都离不开数理逻辑。
+现代逻辑学已经发展得非常广泛：
+Propositional logic（命题逻辑），
+First-order logic（也称 Predicate logic），
+Second-order logic，
+Higher-order logic，
+Constructive logic（也称 Intuitionistic logic），
+Modal logic（模态逻辑），
+Temporal logic（时态逻辑是模态逻辑的一个分支），
+Free logic，
+Plural logic，
+Paraconsistent logic（次协调逻辑），
+Quantum logic（量子逻辑）。
+逻辑学与其它理论也有非常紧密的联系，如集合论、证明论、模型论、计算理论等。
+在计算机技术领域，学习一阶逻辑、时态逻辑等，可以帮助我们更好地运用形式化方法。
 "/>
 
 <!--[if lte IE 9]>
@@ -246,7 +273,7 @@ Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">Specifying Systems 笔记2 Liveness &amp; Fairness</h1>
+      <h1 class="post-title">数理逻辑一些概念</h1>
 
       <div class="post-meta">
         <span class="post-time"> 2020-09-08 </span>
@@ -264,181 +291,166 @@ Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公
       <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_一些概念">一些概念</a></li>
-<li><a href="#_逻辑基础">逻辑基础</a>
-<ul class="sectlevel2">
-<li><a href="#_命题逻辑">命题逻辑</a></li>
 <li><a href="#_谓词逻辑">谓词逻辑</a></li>
+<li><a href="#_形式系统的一致性和完全性">形式系统的一致性和完全性</a>
+<ul class="sectlevel2">
+<li><a href="#_一致性consistent">一致性（consistent）</a></li>
+<li><a href="#_完全性">完全性</a></li>
 </ul>
 </li>
-<li><a href="#_temporal_logic_简介">Temporal Logic 简介</a></li>
+<li><a href="#_演绎定理">演绎定理</a></li>
+<li><a href="#_参考资料">参考资料</a></li>
 </ul>
 </div>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Specifying Systems的1-7章层层推进，在实例中穿插着原理讲解，深入浅出地讲解了Specification是什么，以及如何规约系统设计。
-这些Specification表明了系统的Safety属性&#8201;&#8212;&#8201;即系统行为被约束在一定范围内，不会做出一些不被允许的行为(something <strong>bad</strong> does not happen)。
-在TLA+中，通常使用公式 \(Spec \triangleq Init \land \Box [Next]_{vars}\) 来描述系统的Safety属性(约束)。
-Safety属性说明了系统中什么不能发生，但无法表达系统中<strong>最终会发生</strong>的这类属性，而Liveness便可以表达("something <strong>good</strong> eventully happen")。
-Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公式 \(Spec \triangleq Init \land \Box [Next]_{vars} \land F\) 来同时描述其对Safety和Liveness的要求，
-公式末尾的 $F$ 便是描述Liveness属性的公式。</p>
+<p>形式化方法已经有大量的应用，如计算机辅助证明、模型检查、系统规约化语言（如TLA+），这些技术的基础都离不开数理逻辑。
+现代逻辑学已经发展得非常广泛：
+<a href="https://en.wikipedia.org/wiki/Propositional_calculus" target="_blank" rel="noopener">Propositional logic</a>（命题逻辑），
+<a href="https://en.wikipedia.org/wiki/First-order_logic" target="_blank" rel="noopener">First-order logic</a>（也称 Predicate logic），
+<a href="https://en.wikipedia.org/wiki/Second-order_logic" target="_blank" rel="noopener">Second-order logic</a>，
+<a href="https://en.wikipedia.org/wiki/Higher-order_logic" target="_blank" rel="noopener">Higher-order logic</a>，
+<a href="https://en.wikipedia.org/wiki/Intuitionistic_logic" target="_blank" rel="noopener">Constructive logic</a>（也称 Intuitionistic logic），
+<a href="https://en.wikipedia.org/wiki/Modal_logic" target="_blank" rel="noopener">Modal logic</a>（模态逻辑），
+<a href="https://en.wikipedia.org/wiki/Temporal_logic" target="_blank" rel="noopener">Temporal logic</a>（时态逻辑是模态逻辑的一个分支），
+<a href="https://plato.stanford.edu/entries/logic-free/" target="_blank" rel="noopener">Free logic</a>，
+<a href="https://plato.stanford.edu/entries/plural-quant/" target="_blank" rel="noopener">Plural logic</a>，
+<a href="https://en.wikipedia.org/wiki/Paraconsistent_logic" target="_blank" rel="noopener">Paraconsistent logic</a>（次协调逻辑），
+<a href="https://en.wikipedia.org/wiki/Quantum_logic" target="_blank" rel="noopener">Quantum logic</a>（量子逻辑）。
+逻辑学与其它理论也有非常紧密的联系，如集合论、证明论、模型论、计算理论等。
+在计算机技术领域，学习一阶逻辑、时态逻辑等，可以帮助我们更好地运用形式化方法。</p>
+</div>
+<div style="display: none"><script type="math/tex; mode=display">
+\newcommand{\F}[1]{\!\!{#1}}
+</script></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_谓词逻辑"><a class="anchor" href="#_谓词逻辑"></a><a class="link" href="#_谓词逻辑">谓词逻辑</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>自然演绎规则：</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\dfrac{f: \forall \alpha. \alpha\to\alpha \vdash f : \color{green}{\tau} \to \color{blue}{\tau'} \qquad f: \forall \alpha. \alpha\to\alpha \vdash f : \color{blue}{\tau'}}
+      {f: \forall \alpha. \alpha\to\alpha \vdash f \, f : \color{blue}{\tau'}}
+  \textsf{(T-App)}\]
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_一些概念"><a class="anchor" href="#_一些概念"></a><a class="link" href="#_一些概念">一些概念</a></h2>
+<h2 id="_形式系统的一致性和完全性"><a class="anchor" href="#_形式系统的一致性和完全性"></a><a class="link" href="#_形式系统的一致性和完全性">形式系统的一致性和完全性</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<div class="title">state</div>
-<p>state是对一些变量进行赋值(的结果)，如 $[hr=1]$，$[hr=2]$ 等等。</p>
-</div>
-<div class="paragraph">
-<div class="title">step</div>
-<p>step是状态间直接变化的步骤。假如 $s_n$, $s_{n+1}$ 分别是两个相邻的 <em>state</em> ，那么 $s_n &#8594; s_{n+1}$ 就是表示 从 $s_n$ 直接变化到 $s_{n+1}$的step，无论 <em>state</em> 中有多少个变量，这个变化都是原子的，不会产生其它中间状态。</p>
-</div>
-<div class="paragraph">
-<div class="title">behavior</div>
-<p>behavior是 <em>state</em> 组成的无穷序列，如 $\sigma \defeq [hr=1] &#8594; [hr=2] &#8594; [hr=3] &#8594; &#8230;&#8203;$ 。需要注意的是，一个系统可能有多个behavior，比如并发系统可能有多种执行顺序，产生不同的behavior。</p>
-</div>
-<div class="paragraph">
-<div class="title">primed variable</div>
-<p>变量发生变化后的值，如 $hr'=hr+1$ 表示 <code>hr</code> 变量经过一个 <em>step</em> 之后，其值等于原先的值加 <code>1</code> 。</p>
-</div>
-<div class="paragraph">
-<div class="title">state function</div>
-<p><em>state function</em> 不包含 <em>prime variable</em> 的表达式，可以包含 <em>variable</em> 和 <em>constant</em> 。function表示了一个 <em>value</em> ，这个 <em>value</em> 可以是集合，可以是Boolean值。</p>
-</div>
-<div class="paragraph">
-<div class="title">state predicate</div>
-<p><em>value</em> 为 <code>Boolean</code> 类型的 <em>state function</em> 。 state predicate作用于states进行真值判断。</p>
-</div>
-<div class="paragraph">
-<div class="title">action</div>
-<p>包含 <em>primed variable</em> 和 <em>unprimed variable</em> 的 formula。 action 作用于 <em>step</em> 进行真值判断。</p>
-</div>
-<div class="paragraph">
-<div class="title">formula</div>
-<p>值为TRUE或FALSE的逻辑表达式（数理逻辑中的「公式」）</p>
-</div>
-<hr>
-<div class="paragraph">
-<p>这些定义的形式和语义都不一定准确，只是帮助加深理解TLA+。精确定义详见Specifying Systems，尤其是 Chapter 16 有许多描述。</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_逻辑基础"><a class="anchor" href="#_逻辑基础"></a><a class="link" href="#_逻辑基础">逻辑基础</a></h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_命题逻辑"><a class="anchor" href="#_命题逻辑"></a><a class="link" href="#_命题逻辑">命题逻辑</a></h3>
-<div class="paragraph">
-<p>命题逻辑语法可以用如下BNF表示：</p>
-</div>
-<div class="stemblock">
-<div class="content">
-\[\phi ::= p | (\lnot\phi) | (\phi\land\phi) | (\phi\lor\phi) | (\phi\to\phi)\]
-</div>
-</div>
-<div class="paragraph">
-<p>自然演绎：</p>
-</div>
-<div class="stemblock">
-<div class="content">
-
-</div>
-</div>
+<p>背景： 希尔伯特为了解决数学基础问题，希望将数学建立在可靠的逻辑系统之上。</p>
 </div>
 <div class="sect2">
-<h3 id="_谓词逻辑"><a class="anchor" href="#_谓词逻辑"></a><a class="link" href="#_谓词逻辑">谓词逻辑</a></h3>
+<h3 id="_一致性consistent"><a class="anchor" href="#_一致性consistent"></a><a class="link" href="#_一致性consistent">一致性（consistent）</a></h3>
 <div class="paragraph">
-<p>PTL: Propositional Temporal Logic ，是LTL的另一种简称，参考 <a href="https://en.wikipedia.org/wiki/Linear_temporal_logic" class="bare">https://en.wikipedia.org/wiki/Linear_temporal_logic</a>
-<a href="http://discuss.tlapl.us/msg00894.html" class="bare">http://discuss.tlapl.us/msg00894.html</a></p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_temporal_logic_简介"><a class="anchor" href="#_temporal_logic_简介"></a><a class="link" href="#_temporal_logic_简介">Temporal Logic 简介</a></h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>时态公式是行为的真值判断式。对于一个行为 $\sigma$ ，以及一个时态公式 $F$ ，如果 $\sigma$ 满足 $F$ ，则可以表示为：</p>
-</div>
-<div class="stemblock">
-<div class="content">
-\[\sigma \models F\]
-</div>
-</div>
-<div class="paragraph">
-<p>也可称作时态公式 $F$ 对于行为 $\sigma$ 是真的。</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-为了便于叙述，我们将“时态公式”简称为“公式”。
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>公式可以通过连接词进行组合，也可使用量词进行修饰。组合公式的含义如下：</p>
+<p><em>有些文献里面将一致性称作「协调性」</em> 。 有三种一致性：</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>$\sigma \models (F \land G) \;\defeq \;(\sigma \models F) \land (\sigma \models G)$</p>
-</li>
-<li>
-<p>$\sigma \models (F \lor G) \;\defeq \;(\sigma \models F) \lor (\sigma \models G)$</p>
-</li>
-<li>
-<p>$\sigma \models (F &#8658; G) \;\defeq \;(\sigma \models F) &#8658; (\sigma \models G)$</p>
-</li>
-<li>
-<p>$\sigma \models \lnot F \;\defeq \;\lnot (\sigma \models F)$</p>
-</li>
-<li>
-<p>$\sigma \models (\forall r \in S: F) \;\defeq \;\forall r \in S : (\sigma \models F)$</p>
-</li>
-</ul>
-</div>
+<p>古典一致性（ $ \nvdash\!{A} \land \lnot A$ ）</p>
 <div class="paragraph">
-<p>上面出现的公式 $F$, $G$ 都未加定义和解释。通常，公式有三种形式，对应各自的语义解释：</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>$P$</p>
-<div class="paragraph">
-<p><em>state predicate</em>。 P是一个「状态谓词」，如果将 $P$ 看作时态公式， 那么 $P$ 满足 <em>behavior</em> 当且仅当 <em>behavior</em> 中的第一个 <em>state</em> 满足 $P$</p>
+<p>系统 $s$ 中不存在公式 $A$ ，使得 $A$ 和 $\lnot A$ 都在该系统中 <strong>可证</strong> 。</p>
 </div>
 </li>
 <li>
-<p>$\Box P$</p>
+<p>语法一致性（ $\exists \psi \in S :\; \nvdash\!\psi$ ）</p>
 <div class="paragraph">
-<p>其中 $P$ 是 <em>state predicate</em> 。$\Box P$ 满足 <em>behavior</em> 当且仅当 <em>behavior</em> 中所有 <em>state</em> 满足 $P$</p>
+<p>系统中不是任何公式都 <strong>可证</strong> 的，或者说至少有一个公式 $A$ 是 <strong>不可证</strong> 的。如果系统中 <strong>每个</strong> 公式都是 <strong>可证</strong> 的（句句是真理），那么这个系统就没有什么用处了。</p>
 </div>
 </li>
 <li>
-<p>$\Box[N]_\color{red}v$</p>
+<p>语义一致性（ $\Gamma \vdash\F{A} \; &#8658; \; \Gamma \models\F{A}$ ）</p>
 <div class="paragraph">
-<p>其中 $N$ 是 <em>action</em> ，$_\color{red}v$ 是 <em>state function</em> 。 该公式满足 <em>behavior</em> 当且仅当 <em>behavior</em> 中每一对相继的states是一个满足 $[N]_v$ 的step。</p>
-</div>
-<div class="paragraph">
-<p>注意： $[N]_v$ 中的 $_v$ 可以是 <em>state function</em> ，并不限定于 variables（如 $\seq{hr ,\, val}$)。 <em>state function</em> 可以增加 prime 运算符形成 <em>transition function</em> 。$[N]_v$ 等价于 $ N \lor (v' = v)$ 。详见 Spcifying Systems 16.2.3。</p>
+<p>也称作可靠性(<a href="https://en.wikipedia.org/wiki/Soundness" target="_blank" rel="noopener">soundness</a>)，凡是 <strong>可证</strong> 的（或称作 <em>valid</em> ，即 <strong>有效的</strong> )公式都真的。</p>
 </div>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>三种公式</p>
+<p>古典一致性和语法一致性都在 <em>句法</em> 和 <em>规则</em> 范围内，弱于语义一致性。如果系统的语义一致性得到证明，那么古典一致性和语法一致性也是满足的。
+因此， <strong>一致性</strong> 通常指 <strong>语义一致性</strong> ，也即 <strong>可靠性(soundness)</strong> 。
+<strong>一致性</strong> 的证明比较简单，其主要思路是：所有公理(axioms)是真的，推理规则(rules)是保真的，通过对证明序列进行归纳，即可得证。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_完全性"><a class="anchor" href="#_完全性"></a><a class="link" href="#_完全性">完全性</a></h3>
+<div class="paragraph">
+<p>完全性也有三种：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>古典完全性（ $\vdash\F A $ 或者 $ \vdash\lnot A$ ）</p>
+<div class="paragraph">
+<p>系统$s$中任一个公式 $A$ ，要么 $A$ 是可证的，要么 $\lnot A$ 是可证的。</p>
+</div>
+</li>
+<li>
+<p>语法完全性</p>
+<div class="paragraph">
+<p>如果把系统中的任一不可证公式作为公理增加到已有的系统中，导致系统变得不一致，则称该系统是语法完全的（或绝对完备的）。</p>
+</div>
+</li>
+<li>
+<p>语义完全性（ $\Gamma \models\F A \; &#8658; \; \Gamma \vdash\F A $ ）</p>
+<div class="paragraph">
+<p>如果在一个形式系统的所有模型中都真的公式在该系统中都可以得到证明，则称该系统是语义完全的（相对完备的）。</p>
+</div>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>待续&#8230;&#8203;</p>
+<p>语义完全性(completeness)是语义一致性的的逆命题，我们一般讨论的 <strong>完全性</strong> 都指「语义完全性」。
+<strong>完全性</strong> 的证明比较复杂， <a href="https://en.wikipedia.org/wiki/G%C3%B6del%27s_completeness_theorem" target="_blank" rel="noopener">Wiki</a> 中有一些概括，证明过程需要理解演绎定理(Deduction Theoream)。
+证明思路为：</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>证明 $\phi_1,\phi_2,&#8230;&#8203;,\phi_n \models\!\psi \; &#8658; \; \models \phi_1 &#8594; \phi_2 &#8594; &#8230;&#8203; &#8594; \phi_n &#8594; \psi $</p>
+<div class="paragraph">
+<p>即如果 $\psi$ 是 $\Gamma \defeq \phi_1,\phi_2,&#8230;&#8203;,\phi_n$ 的语义后承，那么 $\phi_1 &#8594; \phi_2 &#8594; &#8230;&#8203; &#8594; \phi_n &#8594; \psi$ 是重言式（永真式）。</p>
+</div>
+</li>
+<li>
+<p>证明 $\models\!\eta \; &#8658; \;\; \vdash\!\eta$</p>
+<div class="paragraph">
+<p>即证明重言式都存在一个证明序列。</p>
+</div>
+</li>
+<li>
+<p>证明 $\phi_1 &#8594; \phi_2 &#8594; &#8230;&#8203; &#8594; \phi_n &#8594; \psi \; &#8658; \; \phi_1,\phi_2,&#8230;&#8203;,\phi_n \vdash\!\psi$</p>
+<div class="paragraph">
+<p>将 $\phi_1,\phi_2,&#8230;&#8203;,\phi_n$ 当作前提，然后运用蕴含消除规则，最终即可得证 $\phi_1,\phi_2,&#8230;&#8203;,\phi_n \vdash\!\psi$</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_演绎定理"><a class="anchor" href="#_演绎定理"></a><a class="link" href="#_演绎定理">演绎定理</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://en.m.wikipedia.org/wiki/Deduction_theorem" target="_blank" rel="noopener">演绎定理</a> 是重要的元定理。在命题逻辑中，可以如此表述：$\Gamma \cup \{ A \} \vdash\F{B} \; &#8658; \; \Gamma \vdash\F{A} &#8594; B$ 。
+如果 $\Gamma$ 是空集，则 $ A \vdash\F{B} \; &#8658; \; \vdash\F{A}&#8594;B$</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_参考资料"><a class="anchor" href="#_参考资料"></a><a class="link" href="#_参考资料">参考资料</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://en.m.wikipedia.org/wiki/Natural_deduction" class="bare">https://en.m.wikipedia.org/wiki/Natural_deduction</a></p>
 </div>
 </div>
 </div>
@@ -447,12 +459,16 @@ Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公
     
 <footer class="post-footer">
       <div class="post-tags">
-          <a href="/tags/tla&#43;/">TLA&#43;</a>
+          <a href="/tags/logic/">Logic</a>
           </div>
       <nav class="post-nav">
-        
-        <a class="next" href="/post/logic/">
-            <span class="next-text nav-default">数理逻辑一些概念</span>
+        <a class="prev" href="/post/specifying-systems-notes-2/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Specifying Systems 笔记2 Liveness &amp; Fairness</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        <a class="next" href="/post/dubbo-integrate-with-istio/">
+            <span class="next-text nav-default">Dubbo 集成 Istio 的方案</span>
             <span class="next-text nav-mobile">Next</span>
             <i class="iconfont icon-right"></i>
           </a>

@@ -30,13 +30,30 @@ Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公
     </item>
     
     <item>
-      <title>一阶逻辑备忘</title>
-      <link>/post/first-order-logic-notes/</link>
+      <title>数理逻辑一些概念</title>
+      <link>/post/logic/</link>
       <pubDate>Tue, 08 Sep 2020 21:00:00 +0800</pubDate>
       
-      <guid>/post/first-order-logic-notes/</guid>
+      <guid>/post/logic/</guid>
       <description>&lt;div id=&#34;preamble&#34;&gt;
-&lt;div class=&#34;sectionbody&#34;&gt;&lt;/div&gt;&lt;/div&gt;</description>
+&lt;div class=&#34;sectionbody&#34;&gt;
+&lt;div class=&#34;paragraph&#34;&gt;
+&lt;p&gt;形式化方法已经有大量的应用，如计算机辅助证明、模型检查、系统规约化语言（如TLA+），这些技术的基础都离不开数理逻辑。
+现代逻辑学已经发展得非常广泛：
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Propositional_calculus&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Propositional logic&lt;/a&gt;（命题逻辑），
+&lt;a href=&#34;https://en.wikipedia.org/wiki/First-order_logic&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;First-order logic&lt;/a&gt;（也称 Predicate logic），
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Second-order_logic&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Second-order logic&lt;/a&gt;，
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Higher-order_logic&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Higher-order logic&lt;/a&gt;，
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Intuitionistic_logic&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Constructive logic&lt;/a&gt;（也称 Intuitionistic logic），
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Modal_logic&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Modal logic&lt;/a&gt;（模态逻辑），
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Temporal_logic&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Temporal logic&lt;/a&gt;（时态逻辑是模态逻辑的一个分支），
+&lt;a href=&#34;https://plato.stanford.edu/entries/logic-free/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Free logic&lt;/a&gt;，
+&lt;a href=&#34;https://plato.stanford.edu/entries/plural-quant/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Plural logic&lt;/a&gt;，
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Paraconsistent_logic&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Paraconsistent logic&lt;/a&gt;（次协调逻辑），
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Quantum_logic&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Quantum logic&lt;/a&gt;（量子逻辑）。
+逻辑学与其它理论也有非常紧密的联系，如集合论、证明论、模型论、计算理论等。
+在计算机技术领域，学习一阶逻辑、时态逻辑等，可以帮助我们更好地运用形式化方法。&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
