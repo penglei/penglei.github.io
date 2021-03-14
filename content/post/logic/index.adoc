@@ -40,16 +40,16 @@ https://en.wikipedia.org/wiki/Quantum_logic[Quantum logic^]（量子逻辑）。
 </script></div>
 ++++
 
-== 谓词逻辑
-
-自然演绎规则：
-
-[latexmath]
-++++
-\dfrac{f: \forall \alpha. \alpha\to\alpha \vdash f : \color{green}{\tau} \to \color{blue}{\tau'} \qquad f: \forall \alpha. \alpha\to\alpha \vdash f : \color{blue}{\tau'}}
-      {f: \forall \alpha. \alpha\to\alpha \vdash f \, f : \color{blue}{\tau'}}
-  \textsf{(T-App)}
-++++
+//== 谓词逻辑
+//
+//自然演绎规则：
+//
+//[latexmath]
+//++++
+//\dfrac{f: \forall \alpha. \alpha\to\alpha \vdash f : \color{green}{\tau} \to \color{blue}{\tau'} \qquad f: \forall \alpha. \alpha\to\alpha \vdash f : \color{blue}{\tau'}}
+//      {f: \forall \alpha. \alpha\to\alpha \vdash f \, f : \color{blue}{\tau'}}
+//  \textsf{(T-App)}
+//++++
 
 == 形式系统的一致性和完全性
 
