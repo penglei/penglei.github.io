@@ -314,7 +314,7 @@ bibitem:[gidenstam2010efficient]
 
 bibliography::[]
 
-== Ascii Diagram
+== Diagram by Coding
 
 .ditaa
 https://github.com/stathissideris/ditaa
@@ -371,7 +371,7 @@ digraph automata_0 {
 一些绘图工具：
 
 * ascii to svg: https://github.com/ivanceras/svgbob
-* 流程图、UML图( vs plantUML）、甘特图 、轨道图: https://github.com/mermaidjs/mermaid.cli
+* 流程图、UML图( vs plantUML）、甘特图 、轨道图: https://github.com/mermaid-js/mermaid-cli
 * 结构图、DAG等等(graphviz): https://www.graphviz.org/
 * digital timing diagram : https://github.com/wavedrom/wavedrom
 
