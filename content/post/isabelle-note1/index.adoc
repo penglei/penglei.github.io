@@ -1,0 +1,29 @@
+////
+title: Isabelle笔记（一）
+date: 2021-04-30T09:00:00+08:00
+
+draft: true
+categories: [Formal]
+tags: [Isabelle, Proof Assistant]
+////
+
+= Isabelle笔记（一）
+// Disable wrapping in listing and literal blocks.
+:prewrap!:
+:toc:
+:sectanchors:
+:sectlinks:
+:icons: font
+
+Isabelle是一个实现形式逻辑的通用系统，其中Isabelle/HOL是Isabelle处理高阶逻辑的特化系统。
+HOL 是 `Higher-Order Logic` 的简写。 具体地，在Isabelle中，HOL是通过组合 Function Programming和Logic来提供的。
+
+//<!--more-->
+
+== 基础
+
+Isabelle底层使用ML语言实现，其语法也受到ML的影响。Isabelle/Isar是Isabelle的一个扩展，几乎隐藏了所有底层实现语言的细节。
+因此，Isabelle/HOL的完整简写应该是 Isabelle/Isar/HOL。
+
+使用Isabelle是以理论(`theory`)为中心， `theory` 由具名的 `type` 、 `function` 、 `theorem` 列表构成。
+

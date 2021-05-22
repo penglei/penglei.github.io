@@ -76,7 +76,7 @@
 ">
 <meta itemprop="datePublished" content="2019-02-17T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-02-17T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="2651">
+<meta itemprop="wordCount" content="2718">
 
 
 
@@ -335,19 +335,23 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">..............................macOS..............................
-.                                                               .
-. +----------+                                                  .
-. |   APP    |                                                  .
-. +----------+                                                  .
-.      | eg: 1.2.3.4            pf rdr-to  +------------------+ .  +---------------+
-.      |                      +-----------&gt;| transprant proxy +---&gt;| socks5 server +---&gt;outside world
-.      v                      |            +------------------+ .  +---------------+    (eg: 1.2.3.4)
-.  +----+--+               +--+--+         127.0.0.1:12345      .
-.  |  en0  +--------------&gt;| lo0 |                              .
-.  +-------+  pf route-to  +-----+                              .
-.                                                               .
-.................................................................</pre>
+<pre class="nowrap">.........................macOS............................
+.                (userspace)                             .
+.                                 127.0.0.1:12345        .
+. +----------+                  +------------------+     .  +---------------+
+. |   APP    |                  | transprant proxy +-------&gt;| socks5 server +---&gt;outside world
+. +----------+                  +------------------+     .  +---------------+    (eg: 1.2.3.4)
+.      | eg: 1.2.3.4                      ^              .
++======|==================================|===============
+.      |        (kernel space)            |              .
+.      |                        pf rdr    |              .
+.      |                      +-----------+              .
+.      v                      |                          .
+.  +----+--+               +--+--+                       .
+.  |  en0  +--------------&gt;| lo0 |                       .
+.  +-------+  pf route-to  +-----+                       .
+.                                                        .
+..........................................................</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -366,10 +370,10 @@ pass out route-to (lo0 127.0.0.1) proto tcp from any to 1.2.3.4</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p>第二条规则 <strong>route-to</strong> 表示将本地任何地址访问1.2.3.4的TCP流量路由到另一个地址；</p>
+<p>第一条规则 <strong>rdr</strong> 表示将进入lo0、协议为TCP、任何来源、目的地址是1.2.3.4的流量转发到 <code>127.0.0.01:12456</code> ；</p>
 </li>
 <li>
-<p>第一条规则 <strong>rdr-to</strong> 表示将进入lo0接口上的流量转发到另一个地址；</p>
+<p>第二条规则 <strong>route-to</strong> 表示将从本地任何地址(一台设备可能有多个IP地址)访问1.2.3.4的TCP流量路由到另一个地址(这里是lo0 127.0.0.1)；</p>
 </li>
 </ul>
 </div>
