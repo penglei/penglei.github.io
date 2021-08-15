@@ -1,0 +1,26 @@
+////
+title: "nix"
+date: 2021-06-17T18:27:24+08:00
+draft: true
+////
+
+version-less philosophy:
+https://github.com/NixOS/nixpkgs/issues/36266
+https://github.com/NixOS/nixpkgs/issues/9682
+
+haskell tutorial:
+https://github.com/Gabriel439/haskell-nix
+https://github.com/fghibellini/nix-haskell-monorepo
+
+pinning:
+https://cah6.github.io/technology/nix-haskell-1/
+https://nix.dev/tutorials/towards-reproducibility-pinning-nixpkgs
+
+nix expression language:
+https://nixos.wiki/wiki/Nix_Expression_Language
+
+nix-shell:
+https://ghedam.at/15978/an-introduction-to-nix-shell
+
+nix pills(最重要的资料):
+https://nixos.org/guides/nix-pills/why-you-should-give-it-a-try.html

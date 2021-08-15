@@ -66,7 +66,6 @@ params:
   rssFullContent: true     # if false, Rss feed instead of the summary
 
   archivePaginate: 5 # paginate of archives, tags and categories   # 归档、标签、分类每页显示的文章数目，建议修改为一个较大的值
-  #gitRepo: https://github.com/penglei/penglei.github.io
   #sourceGitBranch: source
   # site info (optional)                                  # 站点信息（可选，不需要的可以直接注释掉）
   logoTitle: "ybyte"        # default: the title value    # 默认值: 上面设置的title值

@@ -1,0 +1,33 @@
+////
+title: 「小」宝贝诞生
+date: 2021-05-29
+draft: true
+categories: [children]
+////
+
+= 「小」宝贝诞生
+// Disable wrapping in listing and literal blocks.
+:prewrap!:
+:sectanchors:
+:sectlinks:
+:icons: font
+//:source-highlighter: highlightjs
+//:highlightjsdir: static/highlight
+//:source-highlighter: pygments
+//https://github.com/asciidoctor/asciidoctor.org/blob/master/docs/_includes/icons.adoc
+
+终于等到你
+
+//<!--more-->
+
+== 迎接新生命
+
+回成都大约两年后，我有了带一个娃的想法，这个想法的动机很简单世俗 -- 觉得年龄到了，父母也想要一个孙辈，看着同龄人都带了小孩，自然而然就想要一个孩子。
+但那时我自己并没有好好想过如何做一个父亲，只是单纯地想要一样「东西」，也许那时我的意识中只是把「小孩子」当作一个特殊的物品。
+
+我和你妈妈常常在晚上深度交流各自内心的想法，你妈妈常常问我：你为什么要一个孩子。
+
+结果连你的名字都没想好。我和你妈妈都认可了一个男孩的名字，却一直没有找到合适的女孩名字。 其实妈妈一直以为你是男孩，因为4维彩超长得太像我了
+
+下午4:00
+

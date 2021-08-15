@@ -1,0 +1,48 @@
+////
+title: "Monad"
+date: 2021-06-17T18:27:24+08:00
+draft: true
+////
+
+= blog title
+// https://github.com/asciidoctor/asciidoctor.org/blob/master/docs/_includes/listing-wrap.adoc
+// https://asciidoctor.org/docs/user-manual/#to-wrap-or-to-scroll
+:prewrap!:
+:toc:
+:experimental:
+:icons: font
+
+summary
+
+// <!--more-->
+
+== content
+
+范畴: https://zh.wikipedia.org/wiki/%E7%AF%84%E7%96%87_(%E6%95%B8%E5%AD%B8)
+态射: https://zh.wikipedia.org/wiki/%E6%80%81%E5%B0%84
+函子: https://zh.wikipedia.org/wiki/%E5%87%BD%E5%AD%90
+自然变换:
+- https://en.wikipedia.org/wiki/Natural_transformation
+- https://zh.wikipedia.org/wiki/%E8%87%AA%E7%84%B6%E8%AE%8A%E6%8F%9B
+
+Monad:
+- https://en.wikipedia.org/wiki/Monad_(category_theory)
+- https://stackoverflow.com/questions/3870088/a-monad-is-just-a-monoid-in-the-category-of-endofunctors-whats-the-problem
+- https://blog.softwaremill.com/monoid-in-the-category-of-endofunctors-b85bab43587b
+- https://tristone13th.github.io/archivers/A-Monad-is-Just-a-Monoid-in-the-Category-of-Endofunctors-Cn
+- https://www.reddit.com/r/math/comments/ap25mr/a_monad_is_a_monoid_in_the_category_of/
+
+> All told, a monad in X is just a monoid in the category of endofunctors of X, with product × replaced by composition of endofunctors and unit set by the identity endofunctor.
+
+haskell中的范畴
+- https://zhuanlan.zhihu.com/p/25407184
+
+terminal object?:
+http://www.alpheccar.org/content/74.html
+
+== 概念
+
+=== Monoid as Category (范畴论中的幺半群)
+
+
+

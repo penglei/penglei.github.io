@@ -1,0 +1,21 @@
+////
+title: "haskell"
+date: 2021-06-17T18:27:24+08:00
+draft: true
+////
+
+https://markkarpov.com/learn-haskell.html
+
+https://kseo.github.io/posts/2017-02-02-context-reduction.html
+
+https://diogocastro.com/blog/2018/10/17/haskells-kind-system-a-primer/
+http://blog.omega-prime.co.uk/2011/09/10/constraint-kinds-for-ghc/
+https://kseo.github.io/posts/2017-01-13-constraint-kinds.html
+https://downloads.haskell.org/~ghc/7.4.1/docs/html/users_guide/constraint-kind.html
+
+https://markkarpov.com/tutorial/exceptions.html
+https://openhome.cc/Gossip/CodeData/HaskellTutorial/ExceptionCatchHandle.html
+
+https://markkarpov.com/tutorial/megaparsec.html
+http://dev.stephendiehl.com/fun/002_parsers.html
+
