@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Specifying Systems 笔记2 Liveness &amp; Fairness - ybyte blog</title>
+  <title>Specifying Systems 笔记2 Liveness - ybyte blog</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="penglei" /><meta name="description" content="Specifying Systems的1-7章层层推进，在实例中穿插着原理讲解，深入浅出地讲解了Specification是什么，以及如何规约系统设计。 这些Specification表明了系统的Safety属性&amp;#8201;&amp;#8212;&amp;#8201;即系统行为被约束在一定范围内，不会做出一些不被允许的行为(something bad does not happen)。 在TLA&#43;中，通常使用公式 \(Spec \triangleq Init \land \Box [Next]_{vars}\) 来描述系统的Safety属性(约束)。 Safety属性说明了系统中什么不能发生，但无法表达系统中最终会发生的这类属性，而Liveness便可以表达(&#34;something good eventully happen&#34;)。 Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公式 \(Spec \triangleq Init \land \Box [Next]_{vars} \land F\) 来同时描述其对Safety和Liveness的要求， 公式末尾的 $F$ 便是描述Liveness属性的公式。
+<meta name="author" content="penglei" /><meta name="description" content="Specifying Systems的1-7章层层推进，在实例中穿插着原理讲解，深入浅出地讲解了Specification是什么，以及如何设计系统规约。 这些Specification表明了系统的Safety属性&amp;#8201;&amp;#8212;&amp;#8201;即系统行为被约束在一定范围内，不会做出一些不被允许的行为(something bad does not happen)。 在TLA&#43;中，通常使用公式 \(Spec \triangleq Init \land \Box [Next]_{vars}\) 来描述系统的Safety属性(约束)。 Safety属性说明了系统中什么不能发生，但无法表达系统中某些时间一定会发生的这类属性，而Liveness便可以表达(&#34;something good eventully happen&#34;)。 Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公式 \(Spec \triangleq Init \land \Box [Next]_{vars} \land L\) 来同时描述其对Safety和Liveness的要求， 公式末尾的 $L$ 便是描述Liveness属性的公式。
 " /><meta name="keywords" content="linux, kubernetes, docker, istio, servicemesh, sidecar" />
 
 
@@ -46,49 +46,49 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<meta property="og:title" content="Specifying Systems 笔记2 Liveness &amp; Fairness" />
+<meta property="og:title" content="Specifying Systems 笔记2 Liveness" />
 <meta property="og:description" content="
 
 
-Specifying Systems的1-7章层层推进，在实例中穿插着原理讲解，深入浅出地讲解了Specification是什么，以及如何规约系统设计。
+Specifying Systems的1-7章层层推进，在实例中穿插着原理讲解，深入浅出地讲解了Specification是什么，以及如何设计系统规约。
 这些Specification表明了系统的Safety属性&#8201;&#8212;&#8201;即系统行为被约束在一定范围内，不会做出一些不被允许的行为(something bad does not happen)。
 在TLA&#43;中，通常使用公式 \(Spec \triangleq Init \land \Box [Next]_{vars}\) 来描述系统的Safety属性(约束)。
-Safety属性说明了系统中什么不能发生，但无法表达系统中最终会发生的这类属性，而Liveness便可以表达(&#34;something good eventully happen&#34;)。
-Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公式 \(Spec \triangleq Init \land \Box [Next]_{vars} \land F\) 来同时描述其对Safety和Liveness的要求，
-公式末尾的 $F$ 便是描述Liveness属性的公式。
+Safety属性说明了系统中什么不能发生，但无法表达系统中某些时间一定会发生的这类属性，而Liveness便可以表达(&#34;something good eventully happen&#34;)。
+Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公式 \(Spec \triangleq Init \land \Box [Next]_{vars} \land L\) 来同时描述其对Safety和Liveness的要求，
+公式末尾的 $L$ 便是描述Liveness属性的公式。
 " />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/post/specifying-systems-notes-2/" />
 <meta property="article:published_time" content="2020-09-08T21:00:00+08:00" />
 <meta property="article:modified_time" content="2020-09-08T21:00:00+08:00" />
-<meta itemprop="name" content="Specifying Systems 笔记2 Liveness &amp; Fairness">
+<meta itemprop="name" content="Specifying Systems 笔记2 Liveness">
 <meta itemprop="description" content="
 
 
-Specifying Systems的1-7章层层推进，在实例中穿插着原理讲解，深入浅出地讲解了Specification是什么，以及如何规约系统设计。
+Specifying Systems的1-7章层层推进，在实例中穿插着原理讲解，深入浅出地讲解了Specification是什么，以及如何设计系统规约。
 这些Specification表明了系统的Safety属性&#8201;&#8212;&#8201;即系统行为被约束在一定范围内，不会做出一些不被允许的行为(something bad does not happen)。
 在TLA&#43;中，通常使用公式 \(Spec \triangleq Init \land \Box [Next]_{vars}\) 来描述系统的Safety属性(约束)。
-Safety属性说明了系统中什么不能发生，但无法表达系统中最终会发生的这类属性，而Liveness便可以表达(&#34;something good eventully happen&#34;)。
-Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公式 \(Spec \triangleq Init \land \Box [Next]_{vars} \land F\) 来同时描述其对Safety和Liveness的要求，
-公式末尾的 $F$ 便是描述Liveness属性的公式。
+Safety属性说明了系统中什么不能发生，但无法表达系统中某些时间一定会发生的这类属性，而Liveness便可以表达(&#34;something good eventully happen&#34;)。
+Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公式 \(Spec \triangleq Init \land \Box [Next]_{vars} \land L\) 来同时描述其对Safety和Liveness的要求，
+公式末尾的 $L$ 便是描述Liveness属性的公式。
 ">
 <meta itemprop="datePublished" content="2020-09-08T21:00:00&#43;08:00" />
 <meta itemprop="dateModified" content="2020-09-08T21:00:00&#43;08:00" />
-<meta itemprop="wordCount" content="1422">
+<meta itemprop="wordCount" content="3049">
 
 
 
 <meta itemprop="keywords" content="TLA&#43;," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Specifying Systems 笔记2 Liveness &amp; Fairness"/>
+<meta name="twitter:title" content="Specifying Systems 笔记2 Liveness"/>
 <meta name="twitter:description" content="
 
 
-Specifying Systems的1-7章层层推进，在实例中穿插着原理讲解，深入浅出地讲解了Specification是什么，以及如何规约系统设计。
+Specifying Systems的1-7章层层推进，在实例中穿插着原理讲解，深入浅出地讲解了Specification是什么，以及如何设计系统规约。
 这些Specification表明了系统的Safety属性&#8201;&#8212;&#8201;即系统行为被约束在一定范围内，不会做出一些不被允许的行为(something bad does not happen)。
 在TLA&#43;中，通常使用公式 \(Spec \triangleq Init \land \Box [Next]_{vars}\) 来描述系统的Safety属性(约束)。
-Safety属性说明了系统中什么不能发生，但无法表达系统中最终会发生的这类属性，而Liveness便可以表达(&#34;something good eventully happen&#34;)。
-Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公式 \(Spec \triangleq Init \land \Box [Next]_{vars} \land F\) 来同时描述其对Safety和Liveness的要求，
-公式末尾的 $F$ 便是描述Liveness属性的公式。
+Safety属性说明了系统中什么不能发生，但无法表达系统中某些时间一定会发生的这类属性，而Liveness便可以表达(&#34;something good eventully happen&#34;)。
+Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公式 \(Spec \triangleq Init \land \Box [Next]_{vars} \land L\) 来同时描述其对Safety和Liveness的要求，
+公式末尾的 $L$ 便是描述Liveness属性的公式。
 "/>
 
 <!--[if lte IE 9]>
@@ -188,6 +188,7 @@ Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公
 \newcommand{\PICK}{\sc{PICK}}
 \newcommand{\WITNESS}{\sc{WITNESS}}
 \newcommand{\HIDE}{\sc{HIDE}}
+\newcommand{\@w}[1]{\textsf{``{#1}''}}
 </script>
 </div>
 
@@ -246,7 +247,7 @@ Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">Specifying Systems 笔记2 Liveness &amp; Fairness</h1>
+      <h1 class="post-title">Specifying Systems 笔记2 Liveness</h1>
 
       <div class="post-meta">
         <span class="post-time"> 2020-09-08 </span>
@@ -271,18 +272,38 @@ Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公
 <li><a href="#_谓词逻辑">谓词逻辑</a></li>
 </ul>
 </li>
-<li><a href="#_temporal_logic_简介">Temporal Logic 简介</a></li>
+<li><a href="#_temporal_logic_简介">Temporal Logic 简介</a>
+<ul class="sectlevel2">
+<li><a href="#_更多时态公式定义">更多时态公式定义</a></li>
+<li><a href="#_时态逻辑重言式恒等式">时态逻辑重言式(恒等式)</a></li>
+<li><a href="#_时态逻辑推理规则类似于mp规则">时态逻辑推理规则(类似于MP规则)</a></li>
+</ul>
+</li>
+<li><a href="#_liveness定义">Liveness定义</a>
+<ul class="sectlevel2">
+<li><a href="#_weak_fairness">Weak Fairness</a></li>
+<li><a href="#_strong_fairness">Strong Fairness</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Specifying Systems的1-7章层层推进，在实例中穿插着原理讲解，深入浅出地讲解了Specification是什么，以及如何规约系统设计。
+<p>Specifying Systems的1-7章层层推进，在实例中穿插着原理讲解，深入浅出地讲解了Specification是什么，以及如何设计系统规约。
 这些Specification表明了系统的Safety属性&#8201;&#8212;&#8201;即系统行为被约束在一定范围内，不会做出一些不被允许的行为(something <strong>bad</strong> does not happen)。
 在TLA+中，通常使用公式 \(Spec \triangleq Init \land \Box [Next]_{vars}\) 来描述系统的Safety属性(约束)。
-Safety属性说明了系统中什么不能发生，但无法表达系统中<strong>最终会发生</strong>的这类属性，而Liveness便可以表达("something <strong>good</strong> eventully happen")。
-Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公式 \(Spec \triangleq Init \land \Box [Next]_{vars} \land F\) 来同时描述其对Safety和Liveness的要求，
-公式末尾的 $F$ 便是描述Liveness属性的公式。</p>
+Safety属性说明了系统中什么不能发生，但无法表达系统中<strong>某些时间一定会发生</strong>的这类属性，而Liveness便可以表达("something <strong>good</strong> eventully happen")。
+Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公式 \(Spec \triangleq Init \land \Box [Next]_{vars} \land L\) 来同时描述其对Safety和Liveness的要求，
+公式末尾的 $L$ 便是描述Liveness属性的公式。</p>
+</div>
+<div style="display: none;">
+<script type="math/tex; mode=document">% <![CDATA[
+\begin{alignat}{1}
+\newcommand{\sigman}{\sigma^{+n}}
+\newcommand{\mimply}{\Rightarrow}
+\newcommand{\eventual}{{\large\diamond}}
+\end{alignat} %]]></script>
 </div>
 </div>
 </div>
@@ -290,32 +311,36 @@ Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公
 <h2 id="_一些概念"><a class="anchor" href="#_一些概念"></a><a class="link" href="#_一些概念">一些概念</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<div class="title">state</div>
-<p>state是对一些变量进行赋值(的结果)，如 $[hr=1]$，$[hr=2]$ 等等。</p>
+<div class="title">value</div>
+<p>value表示通常意义上的值，如 $1，2，TRUE, FALSE，[name{\mapsto}``zhangsan\!", age{\mapsto}18]$。 TLA+的语义基于ZF集合论， 因此其value只是集合(set)的另一个称呼。</p>
 </div>
 <div class="paragraph">
-<div class="title">step</div>
-<p>step是状态间直接变化的步骤。假如 $s_n$, $s_{n+1}$ 分别是两个相邻的 <em>state</em> ，那么 $s_n &#8594; s_{n+1}$ 就是表示 从 $s_n$ 直接变化到 $s_{n+1}$的step，无论 <em>state</em> 中有多少个变量，这个变化都是原子的，不会产生其它中间状态。</p>
+<div class="title">state</div>
+<p>state是对一些变量进行赋值(的结果)，如 $[hr=1]$，$[hr=2]$ 等。</p>
+</div>
+<div class="paragraph">
+<div class="title">state function</div>
+<p><em>state function</em> 是一个以 <em>变量</em>(不包含 <em>primed variable</em>)、常量、操作符构建的表达式。这个表达式给所有state都映射了一个value。可以理解为每个state都可以经过这个function计算，得到一个 <em>value</em> 。</p>
+</div>
+<div class="paragraph">
+<div class="title">state predicate</div>
+<p>结果 <em>value</em> 为 <code>Boolean</code> 类型的 <em>state function</em>。 即state predicate一个作用于state进行真值判断的公式。</p>
 </div>
 <div class="paragraph">
 <div class="title">behavior</div>
 <p>behavior是 <em>state</em> 组成的无穷序列，如 $\sigma \defeq [hr=1] &#8594; [hr=2] &#8594; [hr=3] &#8594; &#8230;&#8203;$ 。需要注意的是，一个系统可能有多个behavior，比如并发系统可能有多种执行顺序，产生不同的behavior。</p>
 </div>
 <div class="paragraph">
+<div class="title">step</div>
+<p>step是state之间直接变化的步骤。假如 $s_n$, $s_{n+1}$ 分别是两个相邻的 <em>state</em> ，那么 $s_n &#8594; s_{n+1}$ 就是表示 从 $s_n$ 直接变化到 $s_{n+1}$的step，无论 <em>state</em> 中有多少个变量，这个变化都是原子的，不会产生其它中间状态。</p>
+</div>
+<div class="paragraph">
 <div class="title">primed variable</div>
 <p>变量发生变化后的值，如 $hr'=hr+1$ 表示 <code>hr</code> 变量经过一个 <em>step</em> 之后，其值等于原先的值加 <code>1</code> 。</p>
 </div>
 <div class="paragraph">
-<div class="title">state function</div>
-<p><em>state function</em> 不包含 <em>prime variable</em> 的表达式，可以包含 <em>variable</em> 和 <em>constant</em> 。function表示了一个 <em>value</em> ，这个 <em>value</em> 可以是集合，可以是Boolean值。</p>
-</div>
-<div class="paragraph">
-<div class="title">state predicate</div>
-<p><em>value</em> 为 <code>Boolean</code> 类型的 <em>state function</em> 。 state predicate作用于states进行真值判断。</p>
-</div>
-<div class="paragraph">
 <div class="title">action</div>
-<p>包含 <em>primed variable</em> 和 <em>unprimed variable</em> 的 formula。 action 作用于 <em>step</em> 进行真值判断。</p>
+<p>包含 <em>primed variable</em> 和 <em>unprimed variable</em> 的 formula。 action 作用于 <em>step</em> 进行真值判断，以断定state(的value)是否可以再发生变化。specification(规约)通常由许多action组成。</p>
 </div>
 <div class="paragraph">
 <div class="title">formula</div>
@@ -340,20 +365,21 @@ Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公
 \[\phi ::= p | (\lnot\phi) | (\phi\land\phi) | (\phi\lor\phi) | (\phi\to\phi)\]
 </div>
 </div>
-<div class="paragraph">
-<p>自然演绎：</p>
-</div>
-<div class="stemblock">
-<div class="content">
-
-</div>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_谓词逻辑"><a class="anchor" href="#_谓词逻辑"></a><a class="link" href="#_谓词逻辑">谓词逻辑</a></h3>
 <div class="paragraph">
-<p>PTL: Propositional Temporal Logic ，是LTL的另一种简称，参考 <a href="https://en.wikipedia.org/wiki/Linear_temporal_logic" class="bare">https://en.wikipedia.org/wiki/Linear_temporal_logic</a>
-<a href="http://discuss.tlapl.us/msg00894.html" class="bare">http://discuss.tlapl.us/msg00894.html</a></p>
+<p>PTL: Propositional Temporal Logic ，是LTL的另一种简称，参考:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://en.wikipedia.org/wiki/Linear_temporal_logic" class="bare">https://en.wikipedia.org/wiki/Linear_temporal_logic</a></p>
+</li>
+<li>
+<p><a href="http://discuss.tlapl.us/msg00894.html" class="bare">http://discuss.tlapl.us/msg00894.html</a></p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -362,7 +388,7 @@ Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公
 <h2 id="_temporal_logic_简介"><a class="anchor" href="#_temporal_logic_简介"></a><a class="link" href="#_temporal_logic_简介">Temporal Logic 简介</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>时态公式是行为的真值判断式。对于一个行为 $\sigma$ ，以及一个时态公式 $F$ ，如果 $\sigma$ 满足 $F$ ，则可以表示为：</p>
+<p>时态公式是行为(<em>behavior</em>)的真值判断式。对于一个行为 $\sigma$ ，以及一个时态公式 $F$ ，如果 $\sigma$ 满足 $F$ ，则可以表示为：</p>
 </div>
 <div class="stemblock">
 <div class="content">
@@ -370,7 +396,7 @@ Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公
 </div>
 </div>
 <div class="paragraph">
-<p>也可称作时态公式 $F$ 对于行为 $\sigma$ 是真的。</p>
+<p>也可称作时态公式 $F$ 对于行为 $\sigma$ 是真的，或称行为 $\sigma$ 满足公式 $F$。</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -407,26 +433,26 @@ Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公
 </ul>
 </div>
 <div class="paragraph">
-<p>上面出现的公式 $F$, $G$ 都未加定义和解释。通常，公式有三种形式，对应各自的语义解释：</p>
+<p>上面出现的公式 $F$, $G$ 都未加定义，通常由如下三种形式的公式组成:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
 <p>$P$</p>
 <div class="paragraph">
-<p><em>state predicate</em>。 P是一个「状态谓词」，如果将 $P$ 看作时态公式， 那么 $P$ 满足 <em>behavior</em> 当且仅当 <em>behavior</em> 中的第一个 <em>state</em> 满足 $P$</p>
+<p><em>state predicate</em>， P是一个「状态谓词」。其语义是: 如果将 $P$ 看作时态公式， 那么 $\sigma$(<em>behavior</em>) 满足 $P$ 当且仅当 $\sigma$ 中的第一个 <em>state</em> 满足 $P$。</p>
 </div>
 </li>
 <li>
 <p>$\Box P$</p>
 <div class="paragraph">
-<p>其中 $P$ 是 <em>state predicate</em> 。$\Box P$ 满足 <em>behavior</em> 当且仅当 <em>behavior</em> 中所有 <em>state</em> 满足 $P$</p>
+<p>其中 $P$ 是 <em>state predicate</em> 。<em>behavior</em> 满足 $\Box P$ 当且仅当 <em>behavior</em> 中所有 <em>state</em> 满足 $P$</p>
 </div>
 </li>
 <li>
 <p>$\Box[N]_\color{red}v$</p>
 <div class="paragraph">
-<p>其中 $N$ 是 <em>action</em> ，$_\color{red}v$ 是 <em>state function</em> 。 该公式满足 <em>behavior</em> 当且仅当 <em>behavior</em> 中每一对相继的states是一个满足 $[N]_v$ 的step。</p>
+<p>其中 $N$ 是 <em>action</em> ，$_\color{red}v$ 是 <em>state function</em> 。 <em>behavior</em>  满足该公式 当且仅当 <em>behavior</em> 中每一对相继的states是一个满足 $[N]_v$ 的step。</p>
 </div>
 <div class="paragraph">
 <p>注意： $[N]_v$ 中的 $_v$ 可以是 <em>state function</em> ，并不限定于 variables（如 $\seq{hr ,\, val}$)。 <em>state function</em> 可以增加 prime 运算符形成 <em>transition function</em> 。$[N]_v$ 等价于 $ N \lor (v' = v)$ 。详见 Spcifying Systems 16.2.3。</p>
@@ -435,10 +461,161 @@ Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公
 </ul>
 </div>
 <div class="paragraph">
-<p>三种公式</p>
+<p>这三种公式中，虽然$P$ 是一个 <code>state predicate</code>，但可以将其看作是一个没有 <code>primed variables</code> 的 action(这种action作用于state得到新的 <code>state'</code> 没有改变，即一个stuttering step)。
+这样，我们就可以把时态公式归纳为两种形式： $A$ 和 $\Box A$，其中 $A$ 是一个 action。</p>
 </div>
 <div class="paragraph">
-<p>待续&#8230;&#8203;</p>
+<div class="title">语义解释</div>
+<p>定义 $\sigma_i$ 是 $\sigma$的第$(i + 1) ^{st}$个state，$\sigma$即是: $\sigma_0\rightarrow\sigma_1\rightarrow\sigma_2\rightarrow\dotsb$。
+注意这里的自然语言表述，第一个 state 是 $\sigma_0$ ，$\sigma_0$ 是第一($i+1$)个state。</p>
+</div>
+<div class="paragraph">
+<p>$\sigma \models A$ 为 <code>true</code> 等价于 $\sigma_0\rightarrow\sigma_1$ 是一个 $A$ step。特殊场景: 如果$A$ 是一个 <code>state predicate</code> ， 只要 $A$ 对于第一个状态($\sigma_0$)判定为 <code>true</code> ，$\sigma_0\rightarrow\sigma_1$就是一个 $A$ step。</p>
+</div>
+<div class="paragraph">
+<p>$\sigma \models \Box A$ 为 <code>true</code> 等价于 所有的step($\sigma_n\rightarrow\sigma_{n+1}$)都是一个 $A$ step。</p>
+</div>
+<div class="paragraph">
+<p>定义: $\sigma^{+n} \defeq \sigma_n\rightarrow\sigma_{n+1}\rightarrow\sigma_{n+2}\rightarrow\dotsb$，
+因此$\sigma_n\rightarrow\sigma_{n+1}$ 是$\sigma^{+n}$的第一个step。 $\sigma \models \Box A$ 为 <code>true</code> 等价于 对于所有的 $n$，
+$\sigma^{+n} \models A$为 <code>true</code> ：</p>
+</div>
+<div class="paragraph text-center">
+<p>$\sigma \models \Box A \equiv \forall n \in Nat : \sigma^{+n} \models A$</p>
+</div>
+<div class="paragraph">
+<p>一个很自然的泛化就是把action $A$ 换成 formula $F$：</p>
+</div>
+<div class="paragraph text-center">
+<p>$\sigma \models \Box F \equiv \forall n \in Nat : \sigma^{+n} \models F$</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+因此，$\sigma$ 满足 $\Box F$ 等价于 所有$\sigma$ 后缀的 $\sigma^{+n}$ 满足 $F$。
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>示例:</p>
+</div>
+<script type="math/tex; mode=document">% <![CDATA[
+\begin{alignat}{1}
+&\;\sigma \models \Box((x = 1) \mimply \Box(y > 0)) \\
+& \equiv \forall n \in Nat : \sigma^{+n} \models (( x = 1) \mimply \Box (y > 0)) \\
+& \equiv \forall n \in Nat : (\sigman \models (x = 1)) \mimply (\sigman \models \Box (y > 0)) \\
+& \equiv \forall n \in Nat : (\sigman \models (x = 1)) \mimply (\forall m \in Nat : (\sigman)^{+m} \models (y > 0))
+\end{alignat} %]]></script>
+<div class="sect2">
+<h3 id="_更多时态公式定义"><a class="anchor" href="#_更多时态公式定义"></a><a class="link" href="#_更多时态公式定义">更多时态公式定义</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>$\eventual F \defeq \neg\Box\neg F$</p>
+</li>
+<li>
+<p>$F \leadsto G \defeq \Box(F \mimply \eventual G)$</p>
+</li>
+<li>
+<p>$\eventual\seq{A}_v \defeq \neg\Box[\neg A]_v$</p>
+<div class="paragraph">
+<p>公式中A是一个 <code>action</code> ，$_v$ 是一个 <code>state function</code>，这表示最终某些step是一个改变了$_v$且满足$A$的step。</p>
+</div>
+<div class="paragraph">
+<p>如果定义 $\seq{A}_v \defeq A \land (v' \neq v)$ ，那么也可以理解 $\eventual\seq{A}_v$ 是 $\eventual$ 和 $\seq{A}_v$ 的结合，即最终有一个$\seq{A}_v$ step会发生。(这种理解不是完全正确的，因为 $\seq{A}_v$并不是一个合法的公式，只是一个简写)。</p>
+</div>
+</li>
+<li>
+<p>$\Box\eventual F$ 太好理解，不用解释</p>
+</li>
+<li>
+<p>$\eventual\Box F$ 太好理解，不用解释</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_时态逻辑重言式恒等式"><a class="anchor" href="#_时态逻辑重言式恒等式"></a><a class="link" href="#_时态逻辑重言式恒等式">时态逻辑重言式(恒等式)</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>$\Box F \mimply F$</p>
+</li>
+<li>
+<p>$\neg\Box F \equiv \eventual\neg F$</p>
+</li>
+<li>
+<p>$\Box(F \land G) \equiv (\Box F) \land (\Box G)$</p>
+</li>
+<li>
+<p>$\eventual(F \lor G) \equiv (\eventual F) \lor (\eventual G)$</p>
+</li>
+<li>
+<p>$\Box\eventual(F \lor G) \equiv (\Box\eventual F) \lor (\Box\eventual G)$</p>
+</li>
+<li>
+<p>$\eventual\Box(F \land G) \equiv (\eventual\Box F) \land (\eventual\Box G)$</p>
+</li>
+<li>
+<p>$\Box\eventual(\seq{A}_v \lor \seq{B}_v) \equiv (\Box\eventual\seq{A}_v) \lor (\Box\eventual\seq{B}_v)$</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_时态逻辑推理规则类似于mp规则"><a class="anchor" href="#_时态逻辑推理规则类似于mp规则"></a><a class="link" href="#_时态逻辑推理规则类似于mp规则">时态逻辑推理规则(类似于MP规则)</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>概括(泛化?)规则: $F \mimply \Box F$ ，表示 $F$ 为 <code>true</code> 时， $\Box F$为 <code>true</code> 。</p>
+</li>
+<li>
+<p>蕴含概括规则: $(F \mimply G) \mimply (\Box F \mimply \Box G)$</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>需要意与重言式与推理规则的区别。例如，上面的&#8217;概括规则&#8217;要求 $F$ 为 <code>true</code> 时才能推定 $\Box F$，但重言式没有这个要求，因为重言式的语义是永真的。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_liveness定义"><a class="anchor" href="#_liveness定义"></a><a class="link" href="#_liveness定义">Liveness定义</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>liveness属性可以通过时态逻辑进行描述！</p>
+</div>
+<div class="paragraph">
+<p>TLA+提供两种标准的(常用的)构建Liveness的符号</p>
+</div>
+<div class="sect2">
+<h3 id="_weak_fairness"><a class="anchor" href="#_weak_fairness"></a><a class="link" href="#_weak_fairness">Weak Fairness</a></h3>
+<script type="math/tex; mode=document">% <![CDATA[
+\begin{alignat}{1}
+& WF_v(A) \defeq \Box(\Box \;ENABLED\seq{A}_v\;\;\;\;\;   & \mimply \;\; & \eventual\seq{A}_v) \\
+&\kern{37pt} \equiv \Box\eventual(\neg ENABLED\seq{A}_v)  & \lor         & \Box\eventual\seq{A}_v \\
+&\kern{37pt} \equiv \eventual\Box(ENABLED\seq{A}_v)       & \mimply      & \Box\eventual\seq{A}_v
+\end{alignat} %]]></script>
+<p></p>
+<div class="paragraph">
+<p>这些公式的等价性可以通过时态逻辑和命题逻辑的重言式进行证明。
+如果用 $E$ 表示 $ENABLED\seq{A}_v$，用 $A$表示 $\seq{A}_v$。 则可以将 $WF_v(A)$ 可表示为 $\Box(\Box E\mimply\eventual A))$。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_strong_fairness"><a class="anchor" href="#_strong_fairness"></a><a class="link" href="#_strong_fairness">Strong Fairness</a></h3>
+<script type="math/tex; mode=document">% <![CDATA[
+\begin{alignat}{1}
+&SF_v(A) \defeq \eventual\Box(\neg ENABLED\seq{A}_v) \;\; & \lor  \;\; & \Box\eventual\seq{A}_v \\
+&\kern{32pt} \equiv \Box\eventual ENABLED\seq{A}_v & \mimply \;\; & \Box\eventual\seq{A}_v
+\end{alignat} %]]></script>
+<p></p>
 </div>
 </div>
 </div>
@@ -503,7 +680,7 @@ Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公
   <span class="copyright-year">
     &copy; 
     2017 - 
-    2021
+    2022
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>

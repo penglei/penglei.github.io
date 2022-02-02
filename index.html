@@ -125,7 +125,7 @@
           <section id="posts" class="posts">
     <article class="post">
   <header class="post-header">
-    <h1 class="post-title"><a class="post-link" href="/post/specifying-systems-notes-2/">Specifying Systems 笔记2 Liveness &amp; Fairness</a></h1>
+    <h1 class="post-title"><a class="post-link" href="/post/specifying-systems-notes-2/">Specifying Systems 笔记2 Liveness</a></h1>
     <div class="post-meta">
       <span class="post-time"> 2020-09-08 </span>
       <div class="post-category">
@@ -139,12 +139,12 @@
       <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Specifying Systems的1-7章层层推进，在实例中穿插着原理讲解，深入浅出地讲解了Specification是什么，以及如何规约系统设计。
+<p>Specifying Systems的1-7章层层推进，在实例中穿插着原理讲解，深入浅出地讲解了Specification是什么，以及如何设计系统规约。
 这些Specification表明了系统的Safety属性&#8201;&#8212;&#8201;即系统行为被约束在一定范围内，不会做出一些不被允许的行为(something <strong>bad</strong> does not happen)。
 在TLA+中，通常使用公式 \(Spec \triangleq Init \land \Box [Next]_{vars}\) 来描述系统的Safety属性(约束)。
-Safety属性说明了系统中什么不能发生，但无法表达系统中<strong>最终会发生</strong>的这类属性，而Liveness便可以表达("something <strong>good</strong> eventully happen")。
-Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公式 \(Spec \triangleq Init \land \Box [Next]_{vars} \land F\) 来同时描述其对Safety和Liveness的要求，
-公式末尾的 $F$ 便是描述Liveness属性的公式。</p>
+Safety属性说明了系统中什么不能发生，但无法表达系统中<strong>某些时间一定会发生</strong>的这类属性，而Liveness便可以表达("something <strong>good</strong> eventully happen")。
+Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公式 \(Spec \triangleq Init \land \Box [Next]_{vars} \land L\) 来同时描述其对Safety和Liveness的要求，
+公式末尾的 $L$ 便是描述Liveness属性的公式。</p>
 </div></div></div>
     </div>
     <div class="read-more">
@@ -345,7 +345,7 @@ Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公
   <span class="copyright-year">
     &copy; 
     2017 - 
-    2021
+    2022
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>
