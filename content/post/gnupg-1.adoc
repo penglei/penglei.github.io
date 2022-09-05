@@ -1,0 +1,102 @@
+////
+title: "gnupg 笔记"
+date: 2021-06-17T18:27:24+08:00
+draft: true
+////
+
+
+* why gpg-agent 'pinentry-program' option doesn't find program in $PATH
++
+https://dev.gnupg.org/T4588
++
+主要是为了安全，降低恶意程序伪造 pinentry 截获短语密码的可能性。
+
+
+* publish private key
++
+https://nullprogram.com/blog/2012/06/24/
++
+https://dev.gnupg.org/T1800
++
+https://nullprogram.com/blog/2019/07/10/
++
+----
+gpg --s2k-cipher-algo AES256 --s2k-digest-algo SHA512 --s2k-mode 3 --s2k-count 65000000 --edit-key <key id>
+----
+
+
+----
+About how the keys are actually stored on disk:
+
+On modern GnuPG (2.1.x), gpg-agent itself has an s2k-count argument: either --s2k-count on the gpg-agent command line, or (more likely, since people rarely launch gpg-agent manually), as s2k-count in ~/.gnupg/gpg-agent.conf.
+
+Reading the gpg-agent(1) manpage should provide more details about it.
+
+This bug report is scoped to the details about how the keys are structured when exported, and has nothing to do with how keys are stored by gpg-agent.
+----
+
+== 架构
+
+https://www.gnupg.org/documentation/manuals/assuan/index.html
+
+https://gnupg.org/documentation/manuals/gnupg/GPG-Configuration-Options.html
+
+https://wiki.archlinux.org/title/GnuPG#Backup_your_private_key
+
+== usage
+
+GPG - SSH setup:
+https://gist.github.com/mcattarinussi/834fc4b641ff4572018d0c665e5a94d3
+
+https://incenp.org/notes/2015/gnupg-for-ssh-authentication.html
+
+change usage:
+https://security.stackexchange.com/questions/31614/how-to-change-subkey-usage-of-a-pgp-key
+
+
+https://www.gnupg.org/documentation/manuals/gnupg/Agent-Examples.html
+
+
+Using an offline GnuPG master key
+https://incenp.org/notes/2015/using-an-offline-gnupg-master-key.html
+
+== ssh config
+
+https://man.openbsd.org/ssh_config.5#IdentityAgent
+https://mlohr.com/gpg-agent-for-ssh-authentication-update/
+
+== abbr
+
+
+https://crypto.stackexchange.com/questions/63100/why-does-gnupg-create-4-separate-keys-and-what-does-sub-and-ssb-mean
+
+The abbreviations stand for the following:
+
+pub -- *pub*lic primary key
+sub -- public *sub*-key
+sec -- *sec*ret primary key
+ssb -- *s*ecret *s*u*b*-key
+
+== export private key as ssh key
+
+`--homedir ./gnupg-home/`  or `export GNUPGHOME=$(pwd)/gnupg-home`
+
+----
+$ gpg --pinentry-mode loopback --passwd A363380811D0D6D4
+$ gpg --export-secret-subkey 54869CE5E8C4DC26! | openpgp2ssh 54869CE5E8C4DC26
+----
+
+== change UID (name+email)
+
+https://coderwall.com/p/tx_1-g/gpg-change-email-for-key-in-pgp-key-servers
+
+== signing someones' key
+
+https://gist.github.com/F21/b0e8c62c49dfab267ff1d0c6af39ab84
+
+
+查看我的密钥：
+
+https://keyserver.ubuntu.com/pks/lookup?search=0xA363380811D0D6D4&op=vindex
+
+
