@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="renderer" content="webkit" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec" />
+    
+    <meta name="generator" content="" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <!-- <link rel="stylesheet" href=""> -->
+    
+    <meta name="author" content="penglei" />
+    <title>YByte — Istio数据面性能测试与优化</title>
+    <link rel="stylesheet" type="text/css" href="/assets/css/default.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22>
+          <text y=%22.9em%22 font-size=%2290%22>
+          🦥
+          </text>
+        </svg>"
+    />
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/post.css" />
+    <!-- * -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" />
+    <!-- * -->
+  </head>
+  <body>
+    <script>
+      if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add("dark");
+      } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove("dark");
+      } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        document.body.classList.add("dark");
+      }
+    </script>
+    
+    <header class="header">
+      <nav class="nav">
+        <div class="logo">
+          <a href="/" accesskey="h">YByte</a>
+          <div class="logo-switches">
+            <button id="theme-toggle">
+                  <svg
+      id="sun"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+     <svg
+      id="moon"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+
+            </button>
+          </div>
+        </div>
+        <ul id="menu">
+          <li>
+            <a href="/archive" title="Archive">
+              <span class=""
+                >Archive</span
+              >
+            </a>
+          </li>
+          <li>
+            <a href="/tags" title="Tags">
+              <span class="">Tags</span>
+            </a>
+          </li>
+          <li>
+            <a href="/about" title="About">
+              <span class="">About</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/penglei/" title="Github" target="_blank">
+              <span class="icon">    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path
+        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+      ></path>
+    </svg>
+</span>     <svg
+      fill="none"
+      shape-rendering="geometricPrecision"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2.5"
+      viewBox="0 0 24 24"
+      height="10"
+      width="10"
+      style="margin-left: -3px; margin-right: 3px"
+    >
+      <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+      <path d="M15 3h6v6"></path>
+      <path d="M10 14L21 3"></path>
+    </svg>
+
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="main">
+      <article class="post-single">
+        <header class="post-header">
+          <h1 class="post-title">Istio数据面性能测试与优化</h1>
+          <div class="post-meta">
+            <span>2020-02-28</span>
+            <p class="tags">
+              <a href="/tags/Istio/" target="_blank"> Istio </a>
+              <a href="/tags/Envoy/" target="_blank"> Envoy </a>
+              <a href="/tags/Performance/" target="_blank"> Performance </a>
+              <a href="/tags/Sidecar/" target="_blank"> Sidecar </a>
+            </p>
+          </div>
+        </header>
+          <div class="toc" id="toc">
+        <summary id="toctitle">
+            <span class="details">Table of Contents</span>
+        </summary> 
+        <nav class="inner"><ul>
+<li><a href="#背景动机" id="toc-背景动机">背景动机</a></li>
+<li><a href="#架构简介" id="toc-架构简介">架构简介</a></li>
+<li><a href="#性能测试" id="toc-性能测试">性能测试</a></li>
+<li><a href="#istio-数据测试对比已更新包含-1.5-遥测"
+id="toc-istio-数据测试对比已更新包含-1.5-遥测">Istio
+数据测试对比(已更新，包含 1.5 遥测)</a></li>
+<li><a href="#总结" id="toc-总结">总结</a></li>
+</ul></nav>
+      </div>
+      <div class="post-content"><p>2017
+下半年，非侵入式微服务架构迅速吸引开发者眼球， ServiceMesh
+进入飞速发展通道，至今已近三年。Istio 快速迭代，只经历了 14 个月便从 0.1
+进化到 1.0 版本，这赶上了 Kubernetes 崛起时的迭代速度。本文分享了一些对
+Istio 数据面进行性能测试与优化的经验，加深对 Istio 的理解。</p>
+<!--more-->
+<h2 id="背景动机">背景动机</h2>
+<p>从 2018 年 7 月到现在一路高速发展，却没能复制 Kubernetes
+的历史，成为标准。虽然 Istio
+继续保持着绝对影响力，但很多用户一直处于对其调研的过程中，并没有广泛地使用起来。这其中的原因有很多，「性能不好」可能是用户不敢大规模使用
+Istio 架构的关键因素之一。Istio
+社区和官方都对性能进行了一些测试，对其性能同样不太满意，
+更是加重了大家对 Istio 甚至 ServiceMesh
+的观望态度。在阅读了一些测试报告和文章时，我们发现 Istio
+数据面代理对服务间调用的延时影响较大可能已经形成共识，但通过社区的资料，很难深刻理解
+Istio 性能问题的原因。因此，我们希望更细致地测试分析 Istio
+数据面性能，得到一些有价值的经验和数据，以期在此基础上进行一些优化。</p>
+<h2 id="架构简介">架构简介</h2>
+<p>Istio 在设计上分为了控制面和数据面。</p>
+<p>控制面可以理解为各种配置管理和协调服务。比如，控制面自动从 Kubernetes
+中提取 Service 信息，使用 xDS
+协议将其下发到数据面，帮助数据面代理完成服务发现。</p>
+<p>数据面完成各种具体的动作。如路由、熔断等流量管理，生成遥测信息进行上报，策略实施等。</p>
+<figure>
+<img src="istio-structure.png" alt="Istio架构" />
+<figcaption aria-hidden="true">Istio架构</figcaption>
+</figure>
+<p><em>图 1: Istio 架构示意图</em></p>
+<p>数据面以 sidecar 模式实现，这是 Istio
+为微服务带来强大能力却不用修改服务本身的关键：即在每一个服务实例旁，它都会运行一个
+envoy
+代理程序，将原来需要在服务内实现（如服务发现、负载均衡、监控追踪等）的功能移到独立进程中完成。</p>
+<figure>
+<img src="data-plane-diagram.png" alt="数据面示意" />
+<figcaption aria-hidden="true">数据面示意</figcaption>
+</figure>
+<p><em>图 2: 在 Kubernetes 平台上，Pod 内增加了一个运行着 envoy
+代理的容器，服务流量需通过 envoy 进行转发</em></p>
+<p>注： 对于接下来的性能研究，文中出现的术语 proxy、sidecar、envoy
+可以视为同一个意思。</p>
+<h2 id="性能测试">性能测试</h2>
+<p>Istio
+本身架构比较复杂，作为性能研究领域的门外汉，面对这样的复杂系统，如何下手是第一个问题。
+一开始，我们便带着两个问题进行思考：</p>
+<ul>
+<li>性能的定义是什么，如何衡量 istio 性能好与不好？</li>
+<li>istio 性能不好有具体的应用场景和问题表现吗？</li>
+</ul>
+<p>吞吐量上不去、延时高、消耗 CPU
+资源过多都是性能问题，这些问题可能是独立的，也可能相互之间有内在联系。
+终端用户体验是否友好的的核心因素之一是延时。Istio
+的核心能力是管理微服务架构，数据面 sidecar 会给服务调用增加一些延时，
+随着业务的发展，企业的微服务可能会变得异常复杂，虽然每个 sidecar
+只增加一点点延时，但随着调用链路深度的增加，叠加的延时可能会达到无法接受的地步。
+因此我们更关心 sidecar 对服务间调用产生的影响，它将最终影响服务质量。
+istio 数据面有作为 ingressgateway 的 envoy，也有作为 sidecar
+管理服务间流量的 envoy
+代理。两者有明显区别，前者可能面对高并发问题，需要处理大量连接，每个连接接只有少量的请求，
+而后则恰恰相反，常常使用长连接进行完成 RPC 过程。我们先聚焦于研究
+sidecar 对服务间调用带来的潜在高延时问题，作为接入层的 ingressgateway
+暂时不作考虑。</p>
+<h3 id="工具与方法">工具与方法</h3>
+<p>测试 sidecar 带来的延时影响，需要注意各种变量和干扰因素。例如：</p>
+<ul>
+<li><p>选择合适的模拟服务来进行压测</p>
+<p>istio 社区有 bookinfo 例子，linkerd 使用 emojivoto
+作为模拟服务进行性能测试。 bookinfo 和 emojivoto
+本身消耗资源很多，处理请求的时间较长。当我们对 envoy 进行调优时，通过
+e2e 测量延时来确认优化效果， 但模拟服务本身高延时的正常波动可能会掩盖
+envoy 调优的差异，导致难以确认优化是否合理。因此我们单独实现了一个简单的
+HTTP 服务 mesh-mocker， 它接收到请求之后，回传 Request Body，同时将 HTTP
+Request Headers 编码为 json 字符串追加到 Response Body 中。</p></li>
+<li><p>不同组件互相影响</p>
+<p>Istio 控制面的组件 Mixer
+消耗资源较多，测试过程中需保证它不占用压测工具和模拟服务的资源。</p></li>
+<li><p>Istio 功能取舍</p>
+<p>如果开启 TLS 加密流量，数据面必将消耗更多 CPU 资源；Check
+策略会同步调用远端服务，导致延时明显增加。我们在测试中都将这些功能关闭。</p></li>
+<li><p>需要深入理解压测工具的模型</p>
+<p>压测工具的线程模型、发包模型也有区别，比如 fortio 使用 gorouting
+来进行并发，适合模拟大量连接的场景；大多数压测工具有 Coordinated
+Omission 问题，导致压测报告的结果比实际环境中要好；压测工具如果使用带 GC
+语言的实现，可能也会影响测量时间的精度，导致结果不稳定。</p></li>
+</ul>
+<h4 id="coordinated-omission-问题">Coordinated Omission 问题</h4>
+<p>什么是 Coordinated
+Omission？简单地说就是我们进行压测时，可能只是测量了「服务时间」，忽略了「排队等待时间」。而真实用户体验到的延时是「响应时间」，包含「服务时间」与「排队等待时间」两者之和。</p>
+<figure>
+<img src="oc-problem-in-queue-system.svg" alt="OC Problem" />
+<figcaption aria-hidden="true">OC Problem</figcaption>
+</figure>
+<p><em>(图中 queue 只是一种抽象，例如它可以来源于链路中的
+buffer，并发系统中的资源竞争等)</em></p>
+<p>压测工具通常没有处理 OC
+问题，它们大多定时发送一个请求，记录开始时间(<code>begin_time</code>)，然后接收响应并记录结束时间(<code>end_time</code>)，这样便得到一个请求的延时(<code>end_time - start_time</code>)。当新的发送周期到来时，继续发送下一个请求，记录延时，如此循环…</p>
+<p>这种发包策略下当某个请求出现响应过慢，其响应时间点已经超过下一个发包周期开始时间点，导致压测工具延后了原本应该发送的请求，降低了实际测试
+RPS。最终，我们测量的数据中只有少部分请求的延时增加了（发生阻塞的那些请求），而真实环境中则可能有多个排队中的请求因为前面的请求阻塞而出现延时增加，用户体验到响应变慢的概率比压测环境报告的数据更大！</p>
+<figure>
+<img
+src="https://bravenewgeek.com/wp-content/uploads/2016/02/coordinated_omission.png"
+alt="OC Problem latency comparing" />
+<figcaption aria-hidden="true">OC Problem latency comparing</figcaption>
+</figure>
+<p><em>图片来自:
+https://bravenewgeek.com/tag/coordinated-omission/</em></p>
+<p>解决 OC
+问题有多种策略，压测工具不等待先前请求响应而是直接定时发送请求(nighthawk
+中的 open-loop
+模式即是如此)，也可以在出现响应延时增大后加快发送频率（wrk2
+使用的方法），还可以在数据处理时进行拟合补充，其目的都是为了让压测得到的数据更接近用户真实环境。</p>
+<h4 id="压测工具">压测工具</h4>
+<p>社区有非常多压测工具，如 ab, jmeter, fortio, wrk2… 我们最终选择了
+Envoy 官方开发的 <a
+href="https://github.com/envoyproxy/nighthawk"><code>nighthawk</code></a>
+。 nighthawk
+由在性能测试领域具有丰富经验的工程师所开发，它还具有诸多优点：</p>
+<ul>
+<li>开源可扩展，容易进行二次开发</li>
+<li>支持 HTTP2，可以进行 grpc 压力测试</li>
+<li>具有非常好的时间精度和伸缩性</li>
+<li>基于 envoy 实现，没有 GC 的影响</li>
+<li>可以非常均匀地发送请求，支持 open-loop 和 closed-loop 两种模式</li>
+</ul>
+<h4 id="自动化脚本">自动化脚本</h4>
+<p>在调优测试过程中，我们会不停地进行
+<code>假设--&gt;开发--&gt;测试--&gt;数据对比--&gt;再假设</code>
+循环，因此，开发好自动化脚本，将每一次测试用例的参数，环境，结果等信息进行记录保存是非常必要的，否则在大量的测试之后，我们很快就会迷失在各种测试用例的数据中。</p>
+<p>测试过程需要调整 sidecar 的 yaml 配置参数，包括 envoy
+镜像地址、资源、启动参数等等，甚至还需要增加挂载 host 目录来保存 envoy
+打点数据。修改这些配置是一个麻烦的事情，因为相应的 yaml 配置都是由 istio
+通过模板 render
+生成。虽然我们可以直接修改模板来实现对测试参数的修改，但这会有非常多的缺点:</p>
+<ul>
+<li>不同的 istio 版本需要分别修改，管理复杂；</li>
+<li>模板中增加的配置需要注入 render 时的参数，这些参数值在注入 sidecar
+时如何传递进去非常麻烦，甚至需要修改自动注入组件；</li>
+</ul>
+<p>我们采取另外的方案来实现：通过 istioctl 完成本地注入生成 yaml，再使用
+kustomize 对 yaml 文件进行结构化修改，得到最终运行测试的 Kubernetes yaml
+文件。</p>
+<p>例如，修改 sidecar 中 envoy 镜像地址，可以通过如下的 transformer
+实现:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> builtin</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> ImageTagTransformer</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> imagetag_not_important_b</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">imageTag</span><span class="kw">:</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> istio/proxyv2</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">newName</span><span class="kw">:</span><span class="at"> ccr.ccs.tencentyun.com/mesh-perf/istio-proxy-v2</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">newTag</span><span class="kw">:</span><span class="at"> </span><span class="fl">1.3.6</span></span></code></pre></div>
+<p><em>sidecar_image_transformer.yaml</em></p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> kustomize.config.k8s.io/v1beta1</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Kustomization</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">resources</span><span class="kw">:</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> resource-sidecar-injected.yaml</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">transformers</span><span class="kw">:</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> sidecar_image_transformer.yaml</span></span></code></pre></div>
+<p><em>kustomization.yaml</em></p>
+<p>kustomize 支持插件，某些操作内置的 plugin 无法完成，可以通过自定义
+plugin 实现。 例如，下面的 yaml 格式内容描述了对 istio-proxy
+容器进行添加 initContainer、修改 security、删除 resource limits 等操作。
+这些 yaml 内容使用的是 json patch 规范，在自定义的 kustomize plugin
+中，我们将其转变为 json 格式之后，使用 json-patch 工具执行对 istio-proxy
+容器配置的修改操作。</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">op</span><span class="kw">:</span><span class="at"> add</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">path</span><span class="kw">:</span><span class="at"> ${proxy_container_path}/securityContext/privileged</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">value</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">op</span><span class="kw">:</span><span class="at"> add</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">path</span><span class="kw">:</span><span class="at"> ${proxy_container_path}/securityContext/allowPrivilegeEscalation</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">value</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">op</span><span class="kw">:</span><span class="at"> replace</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">path</span><span class="kw">:</span><span class="at"> ${proxy_container_path}/imagePullPolicy</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">value</span><span class="kw">:</span><span class="at"> Always</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">op</span><span class="kw">:</span><span class="at"> remove</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">path</span><span class="kw">:</span><span class="at"> ${proxy_container_path}/resources/limits</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">op</span><span class="kw">:</span><span class="at"> add</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">path</span><span class="kw">:</span><span class="at"> ${proxy_container_path}/volumeMounts/-</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">value</span><span class="kw">:</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">mountPath</span><span class="kw">:</span><span class="at"> /data</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> statistic-data</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">op</span><span class="kw">:</span><span class="at"> add</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">path</span><span class="kw">:</span><span class="at"> /spec/template/spec/initContainers/-</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">value</span><span class="kw">:</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">args</span><span class="kw">:</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> -c</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;mkdir -p /data/tmp; chmod -R 777 /data/tmp; chown -R 1337 /data/tmp&quot;</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">command</span><span class="kw">:</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> /bin/sh</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> ubuntu:xenial</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">imagePullPolicy</span><span class="kw">:</span><span class="at"> IfNotPresent</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> create-host-data-dir</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">resources</span><span class="kw">:</span><span class="at"> </span><span class="kw">{}</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">securityContext</span><span class="kw">:</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">privileged</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">runAsNonRoot</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">runAsUser</span><span class="kw">:</span><span class="at"> </span><span class="dv">0</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">volumeMounts</span><span class="kw">:</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">mountPath</span><span class="kw">:</span><span class="at"> /data</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">name</span><span class="kw">:</span><span class="at"> statistic-data</span></span></code></pre></div>
+<p><em><code>${proxy_container_path}</code>是 istio-proxy
+容器的文档对象路径，通常是
+<code>/spec/template/spec/containers/1</code></em></p>
+<p>最后，整个测试脚本按下面的流程进行实现：</p>
+<ul>
+<li>安装 Istio</li>
+<li>使用 Istioctl 注入本地 yaml(如客户端 nighthawk yaml，服务端
+mesh-mocker yaml)；</li>
+<li>使用 kustomize 修改 yaml 中的 istio-proxy 配置；</li>
+<li>提交修改后的 yaml 到 Kubernetes 集群运行；</li>
+<li>收集测试节点的数据（延迟和 envoy 打点日志）；</li>
+<li>删除 nighthawk 和 mesh-mocker，清理环境；</li>
+</ul>
+<h4 id="环境">环境</h4>
+<p>测试环境使用 5 台 8C16G 节点的 tke 集群。istio-telmetry
+组件消耗的资源较多，服务端 mixs 消耗较多，1000QPS 大概需要消耗 1200m
+CPU，因此使用两个节点，以满足超过 7000QPS 的测试压力；pilot
+等其它控制面组件使用一个节点进行部署； nighthawk 和 mesh-mocker
+分别占用一个节点。自动化脚本打包在一个镜像中，每次在控制面组件所在节点运行。</p>
+<p>测试中限制了 nighthawk、mesh-mocker、envoy 都使用
+2vCPU。同时，考虑到相同资源下，多核机器上 worker
+线程数对并发度有直接影响，最终也会影响延时，因此我们对每个组件的工作线程数也限制为
+2。这样配置后，在 OS
+调度下，几乎所有组件都是独立运行，不会互相影响，更容易评估使用 Istio 后
+envoy 产生的影响。</p>
+<figure>
+<img src="test-env.svg" alt="测试环境" />
+<figcaption aria-hidden="true">测试环境</figcaption>
+</figure>
+<h3 id="envoy-打点">Envoy 打点</h3>
+<p>Istio
+数据面带来了明显的延时，把消息在链路中各个阶段的延时统计出来，是进行优化的重要依据。一开始我们思考利用内核态工具如
+bpftrace 进行分析，但请求消息在 envoy
+中进行了多次转发，内核态很难追踪应用层会话，统计时间并不方便，因此我们决定在
+envoy 内部打点记录时间，测试结束后通过离线脚本计算消息在 envoy
+中进行处理的延时。</p>
+<figure>
+<img src="envoy-record-time.svg" alt="envoy内部打点" />
+<figcaption aria-hidden="true">envoy内部打点</figcaption>
+</figure>
+<p>client 请求 server 是，每条消息 Request 依次经过 envoy
+中的<code>3</code>，<code>4</code>，<code>5</code>，<code>6</code>几处，通过
+readv 和 writev 系统调用读取或发送消息，Response 以相反的顺序经过
+envoy。</p>
+<p>我们将 Request 经过打点位置的时间戳记录为<code>t(*)</code>，将
+Response 经过的时间戳记录为<code>t'(*)</code>，则一条消息在两个
+sidecar(envoy)中消耗的时间总计为：<code>t(4)-t(3) + t'(3)-t'(4) + t(6)-t(5) + t'(5)-t'(6)</code>。</p>
+<p>为了防止打点带来过多的额外损耗，时间戳直接记录在预分配的连续内存（数组）中，如果使用
+1w QPS 测试 10 分钟，每个 envoy 最多占用 280MB 内存，我们增加了 proxy
+容器的内存资源配置，以保存这些时间戳数据。时间戳应该记录在内存中什么具体位置呢？这是通过给每条消息增加唯一<code>x-idx</code>作为其数组下标实现的，每条消息的打点时间戳直接写入指定位置内存，非常高效。</p>
+<h3 id="测试结果">测试结果</h3>
+<p>envoy 延时分布</p>
+<figure>
+<img src="envoy-latency-distribution.png" alt="Envoy延时分布" />
+<figcaption aria-hidden="true">Envoy延时分布</figcaption>
+</figure>
+<p>我们使用 2000QPS 进行测试，利用 Envoy
+打点得到了上面的延时分布。从这个分布中，我们发现了一个关键信息：图中<code>1ms ~ 2ms</code>之间的延时分布有隆起现象。高延时部份应该是一些长尾请求造成，应该符合典型的幂律分布，但测试结果表明
+Envoy 造成的延时分布不符合这个特征！</p>
+<h3 id="分析优化">分析优化</h3>
+<p>经过一些测试之后，我们发现测试过程中 CPU 资源是 Envoy
+的性能瓶颈，遂猜测 Envoy 里面有某种任务在长时间运行，来不及转发
+in-flight
+的消息，造成这些消息转发不及时。随后，我们对高延时部份的数据在时间分布上进行分析，发现其分布较均匀，因此将目光转移到一些周期性运行的定时任务上。在对
+Envoy(istio-proxy)代码进行分析后，我们发现 istio 遥测功能(mixer)在
+sidecar 中会消耗较多的 CPU，符合猜测:</p>
+<ul>
+<li><p>属性提取中有大量的 map 操作和字符串拷贝操作</p>
+<figure>
+<img src="istio-mixer-attribute-building.png"
+alt="mixer map operation" />
+<figcaption aria-hidden="true">mixer map operation</figcaption>
+</figure></li>
+<li><p>为了节省网络带宽，envoy 中对属性上报进行批量处理并压缩</p>
+<p><img src="istio-mixer-attribute-batch-compress.png" /></p></li>
+</ul>
+<p>结合 envoy 的多线程架构，mixer 这种实现方式会造成 worker
+忙于处理上报遥测工作，阻塞业务消息的转发，造成一些请求延时明显增加:</p>
+<p><img src="envoy-worker-structure.png" /></p>
+<p>分析出问题原因之后，我们采用如下的方案进行优化：</p>
+<ul>
+<li>在 Envoy 中增加独立的 AsyncWorker，专门处理占用 CPU
+但不紧急的逻辑；</li>
+<li>AsyncWorker
+线程以低优先级运行（SCHED_IDLE），使其随时可被抢占；</li>
+<li>Worker 保存任务上下文，将其提交到队列中暂存，AsyncWorker
+定时拉取处理；</li>
+<li>任务队列实现保证 lock-free 及 unbounded 特性，防止意外阻塞 Worker
+线程；</li>
+</ul>
+<p><img src="async-worker-report.svg" /></p>
+<p>经过优化之后，Envoy 内部的延时分布有明显改善：</p>
+<p><img src="envoy-latency-optimized-distribution.png" /></p>
+<p>总体延时也有一些改善(下图浅蓝色为优化后)：</p>
+<p><img src="e2e-latency-optimized-compare.png" /></p>
+<p>通过异步化处理遥测上报操作，我们虽然在延时上获得了明显的优化，但对
+envoy 占用的 CPU 资源却没有改善，这对大部份应用来说还是不可接受的，随着
+mixer-less 的落地，我们将优化方向转移到降低 Envoy CPU 消耗，当前的
+AsyncWorker
+架构则可以作为通用组件继续保留，与后续优化进行融合，以达到最低的延时。</p>
+<h2 id="istio-数据测试对比已更新包含-1.5-遥测">Istio
+数据测试对比(已更新，包含 1.5 遥测)</h2>
+<p>我们测试了以下几种情况:</p>
+<ul>
+<li><p>baseline</p>
+<p>没有 sidecar。测试用的模拟服务是简单的 HTTP echo
+服务，延时比较稳定，对比 baseline 可评估引入 sidecar
+后增加的延时。</p></li>
+<li><p>1.3-no-telemetry</p>
+<p>关闭了遥测功能，sidecar 只做流量转发功能，这时候我们丧失了 istio
+带来的「可观察性」能力。</p></li>
+<li><p>1.3-mixer-telemetry</p>
+<p>使用 mixer 实现的遥测功能，该方案已过时，但目前 tke-mesh 基于 istio
+1.3.x 实现，还在使用。</p></li>
+<li><p>1.3-mixer-telemetry-optimized</p>
+<p>对 mixer 遥测上报阻塞问题进行优化，可降低 envoy 造成的延时。</p></li>
+<li><p>1.5-telemetry-nullvm</p>
+<p>1.5 默认的遥测方案（没有使用 Wasm，但共享实现遥测的代码）</p></li>
+</ul>
+<h3 id="吞吐能力">吞吐能力</h3>
+<figure>
+<img src="rps-qps-relation.png" alt="QPS maximum" />
+<figcaption aria-hidden="true">QPS maximum</figcaption>
+</figure>
+<p>2vCPU 测试下，1.3 版本使用 mixer
+实现遥测(1.3-mixer-telemetry)，其最大 QPS 大约为 7000 左右；1.5 版本使用
+nullvm 的方式(1.5-telemetry-nullvm)则有 2000QPS 的提升，达到 9000
+左右；关闭 telemtry 之后(1.3-no-telemetry)，QPS 峰值达到 13000
+左右；tke-mesh 阻塞优化版的 QPS 有所下降，只有 6000
+左右，这是因为将上报任务的数据迁移到异步线程中有所消耗。</p>
+<p>QPS 达到峰值时的 CPU
+资源已成为瓶颈，实际生产环境中我们并不会让系统在如此搞负载下运行。下文的图表中我们只关注
+5000QPS 以下的数据。</p>
+<h3 id="延时">延时</h3>
+<p>P90 延时</p>
+<figure>
+<img src="qps-latency-p90.png" alt="P90 Latency" />
+<figcaption aria-hidden="true">P90 Latency</figcaption>
+</figure>
+<p>P99 延时 <img src="qps-latency-p99.png" alt="!P99 Latency" /></p>
+<p>使用 istio 之后，较低 QPS 负载下延时增加不多，随着 QPS
+的增加延时逐步增大。其中，使用 mixer
+实现的遥测对调用延时影响最明显，即使 tke-mesh
+进行一些优化后，在高负载情况(5000)下，P99 也明显增加。istio-1.5 使用
+mixer-less 的方案，其延时有明显的改善。</p>
+<h3 id="envoy-cpu-消耗">Envoy cpu 消耗</h3>
+<p>server-side cpu 消耗 <img src="qps-server-side-cpu-usage.png"
+alt="Server Side Envoy CPU Usage" /></p>
+<p>client-side cpu 消耗 <img src="qps-client-side-cpu-usage.png"
+alt="Client Side Envoy CPU Usage" /></p>
+<p>可以看出，遥测功能会增加 30%左右的 CPU 消耗，即使 1.5 版本引入
+mixer-less 的遥测方案，CPU 消耗也只在 client 侧有一些降低。</p>
+<h3 id="envoy-memory-消耗">Envoy memory 消耗</h3>
+<p>server-side memory <img src="qps-server-side-memory-usage.png"
+alt="Server Side Envoy Memory Usage" /></p>
+<p>client-side memory <img src="qps-client-side-memory-usage.png"
+alt="Client Side Envoy Memory Usage" /></p>
+<p>Envoy 消耗的内存不多，并没有随 QPS 增加而增加，AsyncWorker
+方案大约增加了 10MB 的内存占用，没有太大的影响。</p>
+<h2 id="总结">总结</h2>
+<p>ServiceMesh 发展至今，性能问题横在面前，阻碍着其大规模应用。Istio
+各版本中对性能的一些优化措施没有太好的效果，属于填初期设计的坑：Mixer
+Cache 降低 Check 对 Server
+的压力，但在实际中可能并有什么效果；遥测上报数据进行 delta-Encoding 和
+Compress
+优化操作，以降低遥测功能产生的网络流量，但带来复杂性的同时又消耗掉可观的
+CPU；如今推倒重来用 Wasm 在 proxy 中实现原来 mixer 的功能，去掉了
+mixer-server
+组件能节约一大笔资源，但数据面性能优化却不是主要目标，其性能并没有质的改变，反而随着
+Wasm 引入而带来的灵活性，大家的目光反而被可扩展性引开。Istio
+在性能上的缓慢改进的表现，不知道又会损害多少工程师对它的信心，影响其发展速度。</p>
+<p>从 2019 年下半年开始，我们在 Istio
+性能方面逐步投入了更多的精力进行研究，年初大概完成了文中的工作，但 Istio
+发展太快，我们随后将精力放在 mixer-less
+版本的调研上，一直没有总结，回头来看，走过的路弯弯折折，虽成果不多，但收获不少经验，这帮助我们理解了
+Istio 数据面性能极限在哪，有多少优化空间，因此我们也决定在接下来的
+tke-mesh 版本中，独立开发数据面的遥测组件，以提供一个性能更好的 sidecar
+代理。</p>
+<!--
+最后，再谈一谈对Istio发展缓慢的理解：
+
+* `Service Mesh` 本身有一定的入门门槛。Istio本身架构实现过于复杂，加重了部署推广的难度。
+
+    监控、跟踪、路由、断路保护、负载均衡、访问控制等每一项看似简单，综合起来其实是个复杂的系统，初学者使用门槛较高。
+    (不少开发者介绍Istio时比较欣赏其优美的架构，但优美是主观的。我们运行起istio各种组件，看着它们协调在一起工作时，可能会产生一种系统完备且充满控制感的优美错觉，但它遮住了复杂性和性能不足的问题，从这个角度讲它是残缺的。优雅解决ServiceMesh关键问题的架构是不是更美呢？)
+
+* `Service Mesh`架构面对的问题域对性能十分敏感，其核心功能需要侵入业务网络流量进行分析、导流，然而Istio社区对性能的重视程度较低，导致使用者顾虑较多。
+
+    Istio各版本中对性能的一些优化措施没有太好的效果，属于填初期设计的坑：Mixer Cache降低Check对Server的压力，但在实际中可能并有什么效果；遥测上报数据进行delta-Encoding和Compress优化操作，以降低遥测功能产生的网络流量，带来复杂性的同时又消耗掉可观的CPU；如今推倒重来用Wasm在proxy中实现原来mixer的功能，去掉了mixer-server组件能节约一大笔资源，但数据面性能优化却不是主要目标，其性能并没有质的改变，反而随着Wasm引入而带来的灵活性，大家的目光反而被可扩展性引开。Istio在性能上的缓慢改进的表现，不知道又会损害多少工程师对它的信心，进一步影响发展速度。
+
+    再看看Kubernetes的做法：作为编排工具，Kubernetes大部分功能是运维管理性的，不会直接对业务造成明显的性能损害，其对性能最敏感的Runtime和Network部份则全部用插件实现，CNI简化到只剩标准接口，社区和企业可以自由地进行实现。
+    **Istio**不一样，基于Envoy实现的sidecar跟控制面有较强的耦合，利用xDS标准单独实现一个代理也仅仅存在于理论之中（udpa很有漫长的路要走），复杂度和没有统一的标准都是实现自定义代理拦路虎，暂不具备可操作性。
+--></div>
+   
+        <!-- -->
+      </article>
+    </main>
+    <footer class="footer">
+      <span>© 2023 </span>
+      <span>
+        Powered by
+        <a href="/" rel="noopener noreferrer" target="_blank">hbrush</a>
+        &amp;
+        <a href="https://shakebuild.com/" rel="noopener" target="_blank">Shake</a>
+      </span>
+    </footer>
+    
+    <script>
+      document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+          document.body.classList.remove("dark");
+          localStorage.setItem("pref-theme", "light");
+        } else {
+          document.body.classList.add("dark");
+          localStorage.setItem("pref-theme", "dark");
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="renderer" content="webkit" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec" />
+    
+    <meta name="generator" content="" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <!-- <link rel="stylesheet" href=""> -->
+    
+    <meta name="author" content="penglei" />
+    <title>YByte — 数理逻辑的一些概念</title>
+    <link rel="stylesheet" type="text/css" href="/assets/css/default.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22>
+          <text y=%22.9em%22 font-size=%2290%22>
+          🦥
+          </text>
+        </svg>"
+    />
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/post.css" />
+    <!-- * -->
+    <!-- * -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/assets/css/asciidoctor/css/asciidoctor.css"
+    />
+  </head>
+  <body>
+    <script>
+      if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add("dark");
+      } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove("dark");
+      } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        document.body.classList.add("dark");
+      }
+    </script>
+    
+    <header class="header">
+      <nav class="nav">
+        <div class="logo">
+          <a href="/" accesskey="h">YByte</a>
+          <div class="logo-switches">
+            <button id="theme-toggle">
+                  <svg
+      id="sun"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+     <svg
+      id="moon"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+
+            </button>
+          </div>
+        </div>
+        <ul id="menu">
+          <li>
+            <a href="/archive" title="Archive">
+              <span class=""
+                >Archive</span
+              >
+            </a>
+          </li>
+          <li>
+            <a href="/tags" title="Tags">
+              <span class="">Tags</span>
+            </a>
+          </li>
+          <li>
+            <a href="/about" title="About">
+              <span class="">About</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/penglei/" title="Github" target="_blank">
+              <span class="icon">    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path
+        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+      ></path>
+    </svg>
+</span>     <svg
+      fill="none"
+      shape-rendering="geometricPrecision"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2.5"
+      viewBox="0 0 24 24"
+      height="10"
+      width="10"
+      style="margin-left: -3px; margin-right: 3px"
+    >
+      <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+      <path d="M15 3h6v6"></path>
+      <path d="M10 14L21 3"></path>
+    </svg>
+
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="main">
+      <article class="post-single">
+        <header class="post-header">
+          <h1 class="post-title">数理逻辑的一些概念</h1>
+          <div class="post-meta">
+            <span>2020-09</span>
+            <p class="tags">
+              <a href="/tags/Logic/" target="_blank"> Logic </a>
+            </p>
+          </div>
+        </header>
+        
+        <!-- -->
+        <div class="post-content doc"><div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<nav id="TableOfContents"><ul class="sectlevel1">
+<li><a href="#_形式系统的一致性和完全性">形式系统的一致性和完全性</a>
+<ul class="sectlevel2">
+<li><a href="#_一致性consistent">一致性（consistent）</a></li>
+<li><a href="#_完全性">完全性</a></li>
+</ul>
+</li>
+<li><a href="#_演绎定理">演绎定理</a></li>
+<li><a href="#_参考资料">参考资料</a></li>
+</ul></nav>
+</div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>形式化方法已经有大量的应用，如计算机辅助证明、模型检查、系统规约化语言（如TLA+），这些技术的基础都离不开数理逻辑。
+现代逻辑学已经发展得非常广泛：
+<a href="https://en.wikipedia.org/wiki/Propositional_calculus" target="_blank" rel="noopener">Propositional logic</a>（命题逻辑），
+<a href="https://en.wikipedia.org/wiki/First-order_logic" target="_blank" rel="noopener">First-order logic</a>（也称 Predicate logic），
+<a href="https://en.wikipedia.org/wiki/Second-order_logic" target="_blank" rel="noopener">Second-order logic</a>，
+<a href="https://en.wikipedia.org/wiki/Higher-order_logic" target="_blank" rel="noopener">Higher-order logic</a>，
+<a href="https://en.wikipedia.org/wiki/Intuitionistic_logic" target="_blank" rel="noopener">Constructive logic</a>（也称 Intuitionistic logic），
+<a href="https://en.wikipedia.org/wiki/Modal_logic" target="_blank" rel="noopener">Modal logic</a>（模态逻辑），
+<a href="https://en.wikipedia.org/wiki/Temporal_logic" target="_blank" rel="noopener">Temporal logic</a>（时态逻辑是模态逻辑的一个分支），
+<a href="https://plato.stanford.edu/entries/logic-free/" target="_blank" rel="noopener">Free logic</a>，
+<a href="https://plato.stanford.edu/entries/plural-quant/" target="_blank" rel="noopener">Plural logic</a>，
+<a href="https://en.wikipedia.org/wiki/Paraconsistent_logic" target="_blank" rel="noopener">Paraconsistent logic</a>（次协调逻辑），
+<a href="https://en.wikipedia.org/wiki/Quantum_logic" target="_blank" rel="noopener">Quantum logic</a>（量子逻辑）。
+逻辑学与其它理论也有非常紧密的联系，如集合论、证明论、模型论、计算理论等。
+在计算机技术领域，学习一阶逻辑、时态逻辑等，可以帮助我们更好地运用形式化方法。</p>
+</div>
+<div style="display: none"><script type="math/tex; mode=display">
+\newcommand{\F}[1]{\!\!{#1}}
+</script></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_形式系统的一致性和完全性"><a class="anchor" href="#_形式系统的一致性和完全性"></a><a class="link" href="#_形式系统的一致性和完全性">形式系统的一致性和完全性</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>背景： 希尔伯特为了解决数学基础问题，希望将数学建立在可靠的逻辑系统之上。</p>
+</div>
+<div class="sect2">
+<h3 id="_一致性consistent"><a class="anchor" href="#_一致性consistent"></a><a class="link" href="#_一致性consistent">一致性（consistent）</a></h3>
+<div class="paragraph">
+<p><em>有些文献里面将一致性称作「协调性」</em> 。 有三种一致性：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>古典一致性（ $ \nvdash\!{A} \land \lnot A$ ）</p>
+<div class="paragraph">
+<p>系统 $s$ 中不存在公式 $A$ ，使得 $A$ 和 $\lnot A$ 都在该系统中 <strong>可证</strong> 。</p>
+</div>
+</li>
+<li>
+<p>语法一致性（ $\exists \psi \in S :\; \nvdash\!\psi$ ）</p>
+<div class="paragraph">
+<p>系统中不是任何公式都 <strong>可证</strong> 的，或者说至少有一个公式 $A$ 是 <strong>不可证</strong> 的。如果系统中 <strong>每个</strong> 公式都是 <strong>可证</strong> 的（句句是真理），那么这个系统就没有什么用处了。</p>
+</div>
+</li>
+<li>
+<p>语义一致性（ $\Gamma \vdash\F{A} \; &#8658; \; \Gamma \models\F{A}$ ）</p>
+<div class="paragraph">
+<p>也称作可靠性(<a href="https://en.wikipedia.org/wiki/Soundness" target="_blank" rel="noopener">soundness</a>)，凡是 <strong>可证</strong> 的（或称作 <em>valid</em> ，即 <strong>有效的</strong> )公式都真的。</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>古典一致性和语法一致性都在 <em>句法</em> 和 <em>规则</em> 范围内，弱于语义一致性。如果系统的语义一致性得到证明，那么古典一致性和语法一致性也是满足的。
+因此， <strong>一致性</strong> 通常指 <strong>语义一致性</strong> ，也即 <strong>可靠性(soundness)</strong> 。
+<strong>一致性</strong> 的证明比较简单，其主要思路是：所有公理(axioms)是真的，推理规则(rules)是保真的，通过对证明序列进行归纳，即可得证。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_完全性"><a class="anchor" href="#_完全性"></a><a class="link" href="#_完全性">完全性</a></h3>
+<div class="paragraph">
+<p>完全性也有三种：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>古典完全性（ $\vdash\F A $ 或者 $ \vdash\lnot A$ ）</p>
+<div class="paragraph">
+<p>系统$s$中任一个公式 $A$ ，要么 $A$ 是可证的，要么 $\lnot A$ 是可证的。</p>
+</div>
+</li>
+<li>
+<p>语法完全性</p>
+<div class="paragraph">
+<p>如果把系统中的任一不可证公式作为公理增加到已有的系统中，导致系统变得不一致，则称该系统是语法完全的（或绝对完备的）。</p>
+</div>
+</li>
+<li>
+<p>语义完全性（ $\Gamma \models\F A \; &#8658; \; \Gamma \vdash\F A $ ）</p>
+<div class="paragraph">
+<p>如果在一个形式系统的所有模型中都真的公式在该系统中都可以得到证明，则称该系统是语义完全的（相对完备的）。</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>语义完全性(completeness)是语义一致性的的逆命题，我们一般讨论的 <strong>完全性</strong> 都指「语义完全性」。
+<strong>完全性</strong> 的证明比较复杂， <a href="https://en.wikipedia.org/wiki/G%C3%B6del%27s_completeness_theorem" target="_blank" rel="noopener">Wiki</a> 中有一些概括，证明过程需要理解演绎定理(Deduction Theoream)。
+证明思路为：</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>证明 $\phi_1,\phi_2,&#8230;&#8203;,\phi_n \models\!\psi \; &#8658; \; \models \phi_1 &#8594; \phi_2 &#8594; &#8230;&#8203; &#8594; \phi_n &#8594; \psi $</p>
+<div class="paragraph">
+<p>即如果 $\psi$ 是 $\Gamma \defeq \phi_1,\phi_2,&#8230;&#8203;,\phi_n$ 的语义后承，那么 $\phi_1 &#8594; \phi_2 &#8594; &#8230;&#8203; &#8594; \phi_n &#8594; \psi$ 是重言式（永真式）。</p>
+</div>
+</li>
+<li>
+<p>证明 $\models\!\eta \; &#8658; \;\; \vdash\!\eta$</p>
+<div class="paragraph">
+<p>即证明重言式都存在一个证明序列。</p>
+</div>
+</li>
+<li>
+<p>证明 $\phi_1 &#8594; \phi_2 &#8594; &#8230;&#8203; &#8594; \phi_n &#8594; \psi \; &#8658; \; \phi_1,\phi_2,&#8230;&#8203;,\phi_n \vdash\!\psi$</p>
+<div class="paragraph">
+<p>将 $\phi_1,\phi_2,&#8230;&#8203;,\phi_n$ 当作前提，然后运用蕴含消除规则，最终即可得证 $\phi_1,\phi_2,&#8230;&#8203;,\phi_n \vdash\!\psi$</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_演绎定理"><a class="anchor" href="#_演绎定理"></a><a class="link" href="#_演绎定理">演绎定理</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://en.m.wikipedia.org/wiki/Deduction_theorem" target="_blank" rel="noopener">演绎定理</a> 是重要的元定理。在命题逻辑中，可以如此表述：$\Gamma \cup \{ A \} \vdash\F{B} \; &#8658; \; \Gamma \vdash\F{A} &#8594; B$ 。
+如果 $\Gamma$ 是空集，则 $ A \vdash\F{B} \; &#8658; \; \vdash\F{A}&#8594;B$</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_参考资料"><a class="anchor" href="#_参考资料"></a><a class="link" href="#_参考资料">参考资料</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://en.m.wikipedia.org/wiki/Natural_deduction" class="bare">https://en.m.wikipedia.org/wiki/Natural_deduction</a></p>
+</div>
+</div>
+</div></div>
+      </article>
+    </main>
+    <footer class="footer">
+      <span>© 2023 </span>
+      <span>
+        Powered by
+        <a href="/" rel="noopener noreferrer" target="_blank">hbrush</a>
+        &amp;
+        <a href="https://shakebuild.com/" rel="noopener" target="_blank">Shake</a>
+      </span>
+    </footer>
+    
+    <script>
+      document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+          document.body.classList.remove("dark");
+          localStorage.setItem("pref-theme", "light");
+        } else {
+          document.body.classList.add("dark");
+          localStorage.setItem("pref-theme", "dark");
+        }
+      });
+    </script>
+  </body>
+</html>

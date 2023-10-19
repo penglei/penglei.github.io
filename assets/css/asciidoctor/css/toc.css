@@ -1,0 +1,19 @@
+.toc #toctitle {
+  font-weight: 500;
+}
+
+.toc summary:focus {
+  outline: 0;
+}
+
+.toc {
+  margin: 0 0px 20px 0px;
+  border: 1px solid var(--border);
+  background: var(--code-bg);
+  border-radius: var(--radius);
+  padding: 0.4em;
+}
+
+.dark .toc {
+  background: var(--entry);
+}
