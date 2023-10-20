@@ -18,7 +18,7 @@
     <!-- <link rel="stylesheet" href=""> -->
     
     <meta name="author" content="penglei" />
-    <title>YByte — All Tags</title>
+    <title>YByte — github-flavored markdown syntax</title>
     <link rel="stylesheet" type="text/css" href="/assets/css/default.css" />
     <link
       rel="icon"
@@ -28,7 +28,11 @@
           </text>
         </svg>"
     />
-    <link rel="stylesheet" type="text/css" href="/assets/css/tags.css" />
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/post.css" />
+    <!-- * -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" />
+    <!-- * -->
   </head>
   <body>
     <script>
@@ -97,7 +101,7 @@
           </li>
           <li>
             <a href="/tags" title="Tags">
-              <span class="active">Tags</span>
+              <span class="">Tags</span>
             </a>
           </li>
           <li>
@@ -142,147 +146,55 @@
         </ul>
       </nav>
     </header>
-    <!-- 内容 -->
+    <!-- -->
+    
     <main class="main">
-      <h1>All Tags</h1>
-      <ul class="terms-tags">
-        <li>
-          <a href="/tags/macOS/">
-            macOS
-            <sup>
-              <strong><sup>1</sup></strong>
-            </sup>
-          </a>
-        </li>
-        <li>
-          <a href="/tags/pf/">
-            pf
-            <sup>
-              <strong><sup>1</sup></strong>
-            </sup>
-          </a>
-        </li>
-        <li>
-          <a href="/tags/redsocks2/">
-            redsocks2
-            <sup>
-              <strong><sup>1</sup></strong>
-            </sup>
-          </a>
-        </li>
-        <li>
-          <a href="/tags/socks5/">
-            socks5
-            <sup>
-              <strong><sup>1</sup></strong>
-            </sup>
-          </a>
-        </li>
-        <li>
-          <a href="/tags/blog/">
-            blog
-            <sup>
-              <strong><sup>1</sup></strong>
-            </sup>
-          </a>
-        </li>
-        <li>
-          <a href="/tags/启动/">
-            启动
-            <sup>
-              <strong><sup>1</sup></strong>
-            </sup>
-          </a>
-        </li>
-        <li>
-          <a href="/tags/Istio/">
-            Istio
-            <sup>
-              <strong><sup>2</sup></strong>
-            </sup>
-          </a>
-        </li>
-        <li>
-          <a href="/tags/Dubbo/">
-            Dubbo
-            <sup>
-              <strong><sup>1</sup></strong>
-            </sup>
-          </a>
-        </li>
-        <li>
-          <a href="/tags/ServiceMesh/">
-            ServiceMesh
-            <sup>
-              <strong><sup>1</sup></strong>
-            </sup>
-          </a>
-        </li>
-        <li>
-          <a href="/tags/Envoy/">
-            Envoy
-            <sup>
-              <strong><sup>1</sup></strong>
-            </sup>
-          </a>
-        </li>
-        <li>
-          <a href="/tags/Performance/">
-            Performance
-            <sup>
-              <strong><sup>1</sup></strong>
-            </sup>
-          </a>
-        </li>
-        <li>
-          <a href="/tags/Sidecar/">
-            Sidecar
-            <sup>
-              <strong><sup>1</sup></strong>
-            </sup>
-          </a>
-        </li>
-        <li>
-          <a href="/tags/Logic/">
-            Logic
-            <sup>
-              <strong><sup>2</sup></strong>
-            </sup>
-          </a>
-        </li>
-        <li>
-          <a href="/tags/homelab/">
-            homelab
-            <sup>
-              <strong><sup>1</sup></strong>
-            </sup>
-          </a>
-        </li>
-        <li>
-          <a href="/tags/PaperMod/">
-            PaperMod
-            <sup>
-              <strong><sup>1</sup></strong>
-            </sup>
-          </a>
-        </li>
-        <li>
-          <a href="/tags/TLA+/">
-            TLA+
-            <sup>
-              <strong><sup>1</sup></strong>
-            </sup>
-          </a>
-        </li>
-        <li>
-          <a href="/tags/Formal/">
-            Formal
-            <sup>
-              <strong><sup>1</sup></strong>
-            </sup>
-          </a>
-        </li>
-      </ul>
+      <article class="post-single">
+        <header class="post-header">
+          <h1 class="post-title">github-flavored markdown syntax</h1>
+          <div class="post-meta">
+            <span>2023-10-19</span>
+            <p class="tags">
+            </p>
+          </div>
+        </header>
+          <div class="toc" id="toc">
+        <summary id="toctitle">
+            <span class="details">Table of Contents</span>
+        </summary> 
+        <nav class="inner"><ul>
+<li><a href="#math" id="toc-math">math</a></li>
+<li><a href="#code-block" id="toc-code-block">code block</a></li>
+</ul></nav>
+      </div>
+      <div class="post-content"><h2 id="math">math</h2>
+<p>一元二次方程求解公式</p>
+<p>如果<span class="math inline"><em>a</em> ≠ 0</span>, 方程 <span
+class="math inline">(<em>a</em><em>x</em><sup>2</sup>+<em>b</em><em>x</em>+<em>c</em>=0)</span>
+存在两个解，并且可以通过下面的求根公式直接得到：</p>
+<p><span class="math display">$$ x = {-b \pm \sqrt{b^2-4ac} \over 2a}
+$$</span></p>
+<p><strong>不支持</strong> code block math display:</p>
+<pre><code>```math
+x = {-b \pm \sqrt{b^2-4ac} \over 2a}
+```</code></pre>
+<h2 id="code-block">code block</h2>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Document</span> <span class="ot">=</span> <span class="dt">Document</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  {<span class="ot"> docExt ::</span> <span class="dt">Maybe</span> <span class="dt">String</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ot">    docTitle ::</span> <span class="dt">Text</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ot">    docAuthor ::</span> <span class="dt">Maybe</span> <span class="dt">Text</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ot">    docTags ::</span> <span class="dt">Maybe</span> [<span class="dt">Text</span>],</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="ot">    docDate ::</span> <span class="dt">Maybe</span> <span class="dt">Text</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="ot">    docContent ::</span> <span class="dt">Maybe</span> <span class="dt">Text</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="ot">    docPath ::</span> <span class="dt">Maybe</span> <span class="dt">Text</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="ot">    docAttrs ::</span> <span class="dt">Maybe</span> <span class="dt">Value</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">deriving</span> (<span class="dt">Show</span>, <span class="dt">Generic</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">deriving</span> (<span class="dt">FromJSON</span>, <span class="dt">ToJSON</span>) via <span class="dt">PrefixedSnake</span> <span class="st">&quot;doc&quot;</span> <span class="dt">Document</span></span></code></pre></div></div>
+   
+        <!-- -->
+      </article>
     </main>
     <footer class="footer">
       <span>© 2023 </span>
@@ -305,5 +217,6 @@
         }
       });
     </script>
-  </body>
+    <!-- -->
+      </body>
 </html>
