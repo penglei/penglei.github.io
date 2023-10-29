@@ -1,14 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="renderer" content="webkit" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec" />
     
@@ -19,7 +16,7 @@
     
     <meta name="author" content="penglei" />
     <title>YByte — PaperMod</title>
-    <link rel="stylesheet" type="text/css" href="/assets/css/default.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/site.css" />
     <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22>
@@ -28,161 +25,80 @@
           </text>
         </svg>"
     />
-    <link rel="stylesheet" type="text/css" href="/assets/css/entry.css" />
+    <script src="/assets/script/theme.js"></script>
   </head>
-  <body class="list" id="top">
-    <script>
-      if (localStorage.getItem("pref-theme") === "dark") {
-        document.body.classList.add("dark");
-      } else if (localStorage.getItem("pref-theme") === "light") {
-        document.body.classList.remove("dark");
-      } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-        document.body.classList.add("dark");
-      }
-    </script>
-    
-    <header class="header">
-      <nav class="nav">
+  <body data-md-color-primary="deep-purple" data-md-color-accent="deep-purple"
+>
+    <!-- -->
+    <header class="md-header md-header--shadow">
+      <nav class="md-header__inner md-grid">
         <div class="logo">
           <a href="/" accesskey="h">YByte</a>
-          <div class="logo-switches">
-            <button id="theme-toggle">
-                  <svg
-      id="sun"
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    >
-      <circle cx="12" cy="12" r="5"></circle>
-      <line x1="12" y1="1" x2="12" y2="3"></line>
-      <line x1="12" y1="21" x2="12" y2="23"></line>
-      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-      <line x1="1" y1="12" x2="3" y2="12"></line>
-      <line x1="21" y1="12" x2="23" y2="12"></line>
-      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-    </svg>
-     <svg
-      id="moon"
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    >
-      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-    </svg>
-
-            </button>
-          </div>
         </div>
-        <ul id="menu">
-          <li>
-            <a href="/archive" title="Archive">
-              <span class=""
-                >Archive</span
-              >
-            </a>
+        <div class="md-header__placeholder"></div>
+        <ul class="md-tabs__list">
+          <li
+            class="md-tabs__item "
+          >
+            <a href="/archive" class="md-tabs__link">Archive</a>
           </li>
-          <li>
-            <a href="/tags" title="Tags">
-              <span class="">Tags</span>
-            </a>
+          <li
+            class="md-tabs__item "
+          >
+            <a href="/tags" class="md-tabs__link">Tags</a>
           </li>
-          <li>
-            <a href="/about" title="About">
-              <span class="">About</span>
-            </a>
-          </li>
-          <li>
-            <a href="https://github.com/penglei/" title="Github" target="_blank">
-              <span class="icon">    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    >
-      <path
-        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
-      ></path>
-    </svg>
-</span>     <svg
-      fill="none"
-      shape-rendering="geometricPrecision"
-      stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2.5"
-      viewBox="0 0 24 24"
-      height="10"
-      width="10"
-      style="margin-left: -3px; margin-right: 3px"
-    >
-      <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
-      <path d="M15 3h6v6"></path>
-      <path d="M10 14L21 3"></path>
-    </svg>
-
-            </a>
+          <li
+            class="md-tabs__item "
+          >
+            <a href="/about" class="md-tabs__link">About</a>
           </li>
         </ul>
+        <div class="md-header__option">
+          <div id="toggle-theme" class="md-icon">
+            <a href="#" title="Light mode" class="light-mode">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>        </a>
+            <a href="#" title="Dark mode" class="dark-mode">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>        </a>
+            <a href="#" title="System preference" class="system-mode">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 2c-1.79 1.15-3 3.18-3 5.5s1.21 4.35 3.03 5.5C4.46 13 2 10.54 2 7.5A5.5 5.5 0 0 1 7.5 2m11.57 1.5 1.43 1.43L4.93 20.5 3.5 19.07 19.07 3.5m-6.18 2.43L11.41 5 9.97 6l.42-1.7L9 3.24l1.75-.12.58-1.65L12 3.1l1.73.03-1.35 1.13.51 1.67m-3.3 3.61-1.16-.73-1.12.78.34-1.32-1.09-.83 1.36-.09.45-1.29.51 1.27 1.36.03-1.05.87.4 1.31M19 13.5a5.5 5.5 0 0 1-5.5 5.5c-1.22 0-2.35-.4-3.26-1.07l7.69-7.69c.67.91 1.07 2.04 1.07 3.26m-4.4 6.58 2.77-1.15-.24 3.35-2.53-2.2m4.33-2.7 1.15-2.77 2.2 2.54-3.35.23m1.15-4.96-1.14-2.78 3.34.24-2.2 2.54M9.63 18.93l2.77 1.15-2.53 2.19-.24-3.34Z"/></svg>        </a>
+          </div>
+        </div>
       </nav>
     </header>
     <!-- 内容 -->
-    <main class="main">
-      <div class="page-header">
-        <h1>PaperMod</h1>
-      </div>
+    <div class="md-container">
+      <main class="md-main">
+        <div class="md-main__inner md-grid">
+          <div class="page-header">
+            <h1>PaperMod</h1>
+          </div>
 
-      <article class="post-entry">
-        <header class="entry-header">
-          <h2><a class="entry-link" href="/posts/papermod-features/">PaperMod Features</a></h2>
-        </header>
-        <!-- <div class="entry-content"> -->
-        <!--   <p></p> -->
-        <!-- </div> -->
-        <footer class="entry-footer">
-          <span class="date" title="Jan 20 2021">Jan 20 2021 </span>
-          <p class="entry-tags">
-            <a class="post-tag" href="/tags/PaperMod/"> PaperMod </a>
+          <article class="post-entry">
+            <header class="entry-header">
+              <h2><a class="entry-link" href="/posts/papermod-features/">PaperMod Features</a></h2>
+            </header>
+            <footer class="entry-footer">
+              <span class="date" title="Jan 20 2021">Jan 20 2021 </span>
+              <p class="meta-tags">
+                <a href="/tags/papermod/"> PaperMod </a>
+              </p>
+            </footer>
+          </article>
+        </div>
+      </main>
+    </div>
+    <footer class="md-footer">
+      <div class="md-grid">
+        <div class="md-footer-meta md-typeset">
+          <p class="md-footer-meta__inner">
+            <span>© 2023 </span>
+            <span>
+              Powered by
+              <a href="https://shakebuild.com/" rel="noopener" target="_blank">Shake</a>
+            </span>
           </p>
-        </footer>
-      </article>
-    </main>
-    <footer class="footer">
-      <span>© 2023 </span>
-      <span>
-        Powered by
-        <a href="/" rel="noopener noreferrer" target="_blank">hbrush</a>
-        &amp;
-        <a href="https://shakebuild.com/" rel="noopener" target="_blank">Shake</a>
-      </span>
+        </div>
+      </div>
     </footer>
-    
-    <script>
-      document.getElementById("theme-toggle").addEventListener("click", () => {
-        if (document.body.className.includes("dark")) {
-          document.body.classList.remove("dark");
-          localStorage.setItem("pref-theme", "light");
-        } else {
-          document.body.classList.add("dark");
-          localStorage.setItem("pref-theme", "dark");
-        }
-      });
-    </script>
   </body>
 </html>
