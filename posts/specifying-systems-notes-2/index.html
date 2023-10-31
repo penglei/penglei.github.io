@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="renderer" content="webkit" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec" />
+    
+    <meta name="generator" content="" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <!-- <link rel="stylesheet" href=""> -->
+    
+    <meta name="author" content="penglei" />
+    <title>YByte — Specifying Systems 笔记 (Liveness)</title>
+    <link rel="stylesheet" type="text/css" href="/assets/css/site.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦥</text></svg>"
+    />
+    <script src="/assets/script/theme.js"></script>
+    <!-- * -->
+    <!-- * -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/assets/css/asciidoctor/css/asciidoctor.css"
+    />
+  </head>
+  <body data-md-color-primary="deep-purple" data-md-color-accent="deep-purple"
+> <header class="md-header md-header--shadow">
+  <nav class="md-header__inner md-grid">
+    <div class="logo">
+      <a href="/" accesskey="h">YByte</a>
+    </div>
+    <div class="md-header__placeholder"></div>
+    <ul class="md-tabs__list">
+      <li
+        class="md-tabs__item "
+      >
+        <a href="/archive" class="md-tabs__link">Archive</a>
+      </li>
+      <li
+        class="md-tabs__item "
+      >
+        <a href="/tags" class="md-tabs__link">Tags</a>
+      </li>
+      <li
+        class="md-tabs__item "
+      >
+        <a href="/about" class="md-tabs__link">About</a>
+      </li>
+    </ul>
+    <div class="md-header__option">
+      <div id="toggle-theme" class="md-icon">
+        <a href="#" title="Light mode" class="light-mode">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>        </a>
+        <a href="#" title="Dark mode" class="dark-mode">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>        </a>
+        <a href="#" title="System preference" class="system-mode">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 2c-1.79 1.15-3 3.18-3 5.5s1.21 4.35 3.03 5.5C4.46 13 2 10.54 2 7.5A5.5 5.5 0 0 1 7.5 2m11.57 1.5 1.43 1.43L4.93 20.5 3.5 19.07 19.07 3.5m-6.18 2.43L11.41 5 9.97 6l.42-1.7L9 3.24l1.75-.12.58-1.65L12 3.1l1.73.03-1.35 1.13.51 1.67m-3.3 3.61-1.16-.73-1.12.78.34-1.32-1.09-.83 1.36-.09.45-1.29.51 1.27 1.36.03-1.05.87.4 1.31M19 13.5a5.5 5.5 0 0 1-5.5 5.5c-1.22 0-2.35-.4-3.26-1.07l7.69-7.69c.67.91 1.07 2.04 1.07 3.26m-4.4 6.58 2.77-1.15-.24 3.35-2.53-2.2m4.33-2.7 1.15-2.77 2.2 2.54-3.35.23m1.15-4.96-1.14-2.78 3.34.24-2.2 2.54M9.63 18.93l2.77 1.15-2.53 2.19-.24-3.34Z"/></svg>        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+    <!-- -->
+    <div style="display: none">
+  <script type="math/tex; mode=display">
+    \newcommand{\defeq}{\triangleq}
+    \newcommand{\seq}[1]{\langle #1 \rangle}
+  </script>
+  <!--
+  <script type="math/tex; mode=display">
+    \newcommand{\sc}[1]{\mathrm{\small{#1}}\;}
+    \newcommand{\comment}[1]{\bbox[lightgrey,2pt]{\text{#1}}}
+    \newcommand{\str}[1]{``\mathsf{#1}\!"}
+    \newcommand{\nested}[1]{\!\!\rlap{\begin{aligned}\begin{alignat}{1}#1\end{alignat}\end{aligned}}}
+    \newcommand{\set}[1]{\{#1\}}
+    \newcommand{\llbracket}{[\![}
+    \newcommand{\rrbracket}{]\!]}
+    \newcommand{\sem}[1]{\llbracket #1 \rrbracket}
+    \newcommand{\H}{-\!\!\!}
+    \newcommand{\UR}{\lower 4.3pt {\urcorner}\!\!}
+    \newcommand{\UL}{\lower 4.3pt {\ulcorner}\!\!\!}
+    \newcommand{\LR}{\raise 2.5pt {\lrcorner}}
+    \newcommand{\LL}{\raise 2.5pt {\llcorner}\!\!\!}
+    \newcommand{\E}{\exists\,}
+    \newcommand{\A}{\forall\,}
+    \newcommand{\EE}{\pmb{\pmb{\boldsymbol{\boldsymbol{\exists}}}}\,}
+    \newcommand{\AA}{\pmb{\pmb{\boldsymbol{\boldsymbol{\forall}}}}\,}
+    \newcommand{\implies}{\Rightarrow}
+    \newcommand{\whileop}{\overset{+}{-}\!\!\triangleright\; }
+    \let\savedBox=\Box
+    \renewcommand{\Box}{\raise1mu{\small \square} }
+    \renewcommand{\Diamond}{ {\Large \diamond} }
+    \newcommand{\LET}{\sc{LET}}
+    \newcommand{\IN}{\sc{IN}}
+    \newcommand{\RECURSIVE}{\sc{RECURSIVE}}
+    \newcommand{\LAMBDA}{\sc{LAMBDA}}
+    \newcommand{\IF}{\sc{IF}}
+    \newcommand{\THEN}{\sc{THEN}}
+    \newcommand{\ELSE}{\sc{ELSE}}
+    \newcommand{\CASE}{\sc{CASE}}
+    \newcommand{\OTHER}{\sc{OTHER}}
+    \newcommand{\CHOOSE}{\sc{CHOOSE}}
+    \newcommand{\BOOLEAN}{\sc{BOOLEAN}}
+    \newcommand{\TRUE}{\sc{TRUE}}
+    \newcommand{\FALSE}{\sc{FALSE}}
+    \newcommand{\DOMAIN}{\sc{DOMAIN}}
+    \newcommand{\EXCEPT}{\sc{EXCEPT}}
+    \newcommand{\STRING}{\sc{STRING}}
+    \newcommand{\MODULE}{\sc{MODULE}}
+    \newcommand{\LOCAL}{\sc{LOCAL}}
+    \newcommand{\INSTANCE}{\sc{INSTANCE}}
+    \newcommand{\WITH}{\sc{WITH}}
+    \newcommand{\EXTENDS}{\sc{EXTENDS}}
+    \newcommand{\ASSUME}{\sc{ASSUME}}
+    \newcommand{\VARIABLE}{\sc{VARIABLE}}
+    \newcommand{\VARIABLES}{\sc{VARIABLES}}
+    \newcommand{\CONSTANT}{\sc{CONSTANT}}
+    \newcommand{\CONSTANTS}{\sc{CONSTANTS}}
+    %\newcommand{\CONSTANTS}{\sc{\color{red}{CONSTANTS}}}
+    \newcommand{\UNION}{\sc{UNION}}
+    \newcommand{\SUBSET}{\sc{SUBSET}}
+    \newcommand{\UNCHANGED}{\sc{UNCHANGED}}
+    \newcommand{\ENABLED}{\sc{ENABLED}}
+    \newcommand{\WF}{\text{WF}}
+    \newcommand{\SF}{\text{SF}}
+    \newcommand{\THEOREM}{\sc{THEOREM}}
+    \newcommand{\LEMMA}{\sc{LEMMA}}
+    \newcommand{\COROLLARY}{\sc{COROLLARY}}
+    \newcommand{\PROPOSITION}{\sc{PROPOSITION}}
+    \newcommand{\AXIOM}{\sc{AXIOM}}
+    \newcommand{\PROOF}{\sc{PROOF}}
+    \newcommand{\ASSUME}{\sc{ASSUME}}
+    \newcommand{\PROVE}{\sc{PROVE}}
+    \newcommand{\QED}{\sc{QED}}
+    \newcommand{\BY}{\sc{BY}}
+    \newcommand{\DEF}{\sc{DEF}}
+    \newcommand{\DEFS}{\sc{DEFS}}
+    \newcommand{\OBVIOUS}{\sc{OBVIOUS}}
+    \newcommand{\OMITTED}{\sc{OMITTED}}
+    \newcommand{\NEW}{\sc{NEW}}
+    \newcommand{\STATE}{\sc{STATE}}
+    \newcommand{\ACTION}{\sc{ACTION}}
+    \newcommand{\TEMPORAL}{\sc{TEMPORAL}}
+    \newcommand{\USE}{\sc{USE}}
+    \newcommand{\DEFINE}{\sc{DEFINE}}
+    \newcommand{\SUFFICES}{\sc{SUFFICES}}
+    \newcommand{\HAVE}{\sc{HAVE}}
+    \newcommand{\TAKE}{\sc{TAKE}}
+    \newcommand{\PICK}{\sc{PICK}}
+    \newcommand{\WITNESS}{\sc{WITNESS}}
+    \newcommand{\HIDE}{\sc{HIDE}}
+    \newcommand{\@w}[1]{\textsf{``{#1}''}}
+  </script>
+  -->
+</div>
+
+    <div class="md-container">
+      <main class="md-main">
+        <div class="md-main__inner md-grid">
+          <article class="post-single md-typeset">
+            <header class="post-header">
+              <h1 class="post-title">Specifying Systems 笔记 (Liveness)</h1>
+              <div class="post-meta">
+                <span>2020-09-08</span>
+                <p class="meta-tags">
+                  <a href="/tags/TLA+/" target="_blank"> TLA+ </a>
+                  <a href="/tags/Formal/" target="_blank"> Formal </a>
+                  <a href="/tags/Logic/" target="_blank"> Logic </a>
+                </p>
+              </div>
+            </header>
+            
+            <!-- -->
+            <div class="post-content doc"><div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<nav id="TableOfContents"><ul class="sectlevel1">
+<li><a href="#_一些概念">一些概念</a></li>
+<li><a href="#_逻辑基础">逻辑基础</a>
+<ul class="sectlevel2">
+<li><a href="#_命题逻辑">命题逻辑</a></li>
+<li><a href="#_谓词逻辑">谓词逻辑</a></li>
+</ul>
+</li>
+<li><a href="#_temporal_logic_简介">Temporal Logic 简介</a>
+<ul class="sectlevel2">
+<li><a href="#_更多时态公式定义">更多时态公式定义</a></li>
+<li><a href="#_时态逻辑重言式恒等式">时态逻辑重言式(恒等式)</a></li>
+<li><a href="#_时态逻辑推理规则类似于mp规则">时态逻辑推理规则(类似于MP规则)</a></li>
+</ul>
+</li>
+<li><a href="#_liveness定义">Liveness定义</a>
+<ul class="sectlevel2">
+<li><a href="#_weak_fairness">Weak Fairness</a></li>
+<li><a href="#_strong_fairness">Strong Fairness</a></li>
+</ul>
+</li>
+</ul></nav>
+</div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Specifying Systems的1-7章层层推进，在实例中穿插着原理讲解，深入浅出地讲解了Specification是什么，以及如何设计系统规约。
+这些Specification表明了系统的Safety属性&#8201;&#8212;&#8201;即系统行为被约束在一定范围内，不会做出一些不被允许的行为(something <strong>bad</strong> does not happen)。
+在TLA+中，通常使用公式 \(Spec \triangleq Init \land \Box [Next]_{vars}\) 来描述系统的Safety属性(约束)。
+Safety属性说明了系统中什么不能发生，但无法表达系统中<strong>某些时间一定会发生</strong>的这类属性，而Liveness便可以表达("something <strong>good</strong> eventully happen")。
+Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公式 \(Spec \triangleq Init \land \Box [Next]_{vars} \land L\) 来同时描述其对Safety和Liveness的要求，
+公式末尾的 $L$ 便是描述Liveness属性的公式。</p>
+</div>
+<div style="display: none;">
+<script type="math/tex; mode=document">% <![CDATA[
+\begin{alignat}{1}
+\newcommand{\sigman}{\sigma^{+n}}
+\newcommand{\mimply}{\Rightarrow}
+\newcommand{\eventual}{{\large\diamond}}
+\end{alignat} %]]></script>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_一些概念"><a class="anchor" href="#_一些概念"></a><a class="link" href="#_一些概念">一些概念</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<div class="title">value</div>
+<p>value表示通常意义上的值，如 $1，2，TRUE, FALSE，[name{\mapsto}``zhangsan\!", age{\mapsto}18]$。 TLA+的语义基于ZF集合论， 因此其value只是集合(set)的另一个称呼。</p>
+</div>
+<div class="paragraph">
+<div class="title">state</div>
+<p>state是对一些变量进行赋值(的结果)，如 $[hr=1]$，$[hr=2]$ 等。</p>
+</div>
+<div class="paragraph">
+<div class="title">state function</div>
+<p><em>state function</em> 是一个以 <em>变量</em>(不包含 <em>primed variable</em>)、常量、操作符构建的表达式。这个表达式给所有state都映射了一个value。可以理解为每个state都可以经过这个function计算，得到一个 <em>value</em> 。</p>
+</div>
+<div class="paragraph">
+<div class="title">state predicate</div>
+<p>结果 <em>value</em> 为 <code>Boolean</code> 类型的 <em>state function</em>。 即state predicate一个作用于state进行真值判断的公式。</p>
+</div>
+<div class="paragraph">
+<div class="title">behavior</div>
+<p>behavior是 <em>state</em> 组成的无穷序列，如 $\sigma \defeq [hr=1] &#8594; [hr=2] &#8594; [hr=3] &#8594; &#8230;&#8203;$ 。需要注意的是，一个系统可能有多个behavior，比如并发系统可能有多种执行顺序，产生不同的behavior。</p>
+</div>
+<div class="paragraph">
+<div class="title">step</div>
+<p>step是state之间直接变化的步骤。假如 $s_n$, $s_{n+1}$ 分别是两个相邻的 <em>state</em> ，那么 $s_n &#8594; s_{n+1}$ 就是表示 从 $s_n$ 直接变化到 $s_{n+1}$的step，无论 <em>state</em> 中有多少个变量，这个变化都是原子的，不会产生其它中间状态。</p>
+</div>
+<div class="paragraph">
+<div class="title">primed variable</div>
+<p>变量发生变化后的值，如 $hr'=hr+1$ 表示 <code>hr</code> 变量经过一个 <em>step</em> 之后，其值等于原先的值加 <code>1</code> 。</p>
+</div>
+<div class="paragraph">
+<div class="title">action</div>
+<p>包含 <em>primed variable</em> 和 <em>unprimed variable</em> 的 formula。 action 作用于 <em>step</em> 进行真值判断，以断定state(的value)是否可以再发生变化。specification(规约)通常由许多action组成。</p>
+</div>
+<div class="paragraph">
+<div class="title">formula</div>
+<p>值为TRUE或FALSE的逻辑表达式（数理逻辑中的「公式」）</p>
+</div>
+<hr>
+<div class="paragraph">
+<p>这些定义的形式和语义都不一定准确，只是帮助加深理解TLA+。精确定义详见Specifying Systems，尤其是 Chapter 16 有许多描述。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_逻辑基础"><a class="anchor" href="#_逻辑基础"></a><a class="link" href="#_逻辑基础">逻辑基础</a></h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_命题逻辑"><a class="anchor" href="#_命题逻辑"></a><a class="link" href="#_命题逻辑">命题逻辑</a></h3>
+<div class="paragraph">
+<p>命题逻辑语法可以用如下BNF表示：</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\phi ::= p | (\lnot\phi) | (\phi\land\phi) | (\phi\lor\phi) | (\phi\to\phi)\]
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_谓词逻辑"><a class="anchor" href="#_谓词逻辑"></a><a class="link" href="#_谓词逻辑">谓词逻辑</a></h3>
+<div class="paragraph">
+<p>PTL: Propositional Temporal Logic ，是LTL的另一种简称，参考:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://en.wikipedia.org/wiki/Linear_temporal_logic" class="bare">https://en.wikipedia.org/wiki/Linear_temporal_logic</a></p>
+</li>
+<li>
+<p><a href="http://discuss.tlapl.us/msg00894.html" class="bare">http://discuss.tlapl.us/msg00894.html</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_temporal_logic_简介"><a class="anchor" href="#_temporal_logic_简介"></a><a class="link" href="#_temporal_logic_简介">Temporal Logic 简介</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>时态公式是行为(<em>behavior</em>)的真值判断式。对于一个行为 $\sigma$ ，以及一个时态公式 $F$ ，如果 $\sigma$ 满足 $F$ ，则可以表示为：</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[\sigma \models F\]
+</div>
+</div>
+<div class="paragraph">
+<p>也可称作时态公式 $F$ 对于行为 $\sigma$ 是真的，或称行为 $\sigma$ 满足公式 $F$。</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+为了便于叙述，我们将“时态公式”简称为“公式”。
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>公式可以通过连接词进行组合，也可使用量词进行修饰。组合公式的含义如下：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>$\sigma \models (F \land G) \;\defeq \;(\sigma \models F) \land (\sigma \models G)$</p>
+</li>
+<li>
+<p>$\sigma \models (F \lor G) \;\defeq \;(\sigma \models F) \lor (\sigma \models G)$</p>
+</li>
+<li>
+<p>$\sigma \models (F &#8658; G) \;\defeq \;(\sigma \models F) &#8658; (\sigma \models G)$</p>
+</li>
+<li>
+<p>$\sigma \models \lnot F \;\defeq \;\lnot (\sigma \models F)$</p>
+</li>
+<li>
+<p>$\sigma \models (\forall r \in S: F) \;\defeq \;\forall r \in S : (\sigma \models F)$</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>上面出现的公式 $F$, $G$ 都未加定义，通常由如下三种形式的公式组成:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>$P$</p>
+<div class="paragraph">
+<p><em>state predicate</em>， P是一个「状态谓词」。其语义是: 如果将 $P$ 看作时态公式， 那么 $\sigma$(<em>behavior</em>) 满足 $P$ 当且仅当 $\sigma$ 中的第一个 <em>state</em> 满足 $P$。</p>
+</div>
+</li>
+<li>
+<p>$\Box P$</p>
+<div class="paragraph">
+<p>其中 $P$ 是 <em>state predicate</em> 。<em>behavior</em> 满足 $\Box P$ 当且仅当 <em>behavior</em> 中所有 <em>state</em> 满足 $P$</p>
+</div>
+</li>
+<li>
+<p>$\Box[N]_\color{red}v$</p>
+<div class="paragraph">
+<p>其中 $N$ 是 <em>action</em> ，$_\color{red}v$ 是 <em>state function</em> 。 <em>behavior</em>  满足该公式 当且仅当 <em>behavior</em> 中每一对相继的states是一个满足 $[N]_v$ 的step。</p>
+</div>
+<div class="paragraph">
+<p>注意： $[N]_v$ 中的 $_v$ 可以是 <em>state function</em> ，并不限定于 variables（如 $\seq{hr ,\, val}$)。 <em>state function</em> 可以增加 prime 运算符形成 <em>transition function</em> 。$[N]_v$ 等价于 $ N \lor (v' = v)$ 。详见 Spcifying Systems 16.2.3。</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>这三种公式中，虽然$P$ 是一个 <code>state predicate</code>，但可以将其看作是一个没有 <code>primed variables</code> 的 action(这种action作用于state得到新的 <code>state'</code> 没有改变，即一个stuttering step)。
+这样，我们就可以把时态公式归纳为两种形式： $A$ 和 $\Box A$，其中 $A$ 是一个 action。</p>
+</div>
+<div class="paragraph">
+<div class="title">语义解释</div>
+<p>定义 $\sigma_i$ 是 $\sigma$的第$(i + 1) ^{st}$个state，$\sigma$即是: $\sigma_0\rightarrow\sigma_1\rightarrow\sigma_2\rightarrow\dotsb$。
+注意这里的自然语言表述，第一个 state 是 $\sigma_0$ ，$\sigma_0$ 是第一($i+1$)个state。</p>
+</div>
+<div class="paragraph">
+<p>$\sigma \models A$ 为 <code>true</code> 等价于 $\sigma_0\rightarrow\sigma_1$ 是一个 $A$ step。特殊场景: 如果$A$ 是一个 <code>state predicate</code> ， 只要 $A$ 对于第一个状态($\sigma_0$)判定为 <code>true</code> ，$\sigma_0\rightarrow\sigma_1$就是一个 $A$ step。</p>
+</div>
+<div class="paragraph">
+<p>$\sigma \models \Box A$ 为 <code>true</code> 等价于 所有的step($\sigma_n\rightarrow\sigma_{n+1}$)都是一个 $A$ step。</p>
+</div>
+<div class="paragraph">
+<p>定义: $\sigma^{+n} \defeq \sigma_n\rightarrow\sigma_{n+1}\rightarrow\sigma_{n+2}\rightarrow\dotsb$，
+因此$\sigma_n\rightarrow\sigma_{n+1}$ 是$\sigma^{+n}$的第一个step。 $\sigma \models \Box A$ 为 <code>true</code> 等价于 对于所有的 $n$，
+$\sigma^{+n} \models A$为 <code>true</code> ：</p>
+</div>
+<div class="paragraph text-center">
+<p>$\sigma \models \Box A \equiv \forall n \in Nat : \sigma^{+n} \models A$</p>
+</div>
+<div class="paragraph">
+<p>一个很自然的泛化就是把action $A$ 换成 formula $F$：</p>
+</div>
+<div class="paragraph text-center">
+<p>$\sigma \models \Box F \equiv \forall n \in Nat : \sigma^{+n} \models F$</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+因此，$\sigma$ 满足 $\Box F$ 等价于 所有$\sigma$ 后缀的 $\sigma^{+n}$ 满足 $F$。
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>示例:</p>
+</div>
+<script type="math/tex; mode=document">% <![CDATA[
+\begin{alignat}{1}
+&\;\sigma \models \Box((x = 1) \mimply \Box(y > 0)) \\
+& \equiv \forall n \in Nat : \sigma^{+n} \models (( x = 1) \mimply \Box (y > 0)) \\
+& \equiv \forall n \in Nat : (\sigman \models (x = 1)) \mimply (\sigman \models \Box (y > 0)) \\
+& \equiv \forall n \in Nat : (\sigman \models (x = 1)) \mimply (\forall m \in Nat : (\sigman)^{+m} \models (y > 0))
+\end{alignat} %]]></script>
+<div class="sect2">
+<h3 id="_更多时态公式定义"><a class="anchor" href="#_更多时态公式定义"></a><a class="link" href="#_更多时态公式定义">更多时态公式定义</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>$\eventual F \defeq \neg\Box\neg F$</p>
+</li>
+<li>
+<p>$F \leadsto G \defeq \Box(F \mimply \eventual G)$</p>
+</li>
+<li>
+<p>$\eventual\seq{A}_v \defeq \neg\Box[\neg A]_v$</p>
+<div class="paragraph">
+<p>公式中A是一个 <code>action</code> ，$_v$ 是一个 <code>state function</code>，这表示最终某些step是一个改变了$_v$且满足$A$的step。</p>
+</div>
+<div class="paragraph">
+<p>如果定义 $\seq{A}_v \defeq A \land (v' \neq v)$ ，那么也可以理解 $\eventual\seq{A}_v$ 是 $\eventual$ 和 $\seq{A}_v$ 的结合，即最终有一个$\seq{A}_v$ step会发生。(这种理解不是完全正确的，因为 $\seq{A}_v$并不是一个合法的公式，只是一个简写)。</p>
+</div>
+</li>
+<li>
+<p>$\Box\eventual F$ 太好理解，不用解释</p>
+</li>
+<li>
+<p>$\eventual\Box F$ 太好理解，不用解释</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_时态逻辑重言式恒等式"><a class="anchor" href="#_时态逻辑重言式恒等式"></a><a class="link" href="#_时态逻辑重言式恒等式">时态逻辑重言式(恒等式)</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>$\Box F \mimply F$</p>
+</li>
+<li>
+<p>$\neg\Box F \equiv \eventual\neg F$</p>
+</li>
+<li>
+<p>$\Box(F \land G) \equiv (\Box F) \land (\Box G)$</p>
+</li>
+<li>
+<p>$\eventual(F \lor G) \equiv (\eventual F) \lor (\eventual G)$</p>
+</li>
+<li>
+<p>$\Box\eventual(F \lor G) \equiv (\Box\eventual F) \lor (\Box\eventual G)$</p>
+</li>
+<li>
+<p>$\eventual\Box(F \land G) \equiv (\eventual\Box F) \land (\eventual\Box G)$</p>
+</li>
+<li>
+<p>$\Box\eventual(\seq{A}_v \lor \seq{B}_v) \equiv (\Box\eventual\seq{A}_v) \lor (\Box\eventual\seq{B}_v)$</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_时态逻辑推理规则类似于mp规则"><a class="anchor" href="#_时态逻辑推理规则类似于mp规则"></a><a class="link" href="#_时态逻辑推理规则类似于mp规则">时态逻辑推理规则(类似于MP规则)</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>概括(泛化?)规则: $F \mimply \Box F$ ，表示 $F$ 为 <code>true</code> 时， $\Box F$为 <code>true</code> 。</p>
+</li>
+<li>
+<p>蕴含概括规则: $(F \mimply G) \mimply (\Box F \mimply \Box G)$</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>需要意与重言式与推理规则的区别。例如，上面的&#8217;概括规则&#8217;要求 $F$ 为 <code>true</code> 时才能推定 $\Box F$，但重言式没有这个要求，因为重言式的语义是永真的。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_liveness定义"><a class="anchor" href="#_liveness定义"></a><a class="link" href="#_liveness定义">Liveness定义</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>liveness属性可以通过时态逻辑进行描述！</p>
+</div>
+<div class="paragraph">
+<p>TLA+提供两种标准的(常用的)构建Liveness的符号</p>
+</div>
+<div class="sect2">
+<h3 id="_weak_fairness"><a class="anchor" href="#_weak_fairness"></a><a class="link" href="#_weak_fairness">Weak Fairness</a></h3>
+<script type="math/tex; mode=document">% <![CDATA[
+\begin{alignat}{1}
+& WF_v(A) \defeq \Box(\Box \;ENABLED\seq{A}_v\;\;\;\;\;   & \mimply \;\; & \eventual\seq{A}_v) \\
+&\kern{37pt} \equiv \Box\eventual(\neg ENABLED\seq{A}_v)  & \lor         & \Box\eventual\seq{A}_v \\
+&\kern{37pt} \equiv \eventual\Box(ENABLED\seq{A}_v)       & \mimply      & \Box\eventual\seq{A}_v
+\end{alignat} %]]></script>
+<p></p>
+<div class="paragraph">
+<p>这些公式的等价性可以通过时态逻辑和命题逻辑的重言式进行证明。
+如果用 $E$ 表示 $ENABLED\seq{A}_v$，用 $A$表示 $\seq{A}_v$。 则可以将 $WF_v(A)$ 可表示为 $\Box(\Box E\mimply\eventual A))$。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_strong_fairness"><a class="anchor" href="#_strong_fairness"></a><a class="link" href="#_strong_fairness">Strong Fairness</a></h3>
+<script type="math/tex; mode=document">% <![CDATA[
+\begin{alignat}{1}
+&SF_v(A) \defeq \eventual\Box(\neg ENABLED\seq{A}_v) \;\; & \lor  \;\; & \Box\eventual\seq{A}_v \\
+&\kern{32pt} \equiv \Box\eventual ENABLED\seq{A}_v & \mimply \;\; & \Box\eventual\seq{A}_v
+\end{alignat} %]]></script>
+<p></p>
+</div>
+</div>
+</div></div>
+          </article>
+        </div>
+      </main>
+    </div>
+    <footer class="md-footer">
+      <div class="md-grid">
+        <div class="md-footer-meta md-typeset">
+          <p class="md-footer-meta__inner">
+            <span>© 2023 </span>
+            <span>
+              Powered by
+              <a href="https://shakebuild.com/" rel="noopener" target="_blank">Shake</a>
+            </span>
+          </p>
+        </div>
+      </div>
+    </footer>
+    <!-- -->
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/CommonHTML"],
+    //displayAlign: "left",
+    extensions: ["tex2jax.js","AssistiveMML.js"], // "MathMenu.js","MathZoom.js", "a11y/accessibility-menu.js"
+    TeX: {
+      extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"],
+      equationNumbers: { autoNumber: "none" }
+    },
+    tex2jax: {
+      //inlineMath: [["\\(", "\\)"]],
+      inlineMath: [['\\(', '\\)'], ['$', '$']],
+      displayMath: [["\\[", "\\]"]],
+      ignoreClass: "nostem|nolatexmath",
+      processEscapes: true,
+      balanceBraces: true
+    },
+    asciimath2jax: {
+      delimiters: [["\\$", "\\$"]],
+      ignoreClass: "nostem|noasciimath"
+    },
+    showMathMenu: false,
+    showMathMenuMSIE: false,
+    menuSettings: {
+        inTabOrder: false,
+        zoom: "None"
+    },
+    'HTML-CSS': {
+        availableFonts: [],
+        webFont: 'TeX',
+    }
+  })
+  MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready", function () {
+    MathJax.InputJax.AsciiMath.postfilterHooks.Add(function (data, node) {
+      if ((node = data.script.parentNode) && (node = node.parentNode) && node.classList.contains('stemblock')) {
+        data.math.root.display = "block"
+      }
+      return data
+    })
+  });
+
+  MathJax.Hub.Register.MessageHook("Math Processing Error", function (message) {
+      console.log(message)
+  });
+  MathJax.Hub.Register.MessageHook("TeX Jax - parse error", function (message) {
+      console.log(message)
+  });
+
+  (function () {
+    var EXT = MathJax.Extension, mm, mz;
+          MathJax.Hub.Register.StartupHook("End Typeset",function () {
+            mm = EXT.MathMenu; mz = EXT.MathZoom;
+            EXT.MathMenu = EXT.MathZoom = {};
+          });
+    MathJax.Hub.Queue(function () {
+      if (mm) {EXT.MathMenu = mm} else {delete EXT.MathMenu}
+      if (mm) {EXT.MathZoom = mz} else {delete EXT.MathZoom}
+    });
+  })();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
+  </body>
+</html>

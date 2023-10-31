@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="renderer" content="webkit" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec" />
+    
+    <meta name="generator" content="" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <!-- <link rel="stylesheet" href=""> -->
+    
+    <meta name="author" content="penglei" />
+    <title>YByte — Dubbo 集成 Istio 的方案</title>
+    <link rel="stylesheet" type="text/css" href="/assets/css/site.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦥</text></svg>"
+    />
+    <script src="/assets/script/theme.js"></script>
+    <!-- * -->
+    <!-- <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" /> -->
+    <!-- <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css" /> -->
+    <!-- * -->
+  </head>
+  <body data-md-color-primary="deep-purple" data-md-color-accent="deep-purple"
+> <header class="md-header md-header--shadow">
+  <nav class="md-header__inner md-grid">
+    <div class="logo">
+      <a href="/" accesskey="h">YByte</a>
+    </div>
+    <div class="md-header__placeholder"></div>
+    <ul class="md-tabs__list">
+      <li
+        class="md-tabs__item "
+      >
+        <a href="/archive" class="md-tabs__link">Archive</a>
+      </li>
+      <li
+        class="md-tabs__item "
+      >
+        <a href="/tags" class="md-tabs__link">Tags</a>
+      </li>
+      <li
+        class="md-tabs__item "
+      >
+        <a href="/about" class="md-tabs__link">About</a>
+      </li>
+    </ul>
+    <div class="md-header__option">
+      <div id="toggle-theme" class="md-icon">
+        <a href="#" title="Light mode" class="light-mode">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>        </a>
+        <a href="#" title="Dark mode" class="dark-mode">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>        </a>
+        <a href="#" title="System preference" class="system-mode">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 2c-1.79 1.15-3 3.18-3 5.5s1.21 4.35 3.03 5.5C4.46 13 2 10.54 2 7.5A5.5 5.5 0 0 1 7.5 2m11.57 1.5 1.43 1.43L4.93 20.5 3.5 19.07 19.07 3.5m-6.18 2.43L11.41 5 9.97 6l.42-1.7L9 3.24l1.75-.12.58-1.65L12 3.1l1.73.03-1.35 1.13.51 1.67m-3.3 3.61-1.16-.73-1.12.78.34-1.32-1.09-.83 1.36-.09.45-1.29.51 1.27 1.36.03-1.05.87.4 1.31M19 13.5a5.5 5.5 0 0 1-5.5 5.5c-1.22 0-2.35-.4-3.26-1.07l7.69-7.69c.67.91 1.07 2.04 1.07 3.26m-4.4 6.58 2.77-1.15-.24 3.35-2.53-2.2m4.33-2.7 1.15-2.77 2.2 2.54-3.35.23m1.15-4.96-1.14-2.78 3.34.24-2.2 2.54M9.63 18.93l2.77 1.15-2.53 2.19-.24-3.34Z"/></svg>        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+    <!-- -->
+    
+    <div class="md-container">
+      <main class="md-main">
+        <div class="md-main__inner md-grid">
+          <article class="post-single md-typeset">
+            <header class="post-header">
+              <h1 class="post-title">Dubbo 集成 Istio 的方案</h1>
+              <div class="post-meta">
+                <span>2020-06-05</span>
+                <p class="meta-tags">
+                  <a href="/tags/Istio/" target="_blank"> Istio </a>
+                  <a href="/tags/Dubbo/" target="_blank"> Dubbo </a>
+                  <a href="/tags/ServiceMesh/" target="_blank"> ServiceMesh </a>
+                </p>
+              </div>
+            </header>
+              <div class="toc" id="toc">
+        <summary id="toctitle">
+            <span class="details">Table of Contents</span>
+        </summary> 
+        <nav class="inner"><ul>
+<li><a href="#名词解释" id="toc-名词解释">名词解释</a></li>
+<li><a href="#dubbo-如何实现服务发现"
+id="toc-dubbo-如何实现服务发现">Dubbo 如何实现服务发现？</a></li>
+<li><a href="#问题与方案" id="toc-问题与方案">问题与方案</a></li>
+<li><a href="#社区发展" id="toc-社区发展">社区发展</a></li>
+<li><a href="#参考资料" id="toc-参考资料">参考资料</a></li>
+</ul></nav>
+      </div>
+      <div class="post-content"><p>Dubbo 是个流行的微服务框架，其功能和
+ServiceMesh 有一定重合。在将 Dubbo 逐步迁移到 Istio
+架构时，有一些问题需要解决。
+其中，服务注册与发现是服务间调用的核心问题，融合两者的服务注册与发现机制是实现
+Dubbo 向 Istio 迁移的关键步骤。 在研究 Dubbo
+框架的原理及使用方式之后，本文提出了一种扩展 Dubbo
+的方式，使其更容易地集成到 service mesh （istio）中。</p>
+<h2 id="名词解释">名词解释</h2>
+<p>文中用到的名词按下面的意思进行约定，方便理解。</p>
+<ul>
+<li><p>Consumer, Provider</p>
+<p>在 Dubbo 生态中，服务间调用常常用 Consumer 和 Provider
+分别指代服务调用方和服务提供方。</p></li>
+<li><p>address</p>
+<p>表示网络连接地址，格式位 <code>IP:PORT</code></p></li>
+</ul>
+<h2 id="dubbo-如何实现服务发现">Dubbo 如何实现服务发现？</h2>
+<ol type="1">
+<li><p>通过扩展机制，Dubbo 支持使用 zookeeper、consul、etcd
+等作为注册中心。并且同时支持多个注册中心</p>
+<pre><code>&lt;dubbo:registry id=&quot;registry-foo&quot; address=&quot;etcd3://${etcd3.address:127.0.0.1}:2379&quot; /&gt;
+&lt;dubbo:registry id=&quot;registry-bar&quot; address=&quot;zookeeper://${zookeeper.address:localhost}:2181&quot; /&gt;
+
+&lt;bean id=&quot;demo-service&quot; class=&quot;org.apache.dubbo.samples.impl.DemoServiceImpl&quot;/&gt;
+&lt;dubbo:service interface=&quot;org.apache.dubbo.samples.api.DemoService&quot; ref=&quot;demo-service&quot; registry=&quot;registry-foo&quot;/&gt;</code></pre>
+<p>上面是 Provider 的配置定义了两个注册中心, <code>registry-foo</code>
+使用 Etcd， <code>registry-bar</code> 使用 Zookeeper。
+<code>&lt;bean .../&gt;</code> 定义了一个服务 <code>demo-service</code>
+，该服务通过 <code>&lt;dubbo:service ... /&gt;</code> 注册到
+<code>registry-foo</code> 中。</p></li>
+<li><p>服务注册/发现粒度是 interface 级别</p>
+<p>interface 级别的服务发现为用户提供了非常便利的使用方式，用户只需要用
+Java
+语言定义好接口类型，通过配置文件将服务进行声明注册，即可在业务程序中直接调用，整个过程和本地方法调用区别不大。</p>
+<p>接口定义文件（一般在 Provider 和 Consumer 之间进行共享）</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">//service interface definition</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">interface</span> DemoService <span class="op">{</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">String</span> <span class="fu">sayHello</span><span class="op">(</span><span class="bu">String</span> name<span class="op">);</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Consumer 使用方式：</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode java"><code class="sourceCode java"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">//usage</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> <span class="fu">main</span><span class="op">(</span><span class="bu">String</span><span class="op">[]</span> args<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    DemoService demoService <span class="op">=</span> <span class="op">(</span>DemoService<span class="op">)</span> context<span class="op">.</span><span class="fu">getBean</span><span class="op">(</span><span class="st">&quot;demoService&quot;</span><span class="op">);</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">System</span><span class="op">.</span><span class="fu">out</span><span class="op">.</span><span class="fu">println</span><span class="op">(</span>demoService<span class="op">.</span><span class="fu">sayHello</span><span class="op">(</span><span class="st">&quot;world&quot;</span><span class="op">));</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">//config</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>dubbo<span class="op">:</span>reference id<span class="op">=</span><span class="st">&quot;demoService&quot;</span> scope<span class="op">=</span><span class="st">&quot;remote&quot;</span> check<span class="op">=</span><span class="st">&quot;true&quot;</span> <span class="kw">interface</span><span class="op">=</span><span class="st">&quot;org.apache.dubbo.samples.api.DemoService&quot;</span> loadbalance<span class="op">=</span><span class="st">&quot;roundrobin&quot;</span> <span class="op">/&gt;</span></span></code></pre></div>
+<p>例如，服务端在注册中心会用下面的格式记录接口实例的详细信息：</p>
+<pre class="url"><code>/dubbo/org.apache.dubbo.samples.api.DemoService/providers/http://10.35.4.53:8080/org.apache.dubbo.samples.api.DemoService?anyhost=true&amp;application=provider-demo&amp;deprecated=false&amp;dubbo=2.0.2&amp;dynamic=true&amp;generic=false&amp;interface=org.apache.dubbo.samples.api.DemoService&amp;methods=sayHello&amp;pid=91302&amp;release=2.7.5&amp;server=tomcat&amp;side=provider&amp;timestamp=1591344245234</code></pre></li>
+</ol>
+<p>Dubbo 服务发现示意图：</p>
+<figure>
+<img src="dubbo-registry.png" alt="Dubbo服务发现" />
+<figcaption aria-hidden="true">Dubbo服务发现</figcaption>
+</figure>
+<h2 id="问题与方案">问题与方案</h2>
+<p>用户在迁移到 service mesh 过程中，Consumer 将出现两种情况：</p>
+<ol type="1">
+<li><p>Consumer 未改造，继续使用 Dubbo SDK 内部组件访问 Provider；</p>
+<p>对于这些还未迁移的服务，需要保留 Dubbo 已有的服务注册/发现机制，Dubbo
+服务间使用 Pod IP
+进行通信，不需做其它改造，这样我们可以进行平滑迁移。</p></li>
+<li><p>改造过的 Consumer（用 <code>Consumer[sidecar]</code> 表示）通过
+sidecar 访问 Provider；</p>
+<p><code>Consumer[sidecar]</code> 访问 Provider
+时，情况变得稍微复杂一些：</p>
+<ul>
+<li><p>被访问的 Provider 还未使用 Istio 进行治理，Consumer 继续使用
+Dubbo SDK 进行服务发现。</p>
+<p>虽然 sidecar
+虽然会拦截所有流量，但不会对未进行治理的流量做任何处理。为了消除不必要的性能损失，也可通过对
+Provider 规划不同的端口，使用 excludeOutboundPorts 来避免劫持访问
+Provider 的流量。</p></li>
+<li><p><strong>被访问的 Provider 使用 Istio 进行治理，Consumer
+不能再按照原来的方式来进行服务发现。</strong></p>
+<p>Istio
+的服务发现粒度是应用级别，而不是接口级别，我们需要对两种模型进行融合，并且尽量减少上层业务的感知。
+另外，服务发现的过程移动到了 Envoy 进程中，Dubbo SDK 发出的流量需要与
+Envoy 中的服务发现机制相匹配。</p></li>
+<li><p>被访问的 Provider 部份使用 Istio 进行治理</p>
+<p>在一个大型服务迁移过程中出现，可能一部分流量通过 SDK
+访问，另一部分流量通过 sidecar
+进行访问。这种场景较复杂，一种比较直接的解决方案是把同一个服务在逻辑上拆分未两个服务，一个服务通过
+Istio 进行治理，另一个保持原样，
+这样便可将其归结前面两种情况进行处理。在渡过这种迁移状态之后，便可重新归为同一个服务进行处理。</p></li>
+</ul></li>
+</ol>
+<p>总体来说，我们需要在 Dubbo
+上提供一种应用/服务级别的注册/发现机制，并且能与 Dubbo 兼容。</p>
+<p>Dubbo 使用 Java interface 描述 RPC 接口，这和基于 schema 的第三方 IDL
+相比，其易用性好得多，即使迁移到 Istio
+进行服务治理，这种风格也会继续保留在 Dubbo 生态中。
+因此，我们在服务发现的过程中，将不得不面临
+<code>interface -&gt; Service -&gt; Address</code> 的转换问题，这与
+<code>Service -&gt; Address</code> 的转换相比，多了
+<code>interface -&gt; Service</code> 的转换步骤。</p>
+<p>Dubbo 具有高可扩展性，我们可以通过扩展 Registry
+组件来实现这一点（命名为 MeshRegistry)：</p>
+<ul>
+<li>在 Provider 中将 <code>(interface, service)</code> 注册到
+MeshRegistry；</li>
+<li>通过 kubernetes service 将 Provider 自动注册到 Pilot；</li>
+<li>Consumer 侧通过 MeshRegistry 的 Dubbo 扩展进行接口级别的服务发现，将
+api(interface.method) 映射为 service；</li>
+<li>Consumer Pod 的 sidecar 进行服务发现，将 service 转换为
+addresss，访问 Provider；</li>
+</ul>
+<p>下图展示了融合 Istio 和 Dubbo 之后的服务注册/发现机制：</p>
+<figure>
+<img src="dubbo-with-mesh.png" alt="Dubbo适配Mesh" />
+<figcaption aria-hidden="true">Dubbo适配Mesh</figcaption>
+</figure>
+<h3 id="多注册中心">多注册中心</h3>
+<p><strong>为什么不使用 Pilot 作为单独的服务注册中心？</strong></p>
+<p>前面提到，Dubbo 易用性的关键之一是 interface
+级别的服务注册/发现，Pilot 提供的数据模型无法保存
+<code>interface -&gt; service</code> 这样的映射关系，同时 xDS 模型适配到
+Dubbo 的服务发现流程中也比较复杂。</p>
+<p>方案中保留 Dubbo 的原来注册/发现机制，以兼容未纳入 mesh 管理的 Dubbo
+服务，这些服务可以按原方式调用。 MeshRegistry 在逻辑上与 Dubbo Legacy
+Registry 独立，但在部署上可以采用同一个 Etcd
+集群来实现，降低维护代价。</p>
+<h3 id="服务端provider服务注册">服务端（Provider）服务注册</h3>
+<p>在服务端，我们通过 Dubbo Registry 扩展组件，可以实现自定义的 register
+流程。 对于 Dubbo 的注册机制来说，这些服务是自描述的，它们在内部感知到
+IP 等信息，将其提交到注册中心。 对于 MeshRegistry 注册中心需要的
+<code>interface -&gt; service</code> 映射关系，register
+需要感知到外部引用它（即运行 Dubbo 服务的 Pod）的 service 名字，
+然而，register 并没有简单的办法从环境中获取到 service 名字信息，即使通过
+kubernetes api 中查询到引用 Pod 的 service 信息，也会面临一个 Pod 被多个
+service 引用的情况， 这时候没有办法自动确定究竟是哪个 service 才是 Mesh
+使用的 service，最终，它会影响 Consumer 如何与
+sidecar(Envoy)建立通信连接。</p>
+<p>有两种注册方案：</p>
+<ol type="1">
+<li><p>通过 kubernetes 定义 service 时，打上 annotation 标记，如
+<code>dubbo/interface: demo-service</code>，这样 register 便可以查询
+kubernetes service，提取 annotation 完成注册。</p>
+<p>这种方式将 interface 与 service 的关系放在 kubernetes
+集群中进行，并且 Consumer
+还是需要进行一些配置上的改造，可能使用不方便。</p>
+<p>我们也可以去掉 Dubbo register 扩展，通过 kubernetes operator 监听
+service 和 pod 的生命周期来完成注册，但这种方式存在可用性问题：pod
+销毁时 operator 未及时通知 MeshRegistry，Consumer
+侧还会继续转发流量。</p></li>
+<li><p>在 Dubbo 配置中增加 service 信息，扩展的 register 组件从 Dubbo
+配置中读取后进行注册</p>
+<p>Dubbo 存在 application 概念，可以利用这个概念，将其等同于
+service，不需要改造 Dubbo 即可实现：</p>
+<pre><code>&lt;dubbo:application name=&quot;demo-srv&quot; /&gt;
+
+&lt;dubbo:service
+        class=&quot;org.apache.dubbo.samples.impl.DemoServiceImpl&quot;
+        interface=&quot;org.apache.dubbo.samples.api.DemoService&quot;
+        registry=&quot;mesh-registry&quot;
+        application=&quot;demo-srv&quot;/&gt;
+</code></pre>
+<p>上面的配置定义了一个 <dubbo:application />，name 设定为
+<code>demo-srv</code> ，然后定义了一个 dubbo:service，引用
+<code>demo-srv</code> 。 我们可以在 register 扩展插件中将
+<code>demo-srv</code> 属性提取出来，注册到 MeshRegistry 中。</p>
+<p>这样，我们便可再定义一个 <code>demo-srv</code> 的 kubernetes
+service，即可在两个服务注册中心记录下足够的对应信息。</p></li>
+</ol>
+<p>这两种方案各有利弊，对用户来说，第 2 种方案更容易理解，并且 Dubbo
+内部的细节不需要暴露到外部管理流程中，是比较好的方案。</p>
+<h3 id="客户端consumer服务发现">客户端（Consumer）服务发现</h3>
+<p>客户端会进行两级服务发现：在 Dubbo 内将 interface 映射为
+service，Dubbo 再访问 service 被 sidecar 拦截，完成最后
+<code>service-&gt;address</code> 映射。</p>
+<p>服务发现扩展（discover）中完成
+<code>api(interface)-&gt;service</code> 的映射动作后，需要通过 cluster
+扩展，将其目的地址修改为 service。 在这里，我们可以借助 kube-DNS 完成
+service 的 IP 地址转换，而不需要在 cluster 中手动解析。</p>
+<p>下面是 Consumer 侧可能的配置：</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode xml"><code class="sourceCode xml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">dubbo:registry</span><span class="ot"> id=</span><span class="st">&quot;mesh-registry&quot;</span><span class="ot"> address=</span><span class="st">&quot;mesh://${etcd3.address:127.0.0.1}:2379&quot;</span><span class="ot"> register=</span><span class="st">&quot;false&quot;</span> /&gt;</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>&lt;<span class="kw">dubbo:reference</span><span class="ot"> id=</span><span class="st">&quot;demoService&quot;</span><span class="ot"> registry=</span><span class="st">&quot;mesh-registry&quot;</span><span class="ot"> cluster=</span><span class="st">&quot;sidecar&quot;</span><span class="ot"> scope=</span><span class="st">&quot;remote&quot;</span><span class="ot"> check=</span><span class="st">&quot;true&quot;</span><span class="ot"> interface=</span><span class="st">&quot;org.apache.dubbo.samples.api.DemoService&quot;</span> /&gt;</span></code></pre></div>
+<p>我们增加了一种类型为 mesh 的服务发现扩展（ <code>mesh://...</code>
+），同时增加了一种称为 <code>sidecar</code> 的 cluster
+类型，引用的服务接口通过
+<code>interface="org.apache.dubbo.samples.api.DemoService"</code>
+指定。通过这些配置，Consumer 业务代码不需要做什么改造即可接入。</p>
+<h3 id="模块组件">模块组件</h3>
+<ol type="1">
+<li>服务注册/发现组件（RegistryMesh），供 Consumer 和 Provider
+使用。</li>
+<li>Cluster 组件（sidecar），供客户端使用；</li>
+</ol>
+<p>两个组件都是对 Dubbo 的扩展，使用 Java 开发，用户不需要修改已有的
+Dubbo
+框架，只需要引用这些扩展组件。为了保持易用性，需要长期进行维护，甚至与社区合作，将其纳入官方库。</p>
+<h2 id="社区发展">社区发展</h2>
+<p>Dubbo 3.0 也在进行升级改造，核心是将 interface 级别的服务发现控制在
+Dubbo 内部，提供 App 概念来更好地适配云原生生态（app
+概念等同于本文中描述的 service 概念）。
+社区方案中要解决的核心问题也是完成 <code>interface-&gt;app</code>
+映射，计划通过实例间协商完成（社区称之为自省）。 这个方案将改造 registry
+模型，但对上层业务代码没有影响，与 Istio
+结合同样还会遇到注册模型的差异问题。本文提出融合方案与社区发展没有冲突。</p>
+<h2 id="参考资料">参考资料</h2>
+<p>Dubbo 迈出云原生重要一步：应用级服务发现解析
+https://www.infoq.cn/article/GUvBbu5Mbv5uXfj1lLrL</p></div>
+   
+            <!-- -->
+          </article>
+        </div>
+      </main>
+    </div>
+    <footer class="md-footer">
+      <div class="md-grid">
+        <div class="md-footer-meta md-typeset">
+          <p class="md-footer-meta__inner">
+            <span>© 2023 </span>
+            <span>
+              Powered by
+              <a href="https://shakebuild.com/" rel="noopener" target="_blank">Shake</a>
+            </span>
+          </p>
+        </div>
+      </div>
+    </footer>
+    <!-- -->
+      </body>
+</html>

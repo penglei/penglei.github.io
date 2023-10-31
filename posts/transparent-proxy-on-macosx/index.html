@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="renderer" content="webkit" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec" />
+    
+    <meta name="generator" content="" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <!-- <link rel="stylesheet" href=""> -->
+    
+    <meta name="author" content="penglei" />
+    <title>YByte — macOS 全局透明代理</title>
+    <link rel="stylesheet" type="text/css" href="/assets/css/site.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦥</text></svg>"
+    />
+    <script src="/assets/script/theme.js"></script>
+    <!-- * -->
+    <!-- * -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/assets/css/asciidoctor/css/asciidoctor.css"
+    />
+  </head>
+  <body data-md-color-primary="deep-purple" data-md-color-accent="deep-purple"
+> <header class="md-header md-header--shadow">
+  <nav class="md-header__inner md-grid">
+    <div class="logo">
+      <a href="/" accesskey="h">YByte</a>
+    </div>
+    <div class="md-header__placeholder"></div>
+    <ul class="md-tabs__list">
+      <li
+        class="md-tabs__item "
+      >
+        <a href="/archive" class="md-tabs__link">Archive</a>
+      </li>
+      <li
+        class="md-tabs__item "
+      >
+        <a href="/tags" class="md-tabs__link">Tags</a>
+      </li>
+      <li
+        class="md-tabs__item "
+      >
+        <a href="/about" class="md-tabs__link">About</a>
+      </li>
+    </ul>
+    <div class="md-header__option">
+      <div id="toggle-theme" class="md-icon">
+        <a href="#" title="Light mode" class="light-mode">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>        </a>
+        <a href="#" title="Dark mode" class="dark-mode">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>        </a>
+        <a href="#" title="System preference" class="system-mode">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 2c-1.79 1.15-3 3.18-3 5.5s1.21 4.35 3.03 5.5C4.46 13 2 10.54 2 7.5A5.5 5.5 0 0 1 7.5 2m11.57 1.5 1.43 1.43L4.93 20.5 3.5 19.07 19.07 3.5m-6.18 2.43L11.41 5 9.97 6l.42-1.7L9 3.24l1.75-.12.58-1.65L12 3.1l1.73.03-1.35 1.13.51 1.67m-3.3 3.61-1.16-.73-1.12.78.34-1.32-1.09-.83 1.36-.09.45-1.29.51 1.27 1.36.03-1.05.87.4 1.31M19 13.5a5.5 5.5 0 0 1-5.5 5.5c-1.22 0-2.35-.4-3.26-1.07l7.69-7.69c.67.91 1.07 2.04 1.07 3.26m-4.4 6.58 2.77-1.15-.24 3.35-2.53-2.2m4.33-2.7 1.15-2.77 2.2 2.54-3.35.23m1.15-4.96-1.14-2.78 3.34.24-2.2 2.54M9.63 18.93l2.77 1.15-2.53 2.19-.24-3.34Z"/></svg>        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+    <!-- -->
+    
+    <div class="md-container">
+      <main class="md-main">
+        <div class="md-main__inner md-grid">
+          <article class="post-single md-typeset">
+            <header class="post-header">
+              <h1 class="post-title">macOS 全局透明代理</h1>
+              <div class="post-meta">
+                <span>2019-02-17</span>
+                <p class="meta-tags">
+                  <a href="/tags/macOS/" target="_blank"> macOS </a>
+                  <a href="/tags/pf/" target="_blank"> pf </a>
+                  <a href="/tags/redsocks2/" target="_blank"> redsocks2 </a>
+                  <a href="/tags/socks5/" target="_blank"> socks5 </a>
+                </p>
+              </div>
+            </header>
+            
+            <!-- -->
+            <div class="post-content doc"><div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<nav id="TableOfContents"><ul class="sectlevel1">
+<li><a href="#_关于代理">关于代理</a></li>
+<li><a href="#architecture">方案架构</a></li>
+<li><a href="#_详细流程">详细流程</a>
+<ul class="sectlevel2">
+<li><a href="#_a_配置pf_conf">A. 配置pf.conf</a></li>
+<li><a href="#_b_创建直连ip白名单文件">B. 创建直连IP白名单文件</a></li>
+<li><a href="#_c_配置redsocks">C. 配置redsocks</a></li>
+<li><a href="#_d_编译安装redsocks">D. 编译安装redsocks</a></li>
+<li><a href="#_e_安装配置socks5服务">E. 安装配置SOCKS5服务</a></li>
+<li><a href="#_f_运行服务">F. 运行服务</a></li>
+</ul>
+</li>
+<li><a href="#_总结">总结</a></li>
+<li><a href="#_references">References</a></li>
+</ul></nav>
+</div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>我厂办公环境只能通过「HTTP代理」连接外网，作为程序猿，MacBook上有形形色色需要连接外网的软件，
+这些软件支持的代理协议、代理的设置方式可能都有所不同，给这些软件设置代理成为了一件繁琐的事情。
+下班离开公司，MacBook网络环境改变，可能还需要切换或取消公司的代理设置，这极大地增加了程序猿的心智负担。
+因此我一直想寻求灵活统一的全局代理设置方式，这中间尝试过 <code>Proxifier</code> 、 <code>proxychains</code> 等，但并不满意。
+想到Linux通过iptables实现科学上网的透明代理非常容易，研究了一下macOS的包过滤机制，
+发现 <a href="https://www.openbsd.org/faq/pf/" target="_blank" rel="noopener">pf</a> 可以实现类似的方案，因此分享一下。如果您不了解 <code>pf</code> ，
+可以通过执行 <code>man pf.conf</code> 或查看Murus的 <a href="https://murusfirewall.com/Documentation/OS%20X%20PF%20Manual.pdf" target="_blank" rel="noopener">macOS pf手册</a> 进行学习。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_关于代理"><a class="anchor" href="#_关于代理"></a><a class="link" href="#_关于代理">关于代理</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>比较流行的代理协议有 <code>SOCKS5</code> 和 <code>HTTP</code> ，不同的软件对代理的支持没有统一的标准：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>大部软件支持 <code>HTTP</code> 代理，一般可以通过 <code>HTTP_PROXY</code> 环境变量进行设置；</p>
+</li>
+<li>
+<p>有些软件不支持代理，或者只支持 <code>SOCKS5</code> 或 <code>HTTP</code> 代理中的一种；</p>
+</li>
+<li>
+<p>虚拟机常常需要在 guest os 里面设置代理，host 上的代理配置并没有什么作用；</p>
+</li>
+<li>
+<p>&#8230;&#8203; 其它奇奇怪怪的场景</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>显示地在应用程序中设置代理非常繁琐，与此对应，如果在系统层面统一设置代理，让应用程序不需要感知代理的存在，则非常自然友好，我们常常将后者称为透明代理(<code>Transparent Proxy</code>)。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="architecture"><a class="anchor" href="#architecture"></a><a class="link" href="#architecture">方案架构</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>我们希望在应用程序访问目标地址(eg: 1.2.3.4)时，<code>pf</code> 劫持流量，将其转发到本地透明代理上，透明代理再连接远端代理服务器，进而访问到目标地址。</p>
+</div>
+<div class="paragraph">
+<p>架构示意图：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">.........................macOS............................
+.                (userspace)                             .
+.                                 127.0.0.1:12345        .
+. +----------+                  +------------------+     .  +---------------+
+. |   APP    |                  | transprant proxy +-------&gt;| socks5 server +---&gt;outside world
+. +----------+                  +------------------+     .  +---------------+    (eg: 1.2.3.4)
+.      | eg: 1.2.3.4                      ^              .
++======|==================================|===============
+.      |        (kernel space)            |              .
+.      |                        pf rdr    |              .
+.      |                      +-----------+              .
+.      v                      |                          .
+.  +----+--+               +--+--+                       .
+.  |  en0  +--------------&gt;| lo0 |                       .
+.  +-------+  pf route-to  +-----+                       .
+.                                                        .
+..........................................................</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>透明代理使用SOCKS5服务器作为它的上游服务器，同时 <code>transparent proxy</code> 连接 <code>socks5 server</code> 一般也是需要经过 <code>en0</code> 接口，图中并没有画出。</p>
+</div>
+<div class="paragraph">
+<p>不像iptables redirect可以配置在OUTPUT链中，pf <strong>rdr-to</strong> 只对ingress流量起作用，如果想要把本机的egress流量劫持到透明代理上，需要将其路由到另一个interface，转变为后者的ingress流量，再利用 <strong>rdr-to</strong> 进行流量转发(在这里我们利用了本地lo0)。</p>
+</div>
+<div class="listingblock">
+<div class="title">pf rules:</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-pf" data-lang="pf">rdr pass on lo0 proto tcp from any to 1.2.3.4 -&gt; 127.0.0.1 port 12345
+pass out route-to (lo0 127.0.0.1) proto tcp from any to 1.2.3.4</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>第一条规则 <strong>rdr</strong> 表示将进入lo0、协议为TCP、任何来源、目的地址是1.2.3.4的流量转发到 <code>127.0.0.01:12456</code> ；</p>
+</li>
+<li>
+<p>第二条规则 <strong>route-to</strong> 表示将从本地任何地址(一台设备可能有多个IP地址)访问1.2.3.4的TCP流量路由到另一个地址(这里是lo0 127.0.0.1)；</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>当然，这个方案其实有一些缺陷：</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>未考虑IPv6；</p>
+</li>
+<li>
+<p>只支持TCP协议；</p>
+</li>
+<li>
+<p>DNS 污染问题需要单独解决；</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>前面两个问题目前影响不大，但第3个问题却会影响日常使用，将来我会在本文中补充一下我的解决方案。</p>
+</div>
+<div class="paragraph">
+<p>从前面的示意图中可以看出，透明代理的核心思路非常简单，如果看到这里您已经明白如何去实现透明代理，可以不用再看下文的啰嗦流程。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_详细流程"><a class="anchor" href="#_详细流程"></a><a class="link" href="#_详细流程">详细流程</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>现实世界总是要复杂一点，透明代理还有一些细节问题需要解决：</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>需要考虑哪些流量需要经过代理？ (访问代理服务器的流量不能再走代理)</p>
+</li>
+<li>
+<p>透明代理用什么程序实现？</p>
+</li>
+<li>
+<p>由于某些原因，本机可能不能直接连接远端SOCKS5代理服务器，如何处理？</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>更真实的架构：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">..............................macOS..............................
+.                                                               .
+. +----------+                                                  .
+. |   APP    |                                                  .
+. +----------+                             127.0.0.1:12345      .
+.      | eg: 1.2.3.4            pf rdr-to  +------------------+ .
+.      |                      +-----------&gt;|     redsocks     | .
+.      v                      |            +---------+--------+ .
+.  +----+--+               +--+--+                   |          .
+.  |  en0  +--------------&gt;| lo0 |                   |          .
+.  +-------+  pf route-to  +-----+                   |          .
+.                                                    v          .
+.                                          127.0.0.1:29090      .
+.                                          +------------------+ .   +---------------+
+.                                          |     ss-local     +----&gt;|  ss-server    +---&gt;outside world
+.                                          +------------------+ .   +---------------+    (eg: 1.2.3.4)
+.                                                               .   SERVER_IP:PORT
+.................................................................</pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_a_配置pf_conf"><a class="anchor" href="#_a_配置pf_conf"></a><a class="link" href="#_a_配置pf_conf">A. 配置pf.conf</a></h3>
+<div class="paragraph">
+<p>我习惯使用系统默认位置的配置文件，直接编辑 <code>/etc/pf.conf</code> (默认需要root权限)，按如下进行配置：</p>
+</div>
+<div class="listingblock copy">
+<div class="title">/etc/pf.conf</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-pf" data-lang="pf">scrub-anchor "com.apple/*"
+
+table &lt;direct_cidr&gt; persist file "/opt/etc/direct_cidr.txt" //<b class="conum">(1)</b>
+
+nat-anchor "com.apple/*"
+
+rdr-anchor "com.apple/*"
+rdr pass on lo0 proto tcp from any to !&lt;direct_cidr&gt; -&gt; 127.0.0.1 port 12345 //<b class="conum">(3)</b>
+
+pass out route-to (lo0 127.0.0.1) proto tcp from any to !&lt;direct_cidr&gt; //<b class="conum">(2)</b>
+
+dummynet-anchor "com.apple/*"
+
+anchor "com.apple/*"
+load anchor "com.apple" from "/etc/pf.anchors/com.apple"</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>加载直接连接的IP白名单，存入 <code>direct_cidr</code> 表中；</p>
+</li>
+<li>
+<p>将所有非直连的流量路由到本地lo0接口上；</p>
+</li>
+<li>
+<p>对于 <strong>进入</strong> lo0接口的流量，如果是目标地址是非直连IP，转发到本地透明代理(127.0.0.1:12345)；</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_b_创建直连ip白名单文件"><a class="anchor" href="#_b_创建直连ip白名单文件"></a><a class="link" href="#_b_创建直连ip白名单文件">B. 创建直连IP白名单文件</a></h3>
+<div class="paragraph">
+<p>前面的配置文件 <code>/etc/pf.conf</code> 使用pf的table语法引用了直连IP白名单文件，需要自行创建该文件：</p>
+</div>
+<div class="listingblock copy">
+<div class="title">/opt/etc/direct_cidr.txt</div>
+<div class="content">
+<pre class="highlight nowrap"><code># lan
+192.31.196.0/24
+192.52.193.0/24
+127.0.0.0/8
+192.175.48.0/24
+192.0.0.0/24
+198.18.0.0/15
+203.0.113.0/24
+100.64.0.0/10
+240.0.0.0/4
+0.0.0.0/8
+192.88.99.0/24
+172.16.0.0/12
+192.168.0.0/16
+198.51.100.0/24
+255.255.255.255
+192.0.2.0/24
+169.254.0.0/16
+224.0.0.0/4
+10.0.0.0/8
+
+# put your proxy server here
+# eg: 35.x.x.x //<b class="conum">(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>需要将你的远端服务器地址加入IP直连白名单</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_c_配置redsocks"><a class="anchor" href="#_c_配置redsocks"></a><a class="link" href="#_c_配置redsocks">C. 配置redsocks</a></h3>
+<div class="paragraph">
+<p>redsocks监听 <code>127.0.0.1:12345</code> 地址，将流量转发到本地的 <code>127.0.0.1:29090</code> (SOCKS5代理服务器)</p>
+</div>
+<div class="listingblock copy">
+<div class="title">/opt/etc/redsocks.conf</div>
+<div class="content">
+<pre class="highlight nowrap"><code>base {
+  log_debug = off;
+  log_info = on;
+  daemon = off;
+  redirector = pf;
+}
+
+redsocks {
+  local_ip = 127.0.0.1;
+  local_port = 12345;
+  ip = 127.0.0.1;
+  port = 29090;
+  type = socks5;
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_d_编译安装redsocks"><a class="anchor" href="#_d_编译安装redsocks"></a><a class="link" href="#_d_编译安装redsocks">D. 编译安装redsocks</a></h3>
+<div class="paragraph">
+<p>原版redsocks年久失修，对新版macOS支持并不好，有网友fork之后进行了修正将其命名为redsocks2，但是对于最新的macOS编译还是有一点小问题，因此我又进行了一次fork，但不保证以后是否能正常编译。</p>
+</div>
+<div class="paragraph">
+<p>编译redsocks2，将其安装到 <code>/opt/bin/redsocks</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-shell" data-lang="shell">$ mkdir -p /opt/bin
+$ git clone https://github.com/penglei/redsocks.git redsocks2.git &amp;&amp; cd redsocks2.git &amp;&amp; make OSX_VERSION=master
+$ mv redsocks2 /opt/bin/redsocks</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_e_安装配置socks5服务"><a class="anchor" href="#_e_安装配置socks5服务"></a><a class="link" href="#_e_安装配置socks5服务">E. 安装配置SOCKS5服务</a></h3>
+<div class="paragraph">
+<p>这个步骤有很多方法，比如 ssh -L 建立SOCKS5代理，或者使用ss, v2ray等等软件都可以，相信大部分人都知道应该怎么做。
+需要注意的是SOCKS5服务监听地址是 <code>127.0.0.1:29090</code> ，redsocks的配置指明了将流量转发到该地址。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_f_运行服务"><a class="anchor" href="#_f_运行服务"></a><a class="link" href="#_f_运行服务">F. 运行服务</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>SOCKS5 服务需要根据自己的实际情况运行；</p>
+</li>
+<li>
+<p>redsocks通过访问 <code>/dev/pf</code> 来获取连接的原始目标地址，因此需要 <code>root</code> 权限来运行:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-shell" data-lang="shell">$ sudo su -
+Password:
+root# /opt/bin/redsocks -c /opt/etc/redsocks.conf</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>配置pf同样需要 <code>root</code> 权限，创建一个新的terminal窗口运行:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-shell" data-lang="shell">$ sudo su -
+Password:
+root#  sysctl -w net.inet.ip.forwarding=1 //<b class="conum">(1)</b>
+net.inet.ip.forwarding: 1 -&gt; 1
+root#  pfctl -e                           //<b class="conum">(2)</b>
+...
+pf enabled
+root#  pfctl -F all                       //<b class="conum">(3)</b>
+root#  pfctl -f /etc/pf.conf              //<b class="conum">(4)</b>
+pfctl: Use of -f option, could result in flushing of rules
+present in the main ruleset added by the system at startup.
+...
+ALTQ related functions disabled</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>开启IP转发功能</p>
+</li>
+<li>
+<p>开启pf(默认是关闭的)</p>
+</li>
+<li>
+<p>清空所有配置</p>
+</li>
+<li>
+<p>加载配置文件</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>如果想停止使用透明代理访问，禁用pf(<code>sudo pf -d</code>)或者清空pf规则(<code>sudo pf -F all</code>)即可。</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>服务运行之后，我们的macOS就已经有了透明代理的功能，
+运行curl来验证一下:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-console" data-lang="console">$ curl -I https://www.google.com --resolve 'www.google.com:443:216.58.200.36'
+HTTP/2 302
+location: https://www.google.com.hk/url?sa=p&amp;hl=zh-CN&amp;pref=hkredirect&amp;pval=yes&amp;q=https://www.google.com.hk/&amp;ust=1550640983822937&amp;usg=AOvVaw3PnKH6XFhOkLB56FH7sVHc
+cache-control: private
+content-type: text/html; charset=UTF-8
+p3p: CP="This is not a P3P policy! See g.co/p3phelp for more info."
+date: Wed, 20 Feb 2019 05:35:53 GMT
+server: gws
+content-length: 372
+x-xss-protection: 1; mode=block
+x-frame-options: SAMEORIGIN
+set-cookie: 1P_JAR=2019-02-20-05; expires=Fri, 22-Mar-2019 05:35:53 GMT; path=/; domain=.google.com
+set-cookie: NID=160=U44fC0UHxupm7ClkYUGknQQR8gT8JmqDIhrL3VDquqo6wFketgeSCqBEgNHea2cClfa8pyYwo1u2X44uU7vIaEd5Bxeoakgtwq0aauu5Kzv5hX0N65TNmPH7LYTaESyQAT5lVMSu_RO9JarbeukX2oNoVBL_y3q0d8sty2_u7eU; expires=Thu, 22-Aug-2019 05:35:53 GMT; path=/; domain=.google.com; HttpOnly
+alt-svc: quic=":443"; ma=2592000; v="44,43,39"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Good. It works!</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_总结"><a class="anchor" href="#_总结"></a><a class="link" href="#_总结">总结</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>对于普通用户，这个方法太过折腾，其维护成本高，带来的收益却不明显，甚至还需要解决DNS的问题，
+不如在chrome里面通过SwitchyOmega配置SOCKS5代理来得方便，所以并不推荐普通用户使用。
+如果您像我一样爱偷懒，这个方法倒是可能有一些帮助。</p>
+</div>
+<div class="paragraph">
+<p>最后，我厂只能通过HTTP代理访问外网怎么办呢？ 最简单的方法把HTTP代理转发成SOCKS5代理，<code>goproxy</code> 可以做到，
+我是通过HTTP代理连接另一台外网server来实现SOCKS5代理的，但这方法不具有通用性，就不再赘述。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_references"><a class="anchor" href="#_references"></a><a class="link" href="#_references">References</a></h2>
+<div class="sectionbody">
+<div class="ulist bibliography">
+<ul class="bibliography">
+<li>
+<p><a href="https://www.zfl9.com/ss-redir.html" class="bare" target="_blank" rel="noopener">https://www.zfl9.com/ss-redir.html</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div></div>
+          </article>
+        </div>
+      </main>
+    </div>
+    <footer class="md-footer">
+      <div class="md-grid">
+        <div class="md-footer-meta md-typeset">
+          <p class="md-footer-meta__inner">
+            <span>© 2023 </span>
+            <span>
+              Powered by
+              <a href="https://shakebuild.com/" rel="noopener" target="_blank">Shake</a>
+            </span>
+          </p>
+        </div>
+      </div>
+    </footer>
+    <!-- -->
+      </body>
+</html>
