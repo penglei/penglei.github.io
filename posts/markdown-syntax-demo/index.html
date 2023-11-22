@@ -15,7 +15,7 @@
     <!-- <link rel="stylesheet" href=""> -->
     
     <meta name="author" content="penglei" />
-    <title>YByte — github-flavored markdown syntax</title>
+    <title>YByte — markdown syntax demo</title>
     <link rel="stylesheet" type="text/css" href="/assets/css/site.css" />
     <link
       rel="icon"
@@ -71,7 +71,7 @@
         <div class="md-main__inner md-grid">
           <article class="post-single md-typeset">
             <header class="post-header">
-              <h1 class="post-title">github-flavored markdown syntax</h1>
+              <h1 class="post-title">markdown syntax demo</h1>
               <div class="post-meta">
                 <span>2023-10-19</span>
                 <p class="meta-tags">
@@ -83,12 +83,24 @@
             <span class="details">Table of Contents</span>
         </summary> 
         <nav class="inner"><ul>
-<li><a href="#math" id="toc-math">math</a></li>
-<li><a href="#code-block" id="toc-code-block">code block</a></li>
-<li><a href="#table" id="toc-table">table</a></li>
+<li><a href="#math" id="toc-math">Math</a></li>
+<li><a href="#footnotscitation"
+id="toc-footnotscitation">Footnots,Citation</a></li>
+<li><a href="#code-block" id="toc-code-block">Code block</a></li>
+<li><a href="#table" id="toc-table">Table</a></li>
+<li><a href="#alerts-todo" id="toc-alerts-todo">Alerts (TODO)</a></li>
+<li><a href="#quoting-text" id="toc-quoting-text">Quoting text</a></li>
+<li><a href="#using-emoji-todo" id="toc-using-emoji-todo">Using emoji
+(TODO)</a></li>
+<li><a href="#definitions" id="toc-definitions">Definitions</a></li>
+<li><a href="#task-list-items" id="toc-task-list-items">Task list
+items</a></li>
 </ul></nav>
       </div>
-      <div class="post-content"><h2 id="math">math</h2>
+      <div class="post-content"><hr />
+<p>See <a href="https://pandoc.org/MANUAL.html#pandocs-markdown"
+class="uri">https://pandoc.org/MANUAL.html#pandocs-markdown</a></p>
+<h2 id="math">Math</h2>
 <p>一元二次方程求解公式</p>
 <p>如果<span class="math inline"><em>a</em> ≠ 0</span>, 方程 <span
 class="math inline">(<em>a</em><em>x</em><sup>2</sup>+<em>b</em><em>x</em>+<em>c</em>=0)</span>
@@ -99,7 +111,15 @@ $$</span></p>
 <pre><code>```math
 x = {-b \pm \sqrt{b^2-4ac} \over 2a}
 ```</code></pre>
-<h2 id="code-block">code block</h2>
+<h2 id="footnotscitation">Footnots,Citation</h2>
+<p>Here is a simple footnote<a href="#fn1" class="footnote-ref"
+id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<p>A footnote can also have multiple lines<a href="#fn2"
+class="footnote-ref" id="fnref2"
+role="doc-noteref"><sup>2</sup></a>.</p>
+<p><a href="https://pandoc.org/MANUAL.html#citation-syntax"
+class="uri">https://pandoc.org/MANUAL.html#citation-syntax</a></p>
+<h2 id="code-block">Code block</h2>
 <div class="sourceCode" id="cb2"><pre
 class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Document</span> <span class="ot">=</span> <span class="dt">Document</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  {<span class="ot"> docExt ::</span> <span class="dt">Maybe</span> <span class="dt">String</span>,</span>
@@ -113,7 +133,12 @@ class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a 
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">deriving</span> (<span class="dt">Show</span>, <span class="dt">Generic</span>)</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">deriving</span> (<span class="dt">FromJSON</span>, <span class="dt">ToJSON</span>) via <span class="dt">PrefixedSnake</span> <span class="st">&quot;doc&quot;</span> <span class="dt">Document</span></span></code></pre></div>
-<h2 id="table">table</h2>
+<p>fenced code attribute</p>
+<div class="sourceCode" id="mycode" data-startFrom="100"><pre
+class="sourceCode numberSource haskell numberLines"><code class="sourceCode haskell" style="counter-reset: source-line 99;"><span id="mycode-100"><a href="#mycode-100"></a>qsort []     <span class="ot">=</span> []</span>
+<span id="mycode-101"><a href="#mycode-101"></a>qsort (x<span class="op">:</span>xs) <span class="ot">=</span> qsort (<span class="fu">filter</span> (<span class="op">&lt;</span> x) xs) <span class="op">++</span> [x] <span class="op">++</span></span>
+<span id="mycode-102"><a href="#mycode-102"></a>               qsort (<span class="fu">filter</span> (<span class="op">&gt;=</span> x) xs)</span></code></pre></div>
+<h2 id="table">Table</h2>
 <div class="sourceCode" id="cb3"><pre class="sourceCode md"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>| <span class="dv">&amp;nbsp;</span>                       | Sites                               | <span class="dv">&amp;nbsp;</span>                              |</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>| ---------------------------- | ----------------------------------- | ----------------------------------- |</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>| <span class="co">[</span><span class="ot">Github</span><span class="co">](https://github.com)</span> | <span class="co">[</span><span class="ot">Koka</span><span class="co">](https://koka-lang.github.io)</span> | <span class="co">[</span><span class="ot">Haskell</span><span class="co">](https://www.haskell.org/)</span> |</span></code></pre></div>
@@ -137,7 +162,67 @@ class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a 
 <td><a href="https://www.haskell.org/">Haskell</a></td>
 </tr>
 </tbody>
-</table></div>
+</table>
+<h2 id="alerts-todo">Alerts (TODO)</h2>
+<blockquote>
+<p>[!NOTE] Highlights information that users should take into account,
+even when skimming.</p>
+</blockquote>
+<h2 id="quoting-text">Quoting text</h2>
+<p>Text that is not a quote</p>
+<blockquote>
+<p>Text that is a quote</p>
+</blockquote>
+<h2 id="using-emoji-todo">Using emoji (TODO)</h2>
+<p><span class="citation" data-cites="octocat">@octocat</span> :+1: This
+PR looks great - it’s ready to merge! :shipit:</p>
+<h2 id="definitions">Definitions</h2>
+<dl>
+<dt>Term 1</dt>
+<dd>
+<p>Definition 1</p>
+</dd>
+<dt>Term 2 with <em>inline markup</em></dt>
+<dd>
+<p>Definition 2</p>
+<pre><code>{ some code, part of Definition 2 }</code></pre>
+<p>Third paragraph of definition 2.</p>
+</dd>
+</dl>
+<p><a href="https://pandoc.org/MANUAL.html#definition-lists"
+class="uri">https://pandoc.org/MANUAL.html#definition-lists</a></p>
+<h2 id="task-list-items">Task list items</h2>
+<dl>
+<dt>example1</dt>
+<dd>
+<ul class="task-list">
+<li><input type="checkbox" />foo</li>
+<li><input type="checkbox" checked="" />bar</li>
+</ul>
+</dd>
+<dt>example2</dt>
+<dd>
+<ul class="task-list">
+<li><input type="checkbox" checked="" />foo
+<ul class="task-list">
+<li><input type="checkbox" />bar</li>
+<li><input type="checkbox" checked="" />baz</li>
+</ul></li>
+<li><input type="checkbox" />bim</li>
+</ul>
+</dd>
+</dl>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>My reference.<a href="#fnref1" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>To add line breaks within a footnote, prefix new lines
+with 2 spaces. This is a second line.<a href="#fnref2"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div>
    
             <!-- -->
           </article>
@@ -149,10 +234,7 @@ class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a 
         <div class="md-footer-meta md-typeset">
           <p class="md-footer-meta__inner">
             <span>© 2023 </span>
-            <span>
-              Powered by
-              <a href="https://shakebuild.com/" rel="noopener" target="_blank">Shake</a>
-            </span>
+            <span> All rights reserved </span>
           </p>
         </div>
       </div>

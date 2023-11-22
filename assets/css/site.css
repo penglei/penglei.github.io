@@ -1876,6 +1876,11 @@ html .md-footer-meta.md-typeset a:focus,html .md-footer-meta.md-typeset a:hover 
   color: var(--md-default-fg-color--lightest);
 }
 
+.terms-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
 .terms-tags li {
   display: inline-block;
   margin-left: 0.5em;
@@ -1890,4 +1895,19 @@ html .md-footer-meta.md-typeset a:focus,html .md-footer-meta.md-typeset a:hover 
   background: var(--md-default-bg-color--light);
   border-radius: 6px;
   transition: transform 0.1s;
+}
+
+[data-md-color-scheme=dracula] .md-typeset table:not([class]) {
+  box-shadow: var(--md-shadow-z2);
+}
+[data-md-color-scheme=dracula] .md-typeset table:not([class]) tr:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+[data-md-color-scheme=dracula] .md-typeset table:not([class]) th {
+  color: var(--md-text-color);
+  background-color: var(--md-default-bg-color--ultra-dark);
+  border-bottom: 0.05rem solid var(--md-primary-fg-color);
+}
+[data-md-color-scheme=dracula] .md-typeset table:not([class]) td {
+  border-top: 0.05rem solid var(--md-default-fg-color--lighter);
 }

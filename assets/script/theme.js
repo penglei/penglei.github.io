@@ -56,7 +56,7 @@
 
   observer.observe(document.querySelector("html"), { childList: true });
 
-  function toggleScheme() {
+  function toggleScheme(e) {
     const body = document.querySelector("body");
     const preferSupported =
       window.matchMedia("(prefers-color-scheme)").media !== "not all";
@@ -80,6 +80,8 @@
     localStorage.setItem("data-md-color-scheme", scheme);
     body.setAttribute("data-md-prefers-color-scheme", prefer);
     body.setAttribute("data-md-color-scheme", scheme);
+    e.stopPropagation();
+    e.preventDefault();
   }
 
   document.addEventListener("DOMContentLoaded", () => {
