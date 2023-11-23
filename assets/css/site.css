@@ -481,7 +481,7 @@ html .md-typeset__table table {
   --md-default-fg-color--light: hsla(0, 0%, 0%, 0.54);
   --md-default-fg-color--lighter: hsla(0, 0%, 0%, 0.32);
   --md-default-fg-color--lightest: hsla(0, 0%, 0%, 0.07);
-  --md-default-bg-color: hsla(0, 0%, 96.1%, 1);
+  --md-default-bg-color: hsla(0, 0%, 100%, 1);
   --md-default-bg-color--light: hsla(0, 0%, 100%, 0.7);
   --md-default-bg-color--lighter: hsla(0, 0%, 100%, 0.3);
   --md-default-bg-color--lightest: hsla(0, 0%, 100%, 0.12);
@@ -619,12 +619,11 @@ html .md-typeset__table table {
   --md-text-color: var(--md-default-fg-color);
   --md-typeset-color: var(--md-default-fg-color);
   --md-admonition-fg-color: var(--md-default-fg-color);
-  /*
-  // Code colors
   --md-code-fg-color: hsl(60, 30%, 96%);
   --md-code-bg-color: hsl(231, 15%, 18%);
   --md-code-title-bg-color: var(--md-default-bg-color--ultra-dark);
   --md-code-inline-bg-color: #323443;
+  /*
   --md-code-hl-operator-color: hsl(326, 100%, 74%);
   --md-code-hl-punctuation-color: hsl(60, 30%, 96%);
   --md-code-hl-string-color: hsl(65, 92%, 76%);
@@ -1895,6 +1894,208 @@ html .md-footer-meta.md-typeset a:focus,html .md-footer-meta.md-typeset a:hover 
   background: var(--md-default-bg-color--light);
   border-radius: 6px;
   transition: transform 0.1s;
+}
+
+.highlight .kc {
+  color: var(--md-code-hl-constant-color);
+}
+.highlight .nc,.highlight .ne {
+  color: var(--md-code-hl-class-color);
+}
+.highlight .mb {
+  color: var(--md-code-hl-number-color);
+}
+.highlight .nb,.highlight .bp {
+  color: var(--md-code-hl-builtin-color);
+}
+.highlight .nn {
+  color: var(--md-code-hl-namespace-color);
+}
+.highlight .na,.highlight .nd,.highlight .ni {
+  color: var(--md-code-hl-entity-color);
+}
+.highlight .nl,.highlight .nt {
+  color: var(--md-code-hl-tag-color);
+}
+
+.md-typeset {
+  /* Allow code to look like code everywhere despite Material's current preference */
+  /* Code that is also a link */
+  /* Don't always like code breaking in table cells */
+  /* Special line number coloring for tables */
+}
+.md-typeset *:not(pre)>code {
+  margin: 0;
+  padding: 0 0.2941176471em;
+  color: var(--md-code-fg-color);
+  background-color: var(--md-code-inline-bg-color);
+  border-radius: 0.1rem;
+  box-shadow: none;
+}
+.md-typeset a>code {
+  color: inherit !important;
+  background-color: var(--md-code-link-bg-color) !important;
+  transition: color 125ms;
+  transition: background-color 125ms;
+  /* If we are linking highlighted, inline code, force it to just look like a code link */
+}
+.md-typeset a>code * {
+  color: var(--md-typeset-a-color) !important;
+}
+.md-typeset a>code:hover {
+  background-color: var(--md-code-link-accent-bg-color) !important;
+}
+.md-typeset a>code:hover * {
+  color: var(--md-accent-fg-color) !important;
+}
+.md-typeset pre>code {
+  outline: none;
+}
+.md-typeset td code {
+  word-break: normal;
+}
+.md-typeset .highlight {
+  /* Needed for tab preserving mode */
+  -moz-tab-size: 8;
+    -o-tab-size: 8;
+       tab-size: 8;
+  /* `pymdownx-inline` mode */
+}
+.md-typeset .highlight+.result {
+  border-width: 0.1rem;
+}
+.md-typeset .highlight [data-linenos] {
+  /* Special line mode coloring */
+}
+.md-typeset .highlight [data-linenos].special::before {
+  background-color: var(--md-code-special-bg-color);
+}
+.md-typeset .highlighttable .linenodiv .special {
+  margin-right: -0.5882352941em;
+  margin-left: -1.1764705882em;
+  padding-right: 0.5882352941em;
+  padding-left: 1.1764705882em;
+  background-color: var(--md-code-special-bg-color);
+}
+.md-typeset .highlight span.filename {
+  position: relative;
+  display: block;
+  margin-top: 1em;
+  padding: 0.5em 1.1764705882em 0.5em 2.9411764706em;
+  font-weight: 700;
+  font-size: 0.68rem;
+  background-color: var(--md-code-title-bg-color);
+  border-top-left-radius: 0.1rem;
+  border-top-right-radius: 0.1rem;
+}
+.md-typeset .highlight span.filename+pre {
+  margin-top: 0;
+}
+.md-typeset .highlight span.filename+pre code {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.md-typeset .highlight span.filename::before {
+  position: absolute;
+  left: 0.8823529412em;
+  width: 1.4705882353em;
+  height: 1.4705882353em;
+  background-color: var(--md-default-fg-color);
+  -webkit-mask-image: svg-load("@mdi/svg/svg/console.svg");
+          mask-image: svg-load("@mdi/svg/svg/console.svg");
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+          mask-size: contain;
+  content: "";
+}
+.md-typeset .collapse-code {
+  position: relative;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+.md-typeset .collapse-code pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.md-typeset .collapse-code input {
+  display: none;
+}
+.md-typeset .collapse-code input~.code-footer {
+  width: 100%;
+  margin: 0;
+  padding: 0.25em 0.5em 0.25em 0em;
+}
+.md-typeset .collapse-code input~.code-footer label {
+  position: relative;
+  margin: 0.05em;
+  padding: 0.15em 0.8em;
+  color: var(--md-primary-bg-color);
+  font-size: 90%;
+  background-color: var(--md-primary-fg-color);
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+          mask-size: contain;
+  border-radius: 0.1rem;
+  cursor: pointer;
+  content: "";
+}
+.md-typeset .collapse-code input~.code-footer label:hover {
+  background-color: var(--md-accent-fg-color);
+}
+.md-typeset .collapse-code input~.code-footer label::before {
+  position: absolute;
+  top: 0.15em;
+  left: 0.15em;
+  display: block;
+  box-sizing: border-box;
+  width: 1.25em;
+  height: 1.25em;
+  background-color: var(--md-primary-bg-color);
+  background-size: 1.25em;
+  content: "";
+}
+.md-typeset .collapse-code input~.code-footer label.expand {
+  display: none;
+}
+.md-typeset .collapse-code input~.code-footer label.expand::before {
+  -webkit-mask-image: svg-load("@mdi/svg/svg/arrow-expand.svg");
+          mask-image: svg-load("@mdi/svg/svg/arrow-expand.svg");
+}
+.md-typeset .collapse-code input~.code-footer label.collapse::before {
+  -webkit-mask-image: svg-load("@mdi/svg/svg/arrow-collapse.svg");
+          mask-image: svg-load("@mdi/svg/svg/arrow-collapse.svg");
+}
+.md-typeset .collapse-code input:checked~.code-footer label.expand {
+  display: inline;
+}
+.md-typeset .collapse-code input:checked~.code-footer label.collapse {
+  display: none;
+}
+.md-typeset .collapse-code input:checked+div.highlight code {
+  max-height: 9.375em;
+  overflow: hidden;
+}
+.md-typeset .collapse-code input:checked~.code-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 2em 0.5em 0.5em 0.8rem;
+  background-image: linear-gradient(to bottom, transparent, var(--md-default-bg-color) 80% 100%);
+}
+@media screen and (max-width: 44.984375em) {
+  .md-typeset>diagram-div {
+    margin-right: -0.8rem;
+    margin-left: -0.8rem;
+  }
+  .md-typeset>.collapse-code {
+    margin-right: -0.8rem;
+    margin-left: -0.8rem;
+  }
+  .md-typeset>.collapse-code label.collapse {
+    left: 0.8rem;
+  }
 }
 
 [data-md-color-scheme=dracula] .md-typeset table:not([class]) {
