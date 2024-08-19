@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="renderer" content="webkit" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec" />
+    
+    <meta name="generator" content="" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <!-- <link rel="stylesheet" href=""> -->
+    
+    <meta name="author" content="penglei" />
+    <title>YByte — neovim 键位配置</title>
+    <link rel="stylesheet" type="text/css" href="/assets/css/site.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦥</text></svg>"
+    />
+    <script src="/assets/script/theme.js"></script>
+    <!-- * -->
+    <!-- <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" /> -->
+    <!-- <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css" /> -->
+    <!-- * -->
+  </head>
+  <body data-md-color-primary="deep-purple" data-md-color-accent="deep-purple"
+> <header class="md-header md-header--shadow">
+  <nav class="md-header__inner md-grid">
+    <div class="logo">
+      <a href="/" accesskey="h">YByte</a>
+    </div>
+    <div class="md-header__placeholder"></div>
+    <ul class="md-tabs__list">
+      <li
+        class="md-tabs__item "
+      >
+        <a href="/archive" class="md-tabs__link">Archive</a>
+      </li>
+      <li
+        class="md-tabs__item "
+      >
+        <a href="/tags" class="md-tabs__link">Tags</a>
+      </li>
+      <li
+        class="md-tabs__item "
+      >
+        <a href="/about" class="md-tabs__link">About</a>
+      </li>
+    </ul>
+    <div class="md-header__option">
+      <div id="toggle-theme" class="md-icon">
+        <a href="#" title="Light mode" class="light-mode">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>        </a>
+        <a href="#" title="Dark mode" class="dark-mode">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>        </a>
+        <a href="#" title="System preference" class="system-mode">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 2c-1.79 1.15-3 3.18-3 5.5s1.21 4.35 3.03 5.5C4.46 13 2 10.54 2 7.5A5.5 5.5 0 0 1 7.5 2m11.57 1.5 1.43 1.43L4.93 20.5 3.5 19.07 19.07 3.5m-6.18 2.43L11.41 5 9.97 6l.42-1.7L9 3.24l1.75-.12.58-1.65L12 3.1l1.73.03-1.35 1.13.51 1.67m-3.3 3.61-1.16-.73-1.12.78.34-1.32-1.09-.83 1.36-.09.45-1.29.51 1.27 1.36.03-1.05.87.4 1.31M19 13.5a5.5 5.5 0 0 1-5.5 5.5c-1.22 0-2.35-.4-3.26-1.07l7.69-7.69c.67.91 1.07 2.04 1.07 3.26m-4.4 6.58 2.77-1.15-.24 3.35-2.53-2.2m4.33-2.7 1.15-2.77 2.2 2.54-3.35.23m1.15-4.96-1.14-2.78 3.34.24-2.2 2.54M9.63 18.93l2.77 1.15-2.53 2.19-.24-3.34Z"/></svg>        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+    <!-- -->
+    
+    <div class="md-container">
+      <main class="md-main">
+        <div class="md-main__inner md-grid">
+          <article class="post-single md-typeset">
+            <header class="post-header">
+              <h1 class="post-title">neovim 键位配置</h1>
+              <div class="post-meta">
+                <span>2024-02-15</span>
+                <p class="meta-tags">
+                </p>
+              </div>
+            </header>
+              <div class="toc" id="toc">
+        <summary id="toctitle">
+            <span class="details">Table of Contents</span>
+        </summary> 
+        <nav class="inner"><ul>
+<li><a href="#默认键位" id="toc-默认键位">默认键位</a>
+<ul>
+<li><a href="#normal-mode" id="toc-normal-mode">normal mode</a>
+<ul>
+<li><a href="#single-key" id="toc-single-key">single Key</a></li>
+<li><a href="#single-key-with-ctrl-modifier-key"
+id="toc-single-key-with-ctrl-modifier-key">single key with ctrl modifier
+key</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#重新设计" id="toc-重新设计">重新设计</a>
+<ul>
+<li><a href="#光标移动" id="toc-光标移动">光标移动</a></li>
+<li><a href="#代码编辑" id="toc-代码编辑">代码编辑</a>
+<ul>
+<li><a href="#注释" id="toc-注释">注释</a></li>
+<li><a href="#删除" id="toc-删除">删除</a></li>
+<li><a href="#替换" id="toc-替换">替换</a></li>
+<li><a href="#text-object-选择" id="toc-text-object-选择">text-object
+选择</a></li>
+</ul></li>
+<li><a href="#全局功能" id="toc-全局功能">全局功能</a></li>
+</ul></li>
+</ul></nav>
+      </div>
+      <div class="post-content"><p>我经常在不同语言的工程中进行编码，一个通用的轻量级编辑器能明显改善编码体验。
+多年以前我以vim作为主力编辑器，但是遇到大一点的工程的时候，vim还是略显疲软，
+各种IDE的辅助功能如代码跳转、结构化视图(symbols)
+等有明显优势，因此一度抛弃了vim，
+只在简单编辑场景下使用。在neovim重塑vim生态，引入lsp之后，代码跳转、补全等功能大大增强，
+重新将vi(neovim)重新作为日常使用的主力编辑器。</p>
+<p>选择vi主要的原因在于它的键位设计让编辑更加高效，对各种编辑操作形成肌肉记忆之后，
+写程序的思路不会因为大脑切换到如何使用编辑工具而中断。
+neovim依赖大量的插件来实现更多功能(尤其是围绕lsp的扩展插件)。这些插件通常都有自己设计的
+键位设置，没有统一的规范，插件之间的键位设计甚至可能存在冲突，这显然不利于”无脑”使用编辑器。
+因此，设计一套自己常用的键位才能更加高效地使用vi这类的编辑器。</p>
+<h1 id="默认键位">默认键位</h1>
+<h2 id="normal-mode">normal mode</h2>
+<h3 id="single-key">single Key</h3>
+<table>
+<colgroup>
+<col style="width: 48%" />
+<col style="width: 51%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>a</td>
+<td>enter inserting mode</td>
+</tr>
+<tr class="even">
+<td>A</td>
+<td>Go to line end and enter inserting mode</td>
+</tr>
+<tr class="odd">
+<td>b,B</td>
+<td>word backward</td>
+</tr>
+<tr class="even">
+<td>c</td>
+<td>delete and enter inserting mode</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>delete to the end of line and enter inserting mode</td>
+</tr>
+<tr class="even">
+<td>d</td>
+<td>enter deleting mode</td>
+</tr>
+<tr class="odd">
+<td>D</td>
+<td>delete to the end of line</td>
+</tr>
+<tr class="even">
+<td>e</td>
+<td>word-motion</td>
+</tr>
+<tr class="odd">
+<td>E</td>
+<td>word-motion(next char)</td>
+</tr>
+<tr class="even">
+<td>f</td>
+<td>forward to the right {char}</td>
+</tr>
+<tr class="odd">
+<td>F</td>
+<td>backward to the right {char}</td>
+</tr>
+<tr class="even">
+<td>g</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>G</td>
+<td>Go to last line</td>
+</tr>
+<tr class="even">
+<td>h</td>
+<td>Move left</td>
+</tr>
+<tr class="odd">
+<td>H</td>
+<td>go to window first line</td>
+</tr>
+<tr class="even">
+<td>i</td>
+<td>enter inserting mode</td>
+</tr>
+<tr class="odd">
+<td>I</td>
+<td>repeat inserting mode</td>
+</tr>
+<tr class="even">
+<td>j</td>
+<td>Move down</td>
+</tr>
+<tr class="odd">
+<td>J</td>
+<td>join lines</td>
+</tr>
+<tr class="even">
+<td>k</td>
+<td>Move up</td>
+</tr>
+<tr class="odd">
+<td>K</td>
+<td>run program under cursor</td>
+</tr>
+<tr class="even">
+<td>l</td>
+<td>Move right</td>
+</tr>
+<tr class="odd">
+<td>L</td>
+<td>go to window last line</td>
+</tr>
+<tr class="even">
+<td>m</td>
+<td>mark</td>
+</tr>
+<tr class="odd">
+<td>M</td>
+<td>go to the middle line of window</td>
+</tr>
+<tr class="even">
+<td>n</td>
+<td>forward next search</td>
+</tr>
+<tr class="odd">
+<td>N</td>
+<td>backward next search</td>
+</tr>
+<tr class="even">
+<td>o</td>
+<td>enter to inserting mode and insert new line below</td>
+</tr>
+<tr class="odd">
+<td>O</td>
+<td>enter to inserting mode and insert new line above</td>
+</tr>
+<tr class="even">
+<td>q</td>
+<td>enter recording mode</td>
+</tr>
+<tr class="odd">
+<td>Q</td>
+<td>repeat recorded register</td>
+</tr>
+<tr class="even">
+<td>r</td>
+<td>replace one character</td>
+</tr>
+<tr class="odd">
+<td>R</td>
+<td>enter replacing mode</td>
+</tr>
+<tr class="even">
+<td>s</td>
+<td>delete one char and enter inserting mode</td>
+</tr>
+<tr class="odd">
+<td>S</td>
+<td>delete entire line and enter inserting mode</td>
+</tr>
+<tr class="even">
+<td>t</td>
+<td>like ‘f’, but to the occurrence left</td>
+</tr>
+<tr class="odd">
+<td>T</td>
+<td>backword ‘t’, to the occurrence right</td>
+</tr>
+<tr class="even">
+<td>u</td>
+<td>undo</td>
+</tr>
+<tr class="odd">
+<td>U</td>
+<td>toggle undo/redo</td>
+</tr>
+<tr class="even">
+<td>v</td>
+<td>visual mode</td>
+</tr>
+<tr class="odd">
+<td>V</td>
+<td>linewise visual mode</td>
+</tr>
+<tr class="even">
+<td>w</td>
+<td>word forward</td>
+</tr>
+<tr class="odd">
+<td>W</td>
+<td>word forward</td>
+</tr>
+<tr class="even">
+<td>x</td>
+<td>delete char</td>
+</tr>
+<tr class="odd">
+<td>X</td>
+<td>backword delete char</td>
+</tr>
+<tr class="even">
+<td>y</td>
+<td>yank</td>
+</tr>
+<tr class="odd">
+<td>Y</td>
+<td>yank n lines, like yy</td>
+</tr>
+<tr class="even">
+<td>z</td>
+<td>fold functional prefix</td>
+</tr>
+<tr class="odd">
+<td>Z</td>
+<td>double Z do exit??</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>go to the first char of the line</td>
+</tr>
+<tr class="odd">
+<td>1-9</td>
+<td>repeat counts prefix</td>
+</tr>
+<tr class="even">
+<td>-</td>
+<td>lines upward, on the first non-blank character</td>
+</tr>
+<tr class="odd">
+<td>@</td>
+<td>Execute the contents of register {0-9a-z”.=<em>+} </em>count*
+times.</td>
+</tr>
+<tr class="even">
+<td>#</td>
+<td>backword search</td>
+</tr>
+<tr class="odd">
+<td>$</td>
+<td>go go to the line end</td>
+</tr>
+<tr class="even">
+<td>%</td>
+<td>Find the next item in this line after or under the cursor and jump
+to its match</td>
+</tr>
+<tr class="odd">
+<td>^</td>
+<td>To the first non-blank character of the line.</td>
+</tr>
+<tr class="even">
+<td>&amp;</td>
+<td>repeat last substitute in current line</td>
+</tr>
+<tr class="odd">
+<td>*</td>
+<td>forward search</td>
+</tr>
+<tr class="even">
+<td>(</td>
+<td><em>count</em> sentences backward. <em>exclusive</em> motion.</td>
+</tr>
+<tr class="odd">
+<td>)</td>
+<td><em>count</em> sentences forward. <em>exclusive</em> motion.</td>
+</tr>
+<tr class="even">
+<td>{</td>
+<td><em>count</em> paragraphs backward. <em>exclusive</em> motion.</td>
+</tr>
+<tr class="odd">
+<td>}</td>
+<td><em>count</em> paragraphs forward. <em>exclusive</em> motion.</td>
+</tr>
+<tr class="even">
+<td>\</td>
+<td>unused</td>
+</tr>
+<tr class="odd">
+<td>:</td>
+<td>enter command-line mode</td>
+</tr>
+<tr class="even">
+<td>;</td>
+<td>Repeat latest f, t, F or T <em>count</em> times.</td>
+</tr>
+<tr class="odd">
+<td>”</td>
+<td>select register</td>
+</tr>
+<tr class="even">
+<td>’</td>
+<td>Jump to the mark {a-z} in the current buffer.</td>
+</tr>
+<tr class="odd">
+<td>,</td>
+<td>unused</td>
+</tr>
+<tr class="even">
+<td>.</td>
+<td>Repeat last change, with count replaced with <em>count</em>.</td>
+</tr>
+<tr class="odd">
+<td>&lt;</td>
+<td>Shift {motion} lines one ‘shiftwidth’ leftwards.</td>
+</tr>
+<tr class="even">
+<td>&gt;</td>
+<td>Shift {motion} lines one ‘shiftwidth’ rightwards.</td>
+</tr>
+<tr class="odd">
+<td>?</td>
+<td>Search backward for the [count]’th previous occurrence of {pattern}
+<em>exclusive</em>.</td>
+</tr>
+<tr class="even">
+<td>/</td>
+<td>Search forward</td>
+</tr>
+</tbody>
+</table>
+<h3 id="single-key-with-ctrl-modifier-key">single key with ctrl modifier
+key</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>a</td>
+<td>number increment</td>
+</tr>
+<tr class="even">
+<td>b</td>
+<td>pages Backwards</td>
+</tr>
+<tr class="odd">
+<td>c</td>
+<td>Interrupt current (search) command</td>
+</tr>
+<tr class="even">
+<td>d</td>
+<td>Scroll window Downwards in the buffer</td>
+</tr>
+<tr class="odd">
+<td>e</td>
+<td>Scroll window lines downwards in the buffer</td>
+</tr>
+<tr class="even">
+<td>f</td>
+<td>Scroll window pages Forwards (downwards)</td>
+</tr>
+<tr class="odd">
+<td>g</td>
+<td>Prints the current file name</td>
+</tr>
+<tr class="even">
+<td>h</td>
+<td>Move left (often remap to move to left window)</td>
+</tr>
+<tr class="odd">
+<td>i</td>
+<td>backword in jumplist</td>
+</tr>
+<tr class="even">
+<td>j</td>
+<td>Move to bottom window</td>
+</tr>
+<tr class="odd">
+<td>k</td>
+<td>Move to up window</td>
+</tr>
+<tr class="even">
+<td>l</td>
+<td>Move to right window</td>
+</tr>
+<tr class="odd">
+<td>m</td>
+<td>lines downward, on the first non-blank character linewise</td>
+</tr>
+<tr class="even">
+<td>n</td>
+<td>lines downward linewise</td>
+</tr>
+<tr class="odd">
+<td>o</td>
+<td>forward in jumplist</td>
+</tr>
+<tr class="even">
+<td>p</td>
+<td>lines upward linewise.</td>
+</tr>
+<tr class="odd">
+<td>r</td>
+<td>Redo</td>
+</tr>
+<tr class="even">
+<td>s</td>
+<td>split window (aften remap to save file)</td>
+</tr>
+<tr class="odd">
+<td><strong>t</strong></td>
+<td>backword in tags</td>
+</tr>
+<tr class="even">
+<td>u</td>
+<td>Scroll window Upwards in the buffer</td>
+</tr>
+<tr class="odd">
+<td>v</td>
+<td>Start Visual mode blockwise</td>
+</tr>
+<tr class="even">
+<td>w</td>
+<td>Window mode prefix</td>
+</tr>
+<tr class="odd">
+<td>x</td>
+<td>Number decrement</td>
+</tr>
+<tr class="even">
+<td>y</td>
+<td>Scroll window <em>count</em> lines upwards in the buffer</td>
+</tr>
+<tr class="odd">
+<td>z</td>
+<td>Suspend Nvim, like “:stop” (often used in shell)</td>
+</tr>
+</tbody>
+</table>
+<h1 id="重新设计">重新设计</h1>
+<p>neovim 有一篇详尽的 <a
+href="https://neovim.io/doc/user/motion.html">motion文档</a>
+来说明各种按键/功能
+细节，文档中的功能相当多，完全掌握这些按键的不太可能，也没必要。按照日常使用的习惯，我将按键
+的归位三类：</p>
+<ul>
+<li>光标移动: 在代码中快速移动到指定位置</li>
+<li>代码编辑: 快捷编辑代码，如自动提示、触发各种辅助功能</li>
+<li>全局功能: 模式/窗口切换</li>
+</ul>
+<p>所有这些功能首先保留大部分的默认键位，再额外增加一些组件键配置。</p>
+<h2 id="光标移动">光标移动</h2>
+<p>模式: normal</p>
+<table>
+<thead>
+<tr class="header">
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>gs</td>
+<td>基于 hop 的移动</td>
+</tr>
+<tr class="even">
+<td>gw</td>
+<td>基于 hop 的word移动</td>
+</tr>
+</tbody>
+</table>
+<h2 id="代码编辑">代码编辑</h2>
+<p>编辑代码不像写简单文字那样大多时候是在默认插入或者删除一些文字，而是有更复杂的操作，
+如自动完成提示、删除中间的一块代码，增删一对括号，批量重命名等。如果这些功能
+只能通过逐个删除/添加字符来实现，那它的效率也太低了。所以我们可以将一些经常使用的功能
+用快捷键映射，如”删除整行后进入inserting模式”。</p>
+<h3 id="注释">注释</h3>
+<p>vim默认使用了<code>gc</code>来调用注释 配合textobject
+motion，可以实现方便的注释操作</p>
+<table>
+<thead>
+<tr class="header">
+<th>Keys</th>
+<th>Description</th>
+<th>explain</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>gcc</td>
+<td>single line comment</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>gcif</td>
+<td>function body block comment</td>
+<td>function inner</td>
+</tr>
+<tr class="odd">
+<td>gcaf</td>
+<td>function block comment</td>
+<td>function outer</td>
+</tr>
+<tr class="even">
+<td>gcm</td>
+<td>on tree-sitter motion comment</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="删除">删除</h3>
+<p><code>{c}</code> 表示需要输入的字符</p>
+<table>
+<thead>
+<tr class="header">
+<th>Keys</th>
+<th>Description</th>
+<th>explain</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>dl</td>
+<td>delete character (alias: “x”)</td>
+<td>dl</td>
+</tr>
+<tr class="even">
+<td>diw</td>
+<td>delete inner word</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>daw</td>
+<td>delete a word</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>diW</td>
+<td>delete inner WORD</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>daW</td>
+<td>delete a WORD</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>dgn</td>
+<td>delete the next search pattern match</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>dd</td>
+<td>delete one line</td>
+<td>dd</td>
+</tr>
+<tr class="even">
+<td>dis</td>
+<td>delete inner sentence</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>das</td>
+<td>delete a sentence</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>dib</td>
+<td>delete inner ‘(’ ‘)’ block</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>dab</td>
+<td>delete a ‘(’ ‘)’ block</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>dip</td>
+<td>delete inner paragraph</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>dap</td>
+<td>delete a paragraph</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>diB</td>
+<td>delete inner ‘{’ ‘}’ block</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>daB</td>
+<td>delete a ‘{’ ‘}’ block</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>ds<code>{c}</code></td>
+<td>删除外围配对的字符</td>
+<td>基于surround实现，例如如删除包含字符串的引号</td>
+</tr>
+</tbody>
+</table>
+<h3 id="替换">替换</h3>
+<p>直接替换类操作比较少，一般使用删除+插入实现，单个字符使用
+<code>r</code> 命令。</p>
+<p>一个比较高频的操作是 surround replace.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Keys</th>
+<th>Description</th>
+<th>explain</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>cs<code>{c_1}</code> <code>{c_2}</code></td>
+<td>用<code>{c_2}</code> 字符对替换外围的 <code>{c_1}</code> 字符对</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>cS<code>{c_1}</code> <code>{c_2}</code></td>
+<td>同 <code>cs</code> ，但是额外增加换行</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="text-object-选择">text-object 选择</h3>
+<p>前面的几种操作可以归结为选择text-object后进行删除，使用tress-sitter
+object + hop 组合后， 更容易选择需要的内容。 |Keys | Description | | —–|
+———– | | gm<code>{c}</code> | 按照语法选择光标周围一块内容 |</p>
+<h2 id="全局功能">全局功能</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Keys</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Space + f</td>
+<td>fuzzy find: project file</td>
+</tr>
+<tr class="even">
+<td>Space + b</td>
+<td>fuzzy find: buffer</td>
+</tr>
+<tr class="odd">
+<td>Space + d</td>
+<td>buffer: Delete current</td>
+</tr>
+<tr class="even">
+<td>Space + q</td>
+<td>exit</td>
+</tr>
+<tr class="odd">
+<td>Space + n</td>
+<td>buffer: New</td>
+</tr>
+<tr class="even">
+<td>Space + e</td>
+<td>project: file tree explorer</td>
+</tr>
+<tr class="odd">
+<td>Space + z</td>
+<td>project: change current root directory</td>
+</tr>
+<tr class="even">
+<td>Space + o</td>
+<td>Open outline window</td>
+</tr>
+<tr class="odd">
+<td>q</td>
+<td>Close window (panels)</td>
+</tr>
+</tbody>
+</table></div>
+   
+            <!-- -->
+          </article>
+        </div>
+      </main>
+    </div>
+    <footer class="md-footer">
+      <div class="md-grid">
+        <div class="md-footer-meta md-typeset">
+          <p class="md-footer-meta__inner">
+            <span>© 2023 </span>
+            <span> All rights reserved </span>
+          </p>
+        </div>
+      </div>
+    </footer>
+    <!-- -->
+      </body>
+</html>
