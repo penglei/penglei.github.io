@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="renderer" content="webkit" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-status-bar-style" content="#f8f5ec" />
     
     <meta name="generator" content="" />
     <meta name="description" content="" />
@@ -89,10 +89,24 @@
         <nav class="inner"><ul>
 <li><a href="#背景动机" id="toc-背景动机">背景动机</a></li>
 <li><a href="#架构简介" id="toc-架构简介">架构简介</a></li>
-<li><a href="#性能测试" id="toc-性能测试">性能测试</a></li>
+<li><a href="#性能测试" id="toc-性能测试">性能测试</a>
+<ul>
+<li><a href="#工具与方法" id="toc-工具与方法">工具与方法</a></li>
+<li><a href="#envoy-打点" id="toc-envoy-打点">Envoy 打点</a></li>
+<li><a href="#测试结果" id="toc-测试结果">测试结果</a></li>
+<li><a href="#分析优化" id="toc-分析优化">分析优化</a></li>
+</ul></li>
 <li><a href="#istio-数据测试对比已更新包含-1.5-遥测"
 id="toc-istio-数据测试对比已更新包含-1.5-遥测">Istio
-数据测试对比(已更新，包含 1.5 遥测)</a></li>
+数据测试对比(已更新，包含 1.5 遥测)</a>
+<ul>
+<li><a href="#吞吐能力" id="toc-吞吐能力">吞吐能力</a></li>
+<li><a href="#延时" id="toc-延时">延时</a></li>
+<li><a href="#envoy-cpu-消耗" id="toc-envoy-cpu-消耗">Envoy cpu
+消耗</a></li>
+<li><a href="#envoy-memory-消耗" id="toc-envoy-memory-消耗">Envoy memory
+消耗</a></li>
+</ul></li>
 <li><a href="#总结" id="toc-总结">总结</a></li>
 </ul></nav>
       </div>
@@ -145,28 +159,27 @@ envoy
 <li>istio 性能不好有具体的应用场景和问题表现吗？</li>
 </ul>
 <p>吞吐量上不去、延时高、消耗 CPU
-资源过多都是性能问题，这些问题可能是独立的，也可能相互之间有内在联系。
-终端用户体验是否友好的的核心因素之一是延时。Istio
-的核心能力是管理微服务架构，数据面 sidecar 会给服务调用增加一些延时，
-随着业务的发展，企业的微服务可能会变得异常复杂，虽然每个 sidecar
-只增加一点点延时，但随着调用链路深度的增加，叠加的延时可能会达到无法接受的地步。
-因此我们更关心 sidecar 对服务间调用产生的影响，它将最终影响服务质量。
-istio 数据面有作为 ingressgateway 的 envoy，也有作为 sidecar
-管理服务间流量的 envoy
-代理。两者有明显区别，前者可能面对高并发问题，需要处理大量连接，每个连接接只有少量的请求，
-而后则恰恰相反，常常使用长连接进行完成 RPC 过程。我们先聚焦于研究
-sidecar 对服务间调用带来的潜在高延时问题，作为接入层的 ingressgateway
+资源过多都是性能问题，这些问题可能是独立的，也可能相互之间有内在联系。终端用户体验是否友好的的核心因素之一是延时。Istio
+的核心能力是管理微服务架构，数据面 sidecar
+会给服务调用增加一些延时，随着业务的发展，企业的微服务可能会变得异常复杂，虽然每个
+sidecar
+只增加一点点延时，但随着调用链路深度的增加，叠加的延时可能会达到无法接受的地步。因此我们更关心
+sidecar 对服务间调用产生的影响，它将最终影响服务质量。istio 数据面有作为
+ingressgateway 的 envoy，也有作为 sidecar 管理服务间流量的 envoy
+代理。两者有明显区别，前者可能面对高并发问题，需要处理大量连接，每个连接接只有少量的请求，而后则恰恰相反，常常使用长连接进行完成
+RPC 过程。我们先聚焦于研究 sidecar
+对服务间调用带来的潜在高延时问题，作为接入层的 ingressgateway
 暂时不作考虑。</p>
 <h3 id="工具与方法">工具与方法</h3>
 <p>测试 sidecar 带来的延时影响，需要注意各种变量和干扰因素。例如：</p>
 <ul>
 <li><p>选择合适的模拟服务来进行压测</p>
 <p>istio 社区有 bookinfo 例子，linkerd 使用 emojivoto
-作为模拟服务进行性能测试。 bookinfo 和 emojivoto
+作为模拟服务进行性能测试。bookinfo 和 emojivoto
 本身消耗资源很多，处理请求的时间较长。当我们对 envoy 进行调优时，通过
-e2e 测量延时来确认优化效果， 但模拟服务本身高延时的正常波动可能会掩盖
+e2e 测量延时来确认优化效果，但模拟服务本身高延时的正常波动可能会掩盖
 envoy 调优的差异，导致难以确认优化是否合理。因此我们单独实现了一个简单的
-HTTP 服务 mesh-mocker， 它接收到请求之后，回传 Request Body，同时将 HTTP
+HTTP 服务 mesh-mocker，它接收到请求之后，回传 Request Body，同时将 HTTP
 Request Headers 编码为 json 字符串追加到 Response Body 中。</p></li>
 <li><p>不同组件互相影响</p>
 <p>Istio 控制面的组件 Mixer
@@ -210,7 +223,7 @@ https://bravenewgeek.com/tag/coordinated-omission/</em></p>
 <p>社区有非常多压测工具，如 ab, jmeter, fortio, wrk2… 我们最终选择了
 Envoy 官方开发的 <a
 href="https://github.com/envoyproxy/nighthawk"><code>nighthawk</code></a>
-。 nighthawk
+。nighthawk
 由在性能测试领域具有丰富经验的工程师所开发，它还具有诸多优点：</p>
 <ul>
 <li>开源可扩展，容易进行二次开发</li>
@@ -257,9 +270,9 @@ class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb2-1"><a href="
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> sidecar_image_transformer.yaml</span></span></code></pre></div>
 <p><em>kustomization.yaml</em></p>
 <p>kustomize 支持插件，某些操作内置的 plugin 无法完成，可以通过自定义
-plugin 实现。 例如，下面的 yaml 格式内容描述了对 istio-proxy
-容器进行添加 initContainer、修改 security、删除 resource limits 等操作。
-这些 yaml 内容使用的是 json patch 规范，在自定义的 kustomize plugin
+plugin 实现。例如，下面的 yaml 格式内容描述了对 istio-proxy 容器进行添加
+initContainer、修改 security、删除 resource limits 等操作。这些 yaml
+内容使用的是 json patch 规范，在自定义的 kustomize plugin
 中，我们将其转变为 json 格式之后，使用 json-patch 工具执行对 istio-proxy
 容器配置的修改操作。</p>
 <div class="sourceCode" id="cb3"><pre
@@ -437,23 +450,23 @@ nullvm 的方式(1.5-telemetry-nullvm)则有 2000QPS 的提升，达到 9000
 <img src="qps-latency-p90.png" alt="P90 Latency" />
 <figcaption aria-hidden="true">P90 Latency</figcaption>
 </figure>
-<p>P99 延时 <img src="qps-latency-p99.png" alt="!P99 Latency" /></p>
+<p>P99 延时<img src="qps-latency-p99.png" alt="!P99 Latency" /></p>
 <p>使用 istio 之后，较低 QPS 负载下延时增加不多，随着 QPS
 的增加延时逐步增大。其中，使用 mixer
 实现的遥测对调用延时影响最明显，即使 tke-mesh
 进行一些优化后，在高负载情况(5000)下，P99 也明显增加。istio-1.5 使用
 mixer-less 的方案，其延时有明显的改善。</p>
 <h3 id="envoy-cpu-消耗">Envoy cpu 消耗</h3>
-<p>server-side cpu 消耗 <img src="qps-server-side-cpu-usage.png"
+<p>server-side cpu 消耗<img src="qps-server-side-cpu-usage.png"
 alt="Server Side Envoy CPU Usage" /></p>
-<p>client-side cpu 消耗 <img src="qps-client-side-cpu-usage.png"
+<p>client-side cpu 消耗<img src="qps-client-side-cpu-usage.png"
 alt="Client Side Envoy CPU Usage" /></p>
 <p>可以看出，遥测功能会增加 30%左右的 CPU 消耗，即使 1.5 版本引入
 mixer-less 的遥测方案，CPU 消耗也只在 client 侧有一些降低。</p>
 <h3 id="envoy-memory-消耗">Envoy memory 消耗</h3>
-<p>server-side memory <img src="qps-server-side-memory-usage.png"
+<p>server-side memory<img src="qps-server-side-memory-usage.png"
 alt="Server Side Envoy Memory Usage" /></p>
-<p>client-side memory <img src="qps-client-side-memory-usage.png"
+<p>client-side memory<img src="qps-client-side-memory-usage.png"
 alt="Client Side Envoy Memory Usage" /></p>
 <p>Envoy 消耗的内存不多，并没有随 QPS 增加而增加，AsyncWorker
 方案大约增加了 10MB 的内存占用，没有太大的影响。</p>

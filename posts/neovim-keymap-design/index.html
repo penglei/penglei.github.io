@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="renderer" content="webkit" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-status-bar-style" content="#f8f5ec" />
     
     <meta name="generator" content="" />
     <meta name="description" content="" />
@@ -108,24 +108,16 @@ key</a></li>
 </ul></li>
 </ul></nav>
       </div>
-      <div class="post-content"><p>我经常在不同语言的工程中进行编码，一个通用的轻量级编辑器能明显改善编码体验。
-多年以前我以vim作为主力编辑器，但是遇到大一点的工程的时候，vim还是略显疲软，
-各种IDE的辅助功能如代码跳转、结构化视图(symbols)
-等有明显优势，因此一度抛弃了vim，
-只在简单编辑场景下使用。在neovim重塑vim生态，引入lsp之后，代码跳转、补全等功能大大增强，
-重新将vi(neovim)重新作为日常使用的主力编辑器。</p>
-<p>选择vi主要的原因在于它的键位设计让编辑更加高效，对各种编辑操作形成肌肉记忆之后，
-写程序的思路不会因为大脑切换到如何使用编辑工具而中断。
-neovim依赖大量的插件来实现更多功能(尤其是围绕lsp的扩展插件)。这些插件通常都有自己设计的
-键位设置，没有统一的规范，插件之间的键位设计甚至可能存在冲突，这显然不利于”无脑”使用编辑器。
-因此，设计一套自己常用的键位才能更加高效地使用vi这类的编辑器。</p>
+      <div class="post-content"><p>我经常在不同语言的工程中进行编码，一个通用的轻量级编辑器能明显改善编码体验。多年以前我以vim作为主力编辑器，但是遇到大一点的工程的时候，vim还是略显疲软，各种IDE的辅助功能如代码跳转、结构化视图(symbols)
+等有明显优势，因此一度抛弃了vim，只在简单编辑场景下使用。在neovim重塑vim生态，引入lsp之后，代码跳转、补全等功能大大增强，重新将vi(neovim)重新作为日常使用的主力编辑器。</p>
+<p>选择vi主要的原因在于它的键位设计让编辑更加高效，对各种编辑操作形成肌肉记忆之后，写程序的思路不会因为大脑切换到如何使用编辑工具而中断。neovim依赖大量的插件来实现更多功能(尤其是围绕lsp的扩展插件)。这些插件通常都有自己设计的键位设置，没有统一的规范，插件之间的键位设计甚至可能存在冲突，这显然不利于”无脑”使用编辑器。因此，设计一套自己常用的键位才能更加高效地使用vi这类的编辑器。</p>
 <h1 id="默认键位">默认键位</h1>
 <h2 id="normal-mode">normal mode</h2>
 <h3 id="single-key">single Key</h3>
 <table>
 <colgroup>
-<col style="width: 48%" />
-<col style="width: 51%" />
+<col style="width: 16%" />
+<col style="width: 83%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -550,9 +542,7 @@ key</h3>
 <h1 id="重新设计">重新设计</h1>
 <p>neovim 有一篇详尽的 <a
 href="https://neovim.io/doc/user/motion.html">motion文档</a>
-来说明各种按键/功能
-细节，文档中的功能相当多，完全掌握这些按键的不太可能，也没必要。按照日常使用的习惯，我将按键
-的归位三类：</p>
+来说明各种按键/功能细节，文档中的功能相当多，完全掌握这些按键的不太可能，也没必要。按照日常使用的习惯，我将按键的归位三类：</p>
 <ul>
 <li>光标移动: 在代码中快速移动到指定位置</li>
 <li>代码编辑: 快捷编辑代码，如自动提示、触发各种辅助功能</li>
@@ -585,7 +575,7 @@ href="https://neovim.io/doc/user/motion.html">motion文档</a>
 只能通过逐个删除/添加字符来实现，那它的效率也太低了。所以我们可以将一些经常使用的功能
 用快捷键映射，如”删除整行后进入inserting模式”。</p>
 <h3 id="注释">注释</h3>
-<p>vim默认使用了<code>gc</code>来调用注释 配合textobject
+<p>vim默认使用了<code>gc</code>来调用注释配合textobject
 motion，可以实现方便的注释操作</p>
 <table>
 <thead>
@@ -738,8 +728,21 @@ motion，可以实现方便的注释操作</p>
 </table>
 <h3 id="text-object-选择">text-object 选择</h3>
 <p>前面的几种操作可以归结为选择text-object后进行删除，使用tress-sitter
-object + hop 组合后， 更容易选择需要的内容。 |Keys | Description | | —–|
-———– | | gm<code>{c}</code> | 按照语法选择光标周围一块内容 |</p>
+object + hop 组合后，更容易选择需要的内容。</p>
+<table>
+<thead>
+<tr class="header">
+<th>Keys</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>gm<code>{c}</code></td>
+<td>按照语法选择光标周围一块内容</td>
+</tr>
+</tbody>
+</table>
 <h2 id="全局功能">全局功能</h2>
 <table>
 <thead>

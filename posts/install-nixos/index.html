@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="renderer" content="webkit" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-status-bar-style" content="#f8f5ec" />
+    
+    <meta name="generator" content="" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <!-- <link rel="stylesheet" href=""> -->
+    
+    <meta name="author" content="penglei" />
+    <title>YByte — NixOS安装笔记</title>
+    <link rel="stylesheet" type="text/css" href="/assets/css/site.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦥</text></svg>"
+    />
+    <script src="/assets/script/theme.js"></script>
+    <!-- * -->
+    <!-- <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" /> -->
+    <!-- <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css" /> -->
+    <!-- * -->
+  </head>
+  <body data-md-color-primary="deep-purple" data-md-color-accent="deep-purple"
+> <header class="md-header md-header--shadow">
+  <nav class="md-header__inner md-grid">
+    <div class="logo">
+      <a href="/" accesskey="h">YByte</a>
+    </div>
+    <div class="md-header__placeholder"></div>
+    <ul class="md-tabs__list">
+      <li
+        class="md-tabs__item "
+      >
+        <a href="/archive" class="md-tabs__link">Archive</a>
+      </li>
+      <li
+        class="md-tabs__item "
+      >
+        <a href="/tags" class="md-tabs__link">Tags</a>
+      </li>
+      <li
+        class="md-tabs__item "
+      >
+        <a href="/about" class="md-tabs__link">About</a>
+      </li>
+    </ul>
+    <div class="md-header__option">
+      <div id="toggle-theme" class="md-icon">
+        <a href="#" title="Light mode" class="light-mode">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>        </a>
+        <a href="#" title="Dark mode" class="dark-mode">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>        </a>
+        <a href="#" title="System preference" class="system-mode">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 2c-1.79 1.15-3 3.18-3 5.5s1.21 4.35 3.03 5.5C4.46 13 2 10.54 2 7.5A5.5 5.5 0 0 1 7.5 2m11.57 1.5 1.43 1.43L4.93 20.5 3.5 19.07 19.07 3.5m-6.18 2.43L11.41 5 9.97 6l.42-1.7L9 3.24l1.75-.12.58-1.65L12 3.1l1.73.03-1.35 1.13.51 1.67m-3.3 3.61-1.16-.73-1.12.78.34-1.32-1.09-.83 1.36-.09.45-1.29.51 1.27 1.36.03-1.05.87.4 1.31M19 13.5a5.5 5.5 0 0 1-5.5 5.5c-1.22 0-2.35-.4-3.26-1.07l7.69-7.69c.67.91 1.07 2.04 1.07 3.26m-4.4 6.58 2.77-1.15-.24 3.35-2.53-2.2m4.33-2.7 1.15-2.77 2.2 2.54-3.35.23m1.15-4.96-1.14-2.78 3.34.24-2.2 2.54M9.63 18.93l2.77 1.15-2.53 2.19-.24-3.34Z"/></svg>        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+    <!-- -->
+    
+    <div class="md-container">
+      <main class="md-main">
+        <div class="md-main__inner md-grid">
+          <article class="post-single md-typeset">
+            <header class="post-header">
+              <h1 class="post-title">NixOS安装笔记</h1>
+              <div class="post-meta">
+                <span>2024-01-24</span>
+                <p class="meta-tags">
+                </p>
+              </div>
+            </header>
+              <div class="toc" id="toc">
+        <summary id="toctitle">
+            <span class="details">Table of Contents</span>
+        </summary> 
+        <nav class="inner"><ul>
+<li><a href="#系统配置" id="toc-系统配置">系统配置</a>
+<ul>
+<li><a href="#准备flake仓库"
+id="toc-准备flake仓库">准备flake仓库</a></li>
+<li><a href="#基础配置" id="toc-基础配置">基础配置</a></li>
+<li><a href="#配置磁盘" id="toc-配置磁盘">配置磁盘</a></li>
+<li><a href="#配置硬件驱动" id="toc-配置硬件驱动">配置硬件驱动</a></li>
+<li><a href="#配置登录信息" id="toc-配置登录信息">配置登录信息</a></li>
+</ul></li>
+<li><a href="#安装" id="toc-安装">安装</a>
+<ul>
+<li><a href="#lustrate" id="toc-lustrate">lustrate</a></li>
+<li><a href="#kexec" id="toc-kexec">kexec</a></li>
+</ul></li>
+<li><a href="#nixos-配置" id="toc-nixos-配置">NixOS 配置</a>
+<ul>
+<li><a href="#配置密码" id="toc-配置密码">配置密码</a></li>
+</ul></li>
+<li><a href="#其它一些安装探索"
+id="toc-其它一些安装探索">其它一些安装探索</a>
+<ul>
+<li><a href="#nixos-iso-image-系统启动流程"
+id="toc-nixos-iso-image-系统启动流程">NixOS iso-image
+系统启动流程</a></li>
+<li><a href="#已有的系统中进入copytoram模式"
+id="toc-已有的系统中进入copytoram模式">已有的系统中进入copytoram模式</a></li>
+</ul></li>
+<li><a href="#错误记录" id="toc-错误记录">错误记录</a></li>
+</ul></nav>
+      </div>
+      <div class="post-content"><p>nix是一个基于函数式语言的声明式包管理器，几年前我把macOS上面的包管理器从brew切换到nix，实现了
+Configuration-as-Code
+的方式来管理环境。有了nix这样一个可编程层，基本上所有的配置都可以提交到git仓库：任何时候都可以稳定复现日常使用的环境，这极大地降低了维护个人开发环境的心理负担，尝试不同的技术生态也变得更加容易。x3</p>
+<p>NixOS是以nix为基础实现的Linux发现版。得益于nix的设计原则，NixOS也具有Declarative、Reproducible、
+Reliable的优点。除此之外，NixOS可以高度定制化，基本上可以积木式地搭建自己独特的Linux系统，这一点是使用ArchLinux、Debian、RedHat系等发行版时无法想象的。尤其对于Server端环境，从引导程序、内核到系统服务，完全可按需定制成最小的Linux系统。同时，系统整体上的配置是声明式风格，将系统维护融合进自动化管理流程也容易得多。因此，我逐步将所有的Linux
+Server全部切换到NixOS。</p>
+<p>要使用NixOS，当然先得把它安装到机器上。NixOS的文档跟不上它的发展速度，安装手册跟最佳实践相去甚远，官方文档也没有仔细说明如何使用flake配置和安装NixOS，多少有点对不起它
+「声明式」、「可重现性」的slogan。在nixpkgs 仓库中，至今这个使用”<a
+href="https://nixos.org/manual/nixos/stable/#sec-installing-from-other-distro">驱逐</a>”方式进行安装的<a
+href="https://github.com/NixOS/nixpkgs/issues/49520">issue</a>都还没解决。因此，本文记录一下我在使用NixOS时摸索的安装方式和常见问题。</p>
+<!-- 我常在本地虚拟机、nas、云服务上使用NixOS， -->
+<!-- 这些场景下使用标准方式(如USB或者光驱)进行安装比较麻烦， -->
+<!-- 更多是在机器上已存在其它发行版的情况下进行替换安装。 -->
+<h2 id="系统配置">系统配置</h2>
+<p>安装一个操作系统和一个软件包没有太大的区别：无外乎是把一堆软件/文件持久放置到某个地方，等待将来点击/开机即可使用。不过，安装操作系统大概会复杂一点：需要对硬件和系统软件两部分进行配置。硬件配置包括设置BIOS、磁盘分区等。在准备好硬件之后，则需要进行比较复杂的软件配置过程，包括安装系统内核、配置硬件驱动、安装必要的软件包、设置网络、初始化用户等等。</p>
+<p>nix
+flake可以看作是一个用nix语言描述的”声明式配置包”，有了flake规范之后，我们可以用一个锁定依赖版本、可复现的”程序包”来定义和维护我们的NixOS配置。使用flake时，通过执行命令
+<code>nixos-rebuild switch --falke &lt;flake-uri&gt;</code>实现更新升级NixOS系统。每次执行<code>switch</code>命令时，NixOS会自动为系统生成一个新配置版本，如果使用过程中发现新配置有问题，我们可以选择回到上一个版本的系统配置。</p>
+<h3 id="准备flake仓库">准备flake仓库</h3>
+<p>在本地<a
+href="https://nixos.org/download/">安装nix</a>，注意，我们提前配置nix打开flake和新风格命令行特性：</p>
+<pre data-lang="terminal"><code>❯ mkdir -p ~/.config/nix
+❯ echo &quot;experimental-features = nix-command flakes&quot; &gt;&gt; ~/.config/nix/nix.conf
+❯ sh &lt;(curl -L https://nixos.org/nix/install) </code></pre>
+<p>新建一个git repo，可使用flake template初始化一个配置：</p>
+<!-- https://github.com/jgm/pandoc/issues/5613 -->
+<pre data-lang="terminal"><code>❯ mkdir nixos-example &amp;&amp; cd nixos-example 
+❯ nix flake init -t github:penglei/nixos-example --refresh
+❯ git init &amp;&amp; git add .
+❯ git comimit -m &quot;mynixos configuration&quot;
+❯ cat flake.nix
+{
+  description = &quot;nixos configuration example&quot;;
+  inputs = {
+    nixpkgs.url = &quot;github:nixos/nixpkgs/nixos-unstable&quot;;
+    flake-utils.url = &quot;github:numtide/flake-utils&quot;;
+  };
+  outputs = { nixpkgs, flake-utils, ... }:
+    let
+      username = &quot;penglei&quot;;
+      hostname = &quot;mynixos&quot;;
+    in {
+      packages = flake-utils.lib.eachDefaultSystemMap (system: {
+        nixosConfigurations.&quot;${hostname} &quot; = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = { inherit nixpkgs username hostname; };
+          modules = [
+            ./configuration.nix
+            ./hardware.nix # should match target machine
+          ];
+        };
+      });
+
+    };
+}
+❯
+❯ cat configuration.nix hardware.nix
+{ }
+{ }</code></pre>
+<p>这是一个简单的flake骨架，首先我们通过
+<code>nixosConfigurations."${hostname}"</code>申明了一个nixosSystem。然后，通过<code>modules</code>引入这个系统的配置模块。这个示例中引入了
+<code>configuration.nix</code> 和 <code>hardware.nix</code>
+两个模块，模块(<code>module</code>)
+是NixOS非常重要的特性，一方面它将不同软件的配置组织在内聚的模块中，另一方面通过
+<code>module</code>
+系统，可以在不同配置之间建立依赖关系，实现配置复用和统一。在这个例子中，当前它们的内容都是一个空模块(<code>{ }</code>)，我们接下来将其逐步完善。</p>
+<h3 id="基础配置">基础配置</h3>
+<p>将如下内容填写到 <code>configuration.nix</code> 配置模块中:</p>
+<div class="nix" data-lang="nix"><div style="min-width: auto">
+            <div style="display: flex;">
+              <div class="syn-highlight-line-number" style="border-right: 1px solid green; text-align:right; padding-right: 2px; margin-right: 2px;">
+                <pre style="margin: 0"><code><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div><div>8</div><div>9</div><div>10</div><div>11</div><div>12</div><div>13</div><div>14</div><div>15</div><div>16</div><div>17</div><div>18</div><div>19</div><div>20</div><div>21</div><div>22</div><div>23</div><div>24</div><div>25</div><div>26</div><div>27</div></code></pre></div><div class="sync-highlight-content" style="flex: 1; overflow-x: auto;"><pre style="margin:0"><code class="syn-code-block"><span class="line"><span class="syn-punctuation syn-bracket">{</span> <span class="syn-variable syn-parameter">pkgs</span><span class="syn-punctuation syn-delimiter">,</span> <span class="syn-variable syn-parameter">username</span><span class="syn-punctuation syn-delimiter">,</span> <span class="syn-variable syn-parameter syn-builtin">...</span> <span class="syn-punctuation syn-bracket">}</span><span class="syn-punctuation syn-delimiter">:</span></span>
+<span class="line"></span>
+<span class="line"><span class="syn-punctuation syn-bracket">{</span></span>
+<span class="line">  <span class="syn-variable syn-member">system</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">stateVersion</span> <span class="syn-operator">=</span> <span class="syn-string">"</span><span class="syn-string">23.05</span><span class="syn-string">"</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line"></span>
+<span class="line">  <span class="syn-variable syn-member">time</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">timeZone</span> <span class="syn-operator">=</span> <span class="syn-string">"</span><span class="syn-string">Asia/Shanghai</span><span class="syn-string">"</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line"></span>
+<span class="line">  <span class="syn-variable syn-member">users</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">users</span><span class="syn-punctuation syn-delimiter">.</span>${username} <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">{</span></span>
+<span class="line">    <span class="syn-variable syn-member">isNormalUser</span> <span class="syn-operator">=</span> <span class="syn-boolean">true</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line">    <span class="syn-variable syn-member">extraGroups</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">[</span> <span class="syn-string">"</span><span class="syn-string">wheel</span><span class="syn-string">"</span> <span class="syn-punctuation syn-bracket">]</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line">    <span class="syn-variable syn-member">openssh</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">authorizedKeys</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">keys</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">[</span></span>
+<span class="line">      <span class="syn-string">"</span><span class="syn-string">ssh-ed25519 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</span><span class="syn-string">"</span></span>
+<span class="line">    <span class="syn-punctuation syn-bracket">]</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line">  <span class="syn-punctuation syn-bracket">}</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line"></span>
+<span class="line">  <span class="syn-variable syn-member">security</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">sudo</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">extraRules</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">[</span><span class="syn-punctuation syn-bracket">{</span></span>
+<span class="line">    <span class="syn-variable syn-member">users</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">[</span> <span class="syn-variable">username</span> <span class="syn-punctuation syn-bracket">]</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line">    <span class="syn-variable syn-member">commands</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">[</span><span class="syn-punctuation syn-bracket">{</span></span>
+<span class="line">      <span class="syn-variable syn-member">command</span> <span class="syn-operator">=</span> <span class="syn-string">"</span><span class="syn-string">ALL</span><span class="syn-string">"</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line">      <span class="syn-variable syn-member">options</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">[</span> <span class="syn-string">"</span><span class="syn-string">NOPASSWD</span><span class="syn-string">"</span> <span class="syn-string">"</span><span class="syn-string">SETENV</span><span class="syn-string">"</span> <span class="syn-punctuation syn-bracket">]</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line">    <span class="syn-punctuation syn-bracket">}</span><span class="syn-punctuation syn-bracket">]</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line">  <span class="syn-punctuation syn-bracket">}</span><span class="syn-punctuation syn-bracket">]</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line"></span>
+<span class="line">  <span class="syn-variable syn-member">services</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">openssh</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">enable</span> <span class="syn-operator">=</span> <span class="syn-boolean">true</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line"></span>
+<span class="line">  <span class="syn-variable syn-member">environment</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">systemPackages</span> <span class="syn-operator">=</span> <span class="syn-keyword">with</span> <span class="syn-variable">pkgs</span><span class="syn-punctuation syn-delimiter">;</span> <span class="syn-punctuation syn-bracket">[</span> <span class="syn-variable">git</span> <span class="syn-variable">vim</span> <span class="syn-variable">curl</span> <span class="syn-variable">pstree</span> <span class="syn-variable">htop</span> <span class="syn-variable">tree</span> <span class="syn-punctuation syn-bracket">]</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line"><span class="syn-punctuation syn-bracket">}</span></span></code></pre></div></div></div>
+<p>这个模块包含多个部份:</p>
+<ul>
+<li>第6行声明了系统的时区；</li>
+<li>第8至14行声明了这个系统中的一个用户。这个用户的用户名是通过函数参数<code>username</code>
+传进来的。我们将其加到了 <code>wheel</code>
+组中，并且给他配置了一个ssh的登录密钥(这里需要替换成自己的公钥)。第16至23给用户配置了sudo权限，方便我们安装好系统后切换到root用户进行管理。</li>
+<li>第24打开了openssh，这样系统安装好后我们才方便通过网络登录；</li>
+<li>第26行在系统中声明安装一些常用的软件包；</li>
+</ul>
+<h3 id="配置磁盘">配置磁盘</h3>
+<p>给主分区打label，这样才能更加通用</p>
+<ul>
+<li><p>传统 ext2/3/4 类型的分区使用 <code>e2label</code> 修改label</p>
+<pre><code># e2label /dev/vda1 nixos</code></pre></li>
+<li><p>vfat(fat16) 类型的分区使用 <code>dosfslabel</code>
+，一般使用efi启动的系统都会有这样的分区</p>
+<pre><code># apt install dosfstools
+# dosfslabel /dev/nvme0n1p1 boot</code></pre></li>
+<li><p>btrfs 使用
+<code>btrfs filesystem label &lt;device/mountpoint&gt; &lt;label&gt;</code></p></li>
+</ul>
+<h3 id="配置硬件驱动">配置硬件驱动</h3>
+<h3 id="配置登录信息">配置登录信息</h3>
+<p>ssh:</p>
+<h2 id="安装">安装</h2>
+<!-- 安装方法有多种，比较传统的方式是用*光驱*或者*usb设备*或者*iPEX*启动一个临时系统执行安装过程。
+这些方式对于云服务器以及缺少辅助设备的场景都不够灵活，我更常用的是驱逐安装或者kexec快速启动临时系统。
+-->
+<p>有了NixOS的完整定义，我们便可以将其安装到系统中。整个安装过程可以概括为
+<code>使用nix工具，替换机器上已经存在的Linux系统</code>。</p>
+<p>准备：</p>
+<ul>
+<li><p>目标机器上需要一个在运行的Linux系统，比如常见的ubuntu、debian、arch等。</p>
+<p>已有系统需要有root权限，并且Linux内核版本不能太低。我曾使用3.10内核版本的CentOS，发现user
+namespace无法工作，导致nix安装不上。</p></li>
+<li><p>现有机器位于一个网络质量比较好环境中</p>
+<p>安装NixOS的过程需要下载大量的包，网络环境直接影响安装体验。</p></li>
+</ul>
+<p>首先在已有的Linux系统上准备好支持flake的nix的环境。我采用在root用户下安装单用户使用的nix环境:</p>
+<pre><code># mkdir /etc/nix
+# cat &lt;&lt;EOF &gt; /etc/nix/nix.conf
+experimental-features = nix-command flakes
+build-users-group =
+EOF
+# sh &lt;(curl -L https://nixos.org/nix/install) --no-daemon</code></pre>
+<h3 id="lustrate">lustrate</h3>
+<p>NixOS
+boot支持一种延迟安装模式，特别适用于不重新调整磁盘分区的情况下直接替换当前的系统。</p>
+<ol type="1">
+<li><p>构建系统</p>
+<p>假设我们把flake nixos配置存放在github上，通过如下命令先构建系统：</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> nix profile install <span class="dt">\</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>--profile /nix/var/nix/profiles/system <span class="dt">\</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>github:penglei/nixos-example#nixosConfigurations.mynixos.config.system.build.toplevel</span></code></pre></div>
+<p>Tips</p>
+<ul>
+<li><p>多次执行命令会提醒profile中已经存在该package。使用执行如下命令进行删除：</p>
+<pre><code># nix profile remove toplevel --profile /nix/var/nix/profiles/system</code></pre></li>
+<li><p>如果一直调整配置，构建出系统的多个版本，占用当前系统过多的存储空间，可使用如下命令进行清理清理：</p>
+<pre><code># nix profile wipe-history --profile /nix/var/nix/profiles/system</code></pre></li>
+</ul></li>
+<li><p>执行switch boot</p>
+<pre><code># mkdir -p /run/current-system/sw/bin
+# NIXOS_INSTALL_BOOTLOADER=1 /nix/var/nix/profiles/system/bin/switch-to-configuration boot</code></pre>
+<p>环境变量 <code>NIXOS_INSTALL_BOOTLOADER</code>
+表示我们要在指定的磁盘上安装boot loader。boot
+loader有两种选择，<code>grub</code> 或者
+<code>systemd-boot</code></p></li>
+<li><p>标记重启安装</p>
+<p>前面准备好了系统文件，但是NixOS还无法启动，比如当前的
+<code>/etc</code>
+文件夹还是已有系统的配置，不是NixOS通过配置文件生成。因此，我们需要告诉NixOS的boot阶段执行
+<strong>lustrate</strong> 完成最后的安装动作：通过创建
+<code>/etc/NIXOS</code> 文件给boot阶段一个提示。</p>
+<pre><code>cat &lt;&lt;EOF | sh
+  chown -R 0:0 /nix
+  touch /etc/NIXOS
+  echo etc/nixos &gt;&gt; /etc/NIXOS_LUSTRATE
+EOF
+</code></pre>
+<p>执行完上面的动作，我们便可以重启机器，系统将会进入新安装的NixOS系统。</p></li>
+</ol>
+<!-- 复杂的部份是理解 boot loader和磁盘分区。 -->
+<h3 id="kexec">kexec</h3>
+<h2 id="nixos-配置">NixOS 配置</h2>
+<h3 id="配置密码">配置密码</h3>
+<pre><code>mark:$y$.n.:17736:0:99999:7:::
+[--] [----] [---] - [---] ----
+ │      │     │   │   │    │││└────────────► 9. Unused
+ │      │     │   │   │    ││└─────────────► 8. Expiration date
+ │      │     │   │   │    │└──────────────► 7. Inactivity period
+ │      │     │   │   │    └───────────────► 6. Warning period
+ │      │     │   │   └────────────────────► 5. Maximum password age
+ │      │     │   └────────────────────────► 4. Minimum password age
+ │      │     └────────────────────────────► 3. Last password change
+ │      └──────────────────────────────────► 2. Encrypted Password
+ └─────────────────────────────────────────► 1. Username
+
+$1$ – MD5
+$2a$ – Blowfish
+$2y$ – Eksblowfish
+$5$ – SHA-256
+$6$ – SHA-512
+$y$ - yescrypt, see https://en.wikipedia.org/wiki/Yescrypt https://en.wikipedia.org/wiki/Scrypt</code></pre>
+<p>密码字段格式<a
+href="https://en.wikipedia.org/wiki/Crypt_(C)#Key_derivation_functions_supported_by_crypt">文档</a></p>
+<h2 id="其它一些安装探索">其它一些安装探索</h2>
+<h3 id="nixos-iso-image-系统启动流程">NixOS iso-image 系统启动流程</h3>
+<p>现代Linux系统的启动比较灵活，它可以粗略地分为两个阶段：</p>
+<ol type="1">
+<li><p>阶段1: bootloader 加载
+Image(内核映像)和initrd，将initrd加载到ramfs得到一个内存文件系统，然后执行
+<code>/init</code>。从内核角度看，一旦开始执行 <code>/init</code>
+程序，就意味着内核已经正常初始化完毕，操作系统的初始化将交给用户态程序
+<code>/init</code>。内核以pid 1 执行 <code>/init</code>，
+<code>/init</code>
+程序的关键工作是为阶段2准备好rootfs文件系统，为阶段2启动最终的系统做好准备。</p></li>
+<li><p>阶段2: 阶段1的 <code>/init</code>
+准备好基本信息后，将执行阶段2的初始化流程:切换到真实使用的rootfs并启动系统服务。大多数Linux发行版使用Systemd作为服务管理进程，一些发行版会使用Systemd作为1号进程，也就是阶段2最终会执行新的rootfs下的Systemd程序:<code>exec systemd $@</code>
+。至此，我们通常就得到了一个可登录的系统。</p>
+<p>debian使用 <a
+href="https://git.kernel.org/pub/scm/libs/klibc/klibc.git">klibc</a>
+的<a
+href="https://git.kernel.org/pub/scm/libs/klibc/klibc.git/tree/usr/kinit/run-init/runinitlib.c">run_init</a>作为阶段2的包装程序以简化阶段2的开发，这个程序将切换到到新的rootfs，执行一些清理工作，回调传入的阶段2初始化程序：</p>
+<pre class="shell"><code>exec run-init ${drop_caps} &quot;${rootmnt}&quot; &quot;${init}&quot; &quot;$@&quot; &lt;&quot;${rootmnt}/dev/console&quot; &gt;&quot;${rootmnt}/dev/console&quot; 2&gt;&amp;1</code></pre>
+<blockquote>
+<p>一些社区认为<a
+href="https://systemd.io/">Systemd</a>太复杂，难以审计，进而导致系统安全性降低。debian使用
+/sbin/init (SysV Init)作为1号进程。</p>
+</blockquote></li>
+</ol>
+<p>NixOS使用Systemd作为1号进程和服务管理工具。它的阶段1和阶段2都是使用bash脚本实现，阶段2最终会启动执行Systemd。NixOS如何为准备stage2使用的rootfs?
+它首先创建 <code>/mnt-root</code>
+作为stage2的根目录(下表中使用<code>@R</code>表示)，然后在这个目录中进行初始化，挂载设备。NixOS通过nix
+生成 stage-1
+启动脚本，对于iso-image(安装盘)的启动过程，它会逐步挂载如下的文件/设备。</p>
+<div class="md-table-wrapper">
+<table>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 18%" />
+<col style="width: 20%" />
+<col style="width: 13%" />
+<col style="width: 34%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>order</th>
+<th>mountPoint</th>
+<th>device</th>
+<th>fsType</th>
+<th>options</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><span class="citation" data-cites="R">@R</span>/</td>
+<td>tmpfs</td>
+<td>tmpfs</td>
+<td>x-initrd.mount,mode=0755</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><span class="citation" data-cites="R/iso">@R/iso</span></td>
+<td>/dev/root</td>
+<td>auto</td>
+<td>x-initrd.mount</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td><span class="citation"
+data-cites="R/nix">@R/nix</span>/.ro-store</td>
+<td><span class="citation"
+data-cites="R/iso/nix-store.squashfs">@R/iso/nix-store.squashfs</span></td>
+<td>squashfs</td>
+<td>x-initrd.mount,loop</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td><span class="citation"
+data-cites="R/nix">@R/nix</span>/.rw-store</td>
+<td>tmpfs</td>
+<td>tmpfs</td>
+<td>-initrd.mount,mode=0755</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td><span class="citation"
+data-cites="R/nix/store">@R/nix/store</span></td>
+<td>overlay</td>
+<td>overlay</td>
+<td>x-initrd.mount,lowerdir=/nix/.ro-store,upperdir=/nix/.rw-store/store,workdir=/nix/.rw-store/work</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>每一步的挂在可能会依赖前一步的挂载，例如 <code>/nix/.ro-store</code>
+依赖 <code>/iso</code>，它要求这个目录中存在后续使用的
+<code>nix-store.squashfs</code> 文件。<a
+href="https://github.com/NixOS/nixpkgs/blob/5aa9fc927306617ad428e50a54c638224c37bf5c/nixos/modules/installer/cd-dvd/iso-image.nix#L723">device的路径</a>是相对于
+<code>/mnt-root</code> 的，也就是说，device
+<code>/iso/nix-store.squashfs</code> 的实际路径是
+<code>/mnt-root/iso/nix-store.squashfs</code> 。</p>
+<p>我一台日常使用NixOS的只有一个磁盘分区，这个过程就简单得多，它只有rootfs的挂载：</p>
+<div class="md-table-wrapper">
+<table>
+<colgroup>
+<col style="width: 4%" />
+<col style="width: 17%" />
+<col style="width: 33%" />
+<col style="width: 8%" />
+<col style="width: 35%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>order</th>
+<th>mountPoint</th>
+<th>device</th>
+<th>fsType</th>
+<th>options</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><span class="citation" data-cites="R">@R</span>/</td>
+<td>/dev/disk/by-label/nixos</td>
+<td>ext4</td>
+<td>x-initrd.mount</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>/mnt-root 准备好之后，NixOS使用busybox的<a
+href="https://github.com/brgl/busybox/blob/master/util-linux/switch_root.c">switch_root</a>切换到新的rootfs，执行stage2的初始化，最终启动Systemd。</p>
+<h3
+id="已有的系统中进入copytoram模式">已有的系统中进入copytoram模式</h3>
+<p>有时候我们想重新格式化磁盘，驱逐安装的模式很难这样做，因为某个分区已经被挂载到rootfs，我们无法将其卸载再调整分区。这时候我们只能使用传统方式进行安装：先进入live
+installer系统对磁盘执行分区，再安装系统。</p>
+<p>NixOS的iso
+installer提供了一种copytoram模式，可以完全在内存中启动iso上的NixOS系统。这是通过将iso镜像中的内容拷贝到tmpfs中实现的：如果配置的mountPoint为
+<code>$R/iso</code> 以及 device 为
+<code>/dev/root</code>是，stage1不会挂载iso，而是将整个iso进行copy：首先将<code>/dev/root</code>
+挂载到 <code>/tmp-iso</code> 目录，然后拷贝到 <code>/mnt-root/iso</code>
+目录中。拷贝完成后就会释放(umount) <code>/dev/root</code> 。</p>
+<pre><code>menuentry nixos-installer-iso {
+  set isopath=&quot;/nixos.iso&quot;
+  set stage2init=&quot;/nix/store/bxqbp6l1vd3dmima6slfdx8176lindf8-nixos-system-nixos-24.05.5667.a3f9ad65a0bf/init&quot;
+
+  #search --label nixos --set=rootpart
+  search --fs-uuid --set=rootpart b54d0269-01ce-4956-a4e9-6cccd2ea5e35
+  loopback isoloop ($rootpart)$isopath
+
+  set image=Image #shoule be &quot;bzImage&quot; if arch is x86_64
+  linux (isoloop)/boot/$image findiso=$isopath copytoram init=$stage2init boot.shell_on_fail loglevel=4
+  initrd (isoloop)/boot/initrd
+}
+</code></pre>
+<blockquote>
+<p>nixos-rebuild switch –install-bootloader –flake .</p>
+</blockquote>
+<h4 id="编辑initrd">编辑initrd</h4>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> mount /nixos.iso /mnt</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> mkdir ~/edit-initrd <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> ~/edit-initrd</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> cp /mnt/boot/initrd initrd.zst</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> umount /mnt</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> unzstd initrd.zst</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> mkdir initrd-root <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> initrd-root</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> cpio <span class="at">-imdv</span> <span class="op">&lt;</span> ../initrd</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> find <span class="kw">|</span> <span class="fu">cpio</span> <span class="at">-o</span> <span class="at">-H</span> newc <span class="op">&gt;</span> ../initrd-new</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> zstd ../initrd-new</span></code></pre></div>
+<h2 id="错误记录">错误记录</h2>
+<ul>
+<li><p>安装nix时提示build-users-group不存在</p>
+<blockquote>
+<p>error: the group ‘nixbld’ specified in ‘build-users-group’ does not
+exist</p>
+</blockquote>
+<p>解决方案：禁用 build-users-group。在 <code>/etc/nix/nix.conf</code>
+中配置 <code>build-users-group =</code></p></li>
+</ul></div>
+   
+            <!-- -->
+          </article>
+        </div>
+      </main>
+    </div>
+    <footer class="md-footer">
+      <div class="md-grid">
+        <div class="md-footer-meta md-typeset">
+          <p class="md-footer-meta__inner">
+            <span>© 2023 </span>
+            <span> All rights reserved </span>
+          </p>
+        </div>
+      </div>
+    </footer>
+    <!-- -->
+      </body>
+</html>

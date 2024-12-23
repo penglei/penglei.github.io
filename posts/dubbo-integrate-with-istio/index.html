@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="renderer" content="webkit" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-status-bar-style" content="#f8f5ec" />
     
     <meta name="generator" content="" />
     <meta name="description" content="" />
@@ -89,16 +89,23 @@
 <li><a href="#名词解释" id="toc-名词解释">名词解释</a></li>
 <li><a href="#dubbo-如何实现服务发现"
 id="toc-dubbo-如何实现服务发现">Dubbo 如何实现服务发现？</a></li>
-<li><a href="#问题与方案" id="toc-问题与方案">问题与方案</a></li>
+<li><a href="#问题与方案" id="toc-问题与方案">问题与方案</a>
+<ul>
+<li><a href="#多注册中心" id="toc-多注册中心">多注册中心</a></li>
+<li><a href="#服务端provider服务注册"
+id="toc-服务端provider服务注册">服务端（Provider）服务注册</a></li>
+<li><a href="#客户端consumer服务发现"
+id="toc-客户端consumer服务发现">客户端（Consumer）服务发现</a></li>
+<li><a href="#模块组件" id="toc-模块组件">模块组件</a></li>
+</ul></li>
 <li><a href="#社区发展" id="toc-社区发展">社区发展</a></li>
 <li><a href="#参考资料" id="toc-参考资料">参考资料</a></li>
 </ul></nav>
       </div>
       <div class="post-content"><p>Dubbo 是个流行的微服务框架，其功能和
 ServiceMesh 有一定重合。在将 Dubbo 逐步迁移到 Istio
-架构时，有一些问题需要解决。
-其中，服务注册与发现是服务间调用的核心问题，融合两者的服务注册与发现机制是实现
-Dubbo 向 Istio 迁移的关键步骤。 在研究 Dubbo
+架构时，有一些问题需要解决。其中，服务注册与发现是服务间调用的核心问题，融合两者的服务注册与发现机制是实现
+Dubbo 向 Istio 迁移的关键步骤。在研究 Dubbo
 框架的原理及使用方式之后，本文提出了一种扩展 Dubbo
 的方式，使其更容易地集成到 service mesh （istio）中。</p>
 <h2 id="名词解释">名词解释</h2>
@@ -120,9 +127,10 @@ Dubbo 向 Istio 迁移的关键步骤。 在研究 Dubbo
 &lt;bean id=&quot;demo-service&quot; class=&quot;org.apache.dubbo.samples.impl.DemoServiceImpl&quot;/&gt;
 &lt;dubbo:service interface=&quot;org.apache.dubbo.samples.api.DemoService&quot; ref=&quot;demo-service&quot; registry=&quot;registry-foo&quot;/&gt;</code></pre>
 <p>上面是 Provider 的配置定义了两个注册中心, <code>registry-foo</code>
-使用 Etcd， <code>registry-bar</code> 使用 Zookeeper。
-<code>&lt;bean .../&gt;</code> 定义了一个服务 <code>demo-service</code>
-，该服务通过 <code>&lt;dubbo:service ... /&gt;</code> 注册到
+使用 Etcd， <code>registry-bar</code> 使用
+Zookeeper。<code>&lt;bean .../&gt;</code> 定义了一个服务
+<code>demo-service</code> ，该服务通过
+<code>&lt;dubbo:service ... /&gt;</code> 注册到
 <code>registry-foo</code> 中。</p></li>
 <li><p>服务注册/发现粒度是 interface 级别</p>
 <p>interface 级别的服务发现为用户提供了非常便利的使用方式，用户只需要用
@@ -173,23 +181,23 @@ Provider 的流量。</p></li>
 <li><p><strong>被访问的 Provider 使用 Istio 进行治理，Consumer
 不能再按照原来的方式来进行服务发现。</strong></p>
 <p>Istio
-的服务发现粒度是应用级别，而不是接口级别，我们需要对两种模型进行融合，并且尽量减少上层业务的感知。
-另外，服务发现的过程移动到了 Envoy 进程中，Dubbo SDK 发出的流量需要与
-Envoy 中的服务发现机制相匹配。</p></li>
+的服务发现粒度是应用级别，而不是接口级别，我们需要对两种模型进行融合，并且尽量减少上层业务的感知。另外，服务发现的过程移动到了
+Envoy 进程中，Dubbo SDK 发出的流量需要与 Envoy
+中的服务发现机制相匹配。</p></li>
 <li><p>被访问的 Provider 部份使用 Istio 进行治理</p>
 <p>在一个大型服务迁移过程中出现，可能一部分流量通过 SDK
 访问，另一部分流量通过 sidecar
 进行访问。这种场景较复杂，一种比较直接的解决方案是把同一个服务在逻辑上拆分未两个服务，一个服务通过
-Istio 进行治理，另一个保持原样，
-这样便可将其归结前面两种情况进行处理。在渡过这种迁移状态之后，便可重新归为同一个服务进行处理。</p></li>
+Istio
+进行治理，另一个保持原样，这样便可将其归结前面两种情况进行处理。在渡过这种迁移状态之后，便可重新归为同一个服务进行处理。</p></li>
 </ul></li>
 </ol>
 <p>总体来说，我们需要在 Dubbo
 上提供一种应用/服务级别的注册/发现机制，并且能与 Dubbo 兼容。</p>
 <p>Dubbo 使用 Java interface 描述 RPC 接口，这和基于 schema 的第三方 IDL
 相比，其易用性好得多，即使迁移到 Istio
-进行服务治理，这种风格也会继续保留在 Dubbo 生态中。
-因此，我们在服务发现的过程中，将不得不面临
+进行服务治理，这种风格也会继续保留在 Dubbo
+生态中。因此，我们在服务发现的过程中，将不得不面临
 <code>interface -&gt; Service -&gt; Address</code> 的转换问题，这与
 <code>Service -&gt; Address</code> 的转换相比，多了
 <code>interface -&gt; Service</code> 的转换步骤。</p>
@@ -221,15 +229,15 @@ Registry 独立，但在部署上可以采用同一个 Etcd
 集群来实现，降低维护代价。</p>
 <h3 id="服务端provider服务注册">服务端（Provider）服务注册</h3>
 <p>在服务端，我们通过 Dubbo Registry 扩展组件，可以实现自定义的 register
-流程。 对于 Dubbo 的注册机制来说，这些服务是自描述的，它们在内部感知到
-IP 等信息，将其提交到注册中心。 对于 MeshRegistry 注册中心需要的
+流程。对于 Dubbo 的注册机制来说，这些服务是自描述的，它们在内部感知到 IP
+等信息，将其提交到注册中心。对于 MeshRegistry 注册中心需要的
 <code>interface -&gt; service</code> 映射关系，register
-需要感知到外部引用它（即运行 Dubbo 服务的 Pod）的 service 名字，
-然而，register 并没有简单的办法从环境中获取到 service 名字信息，即使通过
-kubernetes api 中查询到引用 Pod 的 service 信息，也会面临一个 Pod 被多个
-service 引用的情况， 这时候没有办法自动确定究竟是哪个 service 才是 Mesh
-使用的 service，最终，它会影响 Consumer 如何与
-sidecar(Envoy)建立通信连接。</p>
+需要感知到外部引用它（即运行 Dubbo 服务的 Pod）的 service
+名字，然而，register 并没有简单的办法从环境中获取到 service
+名字信息，即使通过 kubernetes api 中查询到引用 Pod 的 service
+信息，也会面临一个 Pod 被多个 service
+引用的情况，这时候没有办法自动确定究竟是哪个 service 才是 Mesh 使用的
+service，最终，它会影响 Consumer 如何与 sidecar(Envoy)建立通信连接。</p>
 <p>有两种注册方案：</p>
 <ol type="1">
 <li><p>通过 kubernetes 定义 service 时，打上 annotation 标记，如
@@ -256,7 +264,7 @@ service，不需要改造 Dubbo 即可实现：</p>
 </code></pre>
 <p>上面的配置定义了一个 <dubbo:application />，name 设定为
 <code>demo-srv</code> ，然后定义了一个 dubbo:service，引用
-<code>demo-srv</code> 。 我们可以在 register 扩展插件中将
+<code>demo-srv</code> 。我们可以在 register 扩展插件中将
 <code>demo-srv</code> 属性提取出来，注册到 MeshRegistry 中。</p>
 <p>这样，我们便可再定义一个 <code>demo-srv</code> 的 kubernetes
 service，即可在两个服务注册中心记录下足够的对应信息。</p></li>
@@ -269,7 +277,7 @@ service，Dubbo 再访问 service 被 sidecar 拦截，完成最后
 <code>service-&gt;address</code> 映射。</p>
 <p>服务发现扩展（discover）中完成
 <code>api(interface)-&gt;service</code> 的映射动作后，需要通过 cluster
-扩展，将其目的地址修改为 service。 在这里，我们可以借助 kube-DNS 完成
+扩展，将其目的地址修改为 service。在这里，我们可以借助 kube-DNS 完成
 service 的 IP 地址转换，而不需要在 cluster 中手动解析。</p>
 <p>下面是 Consumer 侧可能的配置：</p>
 <div class="sourceCode" id="cb6"><pre
@@ -292,14 +300,15 @@ Dubbo
 <h2 id="社区发展">社区发展</h2>
 <p>Dubbo 3.0 也在进行升级改造，核心是将 interface 级别的服务发现控制在
 Dubbo 内部，提供 App 概念来更好地适配云原生生态（app
-概念等同于本文中描述的 service 概念）。
-社区方案中要解决的核心问题也是完成 <code>interface-&gt;app</code>
-映射，计划通过实例间协商完成（社区称之为自省）。 这个方案将改造 registry
+概念等同于本文中描述的 service
+概念）。社区方案中要解决的核心问题也是完成
+<code>interface-&gt;app</code>
+映射，计划通过实例间协商完成（社区称之为自省）。这个方案将改造 registry
 模型，但对上层业务代码没有影响，与 Istio
 结合同样还会遇到注册模型的差异问题。本文提出融合方案与社区发展没有冲突。</p>
 <h2 id="参考资料">参考资料</h2>
-<p>Dubbo 迈出云原生重要一步：应用级服务发现解析
-https://www.infoq.cn/article/GUvBbu5Mbv5uXfj1lLrL</p></div>
+<p>Dubbo
+迈出云原生重要一步：应用级服务发现解析https://www.infoq.cn/article/GUvBbu5Mbv5uXfj1lLrL</p></div>
    
             <!-- -->
           </article>

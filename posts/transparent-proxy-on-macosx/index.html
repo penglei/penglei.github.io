@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="renderer" content="webkit" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-status-bar-style" content="#f8f5ec" />
     
     <meta name="generator" content="" />
     <meta name="description" content="" />
@@ -157,23 +157,23 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">.........................macOS............................
-.                (userspace)                             .
-.                                 127.0.0.1:12345        .
-. +----------+                  +------------------+     .  +---------------+
-. |   APP    |                  | transprant proxy +-------&gt;| socks5 server +---&gt;outside world
-. +----------+                  +------------------+     .  +---------------+    (eg: 1.2.3.4)
-.      | eg: 1.2.3.4                      ^              .
-+======|==================================|===============
-.      |        (kernel space)            |              .
-.      |                        pf rdr    |              .
-.      |                      +-----------+              .
-.      v                      |                          .
-.  +----+--+               +--+--+                       .
-.  |  en0  +--------------&gt;| lo0 |                       .
-.  +-------+  pf route-to  +-----+                       .
-.                                                        .
-..........................................................</pre>
+<pre class="highlight nowrap"><code>┌───────────────────────macOS────────────────────────────┐
+│                (userspace)                             │
+│                                 127.0.0.1:12345        │
+│ ┌─────────┐                   ┌──────────────────┐     │   ┌──────────────────┐
+│ │   APP   │                   │ transprant proxy ├─────┼──►│  socks5 server   ├───► outside world
+│ └────┬────┘                   └─────────▲────────┘     │   └──────────────────┘     (eg: 1.2.3.4)
+│      │ eg: 1.2.3.4                      │              │
+╞══════│══════════════════════════════════│══════════════╡
+│      │        (kernel space)            │              │
+│      │                        pf rdr    │              │
+│      │                        ┌─────────┘              │
+│      │                        │                        │
+│ ┌────▼────┐                ┌──┴──┐                     │
+│ │   en0   ├───────────────►│ lo0 │                     │
+│ └─────────┘   pf route-to  └─────┘                     │
+│                                                        │
+└────────────────────────────────────────────────────────┘</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -247,24 +247,24 @@ pass out route-to (lo0 127.0.0.1) proto tcp from any to 1.2.3.4</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">..............................macOS..............................
-.                                                               .
-. +----------+                                                  .
-. |   APP    |                                                  .
-. +----------+                             127.0.0.1:12345      .
-.      | eg: 1.2.3.4            pf rdr-to  +------------------+ .
-.      |                      +-----------&gt;|     redsocks     | .
-.      v                      |            +---------+--------+ .
-.  +----+--+               +--+--+                   |          .
-.  |  en0  +--------------&gt;| lo0 |                   |          .
-.  +-------+  pf route-to  +-----+                   |          .
-.                                                    v          .
-.                                          127.0.0.1:29090      .
-.                                          +------------------+ .   +---------------+
-.                                          |     ss-local     +----&gt;|  ss-server    +---&gt;outside world
-.                                          +------------------+ .   +---------------+    (eg: 1.2.3.4)
-.                                                               .   SERVER_IP:PORT
-.................................................................</pre>
+<pre class="highlight nowrap"><code>┌────────────────────────────macOS──────────────────────────────┐
+│                                                               │
+│ +----------+                                                  │
+│ |   APP    |                                                  │
+│ +----------+                             127.0.0.1:12345      │
+│      | eg: 1.2.3.4            pf rdr-to  +------------------+ │
+│      |                      +-----------&gt;|     redsocks     | │
+│      v                      |            +---------+--------+ │
+│  +----+--+               +--+--+                   |          │
+│  |  en0  +--------------&gt;| lo0 |                   |          │
+│  +-------+  pf route-to  +-----+                   |          │
+│                                                    v          │
+│                                          127.0.0.1:29090      │
+│                                          +------------------+ │   +---------------+
+│                                          |     ss-local     +----&gt;|  ss-server    +---&gt;outside world
+│                                          +------------------+ │   +---------------+    (eg: 1.2.3.4)
+│                                                               │   SERVER_IP:PORT
+└───────────────────────────────────────────────────────────────┘</code></pre>
 </div>
 </div>
 <div class="sect2">
@@ -382,9 +382,10 @@ redsocks {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-shell" data-lang="shell">$ mkdir -p /opt/bin
-$ git clone https://github.com/penglei/redsocks.git redsocks2.git &amp;&amp; cd redsocks2.git &amp;&amp; make OSX_VERSION=master
-$ mv redsocks2 /opt/bin/redsocks</code></pre>
+<pre class="highlight nowrap"><code class="language-shell" data-lang="shell">❯ mkdir -p /opt/bin
+❯ git clone https://github.com/penglei/redsocks.git
+❯ redsocks2.git &amp;&amp; cd redsocks2.git &amp;&amp; make OSX_VERSION=master
+❯ mv redsocks2 /opt/bin/redsocks</code></pre>
 </div>
 </div>
 </div>
