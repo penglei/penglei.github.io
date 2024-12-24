@@ -218,7 +218,7 @@ code,pre,kbd {
 }
 .md-typeset pre>code {
   display: block;
-  padding: 0.5147058824em 0.7352941176em;
+  padding: 0.2941176471em 0.2941176471em;
   margin: 0;
   /* overflow: auto; */
   word-break: normal;
@@ -396,8 +396,8 @@ code,pre,kbd {
   text-align: right;
 }
 .md-typeset table:not([class]) th {
-  min-width: 5rem;
-  padding: 0.9375em 1.25em;
+  min-width: 3rem;
+  padding: 0.625em 0.625em;
   font-weight: 700;
   vertical-align: top;
 }
@@ -2143,10 +2143,16 @@ pre[data-lang]::before,div.sourceCode[data-lang]::before {
 
 .syn-highlight-line-number {
   background-color: var(--md-code-bg-color);
+  border-right: 1px solid #574c2d;
 }
 .syn-highlight-line-number code {
   font-size: 0.7em;
   color: gray;
+  padding-right: 2px;
+}
+
+pre>code.syn-code-block {
+  padding-left: 0px;
 }
 
 [data-md-color-scheme=dracula] .syn-code-block {

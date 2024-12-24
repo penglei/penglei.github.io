@@ -115,7 +115,7 @@ id="toc-已有的系统中进入copytoram模式">已有的系统中进入copytor
       </div>
       <div class="post-content"><p>nix是一个基于函数式语言的声明式包管理器，几年前我把macOS上面的包管理器从brew切换到nix，实现了
 Configuration-as-Code
-的方式来管理环境。有了nix这样一个可编程层，基本上所有的配置都可以提交到git仓库：任何时候都可以稳定复现日常使用的环境，这极大地降低了维护个人开发环境的心理负担，尝试不同的技术生态也变得更加容易。x3</p>
+的方式来管理环境。有了nix这样一个可编程层，基本上所有的配置都可以提交到git仓库：任何时候都可以稳定复现日常使用的环境，这极大地降低了维护个人开发环境的心理负担，尝试不同的技术生态也变得更加容易。</p>
 <p>NixOS是以nix为基础实现的Linux发现版。得益于nix的设计原则，NixOS也具有Declarative、Reproducible、
 Reliable的优点。除此之外，NixOS可以高度定制化，基本上可以积木式地搭建自己独特的Linux系统，这一点是使用ArchLinux、Debian、RedHat系等发行版时无法想象的。尤其对于Server端环境，从引导程序、内核到系统服务，完全可按需定制成最小的Linux系统。同时，系统整体上的配置是声明式风格，将系统维护融合进自动化管理流程也容易得多。因此，我逐步将所有的Linux
 Server全部切换到NixOS。</p>
@@ -183,7 +183,7 @@ href="https://nixos.org/download/">安装nix</a>，注意，我们提前配置ni
 <p>将如下内容填写到 <code>configuration.nix</code> 配置模块中:</p>
 <div class="nix" data-lang="nix"><div style="min-width: auto">
             <div style="display: flex;">
-              <div class="syn-highlight-line-number" style="border-right: 1px solid green; text-align:right; padding-right: 2px; margin-right: 2px;">
+              <div class="syn-highlight-line-number" style="text-align:right; padding-right: 2px; margin-right: 2px;">
                 <pre style="margin: 0"><code><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div><div>8</div><div>9</div><div>10</div><div>11</div><div>12</div><div>13</div><div>14</div><div>15</div><div>16</div><div>17</div><div>18</div><div>19</div><div>20</div><div>21</div><div>22</div><div>23</div><div>24</div><div>25</div><div>26</div><div>27</div></code></pre></div><div class="sync-highlight-content" style="flex: 1; overflow-x: auto;"><pre style="margin:0"><code class="syn-code-block"><span class="line"><span class="syn-punctuation syn-bracket">{</span> <span class="syn-variable syn-parameter">pkgs</span><span class="syn-punctuation syn-delimiter">,</span> <span class="syn-variable syn-parameter">username</span><span class="syn-punctuation syn-delimiter">,</span> <span class="syn-variable syn-parameter syn-builtin">...</span> <span class="syn-punctuation syn-bracket">}</span><span class="syn-punctuation syn-delimiter">:</span></span>
 <span class="line"></span>
 <span class="line"><span class="syn-punctuation syn-bracket">{</span></span>
@@ -351,11 +351,11 @@ href="https://systemd.io/">Systemd</a>太复杂，难以审计，进而导致系
 <div class="md-table-wrapper">
 <table>
 <colgroup>
-<col style="width: 11%" />
-<col style="width: 18%" />
-<col style="width: 20%" />
-<col style="width: 13%" />
-<col style="width: 34%" />
+<col style="width: 4%" />
+<col style="width: 21%" />
+<col style="width: 21%" />
+<col style="width: 14%" />
+<col style="width: 36%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -420,11 +420,11 @@ href="https://github.com/NixOS/nixpkgs/blob/5aa9fc927306617ad428e50a54c638224c37
 <div class="md-table-wrapper">
 <table>
 <colgroup>
-<col style="width: 4%" />
-<col style="width: 17%" />
-<col style="width: 33%" />
-<col style="width: 8%" />
-<col style="width: 35%" />
+<col style="width: 1%" />
+<col style="width: 18%" />
+<col style="width: 34%" />
+<col style="width: 9%" />
+<col style="width: 36%" />
 </colgroup>
 <thead>
 <tr class="header">
