@@ -83,26 +83,22 @@
             <span class="details">Table of Contents</span>
         </summary> 
         <nav class="inner"><ul>
-<li><a href="#系统配置" id="toc-系统配置">系统配置</a>
+<li><a href="#系统定义" id="toc-系统定义">系统定义</a>
 <ul>
 <li><a href="#准备flake仓库"
 id="toc-准备flake仓库">准备flake仓库</a></li>
 <li><a href="#基础配置" id="toc-基础配置">基础配置</a></li>
-<li><a href="#配置磁盘" id="toc-配置磁盘">配置磁盘</a></li>
-<li><a href="#配置硬件驱动" id="toc-配置硬件驱动">配置硬件驱动</a></li>
-<li><a href="#配置登录信息" id="toc-配置登录信息">配置登录信息</a></li>
+<li><a href="#准备磁盘" id="toc-准备磁盘">准备磁盘</a></li>
+<li><a href="#配置硬件磁盘和网络"
+id="toc-配置硬件磁盘和网络">配置硬件(磁盘和网络)</a></li>
+<li><a href="#配置密码登录" id="toc-配置密码登录">配置密码登录</a></li>
 </ul></li>
-<li><a href="#安装" id="toc-安装">安装</a>
+<li><a href="#执行安装" id="toc-执行安装">执行安装</a>
 <ul>
 <li><a href="#lustrate" id="toc-lustrate">lustrate</a></li>
 <li><a href="#kexec" id="toc-kexec">kexec</a></li>
 </ul></li>
-<li><a href="#nixos-配置" id="toc-nixos-配置">NixOS 配置</a>
-<ul>
-<li><a href="#配置密码" id="toc-配置密码">配置密码</a></li>
-</ul></li>
-<li><a href="#其它一些安装探索"
-id="toc-其它一些安装探索">其它一些安装探索</a>
+<li><a href="#一些安装探索" id="toc-一些安装探索">一些安装探索</a>
 <ul>
 <li><a href="#nixos-iso-image-系统启动流程"
 id="toc-nixos-iso-image-系统启动流程">NixOS iso-image
@@ -126,11 +122,20 @@ href="https://github.com/NixOS/nixpkgs/issues/49520">issue</a>都还没解决。
 <!-- 我常在本地虚拟机、nas、云服务上使用NixOS， -->
 <!-- 这些场景下使用标准方式(如USB或者光驱)进行安装比较麻烦， -->
 <!-- 更多是在机器上已存在其它发行版的情况下进行替换安装。 -->
-<h2 id="系统配置">系统配置</h2>
+<p>安装使用NixOS系统大概分为下面的几个步骤：</p>
+<ul>
+<li><p><strong>系统定义</strong></p>
+<p>既然NixOS是声明式管理的系统，显然首先需要”声明/定义”一个系统，即用代码描述我们的操作系统。</p></li>
+<li><p>系统安装</p>
+<p>选择一种安装模式，将我们定义的系统安装到机器(磁盘)上。</p></li>
+<li><p>系统维护</p>
+<p>安装好系统后，日常使用需要更新时，只需要维护好咱们的<strong>系统定义</strong>，再将其Apply到系统中，如此重复即可。</p></li>
+</ul>
+<h2 id="系统定义">系统定义</h2>
 <p>安装一个操作系统和一个软件包没有太大的区别：无外乎是把一堆软件/文件持久放置到某个地方，等待将来点击/开机即可使用。不过，安装操作系统大概会复杂一点：需要对硬件和系统软件两部分进行配置。硬件配置包括设置BIOS、磁盘分区等。在准备好硬件之后，则需要进行比较复杂的软件配置过程，包括安装系统内核、配置硬件驱动、安装必要的软件包、设置网络、初始化用户等等。</p>
 <p>nix
 flake可以看作是一个用nix语言描述的”声明式配置包”，有了flake规范之后，我们可以用一个锁定依赖版本、可复现的”程序包”来定义和维护我们的NixOS配置。使用flake时，通过执行命令
-<code>nixos-rebuild switch --falke &lt;flake-uri&gt;</code>实现更新升级NixOS系统。每次执行<code>switch</code>命令时，NixOS会自动为系统生成一个新配置版本，如果使用过程中发现新配置有问题，我们可以选择回到上一个版本的系统配置。</p>
+<code>nixos-rebuild switch --falke &lt;flake-uri&gt;</code>实现更新升级NixOS系统。每次执行<code>switch</code>命令时，NixOS会自动为系统生成一个新配置版本，如果使用过程中发现新配置有问题，我们可以选择回滚到上一个版本的系统配置，不再有系统升级的烦恼。</p>
 <h3 id="准备flake仓库">准备flake仓库</h3>
 <p>在本地<a
 href="https://nixos.org/download/">安装nix</a>，注意，我们提前配置nix打开flake和新风格命令行特性：</p>
@@ -182,28 +187,55 @@ href="https://nixos.org/download/">安装nix</a>，注意，我们提前配置ni
 <h3 id="基础配置">基础配置</h3>
 <p>将如下内容填写到 <code>configuration.nix</code> 配置模块中:</p>
 <div class="nix" data-lang="nix"><div style="min-width: auto">
-            <div style="display: flex;">
-              <div class="syn-highlight-line-number" style="text-align:right; padding-right: 2px; margin-right: 2px;">
-                <pre style="margin: 0"><code><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div><div>8</div><div>9</div><div>10</div><div>11</div><div>12</div><div>13</div><div>14</div><div>15</div><div>16</div><div>17</div><div>18</div><div>19</div><div>20</div><div>21</div><div>22</div><div>23</div><div>24</div><div>25</div><div>26</div><div>27</div></code></pre></div><div class="sync-highlight-content" style="flex: 1; overflow-x: auto;"><pre style="margin:0"><code class="syn-code-block"><span class="line"><span class="syn-punctuation syn-bracket">{</span> <span class="syn-variable syn-parameter">pkgs</span><span class="syn-punctuation syn-delimiter">,</span> <span class="syn-variable syn-parameter">username</span><span class="syn-punctuation syn-delimiter">,</span> <span class="syn-variable syn-parameter syn-builtin">...</span> <span class="syn-punctuation syn-bracket">}</span><span class="syn-punctuation syn-delimiter">:</span></span>
+<div style="display: flex;">
+  <div class="syn-highlight-line-number" style="text-align:right;">
+    <pre style="margin: 0"><code><span>1</span>
+<span>2</span>
+<span>3</span>
+<span>4</span>
+<span>5</span>
+<span>6</span>
+<span>7</span>
+<span>8</span>
+<span>9</span>
+<span>10</span>
+<span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+<span>26</span>
+<span>27</span>
+</code></pre></div><div class="sync-highlight-content" style="flex: 1; overflow-x: auto;"><pre style="margin:0"><code class="syn-code-block"><span class="line"><span class="syn-punctuation syn-bracket">{</span> <span class="syn-variable syn-parameter">pkgs</span><span class="syn-punctuation syn-delimiter">,</span> <span class="syn-variable syn-parameter">username</span><span class="syn-punctuation syn-delimiter">,</span> <span class="syn-variable syn-parameter syn-builtin">...</span> <span class="syn-punctuation syn-bracket">}</span><span class="syn-punctuation syn-delimiter">:</span></span>
 <span class="line"></span>
 <span class="line"><span class="syn-punctuation syn-bracket">{</span></span>
-<span class="line">  <span class="syn-variable syn-member">system</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">stateVersion</span> <span class="syn-operator">=</span> <span class="syn-string">"</span><span class="syn-string">23.05</span><span class="syn-string">"</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line">  <span class="syn-variable syn-member">system</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">stateVersion</span> <span class="syn-operator">=</span> <span class="syn-string">&quot;</span><span class="syn-string">23.05</span><span class="syn-string">&quot;</span><span class="syn-punctuation syn-delimiter">;</span></span>
 <span class="line"></span>
-<span class="line">  <span class="syn-variable syn-member">time</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">timeZone</span> <span class="syn-operator">=</span> <span class="syn-string">"</span><span class="syn-string">Asia/Shanghai</span><span class="syn-string">"</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line">  <span class="syn-variable syn-member">time</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">timeZone</span> <span class="syn-operator">=</span> <span class="syn-string">&quot;</span><span class="syn-string">Asia/Shanghai</span><span class="syn-string">&quot;</span><span class="syn-punctuation syn-delimiter">;</span></span>
 <span class="line"></span>
 <span class="line">  <span class="syn-variable syn-member">users</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">users</span><span class="syn-punctuation syn-delimiter">.</span>${username} <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">{</span></span>
 <span class="line">    <span class="syn-variable syn-member">isNormalUser</span> <span class="syn-operator">=</span> <span class="syn-boolean">true</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line">    <span class="syn-variable syn-member">extraGroups</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">[</span> <span class="syn-string">"</span><span class="syn-string">wheel</span><span class="syn-string">"</span> <span class="syn-punctuation syn-bracket">]</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line">    <span class="syn-variable syn-member">extraGroups</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">[</span> <span class="syn-string">&quot;</span><span class="syn-string">wheel</span><span class="syn-string">&quot;</span> <span class="syn-punctuation syn-bracket">]</span><span class="syn-punctuation syn-delimiter">;</span></span>
 <span class="line">    <span class="syn-variable syn-member">openssh</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">authorizedKeys</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">keys</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">[</span></span>
-<span class="line">      <span class="syn-string">"</span><span class="syn-string">ssh-ed25519 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</span><span class="syn-string">"</span></span>
+<span class="line">      <span class="syn-string">&quot;</span><span class="syn-string">ssh-ed25519 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</span><span class="syn-string">&quot;</span></span>
 <span class="line">    <span class="syn-punctuation syn-bracket">]</span><span class="syn-punctuation syn-delimiter">;</span></span>
 <span class="line">  <span class="syn-punctuation syn-bracket">}</span><span class="syn-punctuation syn-delimiter">;</span></span>
 <span class="line"></span>
 <span class="line">  <span class="syn-variable syn-member">security</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">sudo</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">extraRules</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">[</span><span class="syn-punctuation syn-bracket">{</span></span>
 <span class="line">    <span class="syn-variable syn-member">users</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">[</span> <span class="syn-variable">username</span> <span class="syn-punctuation syn-bracket">]</span><span class="syn-punctuation syn-delimiter">;</span></span>
 <span class="line">    <span class="syn-variable syn-member">commands</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">[</span><span class="syn-punctuation syn-bracket">{</span></span>
-<span class="line">      <span class="syn-variable syn-member">command</span> <span class="syn-operator">=</span> <span class="syn-string">"</span><span class="syn-string">ALL</span><span class="syn-string">"</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line">      <span class="syn-variable syn-member">options</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">[</span> <span class="syn-string">"</span><span class="syn-string">NOPASSWD</span><span class="syn-string">"</span> <span class="syn-string">"</span><span class="syn-string">SETENV</span><span class="syn-string">"</span> <span class="syn-punctuation syn-bracket">]</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line">      <span class="syn-variable syn-member">command</span> <span class="syn-operator">=</span> <span class="syn-string">&quot;</span><span class="syn-string">ALL</span><span class="syn-string">&quot;</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line">      <span class="syn-variable syn-member">options</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">[</span> <span class="syn-string">&quot;</span><span class="syn-string">NOPASSWD</span><span class="syn-string">&quot;</span> <span class="syn-string">&quot;</span><span class="syn-string">SETENV</span><span class="syn-string">&quot;</span> <span class="syn-punctuation syn-bracket">]</span><span class="syn-punctuation syn-delimiter">;</span></span>
 <span class="line">    <span class="syn-punctuation syn-bracket">}</span><span class="syn-punctuation syn-bracket">]</span><span class="syn-punctuation syn-delimiter">;</span></span>
 <span class="line">  <span class="syn-punctuation syn-bracket">}</span><span class="syn-punctuation syn-bracket">]</span><span class="syn-punctuation syn-delimiter">;</span></span>
 <span class="line"></span>
@@ -220,8 +252,11 @@ href="https://nixos.org/download/">安装nix</a>，注意，我们提前配置ni
 <li>第24打开了openssh，这样系统安装好后我们才方便通过网络登录；</li>
 <li>第26行在系统中声明安装一些常用的软件包；</li>
 </ul>
-<h3 id="配置磁盘">配置磁盘</h3>
-<p>给主分区打label，这样才能更加通用</p>
+<h3 id="准备磁盘">准备磁盘</h3>
+<p>前面的基础配置只是定义了一些最基本的软件，但要将NixOS安装到自己的机器上，还需要让NixOS的配置感知到磁盘信息，这样它才知道如何安装引导程序、挂载rootfs等。</p>
+<p>为了让我们的配置尽量通用，我们可以给磁盘打上label，然后在配置中通过label来引用，这样即使我们以后更换了机器，只需要重新初始化硬件，配置好disk
+label即可，而不用去修改仓库中的NixOS配置。</p>
+<p>下面是不同的文件系统打label的一些方式</p>
 <ul>
 <li><p>传统 ext2/3/4 类型的分区使用 <code>e2label</code> 修改label</p>
 <pre><code># e2label /dev/vda1 nixos</code></pre></li>
@@ -232,18 +267,117 @@ href="https://nixos.org/download/">安装nix</a>，注意，我们提前配置ni
 <li><p>btrfs 使用
 <code>btrfs filesystem label &lt;device/mountpoint&gt; &lt;label&gt;</code></p></li>
 </ul>
-<h3 id="配置硬件驱动">配置硬件驱动</h3>
-<h3 id="配置登录信息">配置登录信息</h3>
-<p>ssh:</p>
-<h2 id="安装">安装</h2>
+<p><strong>注意:</strong>
+由于我们还没有安装好NixOS，准备磁盘这些操作可以临时启动一个Live系统完成，如果可行的话，也可以将磁盘挂载到其它机器上进行操作。</p>
+<h3 id="配置硬件磁盘和网络">配置硬件(磁盘和网络)</h3>
+<p>准备好磁盘后，我们需要在NixOS的配置中定义文件系统和启动方式等。同时，我们还需要定义网络配置，才能比较方便用ssh登录系统，下面我们在<code>hardware.nix</code>中对硬件部份进行配置：</p>
+<div class="nix" data-lang="nix"><div style="min-width: auto">
+<div style="display: flex;">
+  <div class="syn-highlight-line-number" style="text-align:right;">
+    <pre style="margin: 0"><code><span>1</span>
+<span>2</span>
+<span>3</span>
+<span>4</span>
+<span>5</span>
+<span>6</span>
+<span>7</span>
+<span>8</span>
+<span>9</span>
+<span>10</span>
+<span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+<span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+</code></pre></div><div class="sync-highlight-content" style="flex: 1; overflow-x: auto;"><pre style="margin:0"><code class="syn-code-block"><span class="line"><span class="syn-punctuation syn-bracket">{</span> <span class="syn-variable syn-parameter">hostname</span><span class="syn-punctuation syn-delimiter">,</span> <span class="syn-variable syn-parameter syn-builtin">...</span> <span class="syn-punctuation syn-bracket">}</span><span class="syn-punctuation syn-delimiter">:</span> <span class="syn-punctuation syn-bracket">{</span></span>
+<span class="line">  <span class="syn-variable syn-member">boot</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">{</span></span>
+<span class="line">    <span class="syn-variable syn-member">initrd</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">availableKernelModules</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">[</span> <span class="syn-string">&quot;</span><span class="syn-string">nvme</span><span class="syn-string">&quot;</span> <span class="syn-string">&quot;</span><span class="syn-string">xhci_pci</span><span class="syn-string">&quot;</span> <span class="syn-punctuation syn-bracket">]</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line">    <span class="syn-variable syn-member">loader</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">{</span></span>
+<span class="line">      <span class="syn-variable syn-member">timeout</span> <span class="syn-operator">=</span> <span class="syn-number">1</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line">      <span class="syn-variable syn-member">systemd-boot</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">enable</span> <span class="syn-operator">=</span> <span class="syn-boolean">true</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line">      <span class="syn-variable syn-member">efi</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">efiSysMountPoint</span> <span class="syn-operator">=</span> <span class="syn-string">&quot;</span><span class="syn-string">/boot</span><span class="syn-string">&quot;</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line">      <span class="syn-variable syn-member">efi</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">canTouchEfiVariables</span> <span class="syn-operator">=</span> <span class="syn-boolean">true</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line">    <span class="syn-punctuation syn-bracket">}</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line">  <span class="syn-punctuation syn-bracket">}</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line"></span>
+<span class="line">  <span class="syn-variable syn-member">fileSystems</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-string">&quot;</span><span class="syn-string">/boot</span><span class="syn-string">&quot;</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">{</span></span>
+<span class="line">    <span class="syn-variable syn-member">device</span> <span class="syn-operator">=</span> <span class="syn-string">&quot;</span><span class="syn-string">/dev/nvme0n1p1</span><span class="syn-string">&quot;</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line">    <span class="syn-variable syn-member">fsType</span> <span class="syn-operator">=</span> <span class="syn-string">&quot;</span><span class="syn-string">vfat</span><span class="syn-string">&quot;</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line">    <span class="syn-variable syn-member">options</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">[</span> <span class="syn-string">&quot;</span><span class="syn-string">fmask=0077</span><span class="syn-string">&quot;</span> <span class="syn-string">&quot;</span><span class="syn-string">dmask=0077</span><span class="syn-string">&quot;</span> <span class="syn-punctuation syn-bracket">]</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line">  <span class="syn-punctuation syn-bracket">}</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line">  <span class="syn-variable syn-member">fileSystems</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-string">&quot;</span><span class="syn-string">/</span><span class="syn-string">&quot;</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">{</span></span>
+<span class="line">    <span class="syn-variable syn-member">device</span> <span class="syn-operator">=</span> <span class="syn-string">&quot;</span><span class="syn-string">/dev/disk/by-label/nixos</span><span class="syn-string">&quot;</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line">    <span class="syn-variable syn-member">fsType</span> <span class="syn-operator">=</span> <span class="syn-string">&quot;</span><span class="syn-string">ext4</span><span class="syn-string">&quot;</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line">  <span class="syn-punctuation syn-bracket">}</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line"></span>
+<span class="line">  <span class="syn-variable syn-member">networking</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">{</span></span>
+<span class="line">    <span class="syn-comment">#使用 dhcpcd, resolvconf 管理网络配置，因此打开这两个配置。</span></span>
+<span class="line">    <span class="syn-variable syn-member">dhcpcd</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">enable</span> <span class="syn-operator">=</span> <span class="syn-boolean">true</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line">    <span class="syn-variable syn-member">resolvconf</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">enable</span> <span class="syn-operator">=</span> <span class="syn-boolean">true</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line"></span>
+<span class="line">    <span class="syn-variable syn-member">useDHCP</span> <span class="syn-operator">=</span> <span class="syn-boolean">true</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line">    <span class="syn-variable syn-member">hostName</span> <span class="syn-operator">=</span> <span class="syn-variable">hostname</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line">  <span class="syn-punctuation syn-bracket">}</span><span class="syn-punctuation syn-delimiter">;</span></span>
+<span class="line"><span class="syn-punctuation syn-bracket">}</span></span>
+</code></pre></div></div></div>
+<p>硬件部份配置主要是三部份：</p>
+<ul>
+<li><p>bootloader</p>
+<p>在这里我使用的是efi引导而不是传统的bios，因此在第6行打开systemd-boot</p></li>
+<li><p>文件系统</p>
+<p>12~20行，注意18行的device路径是label的形式</p></li>
+<li><p>网络</p>
+<p>22行至结束，主要是用DHCP配置网络，以及启用resolvconf来维护DNS配置</p></li>
+</ul>
+<h3 id="配置密码登录">配置密码登录</h3>
+<p>安装好NixOS之后如果网络没有配置好，我们就无法通过ssh登录。这时候通过控制台密码登录是很有必要的。</p>
+<p>密码登录的验证信息配置在 <code>/etc/shadow</code>
+文件中，它的格式类似下面:</p>
+<pre><code>mark:$y$.n.:17736:0:99999:7:::
+[--] [----] [---] - [---] ----
+ │      │     │   │   │    │││└────────────► 9. Unused
+ │      │     │   │   │    ││└─────────────► 8. Expiration date
+ │      │     │   │   │    │└──────────────► 7. Inactivity period
+ │      │     │   │   │    └───────────────► 6. Warning period
+ │      │     │   │   └────────────────────► 5. Maximum password age
+ │      │     │   └────────────────────────► 4. Minimum password age
+ │      │     └────────────────────────────► 3. Last password change
+ │      └──────────────────────────────────► 2. Encrypted Password
+ └─────────────────────────────────────────► 1. Username
+
+$1$ – MD5
+$2a$ – Blowfish
+$2y$ – Eksblowfish
+$5$ – SHA-256
+$6$ – SHA-512
+$y$ - yescrypt, see https://en.wikipedia.org/wiki/Yescrypt https://en.wikipedia.org/wiki/Scrypt</code></pre>
+<p>可参考<a
+href="https://en.wikipedia.org/wiki/Crypt_(C)#Key_derivation_functions_supported_by_crypt">文档</a>了解更多细节。</p>
+<!-- 在NixOS中如何配置? -->
+<h2 id="执行安装">执行安装</h2>
 <!-- 安装方法有多种，比较传统的方式是用*光驱*或者*usb设备*或者*iPEX*启动一个临时系统执行安装过程。
 这些方式对于云服务器以及缺少辅助设备的场景都不够灵活，我更常用的是驱逐安装或者kexec快速启动临时系统。
 -->
-<p>有了NixOS的完整定义，我们便可以将其安装到系统中。整个安装过程可以概括为
-<code>使用nix工具，替换机器上已经存在的Linux系统</code>。</p>
+<p>有了NixOS的完整定义，我们便可以将其安装到系统中。最方便的安装方式是”将一个已经运行的Linux发行版替换为NixOS”
+。</p>
 <p>准备：</p>
 <ul>
-<li><p>目标机器上需要一个在运行的Linux系统，比如常见的ubuntu、debian、arch等。</p>
+<li><p>目标机器上运行着一个Linux系统，比如常见的ubuntu、debian、arch等。</p>
 <p>已有系统需要有root权限，并且Linux内核版本不能太低。我曾使用3.10内核版本的CentOS，发现user
 namespace无法工作，导致nix安装不上。</p></li>
 <li><p>现有机器位于一个网络质量比较好环境中</p>
@@ -258,14 +392,14 @@ EOF
 # sh &lt;(curl -L https://nixos.org/nix/install) --no-daemon</code></pre>
 <h3 id="lustrate">lustrate</h3>
 <p>NixOS
-boot支持一种延迟安装模式，特别适用于不重新调整磁盘分区的情况下直接替换当前的系统。</p>
+boot支持一种延迟安装模式，特别适用于不需要重新调整磁盘分区的情况下直接替换当前的系统。</p>
 <ol type="1">
 <li><p>构建系统</p>
 <p>假设我们把flake nixos配置存放在github上，通过如下命令先构建系统：</p>
-<div class="sourceCode" id="cb6"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> nix profile install <span class="dt">\</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>--profile /nix/var/nix/profiles/system <span class="dt">\</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>github:penglei/nixos-example#nixosConfigurations.mynixos.config.system.build.toplevel</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> nix profile install <span class="dt">\</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>--profile /nix/var/nix/profiles/system <span class="dt">\</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>github:penglei/nixos-example#nixosConfigurations.mynixos.config.system.build.toplevel</span></code></pre></div>
 <p>Tips</p>
 <ul>
 <li><p>多次执行命令会提醒profile中已经存在该package。使用执行如下命令进行删除：</p>
@@ -296,29 +430,10 @@ EOF
 </ol>
 <!-- 复杂的部份是理解 boot loader和磁盘分区。 -->
 <h3 id="kexec">kexec</h3>
-<h2 id="nixos-配置">NixOS 配置</h2>
-<h3 id="配置密码">配置密码</h3>
-<pre><code>mark:$y$.n.:17736:0:99999:7:::
-[--] [----] [---] - [---] ----
- │      │     │   │   │    │││└────────────► 9. Unused
- │      │     │   │   │    ││└─────────────► 8. Expiration date
- │      │     │   │   │    │└──────────────► 7. Inactivity period
- │      │     │   │   │    └───────────────► 6. Warning period
- │      │     │   │   └────────────────────► 5. Maximum password age
- │      │     │   └────────────────────────► 4. Minimum password age
- │      │     └────────────────────────────► 3. Last password change
- │      └──────────────────────────────────► 2. Encrypted Password
- └─────────────────────────────────────────► 1. Username
-
-$1$ – MD5
-$2a$ – Blowfish
-$2y$ – Eksblowfish
-$5$ – SHA-256
-$6$ – SHA-512
-$y$ - yescrypt, see https://en.wikipedia.org/wiki/Yescrypt https://en.wikipedia.org/wiki/Scrypt</code></pre>
-<p>密码字段格式<a
-href="https://en.wikipedia.org/wiki/Crypt_(C)#Key_derivation_functions_supported_by_crypt">文档</a></p>
-<h2 id="其它一些安装探索">其它一些安装探索</h2>
+<p>如果我们要格式化磁盘，则需要进入一个临时系统，才能卸载掉磁盘对齐进行操作。传统发行版通常在iso镜像中携带一个isolinux系统和installer程序(NixOS也有这种方式)，这样来实现重新配置硬件，如磁盘分区。</p>
+<p>如果我们已经有正在运行的Linux，一个比启动iso更简单的方式是用kexec拉起一个临时系统。nixos-kexec
+是一个拉起NixOS系统的工具。</p>
+<h2 id="一些安装探索">一些安装探索</h2>
 <h3 id="nixos-iso-image-系统启动流程">NixOS iso-image 系统启动流程</h3>
 <p>现代Linux系统的启动比较灵活，它可以粗略地分为两个阶段：</p>
 <ol type="1">
