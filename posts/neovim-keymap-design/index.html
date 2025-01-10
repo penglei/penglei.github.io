@@ -114,6 +114,7 @@ key</a></li>
 <h1 id="默认键位">默认键位</h1>
 <h2 id="normal-mode">normal mode</h2>
 <h3 id="single-key">single Key</h3>
+<div class="md-table-wrapper">
 <table>
 <colgroup>
 <col style="width: 16%" />
@@ -427,8 +428,10 @@ to its match</td>
 </tr>
 </tbody>
 </table>
+</div>
 <h3 id="single-key-with-ctrl-modifier-key">single key with ctrl modifier
 key</h3>
+<div class="md-table-wrapper">
 <table>
 <thead>
 <tr class="header">
@@ -539,6 +542,7 @@ key</h3>
 </tr>
 </tbody>
 </table>
+</div>
 <h1 id="重新设计">重新设计</h1>
 <p>neovim 有一篇详尽的 <a
 href="https://neovim.io/doc/user/motion.html">motion文档</a>
@@ -551,6 +555,7 @@ href="https://neovim.io/doc/user/motion.html">motion文档</a>
 <p>所有这些功能首先保留大部分的默认键位，再额外增加一些组件键配置。</p>
 <h2 id="光标移动">光标移动</h2>
 <p>模式: normal</p>
+<div class="md-table-wrapper">
 <table>
 <thead>
 <tr class="header">
@@ -569,6 +574,7 @@ href="https://neovim.io/doc/user/motion.html">motion文档</a>
 </tr>
 </tbody>
 </table>
+</div>
 <h2 id="代码编辑">代码编辑</h2>
 <p>编辑代码不像写简单文字那样大多时候是在默认插入或者删除一些文字，而是有更复杂的操作，
 如自动完成提示、删除中间的一块代码，增删一对括号，批量重命名等。如果这些功能
@@ -577,6 +583,7 @@ href="https://neovim.io/doc/user/motion.html">motion文档</a>
 <h3 id="注释">注释</h3>
 <p>vim默认使用了<code>gc</code>来调用注释配合textobject
 motion，可以实现方便的注释操作</p>
+<div class="md-table-wrapper">
 <table>
 <thead>
 <tr class="header">
@@ -608,8 +615,10 @@ motion，可以实现方便的注释操作</p>
 </tr>
 </tbody>
 </table>
+</div>
 <h3 id="删除">删除</h3>
 <p><code>{c}</code> 表示需要输入的字符</p>
+<div class="md-table-wrapper">
 <table>
 <thead>
 <tr class="header">
@@ -701,10 +710,12 @@ motion，可以实现方便的注释操作</p>
 </tr>
 </tbody>
 </table>
+</div>
 <h3 id="替换">替换</h3>
 <p>直接替换类操作比较少，一般使用删除+插入实现，单个字符使用
 <code>r</code> 命令。</p>
 <p>一个比较高频的操作是 surround replace.</p>
+<div class="md-table-wrapper">
 <table>
 <thead>
 <tr class="header">
@@ -726,9 +737,11 @@ motion，可以实现方便的注释操作</p>
 </tr>
 </tbody>
 </table>
+</div>
 <h3 id="text-object-选择">text-object 选择</h3>
 <p>前面的几种操作可以归结为选择text-object后进行删除，使用tress-sitter
 object + hop 组合后，更容易选择需要的内容。</p>
+<div class="md-table-wrapper">
 <table>
 <thead>
 <tr class="header">
@@ -743,7 +756,9 @@ object + hop 组合后，更容易选择需要的内容。</p>
 </tr>
 </tbody>
 </table>
+</div>
 <h2 id="全局功能">全局功能</h2>
+<div class="md-table-wrapper">
 <table>
 <thead>
 <tr class="header">
@@ -789,7 +804,8 @@ object + hop 组合后，更容易选择需要的内容。</p>
 <td>Close window (panels)</td>
 </tr>
 </tbody>
-</table></div>
+</table>
+</div></div>
    
             <!-- -->
           </article>
@@ -800,7 +816,7 @@ object + hop 组合后，更容易选择需要的内容。</p>
       <div class="md-grid">
         <div class="md-footer-meta md-typeset">
           <p class="md-footer-meta__inner">
-            <span>© 2023 </span>
+            <span>© 2025 </span>
             <span> All rights reserved </span>
           </p>
         </div>

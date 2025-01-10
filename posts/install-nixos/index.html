@@ -378,7 +378,7 @@ Fields description:
 <p>每行记录一个用户的登录配置信息。这些信息总共包含9个字段，每个字段由冒号<code>:</code>进行分割。其中最重要的是前面两个字段，即用户名以及密码。下面的例子是配置root用户的密码，其它字段留空。</p>
 <pre><code>root:$y$j9T$JIC4Lr.iMSUQwWfRqQT8I/$BUBtIM0x9xGEk7r65AoWUKr19vMqRd77Cvg3AhYo28B:20013::::::</code></pre>
 <p>第二个字段是<a
-href="https://passlib.readthedocs.io/en/stable/modular_crypt_format.html">MCF格式</a>的哈希密。它用美元符号<code>$</code>分割出多个字段，其中第一个字段(id)表示hash算法，后面的字段表示具体的配置和密码hash值，不同的hash算法会定义自己的字段格式。通常其格式如下所示:</p>
+href="https://passlib.readthedocs.io/en/stable/modular_crypt_format.html">MCF格式</a>的密码哈希值。它用美元符号<code>$</code>分割出多个字段，其中第一个字段(id)表示hash算法，后面的字段表示具体的配置和密码hash值，不同的hash算法会定义自己的字段格式。通常其格式如下所示:</p>
 <pre><code>$&lt;id&gt;[$&lt;param&gt;=&lt;value&gt;(,&lt;param&gt;=&lt;value&gt;)*][$&lt;salt&gt;[$&lt;hash&gt;]]
 
 id: an identifier representing the hashing algorithm (such as 1 for MD5, 5 for SHA-256 etc.)
@@ -393,8 +393,7 @@ $5$  : SHA-256
 $6$  : SHA-512
 $y$  : yescrypt, see https://en.wikipedia.org/wiki/Yescrypt https://en.wikipedia.org/wiki/Scrypt</code></pre>
 <p>如要使密码失效，通常习惯在第MCF前面增加叹号 <code>!</code>
-，以及经常使用 <code>!</code> 表示未设置密码，如
-<code>nobody:!:1::::::</code>。</p>
+。如果想让某个用户不能使用密码登录，则常常用<code>!</code>代替整个MCF，如<code>nobody:!:1::::::</code>。</p>
 <p>如果我们要手动生成一个密码，比较简单的方式是用openssl工具，例如下面生成一个hash算法为SHA-512，密码为
 <code>123456</code> 的MCF。</p>
 <pre><code>❯ openssl passwd -6 --salt tlas 123456
@@ -659,7 +658,7 @@ exist</p>
       <div class="md-grid">
         <div class="md-footer-meta md-typeset">
           <p class="md-footer-meta__inner">
-            <span>© 2023 </span>
+            <span>© 2025 </span>
             <span> All rights reserved </span>
           </p>
         </div>
