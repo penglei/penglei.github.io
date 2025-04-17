@@ -107,6 +107,7 @@ id="toc-nixos-iso-image-系统启动流程">NixOS iso-image
 id="toc-已有的系统中进入copytoram模式">已有的系统中进入copytoram模式</a></li>
 </ul></li>
 <li><a href="#错误记录" id="toc-错误记录">错误记录</a></li>
+<li><a href="#拷贝构建" id="toc-拷贝构建">拷贝构建</a></li>
 </ul></nav>
       </div>
       <div class="post-content"><p>nix是一个基于函数式语言的声明式包管理器，几年前我把macOS上面的包管理器从brew切换到nix，实现了
@@ -347,6 +348,17 @@ module才能正确识别磁盘，进而找到文件系统，运行stage2启动1�
 <li><p>网络</p>
 <p>22行至结束，主要是用DHCP配置网络，以及启用resolvconf来维护DNS配置</p></li>
 </ul>
+<p>很多时候我们都不知道机器有什么硬件配置，如果我们能在机器上运行nix(无论是iso
+live还是已经存在的其它发行版)，则可以使用工具
+<code>nixos-install-tools</code>
+自动生成nixos系统配置和硬件配置。下面的命令在目录
+<code>/mnt/etc/nixos</code>
+中生成系统配置，可以将其中的特殊配置拷贝到我们flake
+repo的configuration中。</p>
+<pre><code>❯ nix shell nixpkgs#nixos-install-tools
+❯ sudo `which nixos-generate-config` --root /mnt
+❯ ls /mnt/etc/nixos
+configuration.nix  hardware-configuration.nix</code></pre>
 <h3 id="配置密码登录">配置密码登录</h3>
 <p>安装好NixOS之后如果网络没有配置好，我们就无法通过ssh登录。这时候通过控制台密码登录是很有必要的。</p>
 <p>密码登录的验证信息配置在 <code>/etc/shadow</code>
@@ -406,8 +418,8 @@ $6$tlas$bwAx2Uxe2FPdQnrOaXZv.jsxia5mD14Db3Ymdbk2MAZomqIaT1YJgeWeQZQGnDxSf/YjjRGJ
 <!-- 安装方法有多种，比较传统的方式是用*光驱*或者*usb设备*或者*iPEX*启动一个临时系统执行安装过程。
 这些方式对于云服务器以及缺少辅助设备的场景都不够灵活，我更常用的是驱逐安装或者kexec快速启动临时系统。
 -->
-<p>有了NixOS的完整定义，我们便可以将其安装到系统中。最方便的安装方式是”将一个已经运行的Linux发行版替换为NixOS”
-。</p>
+<p>有了NixOS的完整定义，我们便可以将其安装到系统中。最方便的安装方式是
+<strong>将一个已经运行的Linux发行版替换为NixOS</strong> 。</p>
 <p>准备：</p>
 <ul>
 <li><p>目标机器上运行着一个Linux系统，比如常见的ubuntu、debian、arch等。</p>
@@ -429,10 +441,10 @@ boot支持一种延迟安装模式，特别适用于不需要重新调整磁盘�
 <ol type="1">
 <li><p>构建系统</p>
 <p>假设我们把flake nixos配置存放在github上，通过如下命令先构建系统：</p>
-<div class="sourceCode" id="cb12"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> nix profile install <span class="dt">\</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>--profile /nix/var/nix/profiles/system <span class="dt">\</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>github:penglei/nixos-example#nixosConfigurations.mynixos.config.system.build.toplevel</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> <span class="co"># git clone github:penglei/nixos-example</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> cd nixos-example</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> nix profile install <span class="at">--profile</span> /nix/var/nix/profiles/system .#nixosConfigurations.<span class="st">&quot;mynixos&quot;</span>.config.system.build.toplevel</span></code></pre></div>
 <p>Tips</p>
 <ul>
 <li><p>多次执行命令会提醒profile中已经存在该package。使用执行如下命令进行删除：</p>
@@ -440,13 +452,6 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href=
 <li><p>如果一直调整配置，构建出系统的多个版本，占用当前系统过多的存储空间，可使用如下命令进行清理清理：</p>
 <pre><code># nix profile wipe-history --profile /nix/var/nix/profiles/system</code></pre></li>
 </ul></li>
-<li><p>执行switch boot</p>
-<pre><code># mkdir -p /run/current-system/sw/bin
-# NIXOS_INSTALL_BOOTLOADER=1 /nix/var/nix/profiles/system/bin/switch-to-configuration boot</code></pre>
-<p>环境变量 <code>NIXOS_INSTALL_BOOTLOADER</code>
-表示我们要在指定的磁盘上安装boot loader。boot
-loader有两种选择，<code>grub</code> 或者
-<code>systemd-boot</code></p></li>
 <li><p>标记重启安装</p>
 <p>前面准备好了系统文件，但是NixOS还无法启动，比如当前的
 <code>/etc</code>
@@ -460,14 +465,21 @@ loader有两种选择，<code>grub</code> 或者
 EOF
 </code></pre>
 <p>执行完上面的动作，我们便可以重启机器，系统将会进入新安装的NixOS系统。</p></li>
+<li><p>执行switch boot</p>
+<pre><code># mkdir -p /run/current-system/sw/bin
+# NIXOS_INSTALL_BOOTLOADER=1 /nix/var/nix/profiles/system/bin/switch-to-configuration boot</code></pre>
+<p>环境变量 <code>NIXOS_INSTALL_BOOTLOADER</code>
+表示我们要在指定的磁盘上安装boot loader。boot
+loader有两种选择，<code>grub</code> 或者
+<code>systemd-boot</code></p></li>
 </ol>
 <!-- 复杂的部份是理解 boot loader和磁盘分区。 -->
 <h3 id="kexec">kexec</h3>
 <p>如果我们要格式化磁盘，则需要进入一个临时系统，才能卸载掉磁盘，然后对其进行格式化操作。传统发行版通常在iso镜像中提供一个isolinux系统和installer程序(NixOS也有这种方式)，安装系统时先通过光驱或者网络或者USB设备启动这个临时系统，执行安装程序，实现配置硬件如磁盘分区等动作。</p>
 <p>这中方式总是比较麻烦，它通常需要我们直接接触硬件(否则我们不方面进入installer)。进入这些installer具有非常明显的Imperative风格，配置BIOS或网络等等，显得和NixOS格格不如。</p>
-<p>从运行时看来，操作系统(内婚)不过内存中是一段程序，如果我们已经有Linux系统了，那其实可以把自己替换掉：在内存中开一个临时文件系统，将操作系统保存到这个临时文件系统中，然后加载运行一个新的内核，重新从头执行运行1号进程的程序，跳过硬件完全运行一个临时的新的系统。这就是kexec的作用。</p>
+<p>从运行时看来，操作系统(内核)不过是内存中的一段运行着的程序，如果我们已经有Linux系统了，那其实可以把自己替换掉：在内存中开一个临时文件系统，将操作系统保存到这个临时文件系统中，然后加载运行一个新的内核，重新从头执行运行1号进程的程序，跳过硬件完全运行一个临时的新的系统。这就是kexec的作用。</p>
 <p>nixos-kexec
-封装了运行临时系统的initrd，可以非常方便地拉起一个纯内存的临时NixOS系统。拉起的临时系统前，我们还可以为其申明网络配置、账户、密码、SSH公钥等，这让我们可以非常方便地通过当前网络进入这个临时系统，进而执行前面的安装流程！</p>
+封装了运行临时系统的initrd，可以非常方便地拉起一个临时的纯内存NixOS系统。在拉起临时系统前，我们还可以为其申明网络配置、账户、密码、SSH公钥等，这让我们在这个临时系统启动后，可过当前网络进入这个临时系统，进而执行前面的安装流程！</p>
 <p>另外，NixOS社区提供了一个申明式工具(<a
 href="https://github.com/nix-community/disko">disko</a>)来实现划分磁盘，这里我提供了一个的<a
 href="https://github.com/penglei/nixos-example/blob/main/disko-config.nix">示例</a>。</p>
@@ -628,16 +640,16 @@ installer提供了一种copytoram模式，可以完全在内存中启动iso上�
 <p>nixos-rebuild switch –install-bootloader –flake .</p>
 </blockquote>
 <h4 id="编辑initrd">编辑initrd</h4>
-<div class="sourceCode" id="cb19"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> mount /nixos.iso /mnt</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> mkdir ~/edit-initrd <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> ~/edit-initrd</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> cp /mnt/boot/initrd initrd.zst</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> umount /mnt</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> unzstd initrd.zst</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> mkdir initrd-root <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> initrd-root</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> cpio <span class="at">-imdv</span> <span class="op">&lt;</span> ../initrd</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> find <span class="kw">|</span> <span class="fu">cpio</span> <span class="at">-o</span> <span class="at">-H</span> newc <span class="op">&gt;</span> ../initrd-new</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> zstd ../initrd-new</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> mount /nixos.iso /mnt</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> mkdir ~/edit-initrd <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> ~/edit-initrd</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> cp /mnt/boot/initrd initrd.zst</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> umount /mnt</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> unzstd initrd.zst</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> mkdir initrd-root <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> initrd-root</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> cpio <span class="at">-imdv</span> <span class="op">&lt;</span> ../initrd</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> find <span class="kw">|</span> <span class="fu">cpio</span> <span class="at">-o</span> <span class="at">-H</span> newc <span class="op">&gt;</span> ../initrd-new</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> zstd ../initrd-new</span></code></pre></div>
 <h2 id="错误记录">错误记录</h2>
 <ul>
 <li><p>安装nix时提示build-users-group不存在</p>
@@ -647,7 +659,15 @@ exist</p>
 </blockquote>
 <p>解决方案：禁用 build-users-group。在 <code>/etc/nix/nix.conf</code>
 中配置 <code>build-users-group =</code></p></li>
-</ul></div>
+</ul>
+<h2 id="拷贝构建">拷贝构建</h2>
+<p>如果安装NixOS系统的机器性能比较差，可以在一台高性能机器上构建系统，再拷贝到目标机器上:</p>
+<pre><code># nix copy --to ssh://192.168.101.1 $(realpath ./result)</code></pre>
+<p>或在目标机器从构建机器进行拷贝:</p>
+<pre><code># ssh 192.168.101.1
+# nix copy --from ssh://192.168.101.100 /nix/store/22130zprm2nqhz6jwlpk3v226saj5yzg-nixos-system-ganger-25.05.20250319.a84ebe2 --no-check-sigs</code></pre>
+<p>拷贝完成之后，切换系统:</p>
+<pre><code># ssh root@192.168.101.1 $(realpath ./result)/bin/switch-to-configuration switch</code></pre></div>
    
             <!-- -->
           </article>
