@@ -3,7 +3,12 @@
 
   function preferDarkChange(e) {
     if (localStorage.getItem("data-md-prefers-color-scheme") === "true") {
-      document.querySelector("body").setAttribute( "data-md-color-scheme", e.matches ? darkScheme : "default");
+      document
+        .querySelector("body")
+        .setAttribute(
+          "data-md-color-scheme",
+          e.matches ? darkScheme : "default",
+        );
     }
   }
 
@@ -21,7 +26,9 @@
     }
 
     if (prefer === "true" && preferSupported) {
-      scheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? darkScheme : "default";
+      scheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? darkScheme
+        : "default";
     } else {
       prefer = "false";
     }
@@ -65,7 +72,9 @@
 
     if (preferSupported && scheme === "default" && prefer !== "true") {
       prefer = "true";
-      scheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? darkScheme : "default";
+      scheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? darkScheme
+        : "default";
     } else if (preferSupported && prefer === "true") {
       prefer = "false";
       scheme = darkScheme;

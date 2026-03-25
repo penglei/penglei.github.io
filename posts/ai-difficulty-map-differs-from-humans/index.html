@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head post="yes">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta name="renderer" content="webkit" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-status-bar-style" content="#f8f5ec" />
+  
+  <meta name="generator" content="" />
+  <meta name="description" content="" />
+  <meta name="keywords" content="" />
+  <!-- <link rel="stylesheet" href=""> -->
+  
+  <meta name="author" content="penglei" />
+  <title>YByte — AI Coding 的难度</title>
+  <link rel="stylesheet" type="text/css" href="/assets/css/site.css" />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦥</text></svg>" />
+  <script src="/assets/script/theme.js"></script>
+  <!-- <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" /> -->
+  <!-- <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css" /> -->
+
+    </head>
+
+<body data-md-color-primary="deep-purple" data-md-color-accent="deep-purple"> <header class="md-header md-header--shadow">
+  <nav class="md-header__inner md-grid">
+    <div class="logo">
+      <a href="/" accesskey="h">YByte</a>
+    </div>
+    <div class="md-header__placeholder"></div>
+    <ul class="md-tabs__list">
+      <li
+        class="md-tabs__item "
+      >
+        <a href="/archive" class="md-tabs__link">Archive</a>
+      </li>
+      <li
+        class="md-tabs__item "
+      >
+        <a href="/tags" class="md-tabs__link">Tags</a>
+      </li>
+      <li
+        class="md-tabs__item "
+      >
+        <a href="/about" class="md-tabs__link">About</a>
+      </li>
+    </ul>
+    <div class="md-header__option">
+      <div id="toggle-theme" class="md-icon">
+        <a href="#" title="Light mode" class="light-mode">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>        </a>
+        <a href="#" title="Dark mode" class="dark-mode">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>        </a>
+        <a href="#" title="System preference" class="system-mode">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 2c-1.79 1.15-3 3.18-3 5.5s1.21 4.35 3.03 5.5C4.46 13 2 10.54 2 7.5A5.5 5.5 0 0 1 7.5 2m11.57 1.5 1.43 1.43L4.93 20.5 3.5 19.07 19.07 3.5m-6.18 2.43L11.41 5 9.97 6l.42-1.7L9 3.24l1.75-.12.58-1.65L12 3.1l1.73.03-1.35 1.13.51 1.67m-3.3 3.61-1.16-.73-1.12.78.34-1.32-1.09-.83 1.36-.09.45-1.29.51 1.27 1.36.03-1.05.87.4 1.31M19 13.5a5.5 5.5 0 0 1-5.5 5.5c-1.22 0-2.35-.4-3.26-1.07l7.69-7.69c.67.91 1.07 2.04 1.07 3.26m-4.4 6.58 2.77-1.15-.24 3.35-2.53-2.2m4.33-2.7 1.15-2.77 2.2 2.54-3.35.23m1.15-4.96-1.14-2.78 3.34.24-2.2 2.54M9.63 18.93l2.77 1.15-2.53 2.19-.24-3.34Z"/></svg>        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+  <!-- -->
+  <div class="md-container">
+    <main class="md-main">
+      <div class="md-main__inner md-grid">
+        <article class="post-single md-typeset">
+          <header class="post-header">
+            <h1 class="post-title">AI Coding 的难度</h1>
+            <div class="post-meta">
+              <span>2026-03-24</span>
+              <p class="meta-tags">
+              </p>
+            </div>
+          </header>
+            <div class="toc" id="toc">
+        <summary id="toctitle">
+            <span class="details">Table of Contents</span>
+        </summary> 
+        <nav class="inner"><ul>
+<li><a href="#底层代码更难"
+id="toc-底层代码更难">底层代码更难？</a></li>
+<li><a href="#从信息结构看代码就是代码"
+id="toc-从信息结构看代码就是代码">从信息结构看，代码就是代码</a></li>
+<li><a href="#底层知识更稀缺吗"
+id="toc-底层知识更稀缺吗">底层知识更稀缺吗？</a></li>
+<li><a href="#即使知道也容易出错"
+id="toc-即使知道也容易出错">即使知道，也容易出错？</a></li>
+<li><a href="#强约束是-ai-的盟友" id="toc-强约束是-ai-的盟友">强约束是
+AI 的盟友</a></li>
+<li><a href="#ai-coding-的真正瓶颈在哪"
+id="toc-ai-coding-的真正瓶颈在哪">AI Coding 的真正瓶颈在哪？</a>
+<ul>
+<li><a href="#比知识更关键的往往是反馈循环"
+id="toc-比知识更关键的往往是反馈循环">比知识更关键的，往往是反馈循环</a></li>
+</ul></li>
+<li><a href="#总结" id="toc-总结">总结</a></li>
+</ul></nav>
+      </div>
+      <div class="post-content"><p>最近我用 AI 完成了一个高性能 Golang
+JSON 库的开发。这不是简单的 CRUD
+应用，涉及到了字节码定义、解释、内存管理、Golang
+运行时集成等系统编程工作。结合对比之前使用 AI
+完成的业务功能，我产生了一个直觉：<strong>AI
+写所谓”底层代码”和”业务代码”，没有明显的能力差距。</strong></p>
+<p>这个直觉初看有点反常识，但仔细分析后我认为它成立。原因是：<strong>AI
+的难度感知和人类对难度的感知不是同一个东西</strong>。</p>
+<h2 id="底层代码更难">底层代码更难？</h2>
+<p>仔细想想，我们说”底层代码难”，这个判断的主语是<strong>人类</strong>。人类觉得编译器比
+Web 后端难，很大程度上是认知结构决定的：</p>
+<ul>
+<li><strong>工作记忆瓶颈。</strong> 例如，编译器各个 pass
+之间的状态变换链条很长，人脑难以同时持有全部上下文。虚拟机的指令分派、栈帧管理、对象布局之间的关系也是如此。</li>
+<li><strong>直觉缺失。</strong> 人对”用户点击按钮 →
+页面跳转”有天然直觉，对”SSA 形式中的 φ 节点”或”标记-清除 GC
+的三色抽象”没有。</li>
+<li><strong>反馈周期长。</strong>
+改一行前端代码刷新浏览器就能看到效果，优化一个算法细节需要跑
+设计好的benchmark 才能感知。</li>
+</ul>
+<p>但这三点对 AI 都不构成障碍。AI 没有工作记忆的 7±2
+限制，不依赖视觉直觉来理解代码语义，也不需要”感受”反馈来维持注意力。</p>
+<p>更深一层看，人类在这里混淆了两个概念：“学习一个领域”的难度和”在这个领域执行任务”的难度。人类程序员花了数年才建立起对编译器或虚拟机的心智模型，因此把建立心智模型的痛苦投射到了任务本身。但一个人类专家理解了
+GC
+的三色标记法之后，实现它并不比实现一个复杂的表单验证更难。<strong>难的是理解的过程，不是理解之后的执行。</strong>
+AI
+不存在”学习过程”这个瓶颈，它在训练阶段已经完成了。所以人类感知的难度中有很大一部分（学习成本）对
+AI 根本不存在。</p>
+<h2 id="从信息结构看代码就是代码">从信息结构看，代码就是代码</h2>
+<p>如果尝试把所有代码（无论是 React
+组件还是字节码解释器）都看作某种信息拓扑结构，一个可能的推论是：所谓”上层”和”底层”的区分，也许更多是人类认知习惯的投射，而非信息本身的固有属性。</p>
+<p>举一个具体的例子：一个虚拟机的指令分派循环，和一个 Redux reducer 的
+action
+分派，在抽象结构上有相似性，都是”根据输入类型选择处理路径，更新状态”。人类觉得前者难后者易，是因为前者的输入类型是操作码，后者是更直观的业务
+action。当然，真实的虚拟机指令分派在工程细节上远比 Redux reducer
+复杂（涉及栈管理、异常处理等），但这种复杂性更多是<strong>量的累积</strong>而非<strong>质的跃迁</strong>，每个子问题的推理模式并没有本质不同。</p>
+<p>对 AI 来说，操作码和业务 action 都是 token。</p>
+<p>换句话说，底层算法之所以显得”复杂”，很大程度上是因为它操纵的对象（寄存器分配的干涉图、GC
+的对象可达性、指令流水线的冒险检测等）不映射到人类日常经验中的任何直观形象。人类的认知天然偏爱能”看到”、能”比拟”的东西：一个购物车页面、一条
+REST
+请求的生命周期，这些和现实世界的因果链相似，所以理解起来毫不费力。而一个
+SSA
+图的支配边界计算，逻辑上并不比购物车结算更复杂，只是它的结构不”形似”任何日常事物，人脑缺少现成的认知锚点去挂靠。</p>
+<p>AI
+没有这个偏好。它不需要把抽象结构映射到视觉直觉上才能处理，无论信息拓扑长什么样，对它来说都是同一种操作：在
+token
+序列上做条件概率推断。人类觉得困难的底层算法，可能只是人类直觉上不容易”看见”的算法，而非本质上更难生成的算法。</p>
+<p>以 Kolmogorov
+复杂度的视角可以看得更清楚：代码的”本质难度”可以用生成该程序的最短描述长度来近似。业务代码往往有高偶然复杂度（框架样板、约定、适配层），但较低的本质复杂度（核心逻辑可能一句话说清）。底层代码反过来，偶然复杂度低（没有框架包袱），本质复杂度高。对
+AI
+来说，偶然复杂度几乎是免费的，模式匹配即可。本质复杂度才是真正的挑战。但关键是：底层系统代码的本质复杂度虽然高，却往往是<strong>局部的、数学化的、有明确边界的</strong>，这恰好是神经网络比较擅长压缩和泛化的结构。</p>
+<h2 id="底层知识更稀缺吗">底层知识更稀缺吗？</h2>
+<p>这是一个自然的疑虑：训练数据中 Express 代码可能远多于 GC 实现，AI
+对底层代码的”经验”理应更少。</p>
+<p>但仔细一想，这个担忧在计算机领域站不太住。计算机科学可能是人类<strong>文档化最彻底</strong>的工程学科之一。操作系统、虚拟机、编译器、数据库内核，每一个经典主题都有大量的高品质资料：</p>
+<ul>
+<li>多本权威教科书（Dragon Book、“Engineering a Compiler”、CMU
+15-445……）</li>
+<li>多个开源实现的完整源码（LLVM、V8、SQLite、LuaJIT……）</li>
+<li>详细到证明级别的学术论文</li>
+<li>大量设计文档和技术博客</li>
+</ul>
+<p>诚然，训练数据中可编译、可运行的底层完整项目在<strong>数量</strong>上仍然远少于
+Web 应用。但底层资料的<strong>信息密度</strong>极高。一份 LLVM
+源码蕴含的结构知识，可能抵得上成百上千个样板式 Express
+应用。对神经网络来说，高质量的样本往往比低质量的海量样本更有效。</p>
+<p>“底层知识稀缺”更多是从业者视角的错觉：<strong>学的人少，不等于写下来的少。</strong>
+恰恰相反，因为这些领域的重要性，前人留下了异常丰富的文字记录。</p>
+<h2 id="即使知道也容易出错">即使知道，也容易出错？</h2>
+<p>另一个常见的直觉是：底层代码的容错空间小，差一个 memory barrier 就是
+bug，所以即使
+AI”知道”相关知识，微小的偏差也会导致错误。这个直觉隐含了一个对神经网络的错误模型，好像
+AI 是在背诵某段代码，稍有记忆偏差就会出错。</p>
+<p>但实际上，当训练数据中存在足够多的变体实现时，网络学到的不是某个特定实现的
+token 序列，而可能是<strong>结构性的理解</strong>。比如对 B-Tree
+的分裂操作，模型捕获的是”中间 key
+上提，左右子树维持有序性不变量”这样的结构规律，而不是某一份特定源码的逐字复述。这种结构性理解对局部扰动是鲁棒的，就像一个理解了快速排序原理的程序员，不会因为变量名从
+<code>i</code> 改成 <code>left</code> 就写不出来。</p>
+<h2 id="强约束是-ai-的盟友">强约束是 AI 的盟友</h2>
+<p>底层代码通常有更<strong>严格的形式化约束</strong>：类型系统、不变量、前置/后置条件。而业务代码的正确性标准往往是模糊的（“用户体验要好”、“产品经理觉得对”）。严格约束对人类是负担，但对
+AI
+可能是<strong>福利</strong>。约束越强，合法程序的搜索空间越小，越容易命中正确解。一个有完整类型签名的
+Rust 函数，比一个”随便怎么写都能跑”的 JavaScript handler 更容易被 AI
+写对，因为类型检查器帮它剪掉了大量错误分支。</p>
+<blockquote>
+<p>更多约束 = 更小的搜索空间 = 对 AI 更友好</p>
+</blockquote>
+<p>这和人类的感受完全相反。同样的逻辑延伸到验证环节，底层系统代码和业务代码在可验证性上存在显著的不对称：</p>
+<div class="md-table-wrapper">
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th></th>
+<th>底层系统代码</th>
+<th>业务代码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>正确性标准</td>
+<td>精确、可形式化</td>
+<td>模糊、依赖人类判断</td>
+</tr>
+<tr>
+<td>验证方式</td>
+<td>单元测试、fuzzing、property-based testing、形式化证明</td>
+<td>“点一点看看对不对”、用户反馈</td>
+</tr>
+<tr>
+<td>回归检测</td>
+<td>确定性的</td>
+<td>经常需要人工判断</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>这意味着 AI
+写底层代码即使出错，也更容易被<strong>自动化地发现和修复</strong>。而业务代码的错误（逻辑不符合产品意图）可能悄无声息地上线。从整个”AI
+生成 → 验证 → 修复”的闭环来看，底层代码可能反而更适合 AI 参与。</p>
+<h2 id="ai-coding-的真正瓶颈在哪">AI Coding 的真正瓶颈在哪？</h2>
+<p>如果知识不稀缺，结构理解也是鲁棒的，强约束还能帮忙剪枝，为什么人们仍然感觉
+AI
+写”复杂系统”时不太行？根据实际经验，问题不在<strong>理解深度</strong>，而在<strong>一致性广度</strong>。</p>
+<p>AI 理解一个 B-Tree 的 insert 操作，和理解一个 REST API 的 POST
+handler，可能确实没有本质难度差别。但当你需要这个 B-Tree 模块和 WAL
+模块、Buffer Pool、并发控制层同时正确交互时，错误率会显著上升。</p>
+<p>这不是因为 AI
+不理解任何单个组件，而是因为当前的生成架构是自回归的，逐 token
+生成，上下文窗口有限。跨模块的不变量维护，本质上要求同时持有多个约束并保持全局一致，这是一个工程局限，不是知识局限。这也解释了为什么在实现
+JSON 虚拟机项目中，AI
+在单个模块内的表现往往很好，但在模块集成时需要更多的人工把控。</p>
+<h3
+id="比知识更关键的往往是反馈循环">比知识更关键的，往往是反馈循环</h3>
+<p>如果把人类在 AI 编程中的作用拆开，大致有两类：</p>
+<ul>
+<li><strong>给出方向</strong>：定义目标、约束、优先级，决定什么值得做。</li>
+<li><strong>提供环境</strong>：让修改、运行、验证、定位错误的成本足够低。</li>
+</ul>
+<p>前者当然更根本，但后者的重要性可能仅次于前者，而且在实践里经常被低估。对
+AI
+来说，一个好的工程环境不是锦上添花，而是能力放大器。所谓”好的环境”，通常意味着：</p>
+<ul>
+<li>改完代码后能立刻运行测试，而不是等半小时集成构建</li>
+<li>性能、正确性、边界条件都有可重复的验证手段</li>
+<li>错误信息足够明确，能把问题定位到具体模块或不变量</li>
+<li>模块边界清晰，修改的影响范围可控</li>
+</ul>
+<p>为什么这件事这么重要？因为 AI
+的强项不是靠直觉拍脑袋，而是在反馈中快速搜索和收敛。只要环境允许它低成本试错、快速验真，它就能把许多原本模糊的设计问题转化为一连串可验证的小问题。</p>
+<p>这也是为什么很多人会产生一种错觉：AI
+在新项目、玩具项目、结构清晰的代码库里显得很强，一进入复杂遗留系统就突然变弱。这里的差别往往不完全是问题本身更深，而是<strong>反馈循环断裂了</strong>。改动之后跑不起来、验证太贵、错误信号含糊、模块依赖纠缠，这些都会让
+AI 的有效能力急剧下降。</p>
+<p>从这个角度看，影响 AI 编程效果的关键因素，可能可以粗略排序为：</p>
+<ol type="1">
+<li>人类是否给出了清晰的目标和边界；</li>
+<li>系统是否提供了便宜、稳定、可自动化的反馈循环；</li>
+<li>问题本身的跨模块约束复杂度有多高。</li>
+</ol>
+<p>近年来的实践正在从多个方向验证这一判断：</p>
+<ul>
+<li>AI 辅助的数据库查询优化（learned index、learned cardinality
+estimation）</li>
+<li>LLM 直接生成编译器；</li>
+<li>DeepMind 的 AlphaCode 在竞赛编程中展现了处理复杂算法问题的能力</li>
+<li>越来越多的开发者正在用 AI
+完成曾经被认为”只有顶级开发者才能做”的系统级开发</li>
+</ul>
+<p>这些都指向同一个方向：<strong>底层系统并非 AI
+的禁区，只是人类的心理禁区。</strong></p>
+<h2 id="总结">总结</h2>
+<p>AI
+和人类的难度认知不完全重合。一个涉及复杂分布式事务的业务系统，可能比一个自包含的
+GC 实现更让 AI 为难；很多看起来高深的经典算法（红黑树、标记-清除
+GC），因为结构自包含、约束边界清晰，AI
+反而写得很可靠。人类觉得前者简单后者难，AI 觉得恰好相反。</p>
+<p>所以，不要因为这是底层系统就不敢让 AI
+做，也不要因为这是业务代码就盲目信任 AI
+修改它。按真实的约束结构来判断，而不是按人类直觉中的难度等级。</p>
+<p>如果想把 AI
+真正用在复杂工程里，除了人类提供方向之外，最值得投入的一件事就是：<strong>建设一个让
+AI
+容易开发、容易验证、容易收敛的反馈环境</strong>。完善的测试、清晰的模块边界、快速的构建流程、明确的错误信息，这不是可选的锦上添花，而是决定
+AI 能力上限的基础设施。</p></div>
+   
+          <!-- -->
+        </article>
+      </div>
+    </main>
+  </div>
+  <footer class="md-footer">
+    <div class="md-grid">
+      <div class="md-footer-meta md-typeset">
+        <p class="md-footer-meta__inner">
+          <span>© 2025 </span>
+          <span> All rights reserved </span>
+        </p>
+      </div>
+    </div>
+  </footer>
+  <!-- -->
+</body>
+
+</html>

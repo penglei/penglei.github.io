@@ -1,34 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <meta name="renderer" content="webkit" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="mobile-web-app-status-bar-style" content="#f8f5ec" />
-    
-    <meta name="generator" content="" />
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
-    <!-- <link rel="stylesheet" href=""> -->
-    
-    <meta name="author" content="penglei" />
-    <title>YByte — NixOS安装笔记</title>
-    <link rel="stylesheet" type="text/css" href="/assets/css/site.css" />
-    <link
-      rel="icon"
-      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦥</text></svg>"
-    />
-    <script src="/assets/script/theme.js"></script>
-    <!-- * -->
-    <!-- <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" /> -->
-    <!-- <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css" /> -->
-    <!-- * -->
-  </head>
-  <body data-md-color-primary="deep-purple" data-md-color-accent="deep-purple"
-> <header class="md-header md-header--shadow">
+
+<head post="yes">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta name="renderer" content="webkit" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-status-bar-style" content="#f8f5ec" />
+  
+  <meta name="generator" content="" />
+  <meta name="description" content="" />
+  <meta name="keywords" content="" />
+  <!-- <link rel="stylesheet" href=""> -->
+  
+  <meta name="author" content="penglei" />
+  <title>YByte — NixOS安装笔记</title>
+  <link rel="stylesheet" type="text/css" href="/assets/css/site.css" />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦥</text></svg>" />
+  <script src="/assets/script/theme.js"></script>
+  <!-- <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" /> -->
+  <!-- <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css" /> -->
+
+    </head>
+
+<body data-md-color-primary="deep-purple" data-md-color-accent="deep-purple"> <header class="md-header md-header--shadow">
   <nav class="md-header__inner md-grid">
     <div class="logo">
       <a href="/" accesskey="h">YByte</a>
@@ -64,21 +62,20 @@
   </nav>
 </header>
 
-    <!-- -->
-    
-    <div class="md-container">
-      <main class="md-main">
-        <div class="md-main__inner md-grid">
-          <article class="post-single md-typeset">
-            <header class="post-header">
-              <h1 class="post-title">NixOS安装笔记</h1>
-              <div class="post-meta">
-                <span>2024-01-24</span>
-                <p class="meta-tags">
-                </p>
-              </div>
-            </header>
-              <div class="toc" id="toc">
+  <!-- -->
+  <div class="md-container">
+    <main class="md-main">
+      <div class="md-main__inner md-grid">
+        <article class="post-single md-typeset">
+          <header class="post-header">
+            <h1 class="post-title">NixOS安装笔记</h1>
+            <div class="post-meta">
+              <span>2024-01-24</span>
+              <p class="meta-tags">
+              </p>
+            </div>
+          </header>
+            <div class="toc" id="toc">
         <summary id="toctitle">
             <span class="details">Table of Contents</span>
         </summary> 
@@ -523,7 +520,7 @@ href="https://systemd.io/">Systemd</a>太复杂，难以审计，进而导致系
 <col style="width: 36%" />
 </colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th>order</th>
 <th>mountPoint</th>
 <th>device</th>
@@ -532,21 +529,21 @@ href="https://systemd.io/">Systemd</a>太复杂，难以审计，进而导致系
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>1</td>
 <td><span class="citation" data-cites="R">@R</span>/</td>
 <td>tmpfs</td>
 <td>tmpfs</td>
 <td>x-initrd.mount,mode=0755</td>
 </tr>
-<tr class="even">
+<tr>
 <td>2</td>
 <td><span class="citation" data-cites="R/iso">@R/iso</span></td>
 <td>/dev/root</td>
 <td>auto</td>
 <td>x-initrd.mount</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>3</td>
 <td><span class="citation"
 data-cites="R/nix">@R/nix</span>/.ro-store</td>
@@ -555,7 +552,7 @@ data-cites="R/iso/nix-store.squashfs">@R/iso/nix-store.squashfs</span></td>
 <td>squashfs</td>
 <td>x-initrd.mount,loop</td>
 </tr>
-<tr class="even">
+<tr>
 <td>4</td>
 <td><span class="citation"
 data-cites="R/nix">@R/nix</span>/.rw-store</td>
@@ -563,7 +560,7 @@ data-cites="R/nix">@R/nix</span>/.rw-store</td>
 <td>tmpfs</td>
 <td>-initrd.mount,mode=0755</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>5</td>
 <td><span class="citation"
 data-cites="R/nix/store">@R/nix/store</span></td>
@@ -592,7 +589,7 @@ href="https://github.com/NixOS/nixpkgs/blob/5aa9fc927306617ad428e50a54c638224c37
 <col style="width: 36%" />
 </colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th>order</th>
 <th>mountPoint</th>
 <th>device</th>
@@ -601,7 +598,7 @@ href="https://github.com/NixOS/nixpkgs/blob/5aa9fc927306617ad428e50a54c638224c37
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>1</td>
 <td><span class="citation" data-cites="R">@R</span>/</td>
 <td>/dev/disk/by-label/nixos</td>
@@ -666,24 +663,26 @@ exist</p>
 <p>或在目标机器从构建机器进行拷贝:</p>
 <pre><code># ssh 192.168.101.1
 # nix copy --from ssh://192.168.101.100 /nix/store/22130zprm2nqhz6jwlpk3v226saj5yzg-nixos-system-ganger-25.05.20250319.a84ebe2 --no-check-sigs</code></pre>
-<p>拷贝完成之后，切换系统:</p>
-<pre><code># ssh root@192.168.101.1 $(realpath ./result)/bin/switch-to-configuration switch</code></pre></div>
+<p>拷贝完成之后，更新profile以及切换系统:</p>
+<pre><code># ssh root@192.168.101.1 nix-env -p /nix/var/nix/profiles/system --set $(realpath ./result)
+# ssh root@192.168.101.1 /nix/var/nix/profiles/system/bin/switch-to-configuration switch</code></pre></div>
    
-            <!-- -->
-          </article>
-        </div>
-      </main>
-    </div>
-    <footer class="md-footer">
-      <div class="md-grid">
-        <div class="md-footer-meta md-typeset">
-          <p class="md-footer-meta__inner">
-            <span>© 2025 </span>
-            <span> All rights reserved </span>
-          </p>
-        </div>
+          <!-- -->
+        </article>
       </div>
-    </footer>
-    <!-- -->
-      </body>
+    </main>
+  </div>
+  <footer class="md-footer">
+    <div class="md-grid">
+      <div class="md-footer-meta md-typeset">
+        <p class="md-footer-meta__inner">
+          <span>© 2025 </span>
+          <span> All rights reserved </span>
+        </p>
+      </div>
+    </div>
+  </footer>
+  <!-- -->
+</body>
+
 </html>

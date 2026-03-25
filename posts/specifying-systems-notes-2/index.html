@@ -1,37 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <meta name="renderer" content="webkit" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="mobile-web-app-status-bar-style" content="#f8f5ec" />
-    
-    <meta name="generator" content="" />
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
-    <!-- <link rel="stylesheet" href=""> -->
-    
-    <meta name="author" content="penglei" />
-    <title>YByte — Specifying Systems 笔记 (Liveness)</title>
-    <link rel="stylesheet" type="text/css" href="/assets/css/site.css" />
-    <link
-      rel="icon"
-      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦥</text></svg>"
-    />
-    <script src="/assets/script/theme.js"></script>
-    <!-- * -->
-    <!-- * -->
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="/assets/css/asciidoctor/css/asciidoctor.css"
-    />
-  </head>
-  <body data-md-color-primary="deep-purple" data-md-color-accent="deep-purple"
-> <header class="md-header md-header--shadow">
+
+<head post="yes">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta name="renderer" content="webkit" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-status-bar-style" content="#f8f5ec" />
+  
+  <meta name="generator" content="" />
+  <meta name="description" content="" />
+  <meta name="keywords" content="" />
+  <!-- <link rel="stylesheet" href=""> -->
+  
+  <meta name="author" content="penglei" />
+  <title>YByte — Specifying Systems 笔记 (Liveness)</title>
+  <link rel="stylesheet" type="text/css" href="/assets/css/site.css" />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦥</text></svg>" />
+  <script src="/assets/script/theme.js"></script>
+  <link rel="stylesheet" type="text/css" href="/assets/css/asciidoctor/css/asciidoctor.css" />
+
+    <script>
+  MathJax = {
+    tex: {
+      processEnvironments: true,
+      processRefs: true,
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      packages: {'[+]': ['textmacros']},
+      textmacros: {
+        packages: {'[+]': ['bbox']}
+      },
+      macros: {
+        RR: '{\\bf R}',
+        bold: ['\\boldsymbol{#1}', 1],
+      }
+    },
+    loader: {load: ['[tex]/textmacros']},
+    options: {
+
+      menuOptions: {
+        settings: {
+          assistiveMml: true,   // true to enable assistive MathML
+          collapsible: false,   // true to enable collapsible math
+          explorer: false      // true to enable the expression explorer
+        }
+      },
+
+      renderActions: {
+        //disable menu
+        addMenu: [],
+
+        //render in script
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            if (display) {
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              console.log(node.textContent)
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            }
+          }
+        }, ''],
+      },
+    },
+    svg: {
+      fontCache: 'global'
+    },
+  }
+</script>
+
+<!--
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+-->
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+</head>
+
+<body data-md-color-primary="deep-purple" data-md-color-accent="deep-purple"> <header class="md-header md-header--shadow">
   <nav class="md-header__inner md-grid">
     <div class="logo">
       <a href="/" accesskey="h">YByte</a>
@@ -67,118 +122,25 @@
   </nav>
 </header>
 
-    <!-- -->
-    <div style="display: none">
-  <script type="math/tex; mode=display">
-    \newcommand{\defeq}{\triangleq}
-    \newcommand{\seq}[1]{\langle #1 \rangle}
-  </script>
-  <!--
-  <script type="math/tex; mode=display">
-    \newcommand{\sc}[1]{\mathrm{\small{#1}}\;}
-    \newcommand{\comment}[1]{\bbox[lightgrey,2pt]{\text{#1}}}
-    \newcommand{\str}[1]{``\mathsf{#1}\!"}
-    \newcommand{\nested}[1]{\!\!\rlap{\begin{aligned}\begin{alignat}{1}#1\end{alignat}\end{aligned}}}
-    \newcommand{\set}[1]{\{#1\}}
-    \newcommand{\llbracket}{[\![}
-    \newcommand{\rrbracket}{]\!]}
-    \newcommand{\sem}[1]{\llbracket #1 \rrbracket}
-    \newcommand{\H}{-\!\!\!}
-    \newcommand{\UR}{\lower 4.3pt {\urcorner}\!\!}
-    \newcommand{\UL}{\lower 4.3pt {\ulcorner}\!\!\!}
-    \newcommand{\LR}{\raise 2.5pt {\lrcorner}}
-    \newcommand{\LL}{\raise 2.5pt {\llcorner}\!\!\!}
-    \newcommand{\E}{\exists\,}
-    \newcommand{\A}{\forall\,}
-    \newcommand{\EE}{\pmb{\pmb{\boldsymbol{\boldsymbol{\exists}}}}\,}
-    \newcommand{\AA}{\pmb{\pmb{\boldsymbol{\boldsymbol{\forall}}}}\,}
-    \newcommand{\implies}{\Rightarrow}
-    \newcommand{\whileop}{\overset{+}{-}\!\!\triangleright\; }
-    \let\savedBox=\Box
-    \renewcommand{\Box}{\raise1mu{\small \square} }
-    \renewcommand{\Diamond}{ {\Large \diamond} }
-    \newcommand{\LET}{\sc{LET}}
-    \newcommand{\IN}{\sc{IN}}
-    \newcommand{\RECURSIVE}{\sc{RECURSIVE}}
-    \newcommand{\LAMBDA}{\sc{LAMBDA}}
-    \newcommand{\IF}{\sc{IF}}
-    \newcommand{\THEN}{\sc{THEN}}
-    \newcommand{\ELSE}{\sc{ELSE}}
-    \newcommand{\CASE}{\sc{CASE}}
-    \newcommand{\OTHER}{\sc{OTHER}}
-    \newcommand{\CHOOSE}{\sc{CHOOSE}}
-    \newcommand{\BOOLEAN}{\sc{BOOLEAN}}
-    \newcommand{\TRUE}{\sc{TRUE}}
-    \newcommand{\FALSE}{\sc{FALSE}}
-    \newcommand{\DOMAIN}{\sc{DOMAIN}}
-    \newcommand{\EXCEPT}{\sc{EXCEPT}}
-    \newcommand{\STRING}{\sc{STRING}}
-    \newcommand{\MODULE}{\sc{MODULE}}
-    \newcommand{\LOCAL}{\sc{LOCAL}}
-    \newcommand{\INSTANCE}{\sc{INSTANCE}}
-    \newcommand{\WITH}{\sc{WITH}}
-    \newcommand{\EXTENDS}{\sc{EXTENDS}}
-    \newcommand{\ASSUME}{\sc{ASSUME}}
-    \newcommand{\VARIABLE}{\sc{VARIABLE}}
-    \newcommand{\VARIABLES}{\sc{VARIABLES}}
-    \newcommand{\CONSTANT}{\sc{CONSTANT}}
-    \newcommand{\CONSTANTS}{\sc{CONSTANTS}}
-    %\newcommand{\CONSTANTS}{\sc{\color{red}{CONSTANTS}}}
-    \newcommand{\UNION}{\sc{UNION}}
-    \newcommand{\SUBSET}{\sc{SUBSET}}
-    \newcommand{\UNCHANGED}{\sc{UNCHANGED}}
-    \newcommand{\ENABLED}{\sc{ENABLED}}
-    \newcommand{\WF}{\text{WF}}
-    \newcommand{\SF}{\text{SF}}
-    \newcommand{\THEOREM}{\sc{THEOREM}}
-    \newcommand{\LEMMA}{\sc{LEMMA}}
-    \newcommand{\COROLLARY}{\sc{COROLLARY}}
-    \newcommand{\PROPOSITION}{\sc{PROPOSITION}}
-    \newcommand{\AXIOM}{\sc{AXIOM}}
-    \newcommand{\PROOF}{\sc{PROOF}}
-    \newcommand{\ASSUME}{\sc{ASSUME}}
-    \newcommand{\PROVE}{\sc{PROVE}}
-    \newcommand{\QED}{\sc{QED}}
-    \newcommand{\BY}{\sc{BY}}
-    \newcommand{\DEF}{\sc{DEF}}
-    \newcommand{\DEFS}{\sc{DEFS}}
-    \newcommand{\OBVIOUS}{\sc{OBVIOUS}}
-    \newcommand{\OMITTED}{\sc{OMITTED}}
-    \newcommand{\NEW}{\sc{NEW}}
-    \newcommand{\STATE}{\sc{STATE}}
-    \newcommand{\ACTION}{\sc{ACTION}}
-    \newcommand{\TEMPORAL}{\sc{TEMPORAL}}
-    \newcommand{\USE}{\sc{USE}}
-    \newcommand{\DEFINE}{\sc{DEFINE}}
-    \newcommand{\SUFFICES}{\sc{SUFFICES}}
-    \newcommand{\HAVE}{\sc{HAVE}}
-    \newcommand{\TAKE}{\sc{TAKE}}
-    \newcommand{\PICK}{\sc{PICK}}
-    \newcommand{\WITNESS}{\sc{WITNESS}}
-    \newcommand{\HIDE}{\sc{HIDE}}
-    \newcommand{\@w}[1]{\textsf{``{#1}''}}
-  </script>
-  -->
-</div>
-
-    <div class="md-container">
-      <main class="md-main">
-        <div class="md-main__inner md-grid">
-          <article class="post-single md-typeset">
-            <header class="post-header">
-              <h1 class="post-title">Specifying Systems 笔记 (Liveness)</h1>
-              <div class="post-meta">
-                <span>2020-09-08</span>
-                <p class="meta-tags">
-                  <a href="/tags/TLA+/" target="_blank"> TLA+ </a>
-                  <a href="/tags/Formal/" target="_blank"> Formal </a>
-                  <a href="/tags/Logic/" target="_blank"> Logic </a>
-                </p>
-              </div>
-            </header>
-            
-            <!-- -->
-            <div class="post-content doc"><div id="toc" class="toc">
+  <!-- -->
+  <div class="md-container">
+    <main class="md-main">
+      <div class="md-main__inner md-grid">
+        <article class="post-single md-typeset">
+          <header class="post-header">
+            <h1 class="post-title">Specifying Systems 笔记 (Liveness)</h1>
+            <div class="post-meta">
+              <span>2020-09-08</span>
+              <p class="meta-tags">
+                <a href="/tags/TLA+/" target="_blank"> TLA+ </a>
+                <a href="/tags/Formal/" target="_blank"> Formal </a>
+                <a href="/tags/Logic/" target="_blank"> Logic </a>
+              </p>
+            </div>
+          </header>
+          
+          <!-- -->
+          <div class="post-content doc"><div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <nav id="TableOfContents"><ul class="sectlevel1">
 <li><a href="#_一些概念">一些概念</a></li>
@@ -214,12 +176,15 @@ Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公
 公式末尾的 $L$ 便是描述Liveness属性的公式。</p>
 </div>
 <div style="display: none;">
-<script type="math/tex; mode=document">% <![CDATA[
+\(
 \begin{alignat}{1}
-\newcommand{\sigman}{\sigma^{+n}}
-\newcommand{\mimply}{\Rightarrow}
-\newcommand{\eventual}{{\large\diamond}}
-\end{alignat} %]]></script>
+  \newcommand{\sigman}{\sigma^{+n}}
+  \newcommand{\mimply}{\Rightarrow}
+  \newcommand{\eventual}{{\large\diamond}}
+  \newcommand{\defeq}{\triangleq}
+  \newcommand{\seq}[1]{\langle #1 \rangle}
+\end{alignat}
+\)
 </div>
 </div>
 </div>
@@ -366,9 +331,9 @@ Liveness使用时态逻辑公式进行描述，一个系统规约可以通过公
 </div>
 </li>
 <li>
-<p>$\Box[N]_\color{red}v$</p>
+<p>$\Box[N]_v$</p>
 <div class="paragraph">
-<p>其中 $N$ 是 <em>action</em> ，$_\color{red}v$ 是 <em>state function</em> 。 <em>behavior</em>  满足该公式 当且仅当 <em>behavior</em> 中每一对相继的states是一个满足 $[N]_v$ 的step。</p>
+<p>其中 $N$ 是 <em>action</em> ，$_v$ 是 <em>state function</em> 。 <em>behavior</em>  满足该公式 当且仅当 <em>behavior</em> 中每一对相继的states是一个满足 $[N]_v$ 的step。</p>
 </div>
 <div class="paragraph">
 <p>注意： $[N]_v$ 中的 $_v$ 可以是 <em>state function</em> ，并不限定于 variables（如 $\seq{hr ,\, val}$)。 <em>state function</em> 可以增加 prime 运算符形成 <em>transition function</em> 。$[N]_v$ 等价于 $ N \lor (v' = v)$ 。详见 Spcifying Systems 16.2.3。</p>
@@ -535,81 +500,21 @@ $\sigma^{+n} \models A$为 <code>true</code> ：</p>
 </div>
 </div>
 </div></div>
-          </article>
-        </div>
-      </main>
-    </div>
-    <footer class="md-footer">
-      <div class="md-grid">
-        <div class="md-footer-meta md-typeset">
-          <p class="md-footer-meta__inner">
-            <span>© 2025 </span>
-            <span> All rights reserved </span>
-          </p>
-        </div>
+        </article>
       </div>
-    </footer>
-    <!-- -->
-    <script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    jax: ["input/TeX","output/CommonHTML"],
-    //displayAlign: "left",
-    extensions: ["tex2jax.js","AssistiveMML.js"], // "MathMenu.js","MathZoom.js", "a11y/accessibility-menu.js"
-    TeX: {
-      extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"],
-      equationNumbers: { autoNumber: "none" }
-    },
-    tex2jax: {
-      //inlineMath: [["\\(", "\\)"]],
-      inlineMath: [['\\(', '\\)'], ['$', '$']],
-      displayMath: [["\\[", "\\]"]],
-      ignoreClass: "nostem|nolatexmath",
-      processEscapes: true,
-      balanceBraces: true
-    },
-    asciimath2jax: {
-      delimiters: [["\\$", "\\$"]],
-      ignoreClass: "nostem|noasciimath"
-    },
-    showMathMenu: false,
-    showMathMenuMSIE: false,
-    menuSettings: {
-        inTabOrder: false,
-        zoom: "None"
-    },
-    'HTML-CSS': {
-        availableFonts: [],
-        webFont: 'TeX',
-    }
-  })
-  MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready", function () {
-    MathJax.InputJax.AsciiMath.postfilterHooks.Add(function (data, node) {
-      if ((node = data.script.parentNode) && (node = node.parentNode) && node.classList.contains('stemblock')) {
-        data.math.root.display = "block"
-      }
-      return data
-    })
-  });
+    </main>
+  </div>
+  <footer class="md-footer">
+    <div class="md-grid">
+      <div class="md-footer-meta md-typeset">
+        <p class="md-footer-meta__inner">
+          <span>© 2025 </span>
+          <span> All rights reserved </span>
+        </p>
+      </div>
+    </div>
+  </footer>
+  <!-- -->
+</body>
 
-  MathJax.Hub.Register.MessageHook("Math Processing Error", function (message) {
-      console.log(message)
-  });
-  MathJax.Hub.Register.MessageHook("TeX Jax - parse error", function (message) {
-      console.log(message)
-  });
-
-  (function () {
-    var EXT = MathJax.Extension, mm, mz;
-          MathJax.Hub.Register.StartupHook("End Typeset",function () {
-            mm = EXT.MathMenu; mz = EXT.MathZoom;
-            EXT.MathMenu = EXT.MathZoom = {};
-          });
-    MathJax.Hub.Queue(function () {
-      if (mm) {EXT.MathMenu = mm} else {delete EXT.MathMenu}
-      if (mm) {EXT.MathZoom = mz} else {delete EXT.MathZoom}
-    });
-  })();
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js"></script>
-  </body>
 </html>

@@ -1,34 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <meta name="renderer" content="webkit" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="mobile-web-app-status-bar-style" content="#f8f5ec" />
-    
-    <meta name="generator" content="" />
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
-    <!-- <link rel="stylesheet" href=""> -->
-    
-    <meta name="author" content="penglei" />
-    <title>YByte — markdown syntax demo</title>
-    <link rel="stylesheet" type="text/css" href="/assets/css/site.css" />
-    <link
-      rel="icon"
-      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦥</text></svg>"
-    />
-    <script src="/assets/script/theme.js"></script>
-    <!-- * -->
-    <!-- <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" /> -->
-    <!-- <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css" /> -->
-    <!-- * -->
+
+<head post="yes">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta name="renderer" content="webkit" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-status-bar-style" content="#f8f5ec" />
+  
+  <meta name="generator" content="" />
+  <meta name="description" content="" />
+  <meta name="keywords" content="" />
+  <!-- <link rel="stylesheet" href=""> -->
+  
+  <meta name="author" content="penglei" />
+  <title>YByte — markdown syntax demo</title>
+  <link rel="stylesheet" type="text/css" href="/assets/css/site.css" />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦥</text></svg>" />
+  <script src="/assets/script/theme.js"></script>
+  <!-- <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" /> -->
+  <!-- <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css" /> -->
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"
+  integrity="sha384-5TcZemv2l/9On385z///+d7MSYlvIEw9FuZTIdZ14vJLqWphw7e7ZPuOiCHJcFCP" crossorigin="anonymous">
+
+<!-- The loading of KaTeX is deferred to speed up page rendering -->
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"
+  integrity="sha384-cMkvdD8LoxVzGF/RPUKAcvmm49FQ0oxwDF3BGKtDXcEc+T1b2N+teh/OJfpU0jr6" crossorigin="anonymous"></script>
+
+<!-- To automatically render math in text elements, include the auto-render extension: -->
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"
+  integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous"
+  onload="renderMathInElement(document.body);"></script>
   </head>
-  <body data-md-color-primary="deep-purple" data-md-color-accent="deep-purple"
-> <header class="md-header md-header--shadow">
+
+<body data-md-color-primary="deep-purple" data-md-color-accent="deep-purple"> <header class="md-header md-header--shadow">
   <nav class="md-header__inner md-grid">
     <div class="logo">
       <a href="/" accesskey="h">YByte</a>
@@ -64,86 +73,205 @@
   </nav>
 </header>
 
-    <!-- -->
-    
-    <div class="md-container">
-      <main class="md-main">
-        <div class="md-main__inner md-grid">
-          <article class="post-single md-typeset">
-            <header class="post-header">
-              <h1 class="post-title">markdown syntax demo</h1>
-              <div class="post-meta">
-                <span>2023-10-19</span>
-                <p class="meta-tags">
-                </p>
-              </div>
-            </header>
-              <div class="toc" id="toc">
+  <!-- -->
+  <div class="md-container">
+    <main class="md-main">
+      <div class="md-main__inner md-grid">
+        <article class="post-single md-typeset">
+          <header class="post-header">
+            <h1 class="post-title">markdown syntax demo</h1>
+            <div class="post-meta">
+              <span>2023-10-19</span>
+              <p class="meta-tags">
+              </p>
+            </div>
+          </header>
+            <div class="toc" id="toc">
         <summary id="toctitle">
             <span class="details">Table of Contents</span>
         </summary> 
         <nav class="inner"><ul>
-<li><a href="#math" id="toc-math">Math</a></li>
+<li><a href="#math" id="toc-math">Math</a>
+<ul>
+<li><a href="#fitch-proof1" id="toc-fitch-proof1">fitch proof</a></li>
+<li><a href="#equation-align" id="toc-equation-align">equation
+align</a></li>
+<li><a href="#proof-tree" id="toc-proof-tree">proof tree</a></li>
+</ul></li>
 <li><a href="#footnotscitation"
 id="toc-footnotscitation">Footnots,Citation</a></li>
 <li><a href="#code-block" id="toc-code-block">Code block</a></li>
-<li><a href="#table" id="toc-table">Table</a></li>
-<li><a href="#alerts-todo" id="toc-alerts-todo">Alerts (TODO)</a></li>
+<li><a href="#table" id="toc-table">Table</a>
+<ul>
+<li><a href="#pandoc-grid-tables" id="toc-pandoc-grid-tables">Pandoc
+Grid Tables</a></li>
+</ul></li>
 <li><a href="#quoting-text" id="toc-quoting-text">Quoting text</a></li>
-<li><a href="#using-emoji-todo" id="toc-using-emoji-todo">Using emoji
-(TODO)</a></li>
 <li><a href="#definitions" id="toc-definitions">Definitions</a></li>
+<li><a href="#numbered-example-lists"
+id="toc-numbered-example-lists">Numbered example lists</a></li>
 <li><a href="#task-list-items" id="toc-task-list-items">Task list
 items</a></li>
 <li><a href="#divs-and-spans" id="toc-divs-and-spans">Divs and
 Spans</a></li>
+<li><a href="#admonitions-todo" id="toc-admonitions-todo">Admonitions
+(TODO)</a>
+<ul>
+<li><a href="#github-style" id="toc-github-style">github style</a></li>
+<li><a href="#pandoc-style" id="toc-pandoc-style">pandoc style</a></li>
+<li><a href="#mkdocs-detail-4" id="toc-mkdocs-detail-4">mkdocs detail
+</a></li>
+</ul></li>
+<li><a href="#mkdocs-emoji-todo" id="toc-mkdocs-emoji-todo">Mkdocs Emoji
+(TODO)</a></li>
+<li><a href="#links" id="toc-links">Links</a></li>
 </ul></nav>
       </div>
       <div class="post-content"><hr />
 <p>See <a href="https://pandoc.org/MANUAL.html#pandocs-markdown"
 class="uri">https://pandoc.org/MANUAL.html#pandocs-markdown</a></p>
 <h2 id="math">Math</h2>
-<p>一元二次方程求解公式</p>
-<p>如果<span class="math inline"><em>a</em> ≠ 0</span>, 方程 <span
-class="math inline">(<em>a</em><em>x</em><sup>2</sup>+<em>b</em><em>x</em>+<em>c</em>=0)</span>
-存在两个解，并且可以通过下面的求根公式直接得到：</p>
-<p><span class="math display">$$ x = {-b \pm \sqrt{b^2-4ac} \over 2a}
+<p>单行公式</p>
+<p>如果<span class="math inline"><em>a</em> ≠ 0</span>, 那么方程 <span
+class="math inline"><em>a</em><em>x</em><sup>2</sup> + <em>b</em><em>x</em> + <em>c</em> = 0</span>
+存在两个解</p>
+<p>多行公式：</p>
+<ul>
+<li><p>渲染出多行<span class="math display">$$ x = {-b \pm
+\sqrt{b^2-4ac} \over 2a} $$</span></p></li>
+<li><p>单行需要强制增加行 <code>\\</code></p>
+<pre class="math"><code>$$
+f(x) = \int_{-\infty}^\infty
+    \hat{f}(\xi)\,e^{2 \pi i \xi x}
+    \,d\xi \\
+$$</code></pre>
+<p><span class="math display">$$
+f(x) = \int_{-\infty}^\infty
+    \hat{f}(\xi)\,e^{2 \pi i \xi x}
+    \,d\xi \\
+$$</span></p></li>
+</ul>
+<h3 id="fitch-proof1">fitch proof<a href="#fn1" class="footnote-ref"
+id="fnref1" role="doc-noteref"><sup>1</sup></a></h3>
+<p>Demo1</p>
+<p><span class="math display">$$
+\begin{aligned} 1.\\[-3pt] 2.\\[-3pt] 3.\\[-3pt] 4.\\[-3pt] 5.\\[-3pt]
+6.\\[-3pt]\end{aligned}
+\; \begin{array}{|l}
+   A \to B \\
+   B \to C \\
+   \hline
+   \quad \left. \begin{array}{|l} A \\\hline B \\ C\end{array} \right.
+\\
+   A\to C \\
+\end{array}
+\quad
+\begin{aligned} \\[-3pt] \\[-3pt] \\[-3pt]
+&amp;(\to E)\space1,3 \\[-3pt]
+&amp;(\to E) \space 2,4 \\[-3pt]
+&amp;(\to I)\space\text{3-5}
+\end{aligned}
 $$</span></p>
-<p><strong>不支持</strong> code block math display:</p>
+<p>Demo2</p>
+<p><span class="math display">$$
+\begin{array}{rll}
+\begin{array}{c} 1.\\ 2.\\ 3.\\ 4.\\ 5.\\ 6.\\ \end{array}
+\begin{array}{|l}
+   A \to B \\
+   B \to C \\
+   \hline
+   \quad
+        \begin{array}{|l}
+            A \\ \hline
+            B \\ C
+        \end{array} \\
+   A \to C
+\end{array}
+{\tiny \color{gray}
+\begin{array}{rl}
+\\ \\ \\[15px]
+\;\; (\to E) &amp; 1,3 \\[6px]
+\;\; (\to E) &amp; 2,4  \\[6px]
+\;\; (\to I) &amp; \text{3 - 5} \\
+\end{array}
+}
+\end{array}
+$$</span></p>
+<p>Demo3</p>
+<p><span class="math display">$$
+\begin{array}{c}
+\begin{array}{|l}
+\vdash (P \to Q) \to P \to Q \\
+\hline
+\begin{array}{|l}
+\quad \text{1. } P \to Q \\
+\hline
+\quad \begin{array}{|l}
+\qquad \text{2. } P \\
+\hline
+\qquad \text{3. } Q \quad \to\!\text{E}, 1,2 \\
+\end{array} \\
+\quad \text{4. } P \to Q \quad \to\!\text{I}, 2-3 \\
+\end{array} \\
+\text{5. } (P \to Q) \to (P \to Q) \quad \to\!\text{I}, 1-4 \\
+\end{array}
+\end{array}
+$$</span></p>
+<h3 id="equation-align">equation align</h3>
+<p><span class="math display">$$
+\begin{array}{rclcl}
+2x + 5 &amp;=&amp; 4x -3 &amp;&amp;\\
+2x + 5 - 4x &amp;=&amp; 4x -3 - 4x &amp;&amp;\\
+-2x +5 &amp;=&amp; -3 &amp;&amp;\\
+-2x +5 -5&amp;=&amp; -3 -5&amp;&amp;\\
+-2x  &amp;=&amp; -8&amp;&amp;\\
+x  &amp;=&amp; 4&amp;&amp;
+\end{array}
+$$</span></p>
+<h3 id="proof-tree">proof tree</h3>
+<p><span class="math display">$$
+\dfrac{
+  \dfrac{A \qquad B}{A \land B} \quad C
+}{(A \land B) \land C}
+$$</span></p>
+<p><strong>不支持</strong> code block math display</p>
 <pre><code>```math
 x = {-b \pm \sqrt{b^2-4ac} \over 2a}
 ```</code></pre>
+<p>效果:</p>
+<pre class="math"><code>x = {-b \pm \sqrt{b^2-4ac} \over 2a}</code></pre>
+<p>KaTeX支持的符号: https://katex.org/docs/supported.html</p>
 <h2 id="footnotscitation">Footnots,Citation</h2>
-<p>Here is a simple footnote<a href="#fn1" class="footnote-ref"
-id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
-<p>A footnote can also have multiple lines<a href="#fn2"
-class="footnote-ref" id="fnref2"
-role="doc-noteref"><sup>2</sup></a>.</p>
+<p>Here is a simple footnote<a href="#fn2" class="footnote-ref"
+id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
+<p>A footnote can also have multiple lines<a href="#fn3"
+class="footnote-ref" id="fnref3"
+role="doc-noteref"><sup>3</sup></a>.</p>
 <p><a href="https://pandoc.org/MANUAL.html#citation-syntax"
 class="uri">https://pandoc.org/MANUAL.html#citation-syntax</a></p>
 <h2 id="code-block">Code block</h2>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Document</span> <span class="ot">=</span> <span class="dt">Document</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  {<span class="ot"> docExt ::</span> <span class="dt">Maybe</span> <span class="dt">String</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ot">    docTitle ::</span> <span class="dt">Text</span>,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ot">    docAuthor ::</span> <span class="dt">Maybe</span> <span class="dt">Text</span>,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ot">    docTags ::</span> <span class="dt">Maybe</span> [<span class="dt">Text</span>],</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="ot">    docDate ::</span> <span class="dt">Maybe</span> <span class="dt">Text</span>,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="ot">    docContent ::</span> <span class="dt">Maybe</span> <span class="dt">Text</span>,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="ot">    docPath ::</span> <span class="dt">Maybe</span> <span class="dt">Text</span>,</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="ot">    docAttrs ::</span> <span class="dt">Maybe</span> <span class="dt">Value</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">deriving</span> (<span class="dt">Show</span>, <span class="dt">Generic</span>)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">deriving</span> (<span class="dt">FromJSON</span>, <span class="dt">ToJSON</span>) via <span class="dt">PrefixedSnake</span> <span class="st">&quot;doc&quot;</span> <span class="dt">Document</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Document</span> <span class="ot">=</span> <span class="dt">Document</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  {<span class="ot"> docExt ::</span> <span class="dt">Maybe</span> <span class="dt">String</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ot">    docTitle ::</span> <span class="dt">Text</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ot">    docAuthor ::</span> <span class="dt">Maybe</span> <span class="dt">Text</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ot">    docTags ::</span> <span class="dt">Maybe</span> [<span class="dt">Text</span>],</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ot">    docDate ::</span> <span class="dt">Maybe</span> <span class="dt">Text</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="ot">    docContent ::</span> <span class="dt">Maybe</span> <span class="dt">Text</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="ot">    docPath ::</span> <span class="dt">Maybe</span> <span class="dt">Text</span>,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="ot">    docAttrs ::</span> <span class="dt">Maybe</span> <span class="dt">Value</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">deriving</span> (<span class="dt">Show</span>, <span class="dt">Generic</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">deriving</span> (<span class="dt">FromJSON</span>, <span class="dt">ToJSON</span>) via <span class="dt">PrefixedSnake</span> <span class="st">&quot;doc&quot;</span> <span class="dt">Document</span></span></code></pre></div>
 <p>fenced code attribute</p>
 <div class="sourceCode" id="mycode" data-startFrom="100"><pre
 class="sourceCode numberSource haskell numberLines"><code class="sourceCode haskell" style="counter-reset: source-line 99;"><span id="mycode-100"><a href="#mycode-100"></a>qsort []     <span class="ot">=</span> []</span>
 <span id="mycode-101"><a href="#mycode-101"></a>qsort (x<span class="op">:</span>xs) <span class="ot">=</span> qsort (<span class="fu">filter</span> (<span class="op">&lt;</span> x) xs) <span class="op">++</span> [x] <span class="op">++</span></span>
 <span id="mycode-102"><a href="#mycode-102"></a>               qsort (<span class="fu">filter</span> (<span class="op">&gt;=</span> x) xs)</span></code></pre></div>
 <h2 id="table">Table</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode md"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>|                              | Sites                               | <span class="dv">&amp;nbsp;</span>                              |</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>| ---------------------------- | ----------------------------------- | ----------------------------------- |</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>| <span class="co">[</span><span class="ot">Github</span><span class="co">](https://github.com)</span> | <span class="co">[</span><span class="ot">Koka</span><span class="co">](https://koka-lang.github.io)</span> | <span class="co">[</span><span class="ot">Haskell</span><span class="co">](https://www.haskell.org/)</span> |</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode md"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>                              <span class="pp">|</span> Sites                               <span class="pp">|</span> <span class="dv">&amp;nbsp;</span>                              <span class="pp">|</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="pp">| ----------------------------</span> <span class="pp">| -----------------------------------</span> <span class="pp">| -----------------------------------</span> <span class="pp">|</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="co">[</span><span class="ot">Github</span><span class="co">](https://github.com)</span> <span class="pp">|</span> <span class="co">[</span><span class="ot">Koka</span><span class="co">](https://koka-lang.github.io)</span> <span class="pp">|</span> <span class="co">[</span><span class="ot">Haskell</span><span class="co">](https://www.haskell.org/)</span> <span class="pp">|</span></span></code></pre></div>
 <div class="md-table-wrapper">
 <table>
 <colgroup>
@@ -152,14 +280,14 @@ class="sourceCode numberSource haskell numberLines"><code class="sourceCode hask
 <col style="width: 35%" />
 </colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th></th>
 <th>Sites</th>
 <th> </th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td><a href="https://github.com">Github</a></td>
 <td><a href="https://koka-lang.github.io">Koka</a></td>
 <td><a href="https://www.haskell.org/">Haskell</a></td>
@@ -167,26 +295,122 @@ class="sourceCode numberSource haskell numberLines"><code class="sourceCode hask
 </tbody>
 </table>
 </div>
-<h2 id="alerts-todo">Alerts (TODO)</h2>
-<blockquote>
-<p>[!NOTE]Highlights information that users should take into account,
-even when skimming.</p>
-</blockquote>
+<h3 id="pandoc-grid-tables">Pandoc Grid Tables</h3>
+<div class="md-table-wrapper">
+<table style="width:66%;">
+<caption>Sample grid table.</caption>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 26%" />
+</colgroup>
+<thead>
+<tr>
+<th>Fruit</th>
+<th>Price</th>
+<th>Advantages</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bananas</td>
+<td>$1.34</td>
+<td><ul>
+<li>built-in wrapper</li>
+<li>bright color</li>
+</ul></td>
+</tr>
+<tr>
+<td>Oranges</td>
+<td>$2.10</td>
+<td><ul>
+<li>cures scurvy</li>
+<li>tasty</li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Cells can span multiple columns or rows:</p>
+<div class="md-table-wrapper">
+<table style="width:41%;">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 10%" />
+<col style="width: 13%" />
+</colgroup>
+<thead>
+<tr>
+<th colspan="2">Property</th>
+<th>Earth</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td rowspan="3">Temperature1961-1990</td>
+<td>min</td>
+<td>-89.2 °C</td>
+</tr>
+<tr>
+<td>mean</td>
+<td>14 °C</td>
+</tr>
+<tr>
+<td>max</td>
+<td>56.7 °C</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>A table header may contain more than one row:</p>
+<div class="md-table-wrapper">
+<table style="width:57%;">
+<colgroup>
+<col style="width: 27%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+</colgroup>
+<thead>
+<tr>
+<th rowspan="2">Location</th>
+<th colspan="3">Temperature 1961-1990in degree Celsius</th>
+</tr>
+<tr>
+<th>min</th>
+<th>mean</th>
+<th>max</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Antarctica</td>
+<td>-89.2</td>
+<td>N/A</td>
+<td>19.8</td>
+</tr>
+<tr>
+<td>Earth</td>
+<td>-89.2</td>
+<td>14</td>
+<td>56.7</td>
+</tr>
+</tbody>
+</table>
+</div>
 <h2 id="quoting-text">Quoting text</h2>
-<p>Text that is not a quote</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Text that is a quote</span></span></code></pre></div>
 <blockquote>
 <p>Text that is a quote</p>
 </blockquote>
-<h2 id="using-emoji-todo">Using emoji (TODO)</h2>
-<p><span class="citation" data-cites="octocat">@octocat</span> :+1: This
-PR looks great - it’s ready to merge! :shipit:</p>
 <h2 id="definitions">Definitions</h2>
 <dl>
 <dt>Term 1</dt>
 <dd>
 <p>Definition 1</p>
 </dd>
-<dt>Term 2 with <em>inline markup</em></dt>
+<dt><code>Term 2 with *inline markup*</code></dt>
 <dd>
 <p>Definition 2</p>
 <pre><code>{ some code, part of Definition 2 }</code></pre>
@@ -195,55 +419,134 @@ PR looks great - it’s ready to merge! :shipit:</p>
 </dl>
 <p><a href="https://pandoc.org/MANUAL.html#definition-lists"
 class="uri">https://pandoc.org/MANUAL.html#definition-lists</a></p>
+<h2 id="numbered-example-lists">Numbered example lists</h2>
+<ol class="example" type="1">
+<li>My first example will be numbered.</li>
+<li>My second example will be numbered.</li>
+</ol>
+<!-- end of list -->
+<p>Explanation of examples.</p>
+<ol start="3" class="example" type="1">
+<li><p>My third example will be numbered.</p></li>
+<li><p>This is a good example.</p></li>
+</ol>
+<p>As (4) illustrates, …</p>
+<ol start="5" class="example" type="1">
+<li>Sample sentence.</li>
+</ol>
+<p>Intervening text…</p>
+<p>This theory can explain the case we saw earlier (repeated):</p>
+<ol start="5" class="example" type="1">
+<li>Sample sentence.</li>
+</ol>
 <h2 id="task-list-items">Task list items</h2>
 <dl>
 <dt>example1</dt>
 <dd>
 <ul class="task-list">
-<li><input type="checkbox" />foo</li>
-<li><input type="checkbox" checked="" />bar</li>
+<li><label><input type="checkbox" />foo</label></li>
+<li><label><input type="checkbox" checked="" />bar</label></li>
 </ul>
 </dd>
 <dt>example2</dt>
 <dd>
 <ul class="task-list">
-<li><input type="checkbox" checked="" />foo
+<li><label><input type="checkbox" checked="" />foo</label>
 <ul class="task-list">
-<li><input type="checkbox" />bar</li>
-<li><input type="checkbox" checked="" />baz</li>
+<li><label><input type="checkbox" />bar</label></li>
+<li><label><input type="checkbox" checked="" />baz</label></li>
 </ul></li>
-<li><input type="checkbox" />bim</li>
+<li><label><input type="checkbox" />bim</label></li>
 </ul>
 </dd>
 </dl>
 <h2 id="divs-and-spans">Divs and Spans</h2>
+<div id="special" class="sidebar">
+<p>Here is a paragraph.</p>
+<p>And another.</p>
+</div>
+<p>Fenced divs can be nested. Opening fences are distinguished because
+they must have attributes:</p>
+<div class="Warning">
+<p>This is a warning.</p>
+<div class="Danger">
+<p>This is a warning within a warning.</p>
+</div>
+</div>
+<h2 id="admonitions-todo">Admonitions (TODO)</h2>
+<h3 id="github-style">github style</h3>
+<blockquote>
+<p>[!NOTE]Highlights information that users should take into account,
+even when skimming.</p>
+</blockquote>
+<blockquote>
+<p>[!WARNING]Warning: This operation will delete all data.</p>
+</blockquote>
+<h3 id="pandoc-style">pandoc style</h3>
+<p>!!! note</p>
+<pre><code>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et euismod
+nulla. Curabitur feugiat, tortor non consequat finibus, justo purus auctor
+massa, nec semper lorem quam in massa.</code></pre>
+<h3 id="mkdocs-detail-4">mkdocs detail <a href="#fn4"
+class="footnote-ref" id="fnref4"
+role="doc-noteref"><sup>4</sup></a></h3>
+<p>???+ note “Open styled details”</p>
+<pre><code>??? danger &quot;Nested details!&quot;
+    And more content again.</code></pre>
+<p>??? success Content.</p>
+<p>??? warning classes Content.</p>
+<h2 id="mkdocs-emoji-todo">Mkdocs Emoji (TODO)</h2>
+<p><span class="citation" data-cites="octocat">@octocat</span> :+1: This
+PR looks great - it’s ready to merge! :shipit:</p>
+<!-- ## tabs -->
+<!-- === "Tab 1" -->
+<!--     Lorem ipsum dolor sit amet, (1) consectetur adipiscing elit. -->
+<!--     { .annotate } -->
+<!--     1.  :man_raising_hand: I'm an annotation! -->
+<!-- === "Tab 2" -->
+<!--     Phasellus posuere in sem ut cursus (1) -->
+<!--     { .annotate } -->
+<!--     1.  :woman_raising_hand: I'm an annotation as well! -->
+<h2 id="links">Links</h2>
+<p>这是一个访问 <a href="https://www.google.com"
+title="Google 搜索">Google</a> 的链接， 你也可以在 <a
+href="https://github.com" title="GitHub 代码托管">GitHub</a>
+上找到开源项目，或者参考 <a href="https://www.markdownguide.org"
+title="Markdown 语法参考">Markdown指南</a> 学习语法。</p>
+<hr />
 <section id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1"><p>My reference.<a href="#fnref1" class="footnote-back"
+<li id="fn1"><p>https://www.logicmatters.net/latex-for-logicians/nd/<a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>My reference.<a href="#fnref2" class="footnote-back"
 role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>To add line breaks within a footnote, prefix new lines
-with 2 spaces.This is a second line.<a href="#fnref2"
+<li id="fn3"><p>To add line breaks within a footnote, prefix new lines
+with 2 spaces.This is a second line.<a href="#fnref3"
 class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p><a
+href="https://facelessuser.github.io/pymdown-extensions/extensions/details/">details</a><a
+href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div>
    
-            <!-- -->
-          </article>
-        </div>
-      </main>
-    </div>
-    <footer class="md-footer">
-      <div class="md-grid">
-        <div class="md-footer-meta md-typeset">
-          <p class="md-footer-meta__inner">
-            <span>© 2025 </span>
-            <span> All rights reserved </span>
-          </p>
-        </div>
+          <!-- -->
+        </article>
       </div>
-    </footer>
-    <!-- -->
-      </body>
+    </main>
+  </div>
+  <footer class="md-footer">
+    <div class="md-grid">
+      <div class="md-footer-meta md-typeset">
+        <p class="md-footer-meta__inner">
+          <span>© 2025 </span>
+          <span> All rights reserved </span>
+        </p>
+      </div>
+    </div>
+  </footer>
+  <!-- -->
+</body>
+
 </html>

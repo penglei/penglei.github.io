@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head post="yes">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta name="renderer" content="webkit" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-status-bar-style" content="#f8f5ec" />
+  
+  <meta name="generator" content="" />
+  <meta name="description" content="" />
+  <meta name="keywords" content="" />
+  <!-- <link rel="stylesheet" href=""> -->
+  
+  <meta name="author" content="penglei" />
+  <title>YByte — Breakpad 与 Kernel Coredump 用法</title>
+  <link rel="stylesheet" type="text/css" href="/assets/css/site.css" />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦥</text></svg>" />
+  <script src="/assets/script/theme.js"></script>
+  <!-- <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" /> -->
+  <!-- <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css" /> -->
+
+    </head>
+
+<body data-md-color-primary="deep-purple" data-md-color-accent="deep-purple"> <header class="md-header md-header--shadow">
+  <nav class="md-header__inner md-grid">
+    <div class="logo">
+      <a href="/" accesskey="h">YByte</a>
+    </div>
+    <div class="md-header__placeholder"></div>
+    <ul class="md-tabs__list">
+      <li
+        class="md-tabs__item "
+      >
+        <a href="/archive" class="md-tabs__link">Archive</a>
+      </li>
+      <li
+        class="md-tabs__item "
+      >
+        <a href="/tags" class="md-tabs__link">Tags</a>
+      </li>
+      <li
+        class="md-tabs__item "
+      >
+        <a href="/about" class="md-tabs__link">About</a>
+      </li>
+    </ul>
+    <div class="md-header__option">
+      <div id="toggle-theme" class="md-icon">
+        <a href="#" title="Light mode" class="light-mode">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>        </a>
+        <a href="#" title="Dark mode" class="dark-mode">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>        </a>
+        <a href="#" title="System preference" class="system-mode">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 2c-1.79 1.15-3 3.18-3 5.5s1.21 4.35 3.03 5.5C4.46 13 2 10.54 2 7.5A5.5 5.5 0 0 1 7.5 2m11.57 1.5 1.43 1.43L4.93 20.5 3.5 19.07 19.07 3.5m-6.18 2.43L11.41 5 9.97 6l.42-1.7L9 3.24l1.75-.12.58-1.65L12 3.1l1.73.03-1.35 1.13.51 1.67m-3.3 3.61-1.16-.73-1.12.78.34-1.32-1.09-.83 1.36-.09.45-1.29.51 1.27 1.36.03-1.05.87.4 1.31M19 13.5a5.5 5.5 0 0 1-5.5 5.5c-1.22 0-2.35-.4-3.26-1.07l7.69-7.69c.67.91 1.07 2.04 1.07 3.26m-4.4 6.58 2.77-1.15-.24 3.35-2.53-2.2m4.33-2.7 1.15-2.77 2.2 2.54-3.35.23m1.15-4.96-1.14-2.78 3.34.24-2.2 2.54M9.63 18.93l2.77 1.15-2.53 2.19-.24-3.34Z"/></svg>        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+  <!-- -->
+  <div class="md-container">
+    <main class="md-main">
+      <div class="md-main__inner md-grid">
+        <article class="post-single md-typeset">
+          <header class="post-header">
+            <h1 class="post-title">Breakpad 与 Kernel Coredump 用法</h1>
+            <div class="post-meta">
+              <span>2025-11-24</span>
+              <p class="meta-tags">
+              </p>
+            </div>
+          </header>
+            <div class="toc" id="toc">
+        <summary id="toctitle">
+            <span class="details">Table of Contents</span>
+        </summary> 
+        <nav class="inner"><ul>
+<li><a href="#breakpad在进程咽气前抢救现场"
+id="toc-breakpad在进程咽气前抢救现场">Breakpad：在进程咽气前抢救现场</a></li>
+<li><a href="#breakpad-靠不住的时候"
+id="toc-breakpad-靠不住的时候">Breakpad 靠不住的时候</a></li>
+<li><a href="#kernel-coredump从外面给进程拍遗照"
+id="toc-kernel-coredump从外面给进程拍遗照">Kernel
+Coredump：从外面给进程拍遗照</a></li>
+<li><a href="#两者对比一览" id="toc-两者对比一览">两者对比一览</a></li>
+<li><a href="#退出码读懂进程的死因"
+id="toc-退出码读懂进程的死因">退出码：读懂进程的死因</a></li>
+<li><a href="#生产环境怎么选"
+id="toc-生产环境怎么选">生产环境怎么选？</a></li>
+<li><a href="#references" id="toc-references">References</a></li>
+</ul></nav>
+      </div>
+      <div class="post-content"><p>程序崩了不可怕，可怕的是崩了之后什么都没留下。</p>
+<p>线上环境排查崩溃，核心就一个问题：<strong>崩溃现场能不能保住？</strong>
+这篇文章聊两种主流方案 —— Google Breakpad 和 Kernel
+Coredump，它们各自怎么干活、什么时候会掉链子、该怎么选。</p>
+<hr />
+<h2
+id="breakpad在进程咽气前抢救现场">Breakpad：在进程咽气前抢救现场</h2>
+<p>Breakpad 的思路很直接：程序崩溃时内核会发信号（SIGSEGV、SIGABRT
+等），Breakpad
+提前注册了信号处理函数，在进程真正死掉之前，抓紧把调用栈、寄存器、关键内存区域写进一个
+minidump 文件。</p>
+<p>整个过程大致是这样的：</p>
+<pre><code>程序启动 → 注册信号处理函数
+    ↓
+程序崩溃 → 内核发送信号（如 SIGSEGV）
+    ↓
+Breakpad 信号处理函数接管
+    ├─ 进程暂停但尚未终止，内存状态还在
+    ├─ 遍历调用栈、收集寄存器状态
+    └─ 写入 .dmp 文件（通常只有几 MB）
+    ↓
+恢复默认信号处理，重新 raise 信号 → 进程退出</code></pre>
+<p>一个最小的接入示例：</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&quot;client/linux/handler/exception_handler.h&quot;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> DumpCallback<span class="op">(</span><span class="at">const</span> google_breakpad<span class="op">::</span>MinidumpDescriptor<span class="op">&amp;</span> descriptor<span class="op">,</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                  <span class="dt">void</span><span class="op">*</span> context<span class="op">,</span> <span class="dt">bool</span> succeeded<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 注意：这里只能用 async-signal-safe 的函数</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">const</span> <span class="dt">char</span> msg<span class="op">[]</span> <span class="op">=</span> <span class="st">&quot;Crash dump saved</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    write<span class="op">(</span>STDERR_FILENO<span class="op">,</span> msg<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>msg<span class="op">)</span> <span class="op">-</span> <span class="dv">1</span><span class="op">);</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> succeeded<span class="op">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    google_breakpad<span class="op">::</span>MinidumpDescriptor descriptor<span class="op">(</span><span class="st">&quot;/var/crash&quot;</span><span class="op">);</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    google_breakpad<span class="op">::</span>ExceptionHandler eh<span class="op">(</span>descriptor<span class="op">,</span> NULL<span class="op">,</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                                          DumpCallback<span class="op">,</span> NULL<span class="op">,</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>                                          <span class="kw">true</span><span class="op">,</span> <span class="op">-</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 你的业务代码</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    run_application<span class="op">();</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Breakpad 的优点很明显：dump 文件小（几 MB vs. 动辄 GB 的 core
+文件）、跨平台、可以过滤敏感数据、方便离线分析。但它有一个本质弱点 ——
+<strong>它是在”患者”体内做手术</strong>。</p>
+<hr />
+<h2 id="breakpad-靠不住的时候">Breakpad 靠不住的时候</h2>
+<p>既然 Breakpad
+跑在用户态、依赖进程自身的环境，那进程状态一旦烂透了，它也就无能为力了。常见的翻车场景：</p>
+<p><strong>栈溢出</strong> —
+信号处理函数也需要栈空间来执行。栈都爆了，处理函数根本跑不起来。可以通过
+<code>sigaltstack</code> 设置备用栈来缓解：</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">stack_t</span> ss<span class="op">;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ss<span class="op">.</span>ss_sp <span class="op">=</span> malloc<span class="op">(</span>SIGSTKSZ<span class="op">);</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>ss<span class="op">.</span>ss_size <span class="op">=</span> SIGSTKSZ<span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>ss<span class="op">.</span>ss_flags <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>sigaltstack<span class="op">(&amp;</span>ss<span class="op">,</span> NULL<span class="op">);</span></span></code></pre></div>
+<p><strong>回调中二次崩溃</strong> — 如果 DumpCallback
+里不小心触发了新的段错误，系统不允许嵌套处理同一信号，进程直接死亡，dump
+文件可能写到一半就废了。所以回调里绝对不能用
+<code>malloc</code>、<code>printf</code>、<code>std::string</code>
+这些东西，只能用
+<code>write</code>、<code>open</code>、<code>close</code>、<code>_exit</code>
+这类 async-signal-safe 的函数。</p>
+<p><strong>SIGKILL / OOM Killer</strong> — <code>kill -9</code> 和 OOM
+Killer 发出的是 SIGKILL，压根不经过信号处理函数，Breakpad
+连执行的机会都没有。</p>
+<p><strong>内存严重损坏</strong> — double free 破坏了堆的元数据、buffer
+overflow 覆盖了栈帧链表… 这些情况下 Breakpad
+遍历调用栈时拿到的数据本身就是错的，生成的 dump
+要么不完整，要么有误导性。</p>
+<p><strong>多线程竞态</strong> — 多个线程同时崩溃，竞争写
+minidump，可能产出损坏的文件。</p>
+<p>还有一些边缘情况：dump
+目录没权限、磁盘满了、容器沙箱禁用了某些系统调用… 总之，Breakpad
+需要一个”还算健康”的进程环境，才能完成它的工作。</p>
+<hr />
+<h2 id="kernel-coredump从外面给进程拍遗照">Kernel
+Coredump：从外面给进程拍遗照</h2>
+<p>Kernel Coredump
+的思路完全不同：内核捕获到异常后，<strong>自己</strong>从外部读取进程的整个内存空间，写成
+core 文件。进程的代码完全不参与这个过程。</p>
+<p>用前面的比喻来说：</p>
+<blockquote>
+<p><strong>Breakpad</strong> 是让溺水者自己写遗书 ——
+如果他已经失去意识，就没戏了。</p>
+<p><strong>Kernel Coredump</strong> 是法医做尸检 ——
+不管遗体什么状态，都能检查。</p>
+</blockquote>
+<p>这解释了为什么 Kernel Coredump 在很多极端场景下更可靠：</p>
+<ul>
+<li><strong>栈溢出？</strong>
+内核跑在自己的内核栈上，用户栈爆了不影响它。</li>
+<li><strong>内存损坏？</strong>
+内核只是遍历进程的虚拟内存区域（VMA）逐页
+dump，不关心堆的元数据是不是完好。遇到损坏的页面，<code>copy_from_user</code>
+返回错误，跳过继续。</li>
+<li><strong>二次崩溃？</strong>
+不存在的。内核代码跑在保护模式下，和用户进程的状态完全隔离。</li>
+<li><strong>权限？</strong> 内核以最高权限运行，不受
+ulimit、文件权限的限制。</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 内核 do_coredump 的核心逻辑（极度简化）</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>do_coredump<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 跑在内核栈上，不依赖用户栈</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> mm_struct <span class="op">*</span>mm <span class="op">=</span> current<span class="op">-&gt;</span>mm<span class="op">;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 遍历所有虚拟内存区域，逐页 dump</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span>vma <span class="op">=</span> mm<span class="op">-&gt;</span>mmap<span class="op">;</span> vma<span class="op">;</span> vma <span class="op">=</span> vma<span class="op">-&gt;</span>vm_next<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        dump_range<span class="op">(</span>vma<span class="op">-&gt;</span>vm_start<span class="op">,</span> vma<span class="op">-&gt;</span>vm_end<span class="op">);</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 就是给整个内存空间&quot;拍照&quot;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>但 Kernel Coredump 也有自己的硬伤：</p>
+<div class="md-table-wrapper">
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>问题</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>文件巨大</strong></td>
+<td>进程用了 10GB 内存，core 文件就是 10GB</td>
+</tr>
+<tr>
+<td><strong>生成慢</strong></td>
+<td>写一个大 core 文件可能要几十秒</td>
+</tr>
+<tr>
+<td><strong>隐私风险</strong></td>
+<td>完整内存 dump，<code>strings core \| grep password</code>
+就能翻出敏感数据</td>
+</tr>
+<tr>
+<td><strong>分析不便</strong></td>
+<td>需要原始可执行文件 + 调试符号，还得在同架构机器上用 gdb</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>而 SIGKILL 这种信号，Kernel Coredump 同样无法处理 ——
+这是设计如此，SIGKILL 的语义就是”立即终止，不留后路”。</p>
+<hr />
+<h2 id="两者对比一览">两者对比一览</h2>
+<div class="md-table-wrapper">
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Breakpad</th>
+<th>Kernel Coredump</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>执行环境</td>
+<td>用户态，进程内</td>
+<td>内核态，进程外</td>
+</tr>
+<tr>
+<td>栈溢出</td>
+<td>通常失败（除非配了备用栈）</td>
+<td>正常工作</td>
+</tr>
+<tr>
+<td>内存损坏</td>
+<td>可能失败或产出错误数据</td>
+<td>不受影响</td>
+</tr>
+<tr>
+<td>二次崩溃</td>
+<td>致命</td>
+<td>不存在此问题</td>
+</tr>
+<tr>
+<td>SIGKILL</td>
+<td>无法捕获</td>
+<td>同样无法处理</td>
+</tr>
+<tr>
+<td>文件大小</td>
+<td>几 MB</td>
+<td>可达 GB 级别</td>
+</tr>
+<tr>
+<td>生成速度</td>
+<td>快</td>
+<td>慢</td>
+</tr>
+<tr>
+<td>跨平台</td>
+<td>支持</td>
+<td>平台相关</td>
+</tr>
+<tr>
+<td>隐私控制</td>
+<td>可过滤敏感数据</td>
+<td>全量 dump</td>
+</tr>
+<tr>
+<td>离线分析</td>
+<td>方便，有专用工具链</td>
+<td>需要匹配环境</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr />
+<h2 id="退出码读懂进程的死因">退出码：读懂进程的死因</h2>
+<p>当进程被信号终止时，退出码 = <strong>128 +
+信号编号</strong>。这个规则很实用，直接从退出码就能判断死因：</p>
+<div class="md-table-wrapper">
+<table>
+<thead>
+<tr>
+<th>退出码</th>
+<th>信号</th>
+<th>含义</th>
+<th>Breakpad 能捕获？</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>132</td>
+<td>SIGILL</td>
+<td>非法指令</td>
+<td>能</td>
+</tr>
+<tr>
+<td>133</td>
+<td>SIGTRAP</td>
+<td>断点陷阱</td>
+<td>能</td>
+</tr>
+<tr>
+<td>134</td>
+<td>SIGABRT</td>
+<td>主动 abort</td>
+<td>能</td>
+</tr>
+<tr>
+<td>135</td>
+<td>SIGBUS</td>
+<td>总线错误</td>
+<td>能</td>
+</tr>
+<tr>
+<td>136</td>
+<td>SIGFPE</td>
+<td>浮点异常</td>
+<td>能</td>
+</tr>
+<tr>
+<td>137</td>
+<td>SIGKILL</td>
+<td>强制终止</td>
+<td><strong>不能</strong></td>
+</tr>
+<tr>
+<td>139</td>
+<td>SIGSEGV</td>
+<td>段错误</td>
+<td>能</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Breakpad 在生成 minidump 后，会恢复默认信号处理再
+<code>raise(sig)</code>，让进程以原始信号退出——所以外部看到的退出码和没装
+Breakpad 时是一样的，监控脚本不用做特殊适配。</p>
+<p>一个简单的监控示例：</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./my_program</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="va">EXIT_CODE</span><span class="op">=</span><span class="va">$?</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="cf">case</span> <span class="va">$EXIT_CODE</span> <span class="kw">in</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="ss">0</span><span class="kw">)</span>   <span class="bu">echo</span> <span class="st">&quot;正常退出&quot;</span> <span class="cf">;;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="ss">134</span><span class="kw">)</span> <span class="bu">echo</span> <span class="st">&quot;SIGABRT - 检查 assert 或主动 abort&quot;</span> <span class="cf">;;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="ss">137</span><span class="kw">)</span> <span class="bu">echo</span> <span class="st">&quot;SIGKILL - 被强杀，无 minidump&quot;</span> <span class="cf">;;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="ss">139</span><span class="kw">)</span> <span class="bu">echo</span> <span class="st">&quot;SIGSEGV - 段错误，查看 minidump&quot;</span> <span class="cf">;;</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="pp">*</span><span class="kw">)</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">[</span> <span class="va">$EXIT_CODE</span> <span class="ot">-ge</span> 128 <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>            <span class="bu">echo</span> <span class="st">&quot;被信号 </span><span class="va">$((EXIT_CODE</span> <span class="op">-</span> <span class="dv">128</span><span class="va">))</span><span class="st"> 终止&quot;</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>            <span class="bu">echo</span> <span class="st">&quot;异常退出，退出码：</span><span class="va">$EXIT_CODE</span><span class="st">&quot;</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">fi</span> <span class="cf">;;</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="cf">esac</span></span></code></pre></div>
+<hr />
+<h2 id="生产环境怎么选">生产环境怎么选？</h2>
+<p><strong>大多数情况下，Breakpad 是首选。</strong>
+文件小、传输快、隐私可控，适合线上大规模部署。</p>
+<p>但最稳妥的做法是<strong>两者都开</strong>：Breakpad
+作为主力生成小巧的 minidump 用于快速分析，Kernel Coredump
+作为兜底——Breakpad 翻车的时候，至少还有 core 文件可以捞。</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 兜底：启用 kernel coredump</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> rlimit rl <span class="op">=</span> <span class="op">{</span> RLIM_INFINITY<span class="op">,</span> RLIM_INFINITY <span class="op">};</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    setrlimit<span class="op">(</span>RLIMIT_CORE<span class="op">,</span> <span class="op">&amp;</span>rl<span class="op">);</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">// 主力：初始化 Breakpad</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    setup_alternate_stack<span class="op">();</span>  <span class="co">// 别忘了备用栈</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    google_breakpad<span class="op">::</span>MinidumpDescriptor descriptor<span class="op">(</span><span class="st">&quot;/var/crash&quot;</span><span class="op">);</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    google_breakpad<span class="op">::</span>ExceptionHandler eh<span class="op">(</span>descriptor<span class="op">,</span> NULL<span class="op">,</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                                          DumpCallback<span class="op">,</span> NULL<span class="op">,</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>                                          <span class="kw">true</span><span class="op">,</span> <span class="op">-</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> run_application<span class="op">();</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>配套的运维工作也别忘了：</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dump 目录权限</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> /var/crash <span class="kw">&amp;&amp;</span> <span class="fu">chown</span> myapp:myapp /var/crash</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># kernel coredump 路径配置</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;/var/crash/core.%e.%p.%t&quot;</span> <span class="kw">|</span> <span class="fu">sudo</span> tee /proc/sys/kernel/core_pattern</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 自动清理（只保留 7 天）</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /var/crash <span class="at">-name</span> <span class="st">&quot;*.dmp&quot;</span> <span class="at">-mtime</span> +7 <span class="at">-delete</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 构建时生成符号文件，供离线分析</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="ex">dump_syms</span> ./myapp <span class="op">&gt;</span> myapp.sym</span></code></pre></div>
+<p>最后一条建议：<strong>定期测试 dump 功能。</strong>
+不要等到线上真崩了才发现 dump 目录没权限、磁盘满了、符号文件没更新。用
+<code>eh.WriteMinidump()</code> 主动触发一次，确认整条链路是通的。</p>
+<hr />
+<h2 id="references">References</h2>
+<ul>
+<li><a
+href="https://chromium.googlesource.com/breakpad/breakpad/+show/HEAD/docs/exception_handling.md">Breakpad
+Exception Handling</a></li>
+</ul></div>
+   
+          <!-- -->
+        </article>
+      </div>
+    </main>
+  </div>
+  <footer class="md-footer">
+    <div class="md-grid">
+      <div class="md-footer-meta md-typeset">
+        <p class="md-footer-meta__inner">
+          <span>© 2025 </span>
+          <span> All rights reserved </span>
+        </p>
+      </div>
+    </div>
+  </footer>
+  <!-- -->
+</body>
+
+</html>
