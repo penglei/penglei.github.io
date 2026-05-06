@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head post="yes">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta name="renderer" content="webkit" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-status-bar-style" content="#f8f5ec" />
+  
+  <meta name="generator" content="" />
+  <meta name="description" content="" />
+  <meta name="keywords" content="" />
+  <!-- <link rel="stylesheet" href=""> -->
+  
+  <meta name="author" content="penglei" />
+  <title>YByte — 理解浮点数</title>
+  <link rel="stylesheet" type="text/css" href="/assets/css/site.css" />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦥</text></svg>" />
+  <script src="/assets/script/theme.js"></script>
+  <!-- <link rel="stylesheet" type="text/css" href="/assets/css/markdown.css" /> -->
+  <!-- <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css" /> -->
+
+    </head>
+
+<body data-md-color-primary="deep-purple" data-md-color-accent="deep-purple"> <header class="md-header md-header--shadow">
+  <nav class="md-header__inner md-grid">
+    <div class="logo">
+      <a href="/" accesskey="h">YByte</a>
+    </div>
+    <div class="md-header__placeholder"></div>
+    <ul class="md-tabs__list">
+      <li
+        class="md-tabs__item "
+      >
+        <a href="/archive" class="md-tabs__link">Archive</a>
+      </li>
+      <li
+        class="md-tabs__item "
+      >
+        <a href="/tags" class="md-tabs__link">Tags</a>
+      </li>
+      <li
+        class="md-tabs__item "
+      >
+        <a href="/about" class="md-tabs__link">About</a>
+      </li>
+    </ul>
+    <div class="md-header__option">
+      <div id="toggle-theme" class="md-icon">
+        <a href="#" title="Light mode" class="light-mode">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>        </a>
+        <a href="#" title="Dark mode" class="dark-mode">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>        </a>
+        <a href="#" title="System preference" class="system-mode">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 2c-1.79 1.15-3 3.18-3 5.5s1.21 4.35 3.03 5.5C4.46 13 2 10.54 2 7.5A5.5 5.5 0 0 1 7.5 2m11.57 1.5 1.43 1.43L4.93 20.5 3.5 19.07 19.07 3.5m-6.18 2.43L11.41 5 9.97 6l.42-1.7L9 3.24l1.75-.12.58-1.65L12 3.1l1.73.03-1.35 1.13.51 1.67m-3.3 3.61-1.16-.73-1.12.78.34-1.32-1.09-.83 1.36-.09.45-1.29.51 1.27 1.36.03-1.05.87.4 1.31M19 13.5a5.5 5.5 0 0 1-5.5 5.5c-1.22 0-2.35-.4-3.26-1.07l7.69-7.69c.67.91 1.07 2.04 1.07 3.26m-4.4 6.58 2.77-1.15-.24 3.35-2.53-2.2m4.33-2.7 1.15-2.77 2.2 2.54-3.35.23m1.15-4.96-1.14-2.78 3.34.24-2.2 2.54M9.63 18.93l2.77 1.15-2.53 2.19-.24-3.34Z"/></svg>        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+  <!-- -->
+  <div class="md-container">
+    <main class="md-main">
+      <div class="md-main__inner md-grid">
+        <article class="post-single md-typeset">
+          <header class="post-header">
+            <h1 class="post-title">理解浮点数</h1>
+            <div class="post-meta">
+              <span>2026-04-04</span>
+              <p class="meta-tags">
+              </p>
+            </div>
+          </header>
+            <div class="toc" id="toc">
+        <summary id="toctitle">
+            <span class="details">Table of Contents</span>
+        </summary> 
+        <nav class="inner"><ul>
+<li><a href="#什么是数" id="toc-什么是数">什么是数？</a></li>
+<li><a href="#科学计数法" id="toc-科学计数法">科学计数法</a></li>
+<li><a href="#浮点数" id="toc-浮点数">浮点数</a>
+<ul>
+<li><a href="#float8" id="toc-float8">float8</a></li>
+<li><a href="#规范化与特殊值"
+id="toc-规范化与特殊值">规范化与特殊值</a></li>
+<li><a href="#舍入" id="toc-舍入">舍入</a></li>
+</ul></li>
+<li><a href="#浮点运算" id="toc-浮点运算">浮点运算</a>
+<ul>
+<li><a href="#guard-round-sticky" id="toc-guard-round-sticky">Guard /
+Round / Sticky</a></li>
+<li><a href="#舍入误差" id="toc-舍入误差">舍入误差</a></li>
+<li><a href="#误差放大" id="toc-误差放大">误差放大</a></li>
+</ul></li>
+</ul></nav>
+      </div>
+      <div class="post-content"><h2 id="什么是数">什么是数？</h2>
+<p>柏拉图主义认为数是真实存在的、非物质的、永恒且不变的”抽象实体”或”理念”。我倾向于把它看作一种思维方式，一种用来组织关于量的经验的抽象结构。无论哪种立场，有一件事是共识：<strong>数和数的表现形式是不同的</strong>。</p>
+<p>同一个数（e.g. 13）可以有许多形式：</p>
+<ul>
+<li>阿拉伯数字 <code>13</code></li>
+<li>罗马数字 <code>XIII</code></li>
+<li>汉字 <code>十三</code></li>
+<li>英文 <code>thirteen</code>、法语 <code>treize</code></li>
+<li>计算机内存里的 <code>00001101</code></li>
+<li>ASCII 字符串 <code>"13"</code>（两个字节
+<code>0x31 0x33</code>）</li>
+</ul>
+<p>无论这些数的形式是什么样，发音是单音节还是多音节，这些形式中没有哪一个”更真实”。我们甚至可以抛弃这些经验符号，使用更抽象的方式来表达数：<strong>皮亚诺公理</strong>把数定义成”零以及反复应用后继”，如<code>3 = succ(succ(succ(0)))</code>，<strong>丘奇数</strong>把
+<code>3</code>
+定义为”把函数应用三次”这个行为，它们都说明数可以脱离经验写法而在相应系统中被精确刻画。</p>
+<p><code>succ(succ(succ(0)))</code>、丘奇数、罗马数字里表示 3 的
+<code>III</code>，可以看成同一种最原始的记数方式：<strong>重复
+<code>N</code> 次同一个符号来表示数
+<code>N</code></strong>。这也被称作<a
+href="https://en.wikipedia.org/wiki/Unary_numeral_system"><strong>一进制</strong></a>：数本身的”N
+重性”直接暴露在符号上。一进制几乎不含表示技巧，虽然简单，却非常冗余。</p>
+<p>历史上人类想出过很多办法来压缩这种冗长。罗马数字就是一例，用
+<code>I</code>、<code>V</code>、<code>X</code>、<code>L</code>
+等不同符号代表不同量级，<code>XIII</code> 只用四个字符就能写出
+13。比起单符号的一进制，它只是换了一批更经济的符号，本质上仍然是<strong>加法记数系统</strong>：每个字符自带一个确定的值，把它们加起来就是这个数。</p>
+<p>一进制和罗马数字尽管符号经济性不同，却共享一个特点：<strong>符号写在哪个位置都不影响它代表的量</strong>，<code>XIII</code>
+拆开重排成 <code>IIIX</code> 读出来仍是
+13，数一数、把各符号的值加起来就行。位置在这类系统里不携带信息。而计数方式真正的质变是让<strong>位置</strong>承载关键信息：同一个字符(<code>d</code>)写在不同位置代表不同数量
+<code>d·Bᵏ</code>，其中 <code>k</code> 是数字所处的位置(从右起，从 0
+开始)，<code>B</code>
+是可用字符的数量，<code>Bᵏ</code>是这个数字的权重，权重与<code>d</code>相乘后才是它表达的数。这种计数方式被称作<a
+href="https://en.wikipedia.org/wiki/Positional_notation"><strong>位置记数系统</strong></a>或<strong>进位法</strong>。</p>
+<p>位置计数法的好处是信息密度呈指数级上升：表示 <code>N</code>
+这么大的数，一进制要 <code>N</code>
+个划道(<code>|||||...</code>)，位长和数值同阶；位置记数法的位长是
+<code>log_B(N)</code>，数值每增大一个数量级，名字只长一位。数
+<code>1000</code>
+一进制要一千个划道，十进制只需四个字符，二进制也只要十个。位置记数法还有另一个好处：统一的<strong>小数点记法</strong>。位置权重本来是正整数
+<code>Bᵏ(k≥0)</code>，对应”个位、十位、百位”；但公式 <code>d·Bᵏ</code>
+对 <code>k&lt;0</code> 同样成立，权重自然延伸到
+<code>B⁻¹</code>、<code>B⁻²</code>，对应十进制里的十分位(<code>k=-1</code>)、百分位(<code>k=-2</code>)，小数点后的每一位就有了和整数位一样确定的权重。</p>
+<p>当然，非整数的表达并不只有这一种办法。罗马人用过 1/12
+的分数记法，古埃及用过单位分数
+<code>1/n</code>，汉字也有”半”、“小半”。位置记数法的特别之处在于它给了非整数一种和整数同构的写法：同一个公式
+<code>d·Bᵏ</code>，把 <code>k</code> 的范围从 <code>k ≥ 0</code> 扩张到
+<code>k ∈ ℤ</code>，整数和小数就在同一套规则下统一起来了。</p>
+<p>这听起来有点抽象，看一个具体的例子：我们写下
+<code>725</code>时，脑子里对应的就是
+<code>7 · 10² + 2 · 10¹ + 5 · 10⁰</code>，只是权重省掉没写出来，让位置隐式表达了。<code>725</code>本身就是这个展开式的一个缩写。再比如，二进制<code>0b1101</code>
+只是字符表从 <code>{0..9}</code> 换成了 <code>{0, 1}</code>，展开是
+<code>1 · 2³ + 1 · 2² + 0 · 2¹ + 1 · 2⁰</code>。如果我们用十进制给这个数量重新起个名字，它叫
+<code>13</code>。同样，<code>3.14</code> 缩写的是
+<code>3 · 10⁰ + 1 · 10⁻¹ + 4 · 10⁻²</code>，个位、十分位、百分位，每个位置的权重按
+<code>10^k</code>
+往小数点的负方向延伸。二进制小数的形式也可直接依葫芦画瓢：<code>0b10.11</code>
+是
+<code>1 · 2¹ + 0 · 2⁰ + 1 · 2⁻¹ + 1 · 2⁻²</code>的缩写，它用十进制表达就是
+<code>2.75</code>。</p>
+<p>前面我们把B当作字符表的大小：<code>B=10</code>
+就是十个字符，<code>B=2</code>
+就是两个。换个直观的角度看，<code>B</code>
+还是数轴上单位区间细分时的份数。</p>
+<p>以十进制 <code>0.372</code>
+为例。小数点后每多写一位，其实就是在当前这段区间上再做一次”分10份后取一段”。<code>0.372</code>
+这三位数字直观上是从 <code>[0, 1]</code>
+开始，这段分成10份、挑出第3段表示0.3，然后视野落在
+<code>[0.3, 0.4]</code>；第 2 位 <code>7</code> 是把
+<code>[0.3, 0.4]</code>
+再分成10份、挑第7段，视野缩到<code>[0.37, 0.38]</code>；第3位<code>2</code>是把
+<code>[0.37, 0.38]</code> 又分成 10 份、挑第2段。每多一位，视野缩小 10
+倍，精度也提升10倍。</p>
+<p><img src="assets/decimal-zoom.svg" alt="decimal zoom into 0.372"></p>
+<p>位置记数法的小数部分，就是这个”再分 <code>B</code>
+份”的动作一层层递归。<code>B=10</code> 时每层分 10 份，<code>B=2</code>
+时每层分 2 份，<code>B=3</code> 时每层分 3 份。</p>
+<p>但不是所有有理数都长这样。十进制中<code>1/3</code>
+的分母是3，但十进制的每一层等分都是 10 份，没有哪一层的刻度恰好落在
+<code>1/3</code> 这个位置上，于是 <code>1/3</code> 在十进制里变成了
+<code>0.333...</code>，小数点后有无穷多个
+3。<code>1/3</code>用位置计数法有无穷多个数字不是<code>1/3</code>这个有理数本身的特性，而只是在十进制下的表现。把
+<code>B</code> 换成 3，<code>1/3</code> 就是
+<code>0.1</code>，一位就精确了，因为 <code>B=3</code> 的第一层等分正好把
+<code>[0, 1]</code> 分成三份，第一个刻度就在 <code>1/3</code> 上。</p>
+<p>也就是说，一个数在一把尺子(一种进制中)能准确找到它的位置，但换一把尺子就可能变得不再精确。<code>1/10</code>
+在十进制里只要一位；但在二进制里，由于10不是2的任何幂，<code>1/10</code>
+变成 <code>0.0001100110011...</code> 无限循环。</p>
+<p><img src="assets/binary-miss.svg" alt="0.1 never lands on a binary tick"></p>
+<div class="md-table-wrapper">
+<table>
+<thead>
+<tr>
+<th>数</th>
+<th>十进制 <code>B=10</code></th>
+<th>二进制 <code>B=2</code></th>
+<th>三进制 <code>B=3</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>1/2</code></td>
+<td><code>0.5</code>（精确）</td>
+<td><code>0.1</code>（精确）</td>
+<td><code>0.111...</code></td>
+</tr>
+<tr>
+<td><code>1/3</code></td>
+<td><code>0.333...</code></td>
+<td><code>0.010101...</code></td>
+<td><code>0.1</code>（精确）</td>
+</tr>
+<tr>
+<td><code>1/10</code></td>
+<td><code>0.1</code>（精确）</td>
+<td><code>0.0001100110011...</code></td>
+<td><code>0.00220022...</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>对于这些无限的有理数小数，用进位法写出来的有限数字总是存在误差。但是每多一位小数数字，未被捕捉的那部分误差就缩小到原来的
+<code>1/B</code>。十进制写 <code>1/3</code> 到
+<code>0.333</code>，误差不到 <code>1/1000</code>；写到
+<code>0.333333</code>，误差不到
+<code>1/10⁶</code>。只要愿意多写几位，位置记数法对任何有理数都能逼近到任意精度，足够现实中使用。</p>
+<h2 id="科学计数法">科学计数法</h2>
+<p>位置计数法里，每一位的权重由它所在的位置隐式决定：个位是
+<code>10⁰</code>，十位是 <code>10¹</code>，百位是 <code>10²</code>。写
+<code>725</code>
+时，“这串数字落在百位这个量级”这件事没有被单独写出来，是由最高位的位置自动给出的。有时我们会把这个”整体量级”从位置里单独拎出来写：<code>725 = 7.25 × 10²</code>。尾数
+<code>7.25</code>
+内部仍是位置计数法（<code>7 + 2·10⁻¹ + 5·10⁻²</code>），只是”这串有效数字落在哪个量级”由
+<code>× 10²</code> 显式表达，<code>10²</code> 里的 <code>2</code>
+叫<strong>指数</strong>。尾数管有效数字、指数管量级，两者分开后可以独立调节：<code>1.234 × 10⁵</code>
+和 <code>1.234 × 10⁻⁴</code>
+共享同一个尾数，落在完全不同的量级上。这种写法叫<strong>科学计数法</strong>。</p>
+<h2 id="浮点数">浮点数</h2>
+<p>前面我们隐含假设了一个数用进位法书写(表达)时，想写几位就写几位。计算机不一样，一个数只能占固定的位数，常见的是
+32 位或 64
+位。位数一旦固定，尾数和指数就都得在有限位宽内定下来。最朴素的办法是把指数也写死：所有数共用同一个量级
+<code>× 2ᵏ</code>，<code>k</code>
+由格式约定，不进编码。这就是<strong>定点数</strong>。</p>
+<p>约定一个固定的
+<code>k</code>，等价于<strong>约定小数点放在哪一位</strong>：32 位可以前
+16 位当整数、后 16 位当小数(Q16.16)，也可以前 24 位当整数、后 8
+位当小数(Q24.8)，整数位越多能表达的范围越大，小数位越多精度越细，两端此消彼长。以无符号
+Q16.16 为例，它覆盖 0
+到六万出头、精度百万分之十五左右，够记账；但宇宙里的原子数是
+<code>10⁸⁰</code> 量级、电子质量是 <code>10⁻³⁰</code>
+千克量级，两端都够不着。小数点往右挪能换来更大的范围，往左挪能换来更细的精度，可刻度总数就那么多，顾此失彼，怎么挪都无法同时照顾到”大范围、高精度”。</p>
+<p>为什么挪小数点无法解决这个问题？关键在于定点数不管小数点放在哪里，刻度都是等距铺开的：Q16.16
+每一格宽 <code>2⁻¹⁶</code>，Q24.8 每一格宽
+<code>2⁻⁸</code>，前者细、后者粗，但在各自的格式里所有格子都一样宽。也就是说，整把尺子只有一个刻度间距，这个间距同时决定了两件事：小数能分辨多细，大数能覆盖多远。要分辨
+<code>10⁻³⁰</code> 就要求间距小到 <code>10⁻³⁰</code> 量级；要够到
+<code>10⁸⁰</code> 就要求<strong>间距乘上有限的刻度数能跨过
+<code>10⁸⁰</code></strong>。一个数同时满足这两个条件是不可能的。挪小数点改变的只是这个间距取多少，改变不了”只有一个间距”这个约束，所以怎么选小数点位置都跳不出这个约束。</p>
+<p>均匀刻度在小数处精度不够，在大数那里又浪费精度。因此可以把大数那边的分辨率降低，省下来的格子匀到
+0
+附近去，让刻度不均匀地分布：靠近0密、远离0疏。同样的刻度数就能覆盖广得多的数轴，代价是远处精度变糙，但这很合理，越大的数我们通常越能接受粗糙的精度（在
+<code>10⁸⁰</code>
+这个量级上，误差一万也无关紧要）。具体怎么实现？一个自然的办法是：按数量级分段，每段内部刻度均匀，不同段的间距不同，越远离0的段间距越大。</p>
+<p>要让不同段有不同间距，就得让 <code>k</code>
+能随数值变化，每个数自己带一个指数，这便是<strong>浮点数</strong>与定点数的关键区别：</p>
+<ul>
+<li><strong>定点数</strong>：指数由<strong>格式</strong>约定死（例如
+Q16.16 一律
+<code>× 2⁻¹⁶</code>），所有数共用同一个量级，格式里不存指数，位全给尾数</li>
+<li><strong>浮点数</strong>：指数由<strong>数自己</strong>决定，每个数带一个指数字段，位宽在尾数和指数之间分配</li>
+</ul>
+<p>从这个角度看，浮点数是受限存储宽度的科学计数法，那具体用多少位来存尾数、多少位来存指数？IEEE
+754 定义了 float32 和 float64 两种常见尺寸。它们将固定长度的表示格式分为
+sign, exponent, mantissa 三段。以 float32 举例：</p>
+<pre><code>|  sign   |  exponent   |           mantissa           |
+| S(1bit) | E (8 bits)  |          M (23 bits)         |</code></pre>
+<h3 id="float8">float8</h3>
+<p>为了视觉上直观把握浮点数的全貌，我们临时造一个 IEEE 754 里不存在的
+<strong>float8</strong>，沿用”符号 + 指数 + 尾数”的三段布局，位宽1 + 3 +
+4 合计 8 位，位数少到它能表达的所有数都画得进一张图。</p>
+<p><img src="assets/float-ruler.svg" alt="8-bit float8 compared with three 8-bit fixed-point formats (Q4.3, Q3.4, Q2.5) on the same number line"></p>
+<p>float8把数轴按 <code>2</code>
+的幂分段：<code>[1/4, 1/2)、[1/2, 1)、[1, 2)、[2, 4)、[4, 8)、[8, 16)</code>，
+每一段对应指数字段的一个取值，段内再用 4 位尾数等分成
+<code>2⁴ = 16</code>
+格。段越往外越宽，但每段里的刻度数都是16个，于是越往外刻度间距越大。下面三条轴是8位定点数的分布。三种定点数轴都有256（<code>2⁸</code>）个刻度，均匀铺开，差别只在步长和覆盖范围。Q4.3
+每格 <code>1/8</code>，覆盖
+<code>[-16, 16)</code>，范围和浮点相当但0周围的精度更差；Q3.4 每格
+<code>1/16</code>，覆盖 <code>[-8, 8)</code>；Q2.5 每格
+<code>1/32</code>，覆盖
+<code>[-4, 4)</code>，是三档里刻度最细的定点数。</p>
+<p>对比图中8位的定点数，可以看出两者的关键区别：<strong>浮点的刻度间距随数量级变化，定点的刻度间距在整条轴上是常数。</strong></p>
+<h3 id="规范化与特殊值">规范化与特殊值</h3>
+<p>前面讲 float8 分段建立直觉时，我们让每个指数 <code>k</code>
+对应唯一的段 <code>[2ᵏ, 2ᵏ⁺¹)</code>，段内 16 个刻度由尾数枚举。要让
+<code>k</code> 唯一对应某一段，必须把尾数<code>m</code>限制在
+<code>[1, 2)</code>，<code>m × 2ᵏ</code> 落在 <code>[2ᵏ, 2ᵏ⁺¹)</code>
+里，<code>k</code>
+刚好是段号，段之间不重叠，这种方法叫<strong>规范化</strong>。</p>
+<p>规范化的尾数整数部分只能是 <code>1</code>，既然恒为
+<code>1</code>，那我们便不需要在存储中对整数部分进行编码，省下这一位(<code>1</code>)的存储空间，省略的这个<code>1</code>被称作<strong>隐含前导
+1</strong>。指数字段还有个小细节，指数既要表示正指数（大数）也要表示负指数（小数），一种直接的做法是拿一位当符号位。IEEE
+754
+选了另一种方案，<strong>偏移编码</strong>：把字段整体当无符号整数读，字段值
+<code>E</code> 对应真实指数 <code>E - bias</code>。<code>bias</code>
+按惯例取 <code>2^(n-1) - 1</code>（<code>n</code>
+是指数字段位宽），float8 的 3 位指数字段就得到
+<code>bias = 2² - 1 = 3</code>。因此，字段值 <code>3</code> 表示
+<code>2⁰</code>，<code>4</code> 表示 <code>2¹</code>，<code>2</code>
+表示 <code>2⁻¹</code>。偏移编码不影响”<code>k</code>
+是段号”的逻辑，只是字段值怎么映射到 <code>k</code> 的一个实现约定。</p>
+<p><strong>特殊值</strong>。浮点数还要处理一些特殊情况：除以零该返回什么？<code>0 × ∞</code>
+呢？开负数的平方根呢？IEEE 754
+的做法是<strong>在指数字段里留出哨兵值</strong>：</p>
+<ul>
+<li>指数字段全 <code>1</code>：尾数全 0
+表示无穷大（<code>+∞</code>、<code>-∞</code>），尾数非 0 表示 NaN。</li>
+<li>指数字段全
+<code>0</code>：表示零和次正规数（subnormal，下面会讲）。</li>
+</ul>
+<p>大数那一端，本来字段值全 <code>1</code> 还对应一段规范化（float8
+里就是 <code>[16, 32)</code>），现在让位给 <code>±∞</code> 和
+NaN。小数那一端，规范化机制本身表达不了 0，全 <code>0</code>
+这个取值正好闲置，被拿来表示 0。float8 的规范化段从 8 段缩到 6
+段，就是图里的 <code>[1/4, 1/2)</code> 到 <code>[8, 16)</code>。</p>
+<p>最小的规范化段是
+<code>[1/4, 1/2)</code>，再往里就空了：<code>(-1/4, +1/4)</code>
+区间里一个规范化数都没有，任何落在这里的数都会被舍入到
+0。这就出问题了：假设 <code>a ≠ b</code>，差值 <code>ε = a − b</code>
+在实数轴上非零、本应可分辨，但只要它落进
+<code>(0, 1/4)</code>，浮点数找不到刻度容纳，结果就是 0。于是
+<code>a ≠ b</code> 和 <code>a − b == 0</code>
+同时成立，“不相等的数相减不为零”这条直觉被破坏。这种”非零一步跳到零”叫
+<strong>abrupt underflow</strong>（突然下溢）。</p>
+<p>指数字段能表示的最小指数就是
+<code>2⁻²</code>，再往下没有更小的指数可写。想在 <code>[1/4, 1/2)</code>
+和 0 之间再铺出刻度，一个自然的做法是：<strong>指数保持在
+<code>2⁻²</code> 不变，让尾数继续往 0
+方向靠近</strong>。具体来说，规范化段里尾数形如
+<code>1.xxxx</code>，现在允许尾数首位从 <code>1</code> 退到
+<code>0</code>，写成 <code>0.xxxx</code>。这样尾数可以从
+<code>0.1111</code> 一路取到 <code>0.0000</code>，乘上共同的
+<code>2⁻²</code>，对应的数值就从 <code>15/64</code> 递减到
+<code>0</code>，刚好把 <code>[0, 1/4)</code> 这段空白铺满。这批数叫
+<strong>subnormal</strong>（次正规数）。</p>
+<p>这样构造出来的 subnormal 段和最小规范化段共享同一个指数
+<code>2⁻²</code>，所以<strong>两者的刻度间距相等（都是
+<code>1/64</code>），段宽也相等（都是 <code>1/4</code>）</strong>。16 个
+subnormal 刻度和 16 个 <code>[1/4, 1/2)</code> 规范化刻度拼起来，就是
+<code>[0, 1/2)</code> 区间里 32 条均匀间距的刻度线，在 <code>1/4</code>
+处无缝衔接。图里 0 两侧的小圆点，代表的就是这批 subnormal 数。</p>
+<p>这种均匀衔接对感官直觉有一些影响。前面我们说”段越往外越宽”，反过来看，越靠近
+0 的段应当越窄，刻度越密：<code>[1/4, 1/2)</code> 往下本该是
+<code>[1/8, 1/4)</code>、<code>[1/16, 1/8)</code>……，间距依次变为
+<code>1/128</code>、<code>1/256</code>，越来越细。但 subnormal
+段的间距锁在
+<code>1/64</code>，不再跟着往下变细。带来的好处是：非零差不会像 abrupt
+underflow 那样一步跳到 0，而是先在 subnormal
+刻度上逐级变小。这种逐级下沉叫”<strong>gradual
+underflow</strong>（渐进下溢）“。</p>
+<p>上面这些机制都在假设的 float8 上进行分析。IEEE 754 的
+float32、float64 除了位宽不同，机制完全一样：</p>
+<ul>
+<li><strong>float32</strong>：1 位符号 + 8 位指数 + 23
+位尾数。<code>bias = 127</code>，规范化段有 <code>2⁸ − 2 = 254</code>
+段，对应指数范围 <code>2⁻¹²⁶</code> 到 <code>2¹²⁷</code>。尾数字段 23 位
++ 前导 1 = 24 位精度。</li>
+<li><strong>float64</strong>：1 位符号 + 11 位指数 + 52
+位尾数。<code>bias = 1023</code>，规范化段 <code>2¹¹ − 2 = 2046</code>
+段，指数范围 <code>2⁻¹⁰²²</code> 到 <code>2¹⁰²³</code>。尾数字段 52 位 +
+前导 1 = 53 位精度。</li>
+</ul>
+<p>两者的规范化、subnormal、<code>±∞</code>、NaN 编码规则和 float8
+一一对应，只是段数更多、段内刻度更密。</p>
+<h3 id="舍入">舍入</h3>
+<p>前面讨论的都是”哪些数能被刻度精确表示”。但浮点数真正面对的是<strong>任意实数</strong>，绝大多数实数并不会恰好落在某条刻度上。一个浮点格式的尾数位数一旦定下，段内刻度就只有有限个；落在两条相邻刻度之间的实数没有专属编码，必须被映射到附近的某条刻度上，这个映射动作就是<strong>舍入</strong>。</p>
+<p>以 float8 为例，段 <code>[1, 2)</code> 由 4 位尾数等分成 16
+格，刻度依次是
+<code>1.0000</code>、<code>1.0001</code>、<code>1.0010</code>、…、<code>1.1111</code>，对应十进制的
+<code>1</code>、<code>1.0625</code>、<code>1.125</code>、…、<code>1.9375</code>，相邻两条刻度间距
+<code>1/16</code>。十进制的 <code>1.3</code> 不在这 16
+条刻度里，离它最近的两个数是 <code>1.25</code>（<code>1.0100</code>）和
+<code>1.3125</code>（<code>1.0101</code>），舍入要做的就是从这两个数挑一个把
+<code>1.3</code> 映射过去。</p>
+<p>挑哪一个？常见有几种规则：</p>
+<ul>
+<li><strong>最近</strong>：选离 <code>1.3</code>
+更近的那条。<code>1.3</code> 距 <code>1.25</code> 是
+<code>0.05</code>，距 <code>1.3125</code> 是
+<code>0.0125</code>，更近的是 <code>1.3125</code>。</li>
+<li><strong>向零</strong>：往 0
+的方向取，正数选较小那条，负数选较大那条。<code>1.3</code> 选
+<code>1.25</code>。</li>
+<li><strong>向
+<code>+∞</code></strong>：永远选不小于原值的那条。<code>1.3</code> 选
+<code>1.3125</code>。</li>
+<li><strong>向
+<code>−∞</code></strong>：永远选不大于原值的那条。<code>1.3</code> 选
+<code>1.25</code>。</li>
+</ul>
+<p><img src="assets/rounding-modes.svg" alt="four rounding modes mapping 1.3 onto float8 ticks"></p>
+<p>“最近”舍入最符合直觉，但它在一种情况下没有给出答案：如果实数恰好落在两条刻度正中间呢？比如
+<code>1.28125</code> 距 <code>1.25</code> 和 <code>1.3125</code> 都是
+<code>0.03125</code>，往哪边都行。如果固定挑某一边（比如总往上取），把大量这类正中间的样本累加起来，结果会系统性地偏向那一边。IEEE
+754 的默认规则是<strong>向最近，平局取偶数尾数</strong>（round half to
+even）：正中间的情形看尾数的末位 bit，挑使末位为
+<code>0</code>（偶）的那条。上图放大轴上方已标出两条刻度的末位：<code>1.0100</code>
+末位为 <code>0</code>（偶），<code>1.0101</code> 末位为
+<code>1</code>（奇），平局点 <code>1.28125</code> 因此被映射到
+<code>1.25</code>。这样平局向上和向下的概率均匀，长程累加不会把误差攒到某一边。</p>
+<p>舍入误差的大小和它落在哪一段直接相关。<code>[1, 2)</code> 段间距
+<code>1/16</code>，向最近舍入的误差至多是间距的一半，即
+<code>1/32</code>。<code>[2, 4)</code> 段间距翻倍到
+<code>1/8</code>，误差上限也翻倍到
+<code>1/16</code>。绝对误差跟着段宽走，但<strong>相对误差</strong>始终被段内间距与段起点的比值压住：<code>[1, 2)</code>
+段相对误差不超过 <code>(1/32)/1 ≈ 3%</code>，<code>[2, 4)</code>
+段不超过
+<code>(1/16)/2 ≈ 3%</code>，每段都是同一个量级。这正是浮点数刻度按指数分段的好处：误差以<strong>相对</strong>形式在整条数轴上保持稳定，不会因为数变大就失控。</p>
+<p>float32、float64 的舍入机制和 float8 一致，默认也是 round half to
+even，只是尾数位数更多，单步舍入的相对误差更小。float32 段内 24
+位精度，相对误差量级约 <code>2⁻²⁴</code>；float64 段内 53
+位精度，相对误差量级约 <code>2⁻⁵³</code>。</p>
+<p>把舍入这个动作反过来看，会得到一个新的视角：<strong>每个浮点刻度代表的不是一个点，而是一小段区间</strong>。向最近舍入的规则是”离谁近归谁”，所以每条刻度的”势力范围”就是它左右各到相邻刻度的一半。以
+float8 的 <code>1.25</code> 为例，它左边相邻刻度是
+<code>1.1875</code>，右边是 <code>1.3125</code>，于是 <code>1.25</code>
+真正覆盖的是 <code>[1.21875, 1.28125)</code> 这一段，宽度等于段内间距
+<code>1/16</code>。落在这段区间里的任何实数，写进 float8
+后都会变成同一个 <code>1.25</code>。前面作为平局点出现的
+<code>1.28125</code>，几何上正是 <code>1.25</code> 和
+<code>1.3125</code> 两个势力范围的边界，round half to even
+的作用就是在这种边界处决定归属。</p>
+<p>这个视角解释了为什么浮点相等比较要小心：两个实数只要落进同一条刻度的势力范围就被视作相等，哪怕它们在实数轴上本不相同。float32、float64
+的每一个浮点数同样各自代表一小段区间，只是刻度更密、势力范围更窄。以
+<code>[1, 2)</code> 段为例，float8 用 4 位尾数把它等分成 16 份，刻度间距
+<code>1/16</code>；float32 用 23 位尾数等分成 <code>2²³</code>
+份，刻度间距 <code>2⁻²³</code>；float64 用 52 位尾数等分成
+<code>2⁵²</code> 份，刻度间距
+<code>2⁻⁵²</code>。往更大的段走，间距按量级同比例放宽。</p>
+<h2 id="浮点运算">浮点运算</h2>
+<p>前面建立了浮点数的静态图像：一条刻度不均匀的数轴。现在来看这些刻度上的数参与运算时会发生什么。</p>
+<p>浮点运算的基本模型很简单：先按数学定义算出精确结果，再把结果舍入到最近的浮点刻度上。IEEE
+754 要求加减乘除和开方都遵守这个模型，即所谓”正确舍入”（correctly
+rounded）。</p>
+<p>这个模型听起来直接，但硬件落地时有一个困难：尾数存储器是定宽的，运算过程中的中间形式所需的存储往往比存储器宽(甚至无穷)，多出来的低位没处存放。如果直接截掉，舍入方向就可能出错。下面先看硬件如何用最少的额外位解决这个问题。</p>
+<h3 id="guard-round-sticky">Guard / Round / Sticky</h3>
+<p>以 float8 加法为例，计算 <code>1.0100 × 2⁰</code> 加
+<code>1.0111 × 2⁻²</code>（十进制
+<code>1.25 + 0.359375</code>）。加法要先把两个数对齐到同一指数，把小的数右移
+2 位：</p>
+<pre><code>   1.0100 00
++  0.0101 11
+= ----------
+   1.1001 11</code></pre>
+<p>数学结果 <code>1.1001 11</code> 有 6 位小数部分，但 float8 尾数只有 4
+位。它落在相邻两条刻度 <code>1.1001</code> 和 <code>1.1010</code>
+之间，中间点是 <code>1.1001 1000</code>，而结果 <code>1.1001 1100</code>
+严格大于中间点，按向最近舍入应取
+<code>1.1010</code>。但如果硬件<strong>只保留对齐后的 4
+位尾数</strong>，将加数 <code>1.0111 × 2⁻²</code>右移时溢出的
+<code>11</code> 截掉，加完得到
+<code>1.1001</code>，被当成结果正好落在刻度上，错误地得到<code>1.1001</code>。正确结果和错误结果差了一个刻度间距(ULP)。</p>
+<p>完整保留所有溢出的位是最安全的做法，但对 float64 这种 52
+位尾数来说，简单的加法操作最坏情况可能要保留几十位的尾巴，硬件代价大。那保留多少位才够正确舍入呢？</p>
+<p>数学结果若正好落在某条刻度上就无需舍入；需要舍入时，决策只关心结果落在相邻两条刻度之间的什么位置，具体分三种情形：</p>
+<ul>
+<li>严格小于平局点：向较小的刻度舍入</li>
+<li>恰好等于平局点：按 round half to even</li>
+<li>严格大于平局点：向较大的刻度舍入</li>
+</ul>
+<p>怎么判断落在哪种情形？设目标尾数宽 <code>m</code> 位，把数学结果第
+<code>m+1</code> 位及以下统称”尾巴”：</p>
+<ul>
+<li>第 <code>m+1</code> 位 =
+0：尾巴整体小于半个间距，向较小刻度舍入。</li>
+<li>第 <code>m+1</code> 位 = 1，且后面所有位全是
+0：恰好平局，看末位偶数规则。</li>
+<li>第 <code>m+1</code> 位 = 1，且后面有任何一位是
+1：严格大于平局，向较大刻度舍入。</li>
+</ul>
+<p>第一位是判定”是否过半”的关键，叫
+<strong>Guard</strong>（保护位）。但只看 Guard 不够：当
+Guard=1，还得分辨”恰好平局”和”严格大于平局”。直觉上要把后面所有位都保留下来才能分辨，但其实<strong>只需要知道”后面有没有任何一位是
+1”</strong>，因为：</p>
+<ul>
+<li>后面全 0 → 恰好平局</li>
+<li>后面任何位是 1 → 严格大于平局</li>
+</ul>
+<p>这是一次”OR 折叠”：把任意多位的低位压成一个布尔值。这个 OR 结果就是
+<strong>Sticky</strong>（粘连位）：一旦某位为 1，它就被”粘住”不再变
+0，无论后面还有多少位。Sticky
+的妙处在于：<strong>用一位记住了无穷多位低位是否非零的信息</strong>。</p>
+<p>这样看来 Guard + Sticky 两位似乎已经够了。Round（舍入位）是紧挨 Guard
+再往低位的那一位，它的存在是为了应对<strong>减法可能引发的左移规范化</strong>：当两个相近的数相减，结果的高位被消去（比如
+<code>1.0001 − 1.0000 = 0.0001</code>），需要左移把首位 1
+重新对齐到尾数最高位。左移时 Guard 位被移走，需要从更低的位补一个新
+Guard 进来，这一位就是 Round。Sticky 是 OR
+折叠过的，无法在左移时恢复成精确位，所以左移补给必须额外预留一位
+Round。</p>
+<p>合起来三位：</p>
+<p><img src="assets/grs.svg" alt="GRS bits layout: m target mantissa bits, Guard, Round, and Sticky as OR of tail"></p>
+<p><code>G R S</code>
+三位足以让硬件在不保留完整尾巴的情况下做出与”先精确算再舍入”完全一致的决策。决策过程按
+G、R|S 两层分支展开：</p>
+<p><img src="assets/grs-decision.svg" alt="GRS rounding decision flow: G=0 rounds down; G=1 and R|S=0 is a tie (round half to even); G=1 and R|S=1 rounds up"></p>
+<h3 id="舍入误差">舍入误差</h3>
+<p>正确舍入保证的是：每做一次运算，结果最多偏离精确值半个刻度间距。用
+float8 的 <code>[1, 2)</code> 段举例，段内间距 <code>1/16</code>。</p>
+<ul>
+<li><code>1.25 + 0.0625 = 1.3125</code>。数学结果恰好落在刻度上，无需舍入，误差为零。</li>
+<li><code>1.25 + 0.03125 = 1.28125</code>。结果正好落在
+<code>1.25</code> 和 <code>1.3125</code> 正中间，按 round half to even
+舍到 <code>1.25</code>，误差 <code>0.03125</code>，等于半个间距。</li>
+<li><code>1.25 + 0.0078125 = 1.2578125</code>。结果离 <code>1.25</code>
+更近，舍到 <code>1.25</code>，误差
+<code>0.0078125</code>，小于半个间距。</li>
+</ul>
+<p>三组例子中，最坏情况是第二组：数学结果恰好落在两条刻度正中间，无论往哪边舍都差半个间距。<strong>半个间距就是向最近舍入的绝对误差上界。</strong></p>
+<p>不同段的绝对上界不同。<code>[1, 2)</code> 的间距
+<code>1/16</code>，上界 <code>1/32</code>；<code>[2, 4)</code> 的间距
+<code>1/8</code>，上界
+<code>1/16</code>。段越大，绝对误差上界越大。但看<strong>相对误差</strong>（误差除以数值本身），每一段都差不多：<code>(1/32)/1 ≈ 3%</code>，<code>(1/16)/2 ≈ 3%</code>。相对误差在整条数轴上保持稳定，这正是浮点按指数分段的核心好处。</p>
+<h3 id="误差放大">误差放大</h3>
+<p>单次舍入误差有界且可控，但某些运算模式会把已有的微小误差急剧放大。</p>
+<p><strong>加法里”小被大吃”。</strong>
+两个加数量级悬殊时，小数的全部信息可能落在大数所在段的半个间距以下，加了等于没加。float8
+里 <code>8 + 0.125</code>：数学结果 <code>8.125</code>，但
+<code>8</code> 所在的段 <code>[8, 16)</code> 间距
+<code>0.5</code>、半个间距 <code>0.25</code>，<code>0.125</code>
+不够半个间距，舍入后结果仍是 <code>8</code>。小数被”吞掉”了。</p>
+<p>这个现象在累加大量小数时尤其致命。假设要把一百万个 <code>0.125</code>
+加到 <code>8</code> 上，正确结果是
+<code>125008</code>，但如果从左到右逐个累加，每一步都是”大数 +
+小数”，小数每次都被吞掉，结果始终是 <code>8</code>。</p>
+<p>一种经典的应对方法是 <strong>Kahan
+求和</strong>（补偿求和）。思路是：每次加法被吞掉的部分不扔掉，而是记在一个”补偿变量”里，下一次加法时把补偿也带上。伪代码如下：</p>
+<pre><code>sum = 0
+c = 0                      // 补偿变量，记录累积的被吞部分
+for x in data:
+    y = x - c              // 把上次丢失的补偿加回来
+    t = sum + y            // 这一步可能吞掉 y 的低位
+    c = (t - sum) - y      // (t - sum) 是实际加上去的部分，减去 y 就是被吞掉的误差
+    sum = t</code></pre>
+<p><code>c</code>
+每一轮都捕获了本次加法丢失的尾巴，下一轮再补回去。对于简单累加场景，Kahan
+求和能把误差从 O(n) 压到 O(1)，只多一个变量和几次额外运算。</p>
+<p><strong>减法里”灾难性抵消”。</strong>
+两个量级相近的数相减，高位相消，只剩低位的差。如果输入本身已经是舍入过的近似值，低位早已不精确，相减把原本藏在高位下面的舍入噪声暴露成了结果的主体，有效位数大幅缩水。例如真实值
+<code>1.0001</code> 和 <code>0.9999</code> 在 float8 里都被舍入到
+<code>1.0</code>，真实差 <code>0.0002</code> 变成了
+<code>1.0 − 1.0 = 0</code>，结果与真实差完全无关。</p>
+<p>灾难性抵消的应对思路通常不是在减法本身上做文章，而是改写公式，让相近的数不需要相减。求解一元二次方程是一个经典例子。求根公式
+<code>(-b + √(b²-4ac)) / 2a</code> 在 <code>b &gt; 0</code> 且
+<code>b² ≫ 4ac</code> 时，分子里 <code>-b</code> 和
+<code>√(b²-4ac)</code> 非常接近，相加会抵消。替代做法是利用韦达定理
+<code>x₁·x₂ = c/a</code>：先用不抵消的那个根（<code>(-b - √(b²-4ac)) / 2a</code>）算出
+<code>x₂</code>，再用 <code>x₁ = c/(a·x₂)</code>
+得到另一个根，绕开了相近数相减。</p>
+<p>这两种现象在多步运算链中还会叠加：上一步的输出是下一步的输入，舍入误差沿链路逐步累积；一旦遇到灾难性抵消，累积的误差被一次性放大。</p>
+<p>浮点数的有限位宽决定了舍入不可消除，但误差的累积和放大并非不可控。应对的方向不是追求更多位数（虽然
+float64 比 float32
+精度高得多，但面对同样的数值陷阱只是推迟问题），而是选择让误差不容易累积的计算路径。在浮点的世界里，数学上等价的写法在数值上并不等价，选择计算路径也是工程决策的重要部分。</p></div>
+   
+          <!-- -->
+        </article>
+      </div>
+    </main>
+  </div>
+  <footer class="md-footer">
+    <div class="md-grid">
+      <div class="md-footer-meta md-typeset">
+        <p class="md-footer-meta__inner">
+          <span>© 2025 </span>
+          <span> All rights reserved </span>
+        </p>
+      </div>
+    </div>
+  </footer>
+  <!-- -->
+</body>
+
+</html>
