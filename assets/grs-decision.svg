@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-40 0 800 360" width="800" height="360" font-family="monospace" font-size="12">
+  <rect x="-39.5" y="0.5" width="799" height="359" fill="#f7f3e8" stroke="#d8cfbd" stroke-width="1"/>
+
+  <defs>
+    <marker id="arrow-flow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- 起点：输入 G, R, S（中心 x=360） -->
+  <g>
+    <rect x="290" y="20" width="140" height="36" rx="4" ry="4" fill="#fff" stroke="#555" stroke-width="1"/>
+    <text x="360" y="43" text-anchor="middle" fill="#333">精确尾数的 G R S</text>
+  </g>
+
+  <!-- 顶部到第一层的线 -->
+  <line x1="360" y1="56" x2="360" y2="78" stroke="#555" stroke-width="1" marker-end="url(#arrow-flow)"/>
+
+  <!-- 第一层判断：G = 0 ?（中心 x=360） -->
+  <g>
+    <rect x="290" y="80" width="140" height="40" rx="4" ry="4" fill="#fef4e8" stroke="#d35400" stroke-width="1.2"/>
+    <text x="360" y="105" text-anchor="middle" fill="#d35400" font-weight="bold">G = 0 ?</text>
+  </g>
+
+  <!-- 第一层分支"是"：向左到向下舍入盒子正上方 (x=120) 再向下 -->
+  <g>
+    <path d="M 290 100 L 120 100 L 120 218" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arrow-flow)"/>
+    <text x="200" y="92" text-anchor="middle" fill="#555" font-size="11">是</text>
+
+    <rect x="40" y="220" width="160" height="44" rx="4" ry="4" fill="#1f4e8c" fill-opacity="0.1" stroke="#1f4e8c" stroke-width="1.2"/>
+    <text x="120" y="240" text-anchor="middle" fill="#1f4e8c" font-weight="bold">向下舍入</text>
+    <text x="120" y="256" text-anchor="middle" fill="#1f4e8c" font-size="10">（取较小刻度）</text>
+  </g>
+
+  <!-- 第一层分支"否"：向右下到第二层判断 -->
+  <g>
+    <path d="M 430 100 L 600 100 L 600 150 L 360 150 L 360 178" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arrow-flow)"/>
+    <text x="520" y="92" text-anchor="middle" fill="#555" font-size="11">否（G = 1）</text>
+  </g>
+
+  <!-- 第二层判断：R | S = 0 ?（中心 x=360） -->
+  <g>
+    <rect x="270" y="180" width="180" height="40" rx="4" ry="4" fill="#f0e8f2" stroke="#7a5195" stroke-width="1.2"/>
+    <text x="360" y="205" text-anchor="middle" fill="#7a5195" font-weight="bold">R | S = 0 ?</text>
+  </g>
+
+  <!-- 第二层分支"是"：到恰好平局盒子（中心 x=360） -->
+  <g>
+    <path d="M 360 220 L 360 278" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arrow-flow)"/>
+    <text x="380" y="248" fill="#555" font-size="11">是</text>
+
+    <rect x="280" y="280" width="160" height="60" rx="4" ry="4" fill="#1f4e8c" fill-opacity="0.1" stroke="#1f4e8c" stroke-width="1.2"/>
+    <text x="360" y="300" text-anchor="middle" fill="#1f4e8c" font-weight="bold">恰好平局</text>
+    <text x="360" y="316" text-anchor="middle" fill="#1f4e8c" font-size="10">看末位，按</text>
+    <text x="360" y="330" text-anchor="middle" fill="#1f4e8c" font-size="10">round half to even</text>
+  </g>
+
+  <!-- 第二层分支"否"：向右到向上舍入盒子（中心 x=600） -->
+  <g>
+    <path d="M 450 200 L 600 200 L 600 218" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arrow-flow)"/>
+    <text x="520" y="192" text-anchor="middle" fill="#555" font-size="11">否</text>
+
+    <rect x="520" y="220" width="160" height="44" rx="4" ry="4" fill="#1f4e8c" fill-opacity="0.1" stroke="#1f4e8c" stroke-width="1.2"/>
+    <text x="600" y="240" text-anchor="middle" fill="#1f4e8c" font-weight="bold">向上舍入</text>
+    <text x="600" y="256" text-anchor="middle" fill="#1f4e8c" font-size="10">（取较大刻度）</text>
+  </g>
+</svg>
