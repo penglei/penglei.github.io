@@ -16,7 +16,7 @@
   <!-- <link rel="stylesheet" href=""> -->
   
   <meta name="author" content="penglei" />
-  <title>YByte — 理解浮点数</title>
+  <title>YByte — null</title>
   <link rel="stylesheet" type="text/css" href="/assets/css/site.css" />
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦥</text></svg>" />
@@ -68,9 +68,9 @@
       <div class="md-main__inner md-grid">
         <article class="post-single md-typeset">
           <header class="post-header">
-            <h1 class="post-title">理解浮点数</h1>
+            <h1 class="post-title">null</h1>
             <div class="post-meta">
-              <span>2026-04-04</span>
+              <span>null</span>
               <p class="meta-tags">
               </p>
             </div>
@@ -80,6 +80,8 @@
             <span class="details">Table of Contents</span>
         </summary> 
         <nav class="inner"><ul>
+<li><a href="#理解浮点数" id="toc-理解浮点数">理解浮点数</a>
+<ul>
 <li><a href="#什么是数" id="toc-什么是数">什么是数？</a></li>
 <li><a href="#科学计数法" id="toc-科学计数法">科学计数法</a></li>
 <li><a href="#浮点数" id="toc-浮点数">浮点数</a>
@@ -96,9 +98,11 @@ Round / Sticky</a></li>
 <li><a href="#舍入误差" id="toc-舍入误差">舍入误差</a></li>
 <li><a href="#误差放大" id="toc-误差放大">误差放大</a></li>
 </ul></li>
+</ul></li>
 </ul></nav>
       </div>
-      <div class="post-content"><h2 id="什么是数">什么是数？</h2>
+      <div class="post-content"><h1 id="理解浮点数">理解浮点数</h1>
+<h2 id="什么是数">什么是数？</h2>
 <p>柏拉图主义认为数是真实存在的、非物质的、永恒且不变的”抽象实体”或”理念”。我倾向于把它看作一种思维方式，一种用来组织关于量的经验的抽象结构。无论哪种立场，有一件事是共识：<strong>数和数的表现形式是不同的</strong>。</p>
 <p>同一个数（e.g. 13）可以有许多形式：</p>
 <ul>
@@ -440,12 +444,13 @@ float8 的 <code>1.25</code> 为例，它左边相邻刻度是
 rounded）。</p>
 <p>这个模型听起来直接，但硬件落地时有一个困难：尾数存储器是定宽的，运算过程中的中间形式所需的存储往往比存储器宽(甚至无穷)，多出来的低位没处存放。如果直接截掉，舍入方向就可能出错。下面先看硬件如何用最少的额外位解决这个问题。</p>
 <h3 id="guard-round-sticky">Guard / Round / Sticky</h3>
+<p><img src="assets/grs.svg" alt="GRS bits layout: m target mantissa bits, Guard, Round, and Sticky as OR of tail"></p>
 <p>以 float8 加法为例，计算 <code>1.0100 × 2⁰</code> 加
 <code>1.0111 × 2⁻²</code>（十进制
 <code>1.25 + 0.359375</code>）。加法要先把两个数对齐到同一指数，把小的数右移
 2 位：</p>
-<pre><code>   1.0100 00
-+  0.0101 11
+<pre><code>   1.0100 00 × 2⁰
++  0.0101 11 × 2⁰
 = ----------
    1.1001 11</code></pre>
 <p>数学结果 <code>1.1001 11</code> 有 6 位小数部分，但 float8 尾数只有 4
@@ -486,19 +491,47 @@ Guard=1，还得分辨”恰好平局”和”严格大于平局”。直觉上�
 <strong>Sticky</strong>（粘连位）：一旦某位为 1，它就被”粘住”不再变
 0，无论后面还有多少位。Sticky
 的妙处在于：<strong>用一位记住了无穷多位低位是否非零的信息</strong>。</p>
-<p>这样看来 Guard + Sticky 两位似乎已经够了。Round（舍入位）是紧挨 Guard
-再往低位的那一位，它的存在是为了应对<strong>减法可能引发的左移规范化</strong>：当两个相近的数相减，结果的高位被消去（比如
-<code>1.0001 − 1.0000 = 0.0001</code>），需要左移把首位 1
-重新对齐到尾数最高位。左移时 Guard 位被移走，需要从更低的位补一个新
-Guard 进来，这一位就是 Round。Sticky 是 OR
-折叠过的，无法在左移时恢复成精确位，所以左移补给必须额外预留一位
-Round。</p>
-<p>合起来三位：</p>
-<p><img src="assets/grs.svg" alt="GRS bits layout: m target mantissa bits, Guard, Round, and Sticky as OR of tail"></p>
-<p><code>G R S</code>
+<p>Guard + Sticky
+两位信息似乎已经足够应对舍入的判断，但减法运算下还需要更多信息：</p>
+<p>例如，计算 <code>1.0000 × 2³</code> 减
+<code>1.1010 × 2⁻¹</code>（十进制
+<code>8 − 0.8125 = 7.1875</code>）。精确差 7.1875 写成二进制是
+<code>111.0011</code>，即 <code>1.1100 11 × 2²</code>。尾数 4 位只能存
+<code>1.1100</code>，后面的 <code>11</code>
+是需要舍入的尾巴。相邻两条刻度 <code>1.1100 × 2²</code> = 7.0 和
+<code>1.1101 × 2²</code> = 7.25，中点 7.125。7.1875 &gt;
+7.125，正确答案是向上舍入到 7.25。这个例子中指数差 4，对齐时把
+<code>1.1010</code> 右移 4 位。如果只保留 Guard + Sticky 两位（G
+存右移溢出的第一位，其余位 OR 折叠进
+S），运算完成后，对结果左移1位进行规范化，左移后 G 被吞进尾数，只剩 S
+一位给舍入用。一位信息只能区分”不到半”和”至少半”，无法进一步区分”恰好半”和”严格超过半”。这个例子里
+S=1 表示”至少半”，硬件按平局处理；尾数 <code>1.1100</code> 末位为
+0（偶数），round half to even 不进位，得 7.0。错了一个 ULP。</p>
+<p>解决办法是在 Guard 和 Sticky 之间多保留一位精确值，叫
+<strong>Round</strong>（舍入位）。有了 Round，右移 4 位时移出的
+<code>1010</code> 中前两位分别填入 G=1、R=0，剩余两位 OR 折叠得
+S=1。运算结果和左移过程：</p>
+<pre><code>          GRS
+  1.0000  000 × 2³
+− 0.0001  101 × 2³
+= 0.1110  011 × 2³
+= 1.1100  11  × 2²
+</code></pre>
+<p>左移后，原来的 G 进入尾数末位，原来的 R 成为新 Guard = 1，原来的 S
+成为新 Sticky = 1。新 Guard = 1 且新 Sticky =
+1，判定”严格超过半”，向上舍入，得 <code>1.1101 × 2²</code> =
+7.25。正确。</p>
+<p>左移超过 1 位的情况不需要担心：大量高位消去只在指数差 ≤ 1
+时才可能发生（指数差 ≥ 2 时大数的首位不会被抵消），而指数差 ≤ 1 的两个 m
+位尾数相减，精确结果最多 m+1 个有效位。若前导零多于 1
+位，左移规范化后剩余有效位不超过 m−1，全部装进 m
+位尾数绰绰有余，不需要舍入。</p>
+<p>不进行左移操作时，只需要使用G判断”是否过半”，R|S
+判断”是否严格超过半”。左移 1 位时，G 被吞进尾数，R 成为新的 Guard，S
+成为新的 Sticky，舍入判断照常进行。</p>
+<p><img src="assets/grs-decision.svg" alt="GRS rounding decision flow: G=0 rounds down; G=1 and R|S=0 is a tie (round half to even); G=1 and R|S=1 rounds up"><code>G R S</code>
 三位足以让硬件在不保留完整尾巴的情况下做出与”先精确算再舍入”完全一致的决策。决策过程按
 G、R|S 两层分支展开：</p>
-<p><img src="assets/grs-decision.svg" alt="GRS rounding decision flow: G=0 rounds down; G=1 and R|S=0 is a tie (round half to even); G=1 and R|S=1 rounds up"></p>
 <h3 id="舍入误差">舍入误差</h3>
 <p>正确舍入保证的是：每做一次运算，结果最多偏离精确值半个刻度间距。用
 float8 的 <code>[1, 2)</code> 段举例，段内间距 <code>1/16</code>。</p>
