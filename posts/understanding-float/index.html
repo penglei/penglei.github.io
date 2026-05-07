@@ -518,8 +518,8 @@ S=1。运算结果和左移过程：</p>
 </code></pre>
 <p>左移后，原来的 G 进入尾数末位，原来的 R 成为新 Guard = 1，原来的 S
 成为新 Sticky = 1。新 Guard = 1 且新 Sticky =
-1，判定”严格超过半”，向上舍入，得 <code>1.1101 × 2²</code> =
-7.25。正确。</p>
+1，判定”严格超过半”，向上舍入，得到
+<code>1.1101 × 2² = 7.25</code>，符合舍入预期。</p>
 <p>左移超过 1 位的情况不需要担心：大量高位消去只在指数差 ≤ 1
 时才可能发生（指数差 ≥ 2 时大数的首位不会被抵消），而指数差 ≤ 1 的两个 m
 位尾数相减，精确结果最多 m+1 个有效位。若前导零多于 1
@@ -528,9 +528,10 @@ S=1。运算结果和左移过程：</p>
 <p>不进行左移操作时，只需要使用G判断”是否过半”，R|S
 判断”是否严格超过半”。左移 1 位时，G 被吞进尾数，R 成为新的 Guard，S
 成为新的 Sticky，舍入判断照常进行。</p>
-<p><img src="assets/grs-decision.svg" alt="GRS rounding decision flow: G=0 rounds down; G=1 and R|S=0 is a tie (round half to even); G=1 and R|S=1 rounds up"><code>G R S</code>
+<p><img src="assets/grs-decision.svg" alt="GRS rounding decision flow: G=0 rounds down; G=1 and R|S=0 is a tie (round half to even); G=1 and R|S=1 rounds up"></p>
+<p><code>G R S</code>
 三位足以让硬件在不保留完整尾巴的情况下做出与”先精确算再舍入”完全一致的决策。决策过程按
-G、R|S 两层分支展开：</p>
+G、R|S 两层分支展开。</p>
 <h3 id="舍入误差">舍入误差</h3>
 <p>正确舍入保证的是：每做一次运算，结果最多偏离精确值半个刻度间距。用
 float8 的 <code>[1, 2)</code> 段举例，段内间距 <code>1/16</code>。</p>
