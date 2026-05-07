@@ -16,7 +16,7 @@
   <!-- <link rel="stylesheet" href=""> -->
   
   <meta name="author" content="penglei" />
-  <title>YByte — null</title>
+  <title>YByte — 理解浮点数</title>
   <link rel="stylesheet" type="text/css" href="/assets/css/site.css" />
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦥</text></svg>" />
@@ -68,9 +68,9 @@
       <div class="md-main__inner md-grid">
         <article class="post-single md-typeset">
           <header class="post-header">
-            <h1 class="post-title">null</h1>
+            <h1 class="post-title">理解浮点数</h1>
             <div class="post-meta">
-              <span>null</span>
+              <span>2026-04-04</span>
               <p class="meta-tags">
               </p>
             </div>
@@ -80,8 +80,6 @@
             <span class="details">Table of Contents</span>
         </summary> 
         <nav class="inner"><ul>
-<li><a href="#理解浮点数" id="toc-理解浮点数">理解浮点数</a>
-<ul>
 <li><a href="#什么是数" id="toc-什么是数">什么是数？</a></li>
 <li><a href="#科学计数法" id="toc-科学计数法">科学计数法</a></li>
 <li><a href="#浮点数" id="toc-浮点数">浮点数</a>
@@ -98,11 +96,9 @@ Round / Sticky</a></li>
 <li><a href="#舍入误差" id="toc-舍入误差">舍入误差</a></li>
 <li><a href="#误差放大" id="toc-误差放大">误差放大</a></li>
 </ul></li>
-</ul></li>
 </ul></nav>
       </div>
-      <div class="post-content"><h1 id="理解浮点数">理解浮点数</h1>
-<h2 id="什么是数">什么是数？</h2>
+      <div class="post-content"><h2 id="什么是数">什么是数？</h2>
 <p>柏拉图主义认为数是真实存在的、非物质的、永恒且不变的”抽象实体”或”理念”。我倾向于把它看作一种思维方式，一种用来组织关于量的经验的抽象结构。无论哪种立场，有一件事是共识：<strong>数和数的表现形式是不同的</strong>。</p>
 <p>同一个数（e.g. 13）可以有许多形式：</p>
 <ul>
@@ -495,18 +491,21 @@ Guard=1，还得分辨”恰好平局”和”严格大于平局”。直觉上�
 两位信息似乎已经足够应对舍入的判断，但减法运算下还需要更多信息：</p>
 <p>例如，计算 <code>1.0000 × 2³</code> 减
 <code>1.1010 × 2⁻¹</code>（十进制
-<code>8 − 0.8125 = 7.1875</code>）。精确差 7.1875 写成二进制是
-<code>111.0011</code>，即 <code>1.1100 11 × 2²</code>。尾数 4 位只能存
-<code>1.1100</code>，后面的 <code>11</code>
-是需要舍入的尾巴。相邻两条刻度 <code>1.1100 × 2²</code> = 7.0 和
-<code>1.1101 × 2²</code> = 7.25，中点 7.125。7.1875 &gt;
-7.125，正确答案是向上舍入到 7.25。这个例子中指数差 4，对齐时把
-<code>1.1010</code> 右移 4 位。如果只保留 Guard + Sticky 两位（G
-存右移溢出的第一位，其余位 OR 折叠进
-S），运算完成后，对结果左移1位进行规范化，左移后 G 被吞进尾数，只剩 S
-一位给舍入用。一位信息只能区分”不到半”和”至少半”，无法进一步区分”恰好半”和”严格超过半”。这个例子里
-S=1 表示”至少半”，硬件按平局处理；尾数 <code>1.1100</code> 末位为
-0（偶数），round half to even 不进位，得 7.0。错了一个 ULP。</p>
+<code>8 − 0.8125 = 7.1875</code>）。指数差 4，对齐时把
+<code>1.1010</code> 右移 4 位。假设只保留 Guard + Sticky 两位（G
+存右移溢出的第一位，其余位 OR 折叠进 S），移出的 4 位 <code>1010</code>
+变为 G=1, S=OR(010)=1：</p>
+<pre><code>          GS
+  1.0000  00 × 2³
+− 0.0001  11 × 2³       移出的 1010 → G=1, S=OR(010)=1
+= 0.1110  01 × 2³       S=1 向 G 借位，G: 0−1−1=0 再向尾数借位
+= 1.1100  1  × 2²       左移规范化，G 进入尾数末位，仅剩 S=1</code></pre>
+<p>S=1
+表示”至少半”，但无法区分”恰好半”和”严格超过半”。硬件只能按平局处理，尾数末位
+0 是偶数，round half to even 不进位，得 <code>1.1100 × 2²</code> =
+7.0。</p>
+<p>但精确答案 7.1875 = <code>1.1100 11 × 2²</code>，落在刻度 7.0 与 7.25
+的中点 7.125 之上，正确结果应为 7.25。差了一个 ULP。</p>
 <p>解决办法是在 Guard 和 Sticky 之间多保留一位精确值，叫
 <strong>Round</strong>（舍入位）。有了 Round，右移 4 位时移出的
 <code>1010</code> 中前两位分别填入 G=1、R=0，剩余两位 OR 折叠得
