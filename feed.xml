@@ -2119,7 +2119,7 @@ href="https://nixos.org/download/">安装nix</a>，注意，我们提前配置ni
 <span class="line">  <span class="syn-variable syn-member">services</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">openssh</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">enable</span> <span class="syn-operator">=</span> <span class="syn-boolean">true</span><span class="syn-punctuation syn-delimiter">;</span></span>
 <span class="line"></span>
 <span class="line">  <span class="syn-variable syn-member">environment</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">systemPackages</span> <span class="syn-operator">=</span> <span class="syn-keyword">with</span> <span class="syn-variable">pkgs</span><span class="syn-punctuation syn-delimiter">;</span> <span class="syn-punctuation syn-bracket">[</span> <span class="syn-variable">git</span> <span class="syn-variable">vim</span> <span class="syn-variable">curl</span> <span class="syn-variable">pstree</span> <span class="syn-variable">htop</span> <span class="syn-variable">tree</span> <span class="syn-punctuation syn-bracket">]</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line"><span class="syn-punctuation syn-bracket">}</span></span></code></pre></div></div></div>
+<span class="line"><span class="syn-punctuation syn-bracket">}</span></span></code></pre></div></div></div></div>
 <p>这个模块包含多个部份:</p>
 <ul>
 <li>第6行声明了系统的时区；</li>
@@ -2211,7 +2211,7 @@ label即可，而不用去修改仓库中的NixOS配置。</p>
 <span class="line">    <span class="syn-variable syn-member">hostName</span> <span class="syn-operator">=</span> <span class="syn-variable">hostname</span><span class="syn-punctuation syn-delimiter">;</span></span>
 <span class="line">  <span class="syn-punctuation syn-bracket">}</span><span class="syn-punctuation syn-delimiter">;</span></span>
 <span class="line"><span class="syn-punctuation syn-bracket">}</span></span>
-</code></pre></div></div></div>
+</code></pre></div></div></div></div>
 <p>硬件部份配置主要是三部份：</p>
 <ul>
 <li><p>bootloader</p>
