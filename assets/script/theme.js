@@ -1,101 +1,151 @@
 (() => {
-  const darkScheme = "dracula";
+  /*
+   * Theme switching for Pico v2.
+   *
+   * Pico v2 convention:
+   *   - <html data-theme="light">  : force light
+   *   - <html data-theme="dark">   : force dark
+   *   - <html> with no data-theme  : follow `prefers-color-scheme`
+   *
+   * We layer three user-visible states on top:
+   *   light (manual) -> dark (manual) -> system -> light ...
+   *
+   * Stored as:
+   *   localStorage["site-theme"]          : "light" | "dark"
+   *   localStorage["site-prefers-system"] : "true"  | "false"
+   *
+   * We also set a `data-theme-mode` attribute on <body> so the header toggle
+   * can show the correct icon (light / dark / system).
+   */
+  const LIGHT = "light";
+  const DARK = "dark";
+  const STORAGE_THEME = "site-theme";
+  const STORAGE_SYSTEM = "site-prefers-system";
 
-  function preferDarkChange(e) {
-    if (localStorage.getItem("data-md-prefers-color-scheme") === "true") {
-      document
-        .querySelector("body")
-        .setAttribute(
-          "data-md-color-scheme",
-          e.matches ? darkScheme : "default",
-        );
+  function preferSupported() {
+    return window.matchMedia("(prefers-color-scheme)").media !== "not all";
+  }
+
+  function systemTheme() {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? DARK
+      : LIGHT;
+  }
+
+  function applyManual(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+  }
+
+  function applySystem() {
+    document.documentElement.removeAttribute("data-theme");
+  }
+
+  function setMode(body, usesSystem) {
+    body.setAttribute("data-theme-mode", usesSystem ? "system" : "manual");
+  }
+
+  function resolveInitial() {
+    const usesSystem = localStorage.getItem(STORAGE_SYSTEM) === "true";
+    if (usesSystem && preferSupported()) {
+      return { theme: systemTheme(), usesSystem: true };
+    }
+    const stored = localStorage.getItem(STORAGE_THEME);
+    if (stored === LIGHT || stored === DARK) {
+      return { theme: stored, usesSystem: false };
+    }
+    return { theme: DARK, usesSystem: false };
+  }
+
+  function applyState(theme, usesSystem) {
+    if (usesSystem) {
+      applySystem();
+    } else {
+      applyManual(theme);
+    }
+    if (document.body) {
+      setMode(document.body, usesSystem);
     }
   }
 
-  function setupTheme(body) {
-    const preferSupported =
-      window.matchMedia("(prefers-color-scheme)").media !== "not all";
-    let scheme = localStorage.getItem("data-md-color-scheme");
-    let prefer = localStorage.getItem("data-md-prefers-color-scheme");
-
-    if (!scheme) {
-      scheme = darkScheme;
+  function systemChangeHandler() {
+    if (localStorage.getItem(STORAGE_SYSTEM) === "true") {
+      // Pico v2 already reacts to prefers-color-scheme automatically, so we
+      // only need to keep `data-theme` absent (which it already is).
+      applySystem();
     }
-    if (!prefer) {
-      prefer = "false";
-    }
+  }
 
-    if (prefer === "true" && preferSupported) {
-      scheme = window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? darkScheme
-        : "default";
-    } else {
-      prefer = "false";
-    }
+  function setup() {
+    const { theme, usesSystem } = resolveInitial();
+    applyState(theme, usesSystem);
 
-    body.setAttribute("data-md-prefers-color-scheme", prefer);
-    body.setAttribute("data-md-color-scheme", scheme);
-
-    if (preferSupported) {
-      //must listen on concrete scheme, i.e. (..: dark) or (..: light)
+    if (preferSupported()) {
       window
         .matchMedia("(prefers-color-scheme: dark)")
-        .addEventListener("change", preferDarkChange);
+        .addEventListener("change", systemChangeHandler);
     }
   }
 
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      if (mutation.type === "childList") {
-        if (mutation.addedNodes.length) {
-          for (let i = 0; i < mutation.addedNodes.length; i++) {
-            const el = mutation.addedNodes[i];
+  function currentResolvedTheme() {
+    const attr = document.documentElement.getAttribute("data-theme");
+    if (attr === LIGHT || attr === DARK) return attr;
+    return systemTheme();
+  }
 
-            if (el.nodeType === 1 && el.tagName.toLowerCase() === "body") {
-              setupTheme(el);
-              break;
-            }
-          }
-        }
-      }
-    });
-  });
-
-  observer.observe(document.querySelector("html"), { childList: true });
-
-  function toggleScheme(e) {
-    const body = document.querySelector("body");
-    const preferSupported =
-      window.matchMedia("(prefers-color-scheme)").media !== "not all";
-    let scheme = body.getAttribute("data-md-color-scheme");
-    let prefer = body.getAttribute("data-md-prefers-color-scheme");
-
-    if (preferSupported && scheme === "default" && prefer !== "true") {
-      prefer = "true";
-      scheme = window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? darkScheme
-        : "default";
-    } else if (preferSupported && prefer === "true") {
-      prefer = "false";
-      scheme = darkScheme;
-    } else if (scheme === darkScheme) {
-      prefer = "false";
-      scheme = "default";
-    } else {
-      prefer = "false";
-      scheme = darkScheme;
-    }
-    localStorage.setItem("data-md-prefers-color-scheme", prefer);
-    localStorage.setItem("data-md-color-scheme", scheme);
-    body.setAttribute("data-md-prefers-color-scheme", prefer);
-    body.setAttribute("data-md-color-scheme", scheme);
+  function toggle(e) {
     e.stopPropagation();
     e.preventDefault();
+
+    const body = document.body;
+    const mode = body.getAttribute("data-theme-mode");
+    const current = currentResolvedTheme();
+
+    let nextMode, nextTheme;
+    if (mode !== "system" && current === LIGHT) {
+      nextMode = "manual";
+      nextTheme = DARK;
+    } else if (mode !== "system" && current === DARK && preferSupported()) {
+      nextMode = "system";
+      nextTheme = systemTheme();
+    } else {
+      nextMode = "manual";
+      nextTheme = LIGHT;
+    }
+
+    const usesSystem = nextMode === "system";
+    localStorage.setItem(STORAGE_SYSTEM, String(usesSystem));
+    localStorage.setItem(STORAGE_THEME, nextTheme);
+    applyState(nextTheme, usesSystem);
+  }
+
+  // Apply theme as soon as <body> is available (avoid FOUC of icon state).
+  const htmlObserver = new MutationObserver((mutations) => {
+    for (const m of mutations) {
+      for (const n of m.addedNodes) {
+        if (n.nodeType === 1 && n.tagName === "BODY") {
+          setup();
+          htmlObserver.disconnect();
+          return;
+        }
+      }
+    }
+  });
+  if (document.body) {
+    setup();
+  } else {
+    // Apply the html[data-theme] attribute immediately to avoid color FOUC,
+    // then defer the body-mode attribute until <body> exists.
+    const { theme, usesSystem } = resolveInitial();
+    if (usesSystem) {
+      applySystem();
+    } else {
+      applyManual(theme);
+    }
+    htmlObserver.observe(document.documentElement, { childList: true });
   }
 
   document.addEventListener("DOMContentLoaded", () => {
-    document
-      .getElementById("toggle-theme")
-      .addEventListener("click", toggleScheme);
+    const btn = document.getElementById("toggle-theme");
+    if (btn) btn.addEventListener("click", toggle);
   });
 })();

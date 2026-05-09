@@ -1,0 +1,371 @@
+/*
+ * site-override.css
+ *
+ * Overlay on top of Pico v2 classless (vendor/pico.min.css).
+ *
+ * Pico v2 handles:
+ *   - Full light/dark theming via `prefers-color-scheme` and `[data-theme]`.
+ *   - Responsive body container widths on `body > header|main|footer`.
+ *   - Typography, forms, tables, code, most inline elements.
+ *
+ * We only add:
+ *   - Top navigation bar layout (semantic classes that Pico doesn't style).
+ *   - Theme toggle button + icon visibility rules.
+ *   - Post listing / post header / archive / tag cloud layout.
+ *   - ToC overrides to beat Pico's aggressive `nav li { display: inline-block }`.
+ */
+
+/* -------------------------------------------------------------------------
+ * 1. Top navigation
+ * ---------------------------------------------------------------------- */
+.site-header {
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid currentColor;
+  border-color: color-mix(in srgb, currentColor 15%, transparent);
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.site-brand {
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-decoration: none;
+}
+
+.site-links {
+  display: flex;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  flex: 1;
+}
+
+.site-links li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  /* Pico's classless rules style `nav li` as inline-block; that's fine here
+     but we want predictable spacing via the flex `gap`. */
+}
+
+.site-links li.active a {
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.site-links a {
+  text-decoration: none;
+}
+
+.site-links a:hover {
+  text-decoration: underline;
+}
+
+/* -------------------------------------------------------------------------
+ * 2. Theme toggle button
+ *
+ * Icon visibility uses two attributes that live on different elements:
+ *   - <html data-theme="light|dark">   : set only in manual mode
+ *   - <body data-theme-mode="manual|system">
+ * In system mode <html> has no data-theme (Pico v2 then follows
+ * prefers-color-scheme). That's why the selectors below use
+ * `html[data-theme=...] body[data-theme-mode="manual"]` descendant chains.
+ * ---------------------------------------------------------------------- */
+.theme-toggle {
+  background: transparent;
+  border: none;
+  padding: 0.25rem;
+  margin: 0;
+  cursor: pointer;
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+  flex: 0 0 auto;
+  width: auto;
+}
+
+.theme-toggle:hover {
+  opacity: 0.7;
+}
+
+.theme-toggle svg {
+  width: 1.4rem;
+  height: 1.4rem;
+  fill: currentColor;
+}
+
+.theme-toggle .icon {
+  display: none;
+}
+
+html[data-theme="light"] body[data-theme-mode="manual"] .theme-toggle .icon-light,
+html[data-theme="dark"]  body[data-theme-mode="manual"] .theme-toggle .icon-dark,
+body[data-theme-mode="system"] .theme-toggle .icon-system {
+  display: inline-flex;
+}
+/* Fallback before JS has finished: show the system icon. */
+html:not([data-theme]) body:not([data-theme-mode]) .theme-toggle .icon-system {
+  display: inline-flex;
+}
+
+/* -------------------------------------------------------------------------
+ * 3. Post listing (home / archive / tag)
+ * ---------------------------------------------------------------------- */
+.post-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.post-list > li.post-entry {
+  list-style: none;
+  padding: 0.5rem 0;
+  margin: 0 0 1rem 0;
+}
+
+.post-entry__title {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.25rem;
+  line-height: 1.3;
+}
+
+.post-entry__title a {
+  text-decoration: none;
+}
+
+.post-entry__title a:hover {
+  text-decoration: underline;
+}
+
+.post-entry__meta {
+  margin: 0;
+  font-size: 0.875rem;
+  opacity: 0.75;
+}
+
+.post-entry__meta .post-tag {
+  margin-left: 0.5rem;
+}
+
+/* -------------------------------------------------------------------------
+ * 4. Single post header
+ * ---------------------------------------------------------------------- */
+.post-header {
+  margin-bottom: 1.5rem;
+}
+
+.post-title {
+  margin-bottom: 0.25rem;
+  line-height: 1.25;
+}
+
+.post-meta {
+  font-size: 0.9rem;
+  opacity: 0.75;
+  margin-top: 0;
+}
+
+.post-meta .post-tag {
+  margin-left: 0.5rem;
+}
+
+.post-tag {
+  text-decoration: none;
+  border-bottom: 1px dotted currentColor;
+}
+
+.post-tag:hover {
+  text-decoration: none;
+  border-bottom-style: solid;
+}
+
+/* -------------------------------------------------------------------------
+ * 5. Archive / tags pages
+ * ---------------------------------------------------------------------- */
+.archive-group {
+  margin-bottom: 2rem;
+}
+
+.archive-group__year {
+  border-bottom: 1px solid currentColor;
+  border-color: color-mix(in srgb, currentColor 20%, transparent);
+  padding-bottom: 0.25rem;
+}
+
+.archive-group__count {
+  font-size: 0.7rem;
+  opacity: 0.6;
+  margin-left: 0.25rem;
+}
+
+.tag-cloud {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+}
+
+.tag-cloud > li {
+  list-style: none;
+}
+
+.tag-cloud__item a {
+  text-decoration: none;
+}
+
+.tag-cloud__count {
+  font-size: 0.7rem;
+  opacity: 0.7;
+  margin-left: 0.2rem;
+}
+
+/* -------------------------------------------------------------------------
+ * 6. Media / math
+ * ---------------------------------------------------------------------- */
+img, video {
+  max-width: 100%;
+  height: auto;
+}
+
+.katex, .MathJax {
+  color: inherit;
+}
+
+/*
+ * Wide Markdown tables
+ *
+ * Two regimes:
+ *   - Narrow viewports (<= 767px): force the table to keep its natural
+ *     content width and let the wrapper scroll horizontally as a whole,
+ *     like <pre><code>. This avoids cells getting squeezed to one word
+ *     per line on phones.
+ *   - Wide viewports (>= 768px): let the table fill the wrapper so columns
+ *     spread out evenly, which is the prettier default Pico already gives
+ *     us. No `max-content` / `nowrap` overrides here.
+ *
+ * The Markdown renderer wraps every table in `<div class="md-table-wrapper">`,
+ * so `overflow-x: auto` on the wrapper is harmless on desktop (the table
+ * fits) and load-bearing on mobile (the table overflows).
+ *
+ * Pico's `--pico-table-border-color` defaults to `--pico-muted-border-color`,
+ * which in the dark theme is barely distinguishable from the page background
+ * (#202632 vs #13171f). The 3px thead underline Pico relies on for row
+ * separation then disappears, making the header look glued to the first data
+ * row. We promote the color to the slightly brighter `--pico-muted-color`
+ * tone so the separators actually show up.
+ */
+.md-table-wrapper {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.md-table-wrapper > table {
+  --pico-table-border-color: color-mix(in srgb, var(--pico-muted-color) 40%, transparent);
+  font-size: 0.9em;
+}
+
+@media (max-width: 767px) {
+  .md-table-wrapper > table {
+    width: max-content;
+    max-width: none;
+  }
+
+  .md-table-wrapper > table th,
+  .md-table-wrapper > table td {
+    white-space: nowrap;
+  }
+
+  /*
+   * Pico styles inline <code> as `display: inline-block`, which prevents
+   * `white-space: nowrap` on the parent cell from binding the code chip to
+   * the preceding text — the browser still allows a line break at the
+   * space before the chip. Force inline so the whole cell stays on one line.
+   */
+  .md-table-wrapper > table th code,
+  .md-table-wrapper > table td code {
+    display: inline;
+  }
+}
+
+/* -------------------------------------------------------------------------
+ * 7. Post ToC
+ *
+ * Pico v2 classless styles `nav li` as `display: inline-block` to build the
+ * top nav bar. The Markdown-rendered ToC is also a <nav>, so we have to
+ * explicitly re-assert a vertical bulleted list inside the article.
+ * ---------------------------------------------------------------------- */
+article .toc,
+.post .toc {
+  margin: 1rem 0 2rem;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid currentColor;
+  border-color: color-mix(in srgb, currentColor 25%, transparent);
+  background: color-mix(in srgb, currentColor 4%, transparent);
+}
+
+article .toc summary,
+.post .toc summary {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  list-style: none;
+}
+
+article .toc nav,
+article .toc nav ul,
+.post .toc nav,
+.post .toc nav ul {
+  display: block;
+  flex-direction: unset;
+  flex-wrap: unset;
+}
+
+article .toc nav ul,
+.post .toc nav ul {
+  list-style: disc outside;
+  margin: 0.25rem 0;
+  padding-left: 1.25rem;
+}
+
+article .toc nav li,
+.post .toc nav li {
+  display: list-item;
+  list-style: inherit;
+  margin: 0.15rem 0;
+  padding: 0;
+  width: auto;
+}
+
+article .toc nav a,
+.post .toc nav a {
+  text-decoration: none;
+}
+
+article .toc nav a:hover,
+.post .toc nav a:hover {
+  text-decoration: underline;
+}
+
+/* -------------------------------------------------------------------------
+ * 8. Footer
+ * ---------------------------------------------------------------------- */
+.site-footer {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid currentColor;
+  border-color: color-mix(in srgb, currentColor 15%, transparent);
+  font-size: 0.85rem;
+  opacity: 0.75;
+  text-align: center;
+}
