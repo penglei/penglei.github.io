@@ -2564,8 +2564,8 @@ exist</p>
 align</a></li>
 <li><a href="#proof-tree" id="toc-proof-tree">proof tree</a></li>
 </ul></li>
-<li><a href="#footnotscitation"
-id="toc-footnotscitation">Footnots,Citation</a></li>
+<li><a href="#footnotes-citation" id="toc-footnotes-citation">Footnotes,
+Citation</a></li>
 <li><a href="#code-block" id="toc-code-block">Code block</a></li>
 <li><a href="#table" id="toc-table">Table</a>
 <ul>
@@ -2580,16 +2580,12 @@ id="toc-numbered-example-lists">Numbered example lists</a></li>
 items</a></li>
 <li><a href="#divs-and-spans" id="toc-divs-and-spans">Divs and
 Spans</a></li>
-<li><a href="#admonitions-todo" id="toc-admonitions-todo">Admonitions
-(TODO)</a>
+<li><a href="#admonitions" id="toc-admonitions">Admonitions</a>
 <ul>
 <li><a href="#github-style" id="toc-github-style">github style</a></li>
-<li><a href="#pandoc-style" id="toc-pandoc-style">pandoc style</a></li>
-<li><a href="#mkdocs-detail-4" id="toc-mkdocs-detail-4">mkdocs detail
-</a></li>
+<li><a href="#pandoc-style-fenced-div"
+id="toc-pandoc-style-fenced-div">pandoc style (fenced div)</a></li>
 </ul></li>
-<li><a href="#mkdocs-emoji-todo" id="toc-mkdocs-emoji-todo">Mkdocs Emoji
-(TODO)</a></li>
 <li><a href="#links" id="toc-links">Links</a></li>
 </ul></nav>
       </div>
@@ -2597,30 +2593,37 @@ Spans</a></li>
 <p>See <a href="https://pandoc.org/MANUAL.html#pandocs-markdown"
 class="uri">https://pandoc.org/MANUAL.html#pandocs-markdown</a></p>
 <h2 id="math">Math</h2>
-<p>单行公式</p>
-<p>如果<span class="math inline"><em>a</em> ≠ 0</span>, 那么方程 <span
-class="math inline"><em>a</em><em>x</em><sup>2</sup> + <em>b</em><em>x</em> + <em>c</em> = 0</span>
-存在两个解</p>
-<p>多行公式：</p>
+<p><strong>单行公式</strong></p>
+<p>如果<span class="math inline">a \ne 0</span>, 那么方程 <span
+class="math inline">ax^2 + bx + c = 0</span> 存在两个解</p>
+<p><strong>多行公式</strong></p>
 <ul>
-<li><p>渲染出多行<span class="math display">$$ x = {-b \pm
-\sqrt{b^2-4ac} \over 2a} $$</span></p></li>
-<li><p>单行需要强制增加行 <code>\\</code></p>
-<pre class="math"><code>$$
+<li><p>渲染出多行</p>
+<p><span class="math display"> x = {-b \pm \sqrt{b^2-4ac} \over 2a}
+</span></p></li>
+<li><p>显式增加行 <code>\\</code></p>
+<div class="demo-container">
+<div class="demo-source">
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>f(x) = \int_{-\infty}^\infty</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    \hat{f}(\xi)\,e^{2 \pi i \xi x}</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    \,d\xi <span class="sc">\\</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>$$</span></code></pre></div>
+</div>
+<div class="demo-result">
+<p><span class="math display">
 f(x) = \int_{-\infty}^\infty
     \hat{f}(\xi)\,e^{2 \pi i \xi x}
     \,d\xi \\
-$$</code></pre>
-<p><span class="math display">$$
-f(x) = \int_{-\infty}^\infty
-    \hat{f}(\xi)\,e^{2 \pi i \xi x}
-    \,d\xi \\
-$$</span></p></li>
+</span></p>
+</div>
+</div></li>
 </ul>
 <h3 id="fitch-proof1">fitch proof<a href="#fn1" class="footnote-ref"
 id="fnref1" role="doc-noteref"><sup>1</sup></a></h3>
 <p>Demo1</p>
-<p><span class="math display">$$
+<p><span class="math display">
 \begin{aligned} 1.\\[-3pt] 2.\\[-3pt] 3.\\[-3pt] 4.\\[-3pt] 5.\\[-3pt]
 6.\\[-3pt]\end{aligned}
 \; \begin{array}{|l}
@@ -2637,9 +2640,9 @@ id="fnref1" role="doc-noteref"><sup>1</sup></a></h3>
 &amp;(\to E) \space 2,4 \\[-3pt]
 &amp;(\to I)\space\text{3-5}
 \end{aligned}
-$$</span></p>
+</span></p>
 <p>Demo2</p>
-<p><span class="math display">$$
+<p><span class="math display">
 \begin{array}{rll}
 \begin{array}{c} 1.\\ 2.\\ 3.\\ 4.\\ 5.\\ 6.\\ \end{array}
 \begin{array}{|l}
@@ -2662,9 +2665,9 @@ $$</span></p>
 \end{array}
 }
 \end{array}
-$$</span></p>
+</span></p>
 <p>Demo3</p>
-<p><span class="math display">$$
+<p><span class="math display">
 \begin{array}{c}
 \begin{array}{|l}
 \vdash (P \to Q) \to P \to Q \\
@@ -2682,9 +2685,9 @@ $$</span></p>
 \text{5. } (P \to Q) \to (P \to Q) \quad \to\!\text{I}, 1-4 \\
 \end{array}
 \end{array}
-$$</span></p>
+</span></p>
 <h3 id="equation-align">equation align</h3>
-<p><span class="math display">$$
+<p><span class="math display">
 \begin{array}{rclcl}
 2x + 5 &amp;=&amp; 4x -3 &amp;&amp;\\
 2x + 5 - 4x &amp;=&amp; 4x -3 - 4x &amp;&amp;\\
@@ -2693,13 +2696,13 @@ $$</span></p>
 -2x  &amp;=&amp; -8&amp;&amp;\\
 x  &amp;=&amp; 4&amp;&amp;
 \end{array}
-$$</span></p>
+</span></p>
 <h3 id="proof-tree">proof tree</h3>
-<p><span class="math display">$$
+<p><span class="math display">
 \dfrac{
   \dfrac{A \qquad B}{A \land B} \quad C
 }{(A \land B) \land C}
-$$</span></p>
+</span></p>
 <p><strong>不支持</strong> code block math display</p>
 <pre><code>```math
 x = {-b \pm \sqrt{b^2-4ac} \over 2a}
@@ -2707,37 +2710,90 @@ x = {-b \pm \sqrt{b^2-4ac} \over 2a}
 <p>效果:</p>
 <pre class="math"><code>x = {-b \pm \sqrt{b^2-4ac} \over 2a}</code></pre>
 <p>KaTeX支持的符号: https://katex.org/docs/supported.html</p>
-<h2 id="footnotscitation">Footnots,Citation</h2>
+<h2 id="footnotes-citation">Footnotes, Citation</h2>
+<div class="demo-container">
+<div class="demo-source">
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Here is a simple footnote<span class="ot">[^2]</span>.</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>A footnote can also have multiple lines<span class="ot">[^3]</span>.</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ot">[^2]: </span>My reference.</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ot">[^3]: </span>To add line breaks within a footnote, prefix new lines with 2 spaces.</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    This is a second line.</span></code></pre></div>
+</div>
+<div class="demo-result">
 <p>Here is a simple footnote<a href="#fn2" class="footnote-ref"
 id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
 <p>A footnote can also have multiple lines<a href="#fn3"
 class="footnote-ref" id="fnref3"
 role="doc-noteref"><sup>3</sup></a>.</p>
+</div>
+</div>
 <p><a href="https://pandoc.org/MANUAL.html#citation-syntax"
 class="uri">https://pandoc.org/MANUAL.html#citation-syntax</a></p>
 <h2 id="code-block">Code block</h2>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Document</span> <span class="ot">=</span> <span class="dt">Document</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  {<span class="ot"> docExt ::</span> <span class="dt">Maybe</span> <span class="dt">String</span>,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ot">    docTitle ::</span> <span class="dt">Text</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ot">    docAuthor ::</span> <span class="dt">Maybe</span> <span class="dt">Text</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ot">    docTags ::</span> <span class="dt">Maybe</span> [<span class="dt">Text</span>],</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ot">    docDate ::</span> <span class="dt">Maybe</span> <span class="dt">Text</span>,</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="ot">    docContent ::</span> <span class="dt">Maybe</span> <span class="dt">Text</span>,</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="ot">    docPath ::</span> <span class="dt">Maybe</span> <span class="dt">Text</span>,</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="ot">    docAttrs ::</span> <span class="dt">Maybe</span> <span class="dt">Value</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">deriving</span> (<span class="dt">Show</span>, <span class="dt">Generic</span>)</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">deriving</span> (<span class="dt">FromJSON</span>, <span class="dt">ToJSON</span>) via <span class="dt">PrefixedSnake</span> <span class="st">&quot;doc&quot;</span> <span class="dt">Document</span></span></code></pre></div>
+<div class="demo-container">
+<div class="demo-source">
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="in">```haskell</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Document</span> <span class="ot">=</span> <span class="dt">Document</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  {<span class="ot"> docExt ::</span> <span class="dt">Maybe</span> <span class="dt">String</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ot">    docTitle ::</span> <span class="dt">Text</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ot">    docAuthor ::</span> <span class="dt">Maybe</span> <span class="dt">Text</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="ot">    docTags ::</span> <span class="dt">Maybe</span> [<span class="dt">Text</span>],</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="ot">    docDate ::</span> <span class="dt">Maybe</span> <span class="dt">Text</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="ot">    docContent ::</span> <span class="dt">Maybe</span> <span class="dt">Text</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="ot">    docPath ::</span> <span class="dt">Maybe</span> <span class="dt">Text</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="ot">    docAttrs ::</span> <span class="dt">Maybe</span> <span class="dt">Value</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">deriving</span> (<span class="dt">Show</span>, <span class="dt">Generic</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">deriving</span> (<span class="dt">FromJSON</span>, <span class="dt">ToJSON</span>) via <span class="dt">PrefixedSnake</span> <span class="st">&quot;doc&quot;</span> <span class="dt">Document</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="ot">```</span></span></code></pre></div>
+</div>
+<div class="demo-result">
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> <span class="dt">Document</span> <span class="ot">=</span> <span class="dt">Document</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  {<span class="ot"> docExt ::</span> <span class="dt">Maybe</span> <span class="dt">String</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ot">    docTitle ::</span> <span class="dt">Text</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ot">    docAuthor ::</span> <span class="dt">Maybe</span> <span class="dt">Text</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ot">    docTags ::</span> <span class="dt">Maybe</span> [<span class="dt">Text</span>],</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="ot">    docDate ::</span> <span class="dt">Maybe</span> <span class="dt">Text</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="ot">    docContent ::</span> <span class="dt">Maybe</span> <span class="dt">Text</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="ot">    docPath ::</span> <span class="dt">Maybe</span> <span class="dt">Text</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="ot">    docAttrs ::</span> <span class="dt">Maybe</span> <span class="dt">Value</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">deriving</span> (<span class="dt">Show</span>, <span class="dt">Generic</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">deriving</span> (<span class="dt">FromJSON</span>, <span class="dt">ToJSON</span>) via <span class="dt">PrefixedSnake</span> <span class="st">&quot;doc&quot;</span> <span class="dt">Document</span></span></code></pre></div>
+</div>
+</div>
 <p>fenced code attribute</p>
+<div class="demo-container">
+<div class="demo-source">
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="in">~~~~ {#mycode .haskell .numberLines startFrom=&quot;100&quot;}</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="in">qsort []     = []</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="in">qsort (x:xs) = qsort (filter (&lt; x) xs) ++ [x] ++</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="in">               qsort (filter (&gt;= x) xs)</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="in">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span></code></pre></div>
+</div>
+<div class="demo-result">
 <div class="sourceCode" id="mycode" data-startFrom="100"><pre
 class="sourceCode numberSource haskell numberLines"><code class="sourceCode haskell" style="counter-reset: source-line 99;"><span id="mycode-100"><a href="#mycode-100"></a>qsort []     <span class="ot">=</span> []</span>
 <span id="mycode-101"><a href="#mycode-101"></a>qsort (x<span class="op">:</span>xs) <span class="ot">=</span> qsort (<span class="fu">filter</span> (<span class="op">&lt;</span> x) xs) <span class="op">++</span> [x] <span class="op">++</span></span>
 <span id="mycode-102"><a href="#mycode-102"></a>               qsort (<span class="fu">filter</span> (<span class="op">&gt;=</span> x) xs)</span></code></pre></div>
+</div>
+</div>
 <h2 id="table">Table</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode md"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>                              <span class="pp">|</span> Sites                               <span class="pp">|</span> <span class="dv">&amp;nbsp;</span>                              <span class="pp">|</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="pp">| ----------------------------</span> <span class="pp">| -----------------------------------</span> <span class="pp">| -----------------------------------</span> <span class="pp">|</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="co">[</span><span class="ot">Github</span><span class="co">](https://github.com)</span> <span class="pp">|</span> <span class="co">[</span><span class="ot">Koka</span><span class="co">](https://koka-lang.github.io)</span> <span class="pp">|</span> <span class="co">[</span><span class="ot">Haskell</span><span class="co">](https://www.haskell.org/)</span> <span class="pp">|</span></span></code></pre></div>
+<div class="demo-container">
+<div class="demo-source">
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>                              <span class="pp">|</span> Sites                               <span class="pp">|</span> <span class="dv">&amp;nbsp;</span>                              <span class="pp">|</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="pp">| ----------------------------</span> <span class="pp">| -----------------------------------</span> <span class="pp">| -----------------------------------</span> <span class="pp">|</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="co">[</span><span class="ot">Github</span><span class="co">](https://github.com)</span> <span class="pp">|</span> <span class="co">[</span><span class="ot">Koka</span><span class="co">](https://koka-lang.github.io)</span> <span class="pp">|</span> <span class="co">[</span><span class="ot">Haskell</span><span class="co">](https://www.haskell.org/)</span> <span class="pp">|</span></span></code></pre></div>
+</div>
+<div class="demo-result">
 <div class="md-table-wrapper">
 <table>
 <colgroup>
@@ -2761,10 +2817,26 @@ class="sourceCode numberSource haskell numberLines"><code class="sourceCode hask
 </tbody>
 </table>
 </div>
+</div>
+</div>
 <h3 id="pandoc-grid-tables">Pandoc Grid Tables</h3>
+<p>: Sample grid table.</p>
+<div class="demo-container">
+<div class="demo-source">
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>+---------------+---------------+--------------------+</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Fruit         <span class="pp">|</span> Price         <span class="pp">|</span> Advantages         <span class="pp">|</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>+=============<span class="al">==+===============+==</span>==================+</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Bananas       <span class="pp">|</span> $1.34         <span class="pp">|</span> - built-in wrapper <span class="pp">|</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>               <span class="pp">|</span>               <span class="pp">|</span> - bright color     <span class="pp">|</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>+---------------+---------------+--------------------+</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Oranges       <span class="pp">|</span> $2.10         <span class="pp">|</span> - cures scurvy     <span class="pp">|</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>               <span class="pp">|</span>               <span class="pp">|</span> - tasty            <span class="pp">|</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>+---------------+---------------+--------------------+</span></code></pre></div>
+</div>
+<div class="demo-result">
 <div class="md-table-wrapper">
 <table style="width:66%;">
-<caption>Sample grid table.</caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 20%" />
@@ -2797,7 +2869,23 @@ class="sourceCode numberSource haskell numberLines"><code class="sourceCode hask
 </tbody>
 </table>
 </div>
+</div>
+</div>
 <p>Cells can span multiple columns or rows:</p>
+<div class="demo-container">
+<div class="demo-source">
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>+---------------------+----------+</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Property            <span class="pp">|</span> Earth    <span class="pp">|</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>+===========<span class="al">==+=======+==</span>========+</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>             <span class="pp">|</span> min   <span class="pp">|</span> -89.2 °C <span class="pp">|</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Temperature +-------+----------+</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 1961-1990   <span class="pp">|</span> mean  <span class="pp">|</span> 14 °C    <span class="pp">|</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>             +-------+----------+</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>             <span class="pp">|</span> max   <span class="pp">|</span> 56.7 °C  <span class="pp">|</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>+-------------+-------+----------+</span></code></pre></div>
+</div>
+<div class="demo-result">
 <div class="md-table-wrapper">
 <table style="width:41%;">
 <colgroup>
@@ -2828,7 +2916,24 @@ class="sourceCode numberSource haskell numberLines"><code class="sourceCode hask
 </tbody>
 </table>
 </div>
+</div>
+</div>
 <p>A table header may contain more than one row:</p>
+<div class="demo-container">
+<div class="demo-source">
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>+---------------------+-----------------------+</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Location            <span class="pp">|</span> Temperature 1961-1990 <span class="pp">|</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>                     <span class="pp">|</span> in degree Celsius     <span class="pp">|</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>                     +-------+-------+-------+</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>                     <span class="pp">|</span> min   <span class="pp">|</span> mean  <span class="pp">|</span> max   <span class="pp">|</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>+===================<span class="al">==+=======+=======+==</span>=====+</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Antarctica          <span class="pp">|</span> -89.2 <span class="pp">|</span> N/A   <span class="pp">|</span> 19.8  <span class="pp">|</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>+---------------------+-------+-------+-------+</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Earth               <span class="pp">|</span> -89.2 <span class="pp">|</span> 14    <span class="pp">|</span> 56.7  <span class="pp">|</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>+---------------------+-------+-------+-------+</span></code></pre></div>
+</div>
+<div class="demo-result">
 <div class="md-table-wrapper">
 <table style="width:57%;">
 <colgroup>
@@ -2864,13 +2969,38 @@ class="sourceCode numberSource haskell numberLines"><code class="sourceCode hask
 </tbody>
 </table>
 </div>
+</div>
+</div>
 <h2 id="quoting-text">Quoting text</h2>
-<div class="sourceCode" id="cb6"><pre
-class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Text that is a quote</span></span></code></pre></div>
+<div class="demo-container">
+<div class="demo-source">
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Text that is a quote</span></span></code></pre></div>
+</div>
+<div class="demo-result">
 <blockquote>
 <p>Text that is a quote</p>
 </blockquote>
+</div>
+</div>
 <h2 id="definitions">Definitions</h2>
+<div class="demo-container">
+<div class="demo-source">
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>Term 1</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>:   Definition 1</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="in">`Term 2 with *inline markup*`</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>:   Definition 2</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="in">        { some code, part of Definition 2 }</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="in">    Third paragraph of definition 2.</span></span></code></pre></div>
+</div>
+<div class="demo-result">
 <dl>
 <dt>Term 1</dt>
 <dd>
@@ -2883,39 +3013,52 @@ class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb6-1"><
 <p>Third paragraph of definition 2.</p>
 </dd>
 </dl>
+</div>
+</div>
 <p><a href="https://pandoc.org/MANUAL.html#definition-lists"
 class="uri">https://pandoc.org/MANUAL.html#definition-lists</a></p>
 <h2 id="numbered-example-lists">Numbered example lists</h2>
+<div class="demo-container">
+<div class="demo-source">
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>(@)  My first example will be numbered.</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>(@)  My second example will be numbered.</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>(@good)  This is a good example.</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>As (@good) illustrates, ...</span></code></pre></div>
+</div>
+<div class="demo-result">
 <ol class="example" type="1">
 <li>My first example will be numbered.</li>
 <li>My second example will be numbered.</li>
+<li>This is a good example.</li>
 </ol>
-<!-- end of list -->
-<p>Explanation of examples.</p>
-<ol start="3" class="example" type="1">
-<li><p>My third example will be numbered.</p></li>
-<li><p>This is a good example.</p></li>
-</ol>
-<p>As (4) illustrates, …</p>
-<ol start="5" class="example" type="1">
-<li>Sample sentence.</li>
-</ol>
-<p>Intervening text…</p>
-<p>This theory can explain the case we saw earlier (repeated):</p>
-<ol start="5" class="example" type="1">
-<li>Sample sentence.</li>
-</ol>
+<p>As (3) illustrates, …</p>
+</div>
+</div>
 <h2 id="task-list-items">Task list items</h2>
-<dl>
-<dt>example1</dt>
-<dd>
+<div class="demo-container">
+<div class="demo-source">
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> foo</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[x]</span> bar</span></code></pre></div>
+</div>
+<div class="demo-result">
 <ul class="task-list">
 <li><label><input type="checkbox" />foo</label></li>
 <li><label><input type="checkbox" checked="" />bar</label></li>
 </ul>
-</dd>
-<dt>example2</dt>
-<dd>
+</div>
+</div>
+<div class="demo-container">
+<div class="demo-source">
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[x]</span> foo</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> bar</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[x]</span> baz</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> bim</span></code></pre></div>
+</div>
+<div class="demo-result">
 <ul class="task-list">
 <li><label><input type="checkbox" checked="" />foo</label>
 <ul class="task-list">
@@ -2924,62 +3067,236 @@ class="uri">https://pandoc.org/MANUAL.html#definition-lists</a></p>
 </ul></li>
 <li><label><input type="checkbox" />bim</label></li>
 </ul>
-</dd>
-</dl>
+</div>
+</div>
 <h2 id="divs-and-spans">Divs and Spans</h2>
+<div class="demo-container">
+<div class="demo-source">
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>::::: {#special .sidebar}</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>Here is a paragraph.</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>And another.</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>:::::</span></code></pre></div>
+</div>
+<div class="demo-result">
 <div id="special" class="sidebar">
 <p>Here is a paragraph.</p>
 <p>And another.</p>
 </div>
+</div>
+</div>
 <p>Fenced divs can be nested. Opening fences are distinguished because
 they must have attributes:</p>
+<div class="demo-container">
+<div class="demo-source">
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>::: Warning ::::::</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>This is a warning.</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>::: Danger</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>This is a warning within a warning.</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>::::::::::::::::::</span></code></pre></div>
+</div>
+<div class="demo-result">
 <div class="Warning">
 <p>This is a warning.</p>
 <div class="Danger">
 <p>This is a warning within a warning.</p>
 </div>
 </div>
-<h2 id="admonitions-todo">Admonitions (TODO)</h2>
+</div>
+</div>
+<h2 id="admonitions">Admonitions</h2>
 <h3 id="github-style">github style</h3>
-<blockquote>
-<p>[!NOTE]Highlights information that users should take into account,
-even when skimming.</p>
-</blockquote>
-<blockquote>
-<p>[!WARNING]Warning: This operation will delete all data.</p>
-</blockquote>
-<h3 id="pandoc-style">pandoc style</h3>
-<p>!!! note</p>
-<pre><code>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla et euismod
-nulla. Curabitur feugiat, tortor non consequat finibus, justo purus auctor
-massa, nec semper lorem quam in massa.</code></pre>
-<h3 id="mkdocs-detail-4">mkdocs detail <a href="#fn4"
-class="footnote-ref" id="fnref4"
-role="doc-noteref"><sup>4</sup></a></h3>
-<p>???+ note “Open styled details”</p>
-<pre><code>??? danger &quot;Nested details!&quot;
-    And more content again.</code></pre>
-<p>??? success Content.</p>
-<p>??? warning classes Content.</p>
-<h2 id="mkdocs-emoji-todo">Mkdocs Emoji (TODO)</h2>
-<p><span class="citation" data-cites="octocat">@octocat</span> :+1: This
-PR looks great - it’s ready to merge! :shipit:</p>
-<!-- ## tabs -->
-<!-- === "Tab 1" -->
-<!--     Lorem ipsum dolor sit amet, (1) consectetur adipiscing elit. -->
-<!--     { .annotate } -->
-<!--     1.  :man_raising_hand: I'm an annotation! -->
-<!-- === "Tab 2" -->
-<!--     Phasellus posuere in sem ut cursus (1) -->
-<!--     { .annotate } -->
-<!--     1.  :woman_raising_hand: I'm an annotation as well! -->
+<div class="demo-container">
+<div class="demo-source">
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">!NOTE</span><span class="co">]</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Highlights information that users should take into account, even when skimming.</span></span></code></pre></div>
+</div>
+<div class="demo-result">
+<div class="admonition admonition-note">
+<div class="admonition-title">
+<p>Note</p>
+</div>
+<p>Highlights information that users should take into account, even when
+skimming.</p>
+</div>
+</div>
+</div>
+<div class="demo-container">
+<div class="demo-source">
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">!TIP</span><span class="co">]</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Optional information to help a user be more successful.</span></span></code></pre></div>
+</div>
+<div class="demo-result">
+<div class="admonition admonition-tip">
+<div class="admonition-title">
+<p>Tip</p>
+</div>
+<p>Optional information to help a user be more successful.</p>
+</div>
+</div>
+</div>
+<div class="demo-container">
+<div class="demo-source">
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">!IMPORTANT</span><span class="co">]</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Crucial information necessary for users to succeed.</span></span></code></pre></div>
+</div>
+<div class="demo-result">
+<div class="admonition admonition-important">
+<div class="admonition-title">
+<p>Important</p>
+</div>
+<p>Crucial information necessary for users to succeed.</p>
+</div>
+</div>
+</div>
+<div class="demo-container">
+<div class="demo-source">
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">!WARNING</span><span class="co">]</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Critical content demanding immediate user attention due to potential risks.</span></span></code></pre></div>
+</div>
+<div class="demo-result">
+<div class="admonition admonition-warning">
+<div class="admonition-title">
+<p>Warning</p>
+</div>
+<p>Critical content demanding immediate user attention due to potential
+risks.</p>
+</div>
+</div>
+</div>
+<div class="demo-container">
+<div class="demo-source">
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">!CAUTION</span><span class="co">]</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Negative potential consequences of an action.</span></span></code></pre></div>
+</div>
+<div class="demo-result">
+<div class="admonition admonition-caution">
+<div class="admonition-title">
+<p>Caution</p>
+</div>
+<p>Negative potential consequences of an action.</p>
+</div>
+</div>
+</div>
+<p>嵌套示例：</p>
+<div class="demo-container">
+<div class="demo-source">
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">!NOTE</span><span class="co">]</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 这是外层的说明。有时候在一条提示里需要进一步强调一个特殊情形。</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &gt; </span><span class="co">[</span><span class="ot">!WARNING</span><span class="co">]</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &gt; 嵌套在里面的警告，会独立渲染成自己的色带与图标。</span></span></code></pre></div>
+</div>
+<div class="demo-result">
+<div class="admonition admonition-note">
+<div class="admonition-title">
+<p>Note</p>
+</div>
+<p>这是外层的说明。有时候在一条提示里需要进一步强调一个特殊情形。</p>
+<div class="admonition admonition-warning">
+<div class="admonition-title">
+<p>Warning</p>
+</div>
+<p>嵌套在里面的警告，会独立渲染成自己的色带与图标。</p>
+</div>
+</div>
+</div>
+</div>
+<p>自定义小标题（在正文首段用加粗充当标题）：</p>
+<div class="demo-container">
+<div class="demo-source">
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">!NOTE</span><span class="co">]</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **关于浮点精度**</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 双精度浮点保证约 15.9 位十进制有效数字，这对大多数科学计算够用，但累加大量小数时需要留意抵消效应。</span></span></code></pre></div>
+</div>
+<div class="demo-result">
+<div class="admonition admonition-note">
+<div class="admonition-title">
+<p>Note</p>
+</div>
+<p><strong>关于浮点精度</strong></p>
+<p>双精度浮点保证约 15.9
+位十进制有效数字，这对大多数科学计算够用，但累加大量小数时需要留意抵消效应。</p>
+</div>
+</div>
+</div>
+<h3 id="pandoc-style-fenced-div">pandoc style (fenced div)</h3>
+<p>GitHub 的 <code>&gt; [!NOTE]</code> 写法不支持在 admonition
+里放复杂结构（列表、代码块、多段），需要时可以用 Pandoc 的 fenced div
+语法。</p>
+<div class="demo-container">
+<div class="demo-source">
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>::: note</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>第一段内容。</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>支持列表</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>多段正文</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="in">```haskell</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="fu">putStrLn</span> <span class="st">&quot;甚至可以嵌入代码块&quot;</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div>
+</div>
+<div class="demo-result">
+<div class="admonition admonition-note">
+<div class="admonition-title">
+<p>Note</p>
+</div>
+<p>第一段内容。</p>
+<ul>
+<li>支持列表</li>
+<li>多段正文</li>
+</ul>
+<div class="sourceCode" id="cb28"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">putStrLn</span> <span class="st">&quot;甚至可以嵌入代码块&quot;</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div class="demo-container">
+<div class="demo-source">
+<div class="sourceCode" id="cb29"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>::: warning</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>裸名写法，效果一样。</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div>
+</div>
+<div class="demo-result">
+<div class="admonition admonition-warning">
+<div class="admonition-title">
+<p>Warning</p>
+</div>
+<p>裸名写法，效果一样。</p>
+</div>
+</div>
+</div>
 <h2 id="links">Links</h2>
+<div class="demo-container">
+<div class="demo-source">
+<div class="sourceCode" id="cb30"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>这是一个访问 <span class="co">[</span><span class="ot">Google</span><span class="co">][Google]</span> 的链接， 你也可以在 <span class="co">[</span><span class="ot">GitHub</span><span class="co">][GitHub]</span> 上找到开源项目。</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="ot">[Google]: https://www.google.com  &quot;Google 搜索&quot;</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="ot">[GitHub]: https://github.com  &quot;GitHub 代码托管&quot;</span></span></code></pre></div>
+</div>
+<div class="demo-result">
 <p>这是一个访问 <a href="https://www.google.com"
 title="Google 搜索">Google</a> 的链接， 你也可以在 <a
 href="https://github.com" title="GitHub 代码托管">GitHub</a>
-上找到开源项目，或者参考 <a href="https://www.markdownguide.org"
-title="Markdown 语法参考">Markdown指南</a> 学习语法。</p>
-<hr />
+上找到开源项目。</p>
+</div>
+</div>
 <section id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
@@ -2991,9 +3308,6 @@ role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>To add line breaks within a footnote, prefix new lines
 with 2 spaces.This is a second line.<a href="#fnref3"
 class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p><a
-href="https://facelessuser.github.io/pymdown-extensions/extensions/details/">details</a><a
-href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div>
   ]]></description>
