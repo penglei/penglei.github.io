@@ -23,7 +23,10 @@
   <script src="/assets/script/theme.js"></script>
   <script src="/assets/script/copy-code.js" defer></script>
 
-    
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.45/dist/katex.min.css" integrity="sha384-UA8juhPf75SzzAMA/4fo3yOU7sBJ0om7SCD2GHq0fZqZco6tr1UCV7nUbk9J90JM" crossorigin="anonymous">
+
+  
 </head>
 
 <body>
@@ -82,11 +85,9 @@ id="toc-规范化与特殊值">规范化与特殊值</a></li>
 Round / Sticky</a></li>
 <li><a href="#舍入误差" id="toc-舍入误差">舍入误差</a></li>
 <li><a href="#误差放大" id="toc-误差放大">误差放大</a></li>
-<li><a href="#一个经典例子0.1-0.2-0.3"
-id="toc-一个经典例子0.1-0.2-0.3">一个经典例子：<code>0.1 + 0.2 ≠ 0.3</code></a></li>
+<li><a href="#经典案例" id="toc-经典案例">经典案例</a></li>
 </ul></li>
-<li><a href="#附录浮点数对比"
-id="toc-附录浮点数对比">附录：浮点数对比</a></li>
+<li><a href="#附录" id="toc-附录">附录</a></li>
 </ul></nav>
       </div>
       <div class="post-content"><h2 id="什么是数">什么是数？</h2>
@@ -98,8 +99,6 @@ id="toc-附录浮点数对比">附录：浮点数对比</a></li>
 <li>汉字 <code>十三</code></li>
 <li>英文 <code>thirteen</code>、法语 <code>treize</code></li>
 <li>计算机内存里的 <code>00001101</code></li>
-<li>ASCII 字符串 <code>"13"</code>（两个字节
-<code>0x31 0x33</code>）</li>
 </ul>
 <p>无论这些数的形式是什么样，发音是单音节还是多音节，这些形式中没有哪一个”更真实”。数甚至可以脱离一切经验符号而被精确刻画。皮亚诺公理用”零加后继”定义自然数（<code>3 = succ(succ(succ(0)))</code>），丘奇数用”把函数应用三次”这个行为来定义
 <code>3</code>。不过那些是数学基础的话题，这里不展开。</p>
@@ -133,7 +132,7 @@ href="https://en.wikipedia.org/wiki/Positional_notation"><strong>位置记数系
 <code>1/n</code>，汉字也有”半”、“小半”。位置记数法的特别之处在于它给了非整数一种和整数同构的写法：同一个公式
 <code>d·Bᵏ</code>，把 <code>k</code> 的范围从 <code>k ≥ 0</code> 扩张到
 <code>k ∈ ℤ</code>，整数和小数就在同一套规则下统一起来了。</p>
-<p>看一个具体的例子：我们写下 <code>725</code>时，脑子里对应的就是
+<p>例如，我们写下 <code>725</code>时，脑子里对应的就是
 <code>7 · 10² + 2 · 10¹ + 5 · 10⁰</code>，只是权重省掉没写出来，让位置隐式表达了。<code>725</code>本身就是这个展开式的一个缩写。再比如，二进制<code>0b1101</code>
 只是字符表从 <code>{0..9}</code> 换成了 <code>{0, 1}</code>，展开是
 <code>1 · 2³ + 1 · 2² + 0 · 2¹ + 1 · 2⁰</code>，用十进制表示就是
@@ -323,7 +322,8 @@ sign, exponent, mantissa 三段。以 float32 举例：</p>
 754
 选了另一种方案，<strong>偏移编码</strong>：把字段整体当无符号整数读，字段值
 <code>E</code> 对应真实指数 <code>E - bias</code>。<code>bias</code>
-按惯例取 <code>2^(n-1) - 1</code>（<code>n</code>
+按惯例取
+<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8974em;vertical-align:-0.0833em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span>（<code>n</code>
 是指数字段位宽），float8 的 3 位指数字段就得到
 <code>bias = 2² - 1 = 3</code>。因此，字段值 <code>3</code> 表示
 <code>2⁰</code>，<code>4</code> 表示 <code>2¹</code>，<code>2</code>
@@ -576,11 +576,8 @@ float8 的 <code>[1, 2)</code> 段举例，段内间距 <code>1/16</code>。</p>
 更近，舍到 <code>1.25</code>，误差
 <code>0.0078125</code>，小于半个间距。</li>
 </ul>
-<p>三组例子中，最坏情况是第二组：数学结果恰好落在两条刻度正中间，无论往哪边舍都差半个间距。<strong>半个间距就是向最近舍入的绝对误差上界。</strong></p>
-<p>不同段的绝对上界不同。<code>[1, 2)</code> 的间距
-<code>1/16</code>，上界 <code>1/32</code>；<code>[2, 4)</code> 的间距
-<code>1/8</code>，上界
-<code>1/16</code>。段越大，绝对误差上界越大。但看<strong>相对误差</strong>（误差除以数值本身），每一段都差不多：<code>(1/32)/1 ≈ 3%</code>，<code>(1/16)/2 ≈ 3%</code>。相对误差在整条数轴上保持稳定，这正是浮点按指数分段的核心好处。</p>
+<p>三组例子中，最坏情况是第二组：数学结果恰好落在两条刻度正中间，无论往哪边舍都差半个间距。<strong>半个间距就是向最近舍入的绝对误差上界。</strong>
+相对误差的稳定性已经在前一节讲过：绝对上界跟着段宽走，但除以段起点后量级始终一致，每段都是同一个相对量级。</p>
 <h3 id="误差放大">误差放大</h3>
 <p>单次舍入误差有界且可控，但某些运算模式会把已有的微小误差急剧放大。</p>
 <p><strong>加法里”小被大吃”。</strong>
@@ -612,29 +609,71 @@ for x in data:
 <code>1.0</code>，真实差 <code>0.0002</code> 变成了
 <code>1.0 − 1.0 = 0</code>，结果与真实差完全无关。</p>
 <p>灾难性抵消的应对思路通常不是在减法本身上做文章，而是改写公式，让相近的数不需要相减。求解一元二次方程是一个经典例子。求根公式
-<code>(-b + √(b²-4ac)) / 2a</code> 在 <code>b &gt; 0</code> 且
-<code>b² ≫ 4ac</code> 时，分子里 <code>-b</code> 和
-<code>√(b²-4ac)</code> 非常接近，相加会抵消。替代做法是利用韦达定理
-<code>x₁·x₂ = c/a</code>：先用不抵消的那个根（<code>(-b - √(b²-4ac)) / 2a</code>）算出
-<code>x₂</code>，再用 <code>x₁ = c/(a·x₂)</code>
+<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.2764em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.5904em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span><span class="mord mathnormal">a</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">−</span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">±</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9134em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="padding-left:0.833em;"><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7401em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">4</span><span class="mord mathnormal">a</span><span class="mord mathnormal">c</span></span></span><span style="top:-2.8734em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg xmlns="http://www.w3.org/2000/svg" width="400em" height="1.08em" viewBox="0 0 400000 1080" preserveAspectRatio="xMinYMin slice"><path d="M95,702
+c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
+c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
+c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
+s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
+c69,-144,104.5,-217.7,106.5,-221
+l0 -0
+c5.3,-9.3,12,-14,20,-14
+H400000v40H845.2724
+s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
+c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
+M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1266em;"><span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>
+给出两个根，在 <code>b &gt; 0</code> 且 <code>b² ≫ 4ac</code> 时，取
+<code>+</code> 号那个根的分子里
+<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord mathnormal">b</span></span></span></span>
+和
+<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.04em;vertical-align:-0.1266em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9134em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="padding-left:0.833em;"><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7401em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">4</span><span class="mord mathnormal">a</span><span class="mord mathnormal">c</span></span></span><span style="top:-2.8734em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg xmlns="http://www.w3.org/2000/svg" width="400em" height="1.08em" viewBox="0 0 400000 1080" preserveAspectRatio="xMinYMin slice"><path d="M95,702
+c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
+c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
+c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
+s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
+c69,-144,104.5,-217.7,106.5,-221
+l0 -0
+c5.3,-9.3,12,-14,20,-14
+H400000v40H845.2724
+s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
+c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
+M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1266em;"><span></span></span></span></span></span></span></span></span>
+非常接近，相加会抵消。替代做法是利用韦达定理
+<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5945em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">c</span><span class="mord">/</span><span class="mord mathnormal">a</span></span></span></span>：先用不抵消的那个根
+<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.2764em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.5904em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span><span class="mord mathnormal">a</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">−</span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9134em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="padding-left:0.833em;"><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7401em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">4</span><span class="mord mathnormal">a</span><span class="mord mathnormal">c</span></span></span><span style="top:-2.8734em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg xmlns="http://www.w3.org/2000/svg" width="400em" height="1.08em" viewBox="0 0 400000 1080" preserveAspectRatio="xMinYMin slice"><path d="M95,702
+c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
+c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
+c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
+s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
+c69,-144,104.5,-217.7,106.5,-221
+l0 -0
+c5.3,-9.3,12,-14,20,-14
+H400000v40H845.2724
+s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
+c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
+M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1266em;"><span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>
+算出
+<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，再用
+<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">c</span><span class="mord">/</span><span class="mopen">(</span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>
 得到另一个根，绕开了相近数相减的问题。</p>
 <p>这两种现象在多步运算链中还会叠加：上一步的输出是下一步的输入，舍入误差沿链路逐步累积；一旦遇到灾难性抵消，累积的误差被一次性放大。</p>
 <p>浮点数的有限位宽决定了舍入不可消除，但误差的累积和放大并非不可控。应对的方向不是追求更多位数（虽然
 float64 比 float32
 精度高得多，但面对同样的数值陷阱只是推迟问题），而是选择让误差不容易累积的计算路径。在浮点的世界里，数学上等价的写法在数值上并不等价，选择计算路径也是工程决策的重要部分。</p>
-<h3
-id="一个经典例子0.1-0.2-0.3">一个经典例子：<code>0.1 + 0.2 ≠ 0.3</code></h3>
-<p>把前面所有机制串在一起，看一个几乎每个程序员都会遇到的现象。</p>
+<h3 id="经典案例">经典案例</h3>
+<p>几乎每个程序员都会遇到 <code>0.1 + 0.2 ≠ 0.3</code>
+的问题。把前面所有机制串在一起，我们来看看这是怎么发生的。</p>
 <p>十进制 <code>0.1</code> 在二进制里是无限循环小数
 <code>0.0001100110011...</code>。float64 用 53
 位精度截断它，舍入后存储的值并不精确等于 <code>0.1</code>，而是比
-<code>0.1</code> 稍大一点。同理，<code>0.2</code> 存储的值也比
-<code>0.2</code> 稍大。两个”稍大”相加，结果比精确的 <code>0.3</code>
-更大；而 <code>0.3</code> 本身存储时被舍入到的方向恰好略小于
-<code>0.3</code>。于是 <code>0.1 + 0.2</code> 的浮点结果和
-<code>0.3</code> 的浮点表示落在了不同的刻度上，差一个 ULP。这不是
-bug，而是二进制浮点在有限精度下的必然结果。</p>
-<h2 id="附录浮点数对比">附录：浮点数对比</h2>
+<code>0.1</code> 略大。同理，<code>0.2</code> 存储的值也比
+<code>0.2</code>
+略大。这两个略大的浮点数相加，得到的精确和又被再舍入一次到一条 float64
+刻度上，落点是 <code>0.30000000000000004</code>。而 <code>0.3</code>
+单独存储时舍入到的是另一条刻度
+<code>0.29999999999999998</code>，比真值略小。<code>0.1 + 0.2</code>
+的浮点结果和 <code>0.3</code> 的浮点表示落在了相邻的两条刻度上，相差一个
+ULP。这不是 bug，而是二进制浮点在有限精度下的必然结果。</p>
+<h2 id="附录">附录</h2>
 <div class="md-table-wrapper">
 <table>
 <colgroup>
@@ -693,6 +732,60 @@ bug，而是二进制浮点在有限精度下的必然结果。</p>
 </div></div>
    
     </article>
+    <section class="post-comments" aria-label="Comments">
+  <h2>Comments</h2>
+  <script src="https://giscus.app/client.js"
+          data-repo="penglei/penglei.github.io"
+          data-repo-id="MDEwOlJlcG9zaXRvcnkxNzE2MjA4MTQ="
+          data-category="Comments"
+          data-category-id="DIC_kwDOCjq5zs4C8tdJ"
+          data-mapping="pathname"
+          data-strict="1"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="bottom"
+          data-theme="preferred_color_scheme"
+          data-lang="zh-CN"
+          data-loading="lazy"
+          crossorigin="anonymous"
+          async>
+  </script>
+</section>
+
+<script>
+  (() => {
+    function giscusFrame() {
+      return document.querySelector("iframe.giscus-frame");
+    }
+    function resolvedTheme() {
+      const attr = document.documentElement.getAttribute("data-theme");
+      if (attr === "light" || attr === "dark") return attr;
+      return window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+    }
+    function pushTheme() {
+      const frame = giscusFrame();
+      if (!frame) return;
+      frame.contentWindow.postMessage(
+        { giscus: { setConfig: { theme: resolvedTheme() } } },
+        "https://giscus.app"
+      );
+    }
+    // Re-sync theme when the user toggles via the site header. The
+    // toggle script in theme.js mutates html[data-theme]; observe
+    // that attribute and forward changes into the iframe.
+    new MutationObserver(pushTheme).observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+    // Also follow OS-level changes when the site is in "system" mode
+    // (data-theme attribute is then absent).
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", pushTheme);
+  })();
+</script>
   </main>
   <footer class="site-footer">
     <p>© 2026 All rights reserved</p>

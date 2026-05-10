@@ -59,11 +59,64 @@
         <p class="post-meta">
           <span class="post-date">2019-01-20</span>
           <a class="post-tag" href="/tags/blog/" target="_blank">blog</a>
-          <a class="post-tag" href="/tags/启动/" target="_blank">启动</a>
         </p>
       </header>
        <p>Welcome~</p> 
     </article>
+    <section class="post-comments" aria-label="Comments">
+  <h2>Comments</h2>
+  <script src="https://giscus.app/client.js"
+          data-repo="penglei/penglei.github.io"
+          data-repo-id="MDEwOlJlcG9zaXRvcnkxNzE2MjA4MTQ="
+          data-category="Comments"
+          data-category-id="DIC_kwDOCjq5zs4C8tdJ"
+          data-mapping="pathname"
+          data-strict="1"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="bottom"
+          data-theme="preferred_color_scheme"
+          data-lang="zh-CN"
+          data-loading="lazy"
+          crossorigin="anonymous"
+          async>
+  </script>
+</section>
+
+<script>
+  (() => {
+    function giscusFrame() {
+      return document.querySelector("iframe.giscus-frame");
+    }
+    function resolvedTheme() {
+      const attr = document.documentElement.getAttribute("data-theme");
+      if (attr === "light" || attr === "dark") return attr;
+      return window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+    }
+    function pushTheme() {
+      const frame = giscusFrame();
+      if (!frame) return;
+      frame.contentWindow.postMessage(
+        { giscus: { setConfig: { theme: resolvedTheme() } } },
+        "https://giscus.app"
+      );
+    }
+    // Re-sync theme when the user toggles via the site header. The
+    // toggle script in theme.js mutates html[data-theme]; observe
+    // that attribute and forward changes into the iframe.
+    new MutationObserver(pushTheme).observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+    // Also follow OS-level changes when the site is in "system" mode
+    // (data-theme attribute is then absent).
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", pushTheme);
+  })();
+</script>
   </main>
   <footer class="site-footer">
     <p>© 2026 All rights reserved</p>
