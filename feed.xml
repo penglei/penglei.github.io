@@ -2567,6 +2567,8 @@ align</a></li>
 <li><a href="#footnotes-citation" id="toc-footnotes-citation">Footnotes,
 Citation</a></li>
 <li><a href="#code-block" id="toc-code-block">Code block</a></li>
+<li><a href="#mermaid-diagrams" id="toc-mermaid-diagrams">Mermaid
+diagrams</a></li>
 <li><a href="#table" id="toc-table">Table</a>
 <ul>
 <li><a href="#pandoc-grid-tables" id="toc-pandoc-grid-tables">Pandoc
@@ -2594,13 +2596,25 @@ id="toc-pandoc-style-fenced-div">pandoc style (fenced div)</a></li>
 class="uri">https://pandoc.org/MANUAL.html#pandocs-markdown</a></p>
 <h2 id="math">Math</h2>
 <p><strong>单行公式</strong></p>
-<p>如果<span class="math inline">a \ne 0</span>, 那么方程 <span
-class="math inline">ax^2 + bx + c = 0</span> 存在两个解</p>
+<p>如果<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel"><span class="mrel"><span class="mord vbox"><span class="thinbox"><span class="rlap"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="inner"><span class="mord"><span class="mrel"></span></span></span><span class="fix"></span></span></span></span></span><span class="mspace nobreak"></span><span class="mrel">=</span></span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span>,
+那么方程
+<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8974em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">a</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">b</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">c</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span>
+存在两个解</p>
 <p><strong>多行公式</strong></p>
 <ul>
 <li><p>渲染出多行</p>
-<p><span class="math display"> x = {-b \pm \sqrt{b^2-4ac} \over 2a}
-</span></p></li>
+<p><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.2764em;vertical-align:-0.686em;"></span><span class="mord"><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.5904em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span><span class="mord mathnormal">a</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">−</span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">±</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9134em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="padding-left:0.833em;"><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7401em;"><span style="top:-2.989em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">4</span><span class="mord mathnormal">a</span><span class="mord mathnormal">c</span></span></span><span style="top:-2.8734em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg xmlns="http://www.w3.org/2000/svg" width="400em" height="1.08em" viewBox="0 0 400000 1080" preserveAspectRatio="xMinYMin slice"><path d="M95,702
+c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
+c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
+c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
+s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
+c69,-144,104.5,-217.7,106.5,-221
+l0 -0
+c5.3,-9.3,12,-14,20,-14
+H400000v40H845.2724
+s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
+c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
+M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1266em;"><span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></span></p></li>
 <li><p>显式增加行 <code>\\</code></p>
 <div class="demo-container">
 <div class="demo-source">
@@ -2612,97 +2626,22 @@ class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb1-1"><
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>$$</span></code></pre></div>
 </div>
 <div class="demo-result">
-<p><span class="math display">
-f(x) = \int_{-\infty}^\infty
-    \hat{f}(\xi)\,e^{2 \pi i \xi x}
-    \,d\xi \\
-</span></p>
+<p><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.1076em;">f</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.3846em;vertical-align:-0.9703em;"></span><span class="mop"><span class="mop op-symbol large-op" style="margin-right:0.4445em;position:relative;top:-0.0011em;">∫</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.4143em;"><span style="top:-1.7881em;margin-left:-0.4445em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mtight">∞</span></span></span></span><span style="top:-3.8129em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">∞</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.9703em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9579em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal" style="margin-right:0.1076em;">f</span></span><span style="top:-3.2634em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.0833em;"><span class="mord">^</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1944em;"><span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.046em;">ξ</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8991em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span><span class="mord mathnormal mtight" style="margin-right:0.0359em;">π</span><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight" style="margin-right:0.046em;">ξ</span><span class="mord mathnormal mtight">x</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal" style="margin-right:0.046em;">ξ</span></span><span class="mspace newline"></span></span></span></span></p>
 </div>
 </div></li>
 </ul>
 <h3 id="fitch-proof1">fitch proof<a href="#fn1" class="footnote-ref"
 id="fnref1" role="doc-noteref"><sup>1</sup></a></h3>
 <p>Demo1</p>
-<p><span class="math display">
-\begin{aligned} 1.\\[-3pt] 2.\\[-3pt] 3.\\[-3pt] 4.\\[-3pt] 5.\\[-3pt]
-6.\\[-3pt]\end{aligned}
-\; \begin{array}{|l}
-   A \to B \\
-   B \to C \\
-   \hline
-   \quad \left. \begin{array}{|l} A \\\hline B \\ C\end{array} \right.
-\\
-   A\to C \\
-\end{array}
-\quad
-\begin{aligned} \\[-3pt] \\[-3pt] \\[-3pt]
-&amp;(\to E)\space1,3 \\[-3pt]
-&amp;(\to E) \space 2,4 \\[-3pt]
-&amp;(\to I)\space\text{3-5}
-\end{aligned}
-</span></p>
+<p><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:7.35em;vertical-align:-3.5em;"></span><span class="mord"><span class="mtable"><span class="col-align-r"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.7em;"><span style="top:-5.86em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1.</span></span></span><span style="top:-4.66em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2.</span></span></span><span style="top:-3.46em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3.</span></span></span><span style="top:-2.26em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">4.</span></span></span><span style="top:-1.06em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">5.</span></span></span><span style="top:0.14em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">6.</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:3.5em;"><span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.85em;"><span style="top:-5.85em;"><span class="pstrut" style="height:5.85em;"></span><span class="mtable"><span class="vertical-separator" style="height:7.2em;border-right-width:0.04em;border-right-style:solid;margin:0 -0.02em;vertical-align:-3.35em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.85em;"><span style="top:-7.06em;"><span class="pstrut" style="height:4.05em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathnormal" style="margin-right:0.0502em;">B</span></span></span><span style="top:-5.86em;"><span class="pstrut" style="height:4.05em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0502em;">B</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathnormal" style="margin-right:0.0715em;">C</span></span></span><span style="top:-3.45em;"><span class="pstrut" style="height:4.05em;"></span><span class="mord"><span class="mspace" style="margin-right:1em;"></span><span class="minner"><span class="mopen nulldelimiter"></span><span class="mord"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.05em;"><span style="top:-4.05em;"><span class="pstrut" style="height:4.05em;"></span><span class="mtable"><span class="vertical-separator" style="height:3.6em;border-right-width:0.04em;border-right-style:solid;margin:0 -0.02em;vertical-align:-1.55em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.05em;"><span style="top:-4.21em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">A</span></span></span><span style="top:-3.01em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0502em;">B</span></span></span><span style="top:-1.81em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0715em;">C</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.55em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span><span style="top:-4.9em;"><span class="pstrut" style="height:4.05em;"></span><span class="hline" style="border-bottom-width:0.04em;"></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.55em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span><span style="top:-1.06em;"><span class="pstrut" style="height:4.05em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathnormal" style="margin-right:0.0715em;">C</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:3.35em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span><span style="top:-7.3em;"><span class="pstrut" style="height:5.85em;"></span><span class="hline" style="border-bottom-width:0.04em;"></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:3.35em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:1em;"></span><span class="mord"><span class="mtable"><span class="col-align-r"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.85em;"><span style="top:-5.85em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"></span></span><span style="top:-4.65em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"></span></span><span style="top:-3.45em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"></span></span><span style="top:-2.25em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"></span></span><span style="top:-1.05em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"></span></span><span style="top:0.15em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:3.35em;"><span></span></span></span></span></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.25em;"><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"></span><span class="mopen">(</span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathnormal" style="margin-right:0.0576em;">E</span><span class="mclose">)</span><span class="mspace"> </span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">3</span></span></span><span style="top:-1.21em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"></span><span class="mopen">(</span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathnormal" style="margin-right:0.0576em;">E</span><span class="mclose">)</span><span class="mspace"> </span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">4</span></span></span><span style="top:-0.01em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"></span><span class="mopen">(</span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathnormal" style="margin-right:0.0785em;">I</span><span class="mclose">)</span><span class="mspace"> </span><span class="mord text"><span class="mord">3-5</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:3.35em;"><span></span></span></span></span></span></span></span></span></span></span></span></p>
 <p>Demo2</p>
-<p><span class="math display">
-\begin{array}{rll}
-\begin{array}{c} 1.\\ 2.\\ 3.\\ 4.\\ 5.\\ 6.\\ \end{array}
-\begin{array}{|l}
-   A \to B \\
-   B \to C \\
-   \hline
-   \quad
-        \begin{array}{|l}
-            A \\ \hline
-            B \\ C
-        \end{array} \\
-   A \to C
-\end{array}
-{\tiny \color{gray}
-\begin{array}{rl}
-\\ \\ \\[15px]
-\;\; (\to E) &amp; 1,3 \\[6px]
-\;\; (\to E) &amp; 2,4  \\[6px]
-\;\; (\to I) &amp; \text{3 - 5} \\
-\end{array}
-}
-\end{array}
-</span></p>
+<p><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:7.2em;vertical-align:-3.35em;"></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-r"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.85em;"><span style="top:-5.85em;"><span class="pstrut" style="height:5.85em;"></span><span class="mord"><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.85em;"><span style="top:-6.01em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1.</span></span></span><span style="top:-4.81em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2.</span></span></span><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3.</span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">4.</span></span></span><span style="top:-1.21em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">5.</span></span></span><span style="top:-0.01em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">6.</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:3.35em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span><span class="mord"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.85em;"><span style="top:-5.85em;"><span class="pstrut" style="height:5.85em;"></span><span class="mtable"><span class="vertical-separator" style="height:7.2em;border-right-width:0.04em;border-right-style:solid;margin:0 -0.02em;vertical-align:-3.35em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.85em;"><span style="top:-7.06em;"><span class="pstrut" style="height:4.05em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathnormal" style="margin-right:0.0502em;">B</span></span></span><span style="top:-5.86em;"><span class="pstrut" style="height:4.05em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0502em;">B</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathnormal" style="margin-right:0.0715em;">C</span></span></span><span style="top:-3.45em;"><span class="pstrut" style="height:4.05em;"></span><span class="mord"><span class="mspace" style="margin-right:1em;"></span><span class="mord"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.05em;"><span style="top:-4.05em;"><span class="pstrut" style="height:4.05em;"></span><span class="mtable"><span class="vertical-separator" style="height:3.6em;border-right-width:0.04em;border-right-style:solid;margin:0 -0.02em;vertical-align:-1.55em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.05em;"><span style="top:-4.21em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">A</span></span></span><span style="top:-3.01em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0502em;">B</span></span></span><span style="top:-1.81em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0715em;">C</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.55em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span><span style="top:-4.9em;"><span class="pstrut" style="height:4.05em;"></span><span class="hline" style="border-bottom-width:0.04em;"></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.55em;"><span></span></span></span></span></span></span></span><span style="top:-1.06em;"><span class="pstrut" style="height:4.05em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathnormal" style="margin-right:0.0715em;">C</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:3.35em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span><span style="top:-7.3em;"><span class="pstrut" style="height:5.85em;"></span><span class="hline" style="border-bottom-width:0.04em;"></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:3.35em;"><span></span></span></span></span></span><span class="mord"><span class="mord sizing reset-size6 size1" style="color:gray;"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-r"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:6.5601em;"><span style="top:-8.5601em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord" style="color:gray;"></span></span><span style="top:-7.3601em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord" style="color:gray;"></span></span><span style="top:-6.1601em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord" style="color:gray;"></span></span><span style="top:-1.9489em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord" style="color:gray;"><span class="mspace" style="color:gray;margin-right:0.4089em;"></span><span class="mspace" style="color:gray;margin-right:0.4089em;"></span><span class="mopen" style="color:gray;">(</span><span class="mrel" style="color:gray;">→</span><span class="mspace" style="color:gray;margin-right:0.4089em;"></span><span class="mord mathnormal" style="margin-right:0.0576em;color:gray;">E</span><span class="mclose" style="color:gray;">)</span></span></span><span style="top:0.4556em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord" style="color:gray;"><span class="mspace" style="color:gray;margin-right:0.4089em;"></span><span class="mspace" style="color:gray;margin-right:0.4089em;"></span><span class="mopen" style="color:gray;">(</span><span class="mrel" style="color:gray;">→</span><span class="mspace" style="color:gray;margin-right:0.4089em;"></span><span class="mord mathnormal" style="margin-right:0.0576em;color:gray;">E</span><span class="mclose" style="color:gray;">)</span></span></span><span style="top:2.8601em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord" style="color:gray;"><span class="mspace" style="color:gray;margin-right:0.4089em;"></span><span class="mspace" style="color:gray;margin-right:0.4089em;"></span><span class="mopen" style="color:gray;">(</span><span class="mrel" style="color:gray;">→</span><span class="mspace" style="color:gray;margin-right:0.4089em;"></span><span class="mord mathnormal" style="margin-right:0.0785em;color:gray;">I</span><span class="mclose" style="color:gray;">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:6.0601em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:-0.0511em;"><span style="top:-1.9489em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord" style="color:gray;"><span class="mord" style="color:gray;">1</span><span class="mpunct" style="color:gray;">,</span><span class="mspace" style="color:gray;margin-right:0.2453em;"></span><span class="mord" style="color:gray;">3</span></span></span><span style="top:0.4556em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord" style="color:gray;"><span class="mord" style="color:gray;">2</span><span class="mpunct" style="color:gray;">,</span><span class="mspace" style="color:gray;margin-right:0.2453em;"></span><span class="mord" style="color:gray;">4</span></span></span><span style="top:2.8601em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord" style="color:gray;"><span class="mord text" style="color:gray;"><span class="mord" style="color:gray;">3 - 5</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:6.0601em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:3.35em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span></span></span></span></span></p>
 <p>Demo3</p>
-<p><span class="math display">
-\begin{array}{c}
-\begin{array}{|l}
-\vdash (P \to Q) \to P \to Q \\
-\hline
-\begin{array}{|l}
-\quad \text{1. } P \to Q \\
-\hline
-\quad \begin{array}{|l}
-\qquad \text{2. } P \\
-\hline
-\qquad \text{3. } Q \quad \to\!\text{E}, 1,2 \\
-\end{array} \\
-\quad \text{4. } P \to Q \quad \to\!\text{I}, 2-3 \\
-\end{array} \\
-\text{5. } (P \to Q) \to (P \to Q) \quad \to\!\text{I}, 1-4 \\
-\end{array}
-\end{array}
-</span></p>
+<p><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:7.2em;vertical-align:-3.35em;"></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.85em;"><span style="top:-5.85em;"><span class="pstrut" style="height:5.85em;"></span><span class="mord"><span class="mord"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.85em;"><span style="top:-5.85em;"><span class="pstrut" style="height:5.85em;"></span><span class="mtable"><span class="vertical-separator" style="height:7.2em;border-right-width:0.04em;border-right-style:solid;margin:0 -0.02em;vertical-align:-3.35em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.85em;"><span style="top:-7.66em;"><span class="pstrut" style="height:4.65em;"></span><span class="mord"><span class="mrel">⊢</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.1389em;">P</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathnormal">Q</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathnormal" style="margin-right:0.1389em;">P</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathnormal">Q</span></span></span><span style="top:-4.65em;"><span class="pstrut" style="height:4.65em;"></span><span class="mord"><span class="mord"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.65em;"><span style="top:-4.65em;"><span class="pstrut" style="height:4.65em;"></span><span class="mtable"><span class="vertical-separator" style="height:4.8em;border-right-width:0.04em;border-right-style:solid;margin:0 -0.02em;vertical-align:-2.15em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.65em;"><span style="top:-5.26em;"><span class="pstrut" style="height:3.45em;"></span><span class="mord"><span class="mspace" style="margin-right:1em;"></span><span class="mord text"><span class="mord">1. </span></span><span class="mord mathnormal" style="margin-right:0.1389em;">P</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathnormal">Q</span></span></span><span style="top:-3.45em;"><span class="pstrut" style="height:3.45em;"></span><span class="mord"><span class="mspace" style="margin-right:1em;"></span><span class="mord"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.45em;"><span class="pstrut" style="height:3.45em;"></span><span class="mtable"><span class="vertical-separator" style="height:2.4em;border-right-width:0.04em;border-right-style:solid;margin:0 -0.02em;vertical-align:-0.95em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mspace" style="margin-right:2em;"></span><span class="mord text"><span class="mord">2. </span></span><span class="mord mathnormal" style="margin-right:0.1389em;">P</span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mspace" style="margin-right:2em;"></span><span class="mord text"><span class="mord">3. </span></span><span class="mord mathnormal">Q</span><span class="mspace" style="margin-right:1em;"></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:-0.1667em;"></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord text"><span class="mord">E</span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.95em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span><span style="top:-3.7em;"><span class="pstrut" style="height:3.45em;"></span><span class="hline" style="border-bottom-width:0.04em;"></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.95em;"><span></span></span></span></span></span></span></span><span style="top:-1.66em;"><span class="pstrut" style="height:3.45em;"></span><span class="mord"><span class="mspace" style="margin-right:1em;"></span><span class="mord text"><span class="mord">4. </span></span><span class="mord mathnormal" style="margin-right:0.1389em;">P</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathnormal">Q</span><span class="mspace" style="margin-right:1em;"></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:-0.1667em;"></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord text"><span class="mord">I</span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.15em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span><span style="top:-6.1em;"><span class="pstrut" style="height:4.65em;"></span><span class="hline" style="border-bottom-width:0.04em;"></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:2.15em;"><span></span></span></span></span></span></span></span><span style="top:-1.66em;"><span class="pstrut" style="height:4.65em;"></span><span class="mord"><span class="mord text"><span class="mord">5. </span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.1389em;">P</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathnormal">Q</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.1389em;">P</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathnormal">Q</span><span class="mclose">)</span><span class="mspace" style="margin-right:1em;"></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:-0.1667em;"></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord text"><span class="mord">I</span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">4</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:3.35em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span><span style="top:-8.5em;"><span class="pstrut" style="height:5.85em;"></span><span class="hline" style="border-bottom-width:0.04em;"></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:3.35em;"><span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:3.35em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span></span></span></span></span></p>
 <h3 id="equation-align">equation align</h3>
-<p><span class="math display">
-\begin{array}{rclcl}
-2x + 5 &amp;=&amp; 4x -3 &amp;&amp;\\
-2x + 5 - 4x &amp;=&amp; 4x -3 - 4x &amp;&amp;\\
--2x +5 &amp;=&amp; -3 &amp;&amp;\\
--2x +5 -5&amp;=&amp; -3 -5&amp;&amp;\\
--2x  &amp;=&amp; -8&amp;&amp;\\
-x  &amp;=&amp; 4&amp;&amp;
-\end{array}
-</span></p>
+<p><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:7.2em;vertical-align:-3.35em;"></span><span class="mord"><span class="mtable"><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-r"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.85em;"><span style="top:-6.01em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">5</span></span></span><span style="top:-4.81em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">4</span><span class="mord mathnormal">x</span></span></span><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">−</span><span class="mord">2</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">5</span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">−</span><span class="mord">2</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">5</span></span></span><span style="top:-1.21em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">−</span><span class="mord">2</span><span class="mord mathnormal">x</span></span></span><span style="top:-0.01em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">x</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:3.35em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.85em;"><span style="top:-6.01em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mrel">=</span></span></span><span style="top:-4.81em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mrel">=</span></span></span><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mrel">=</span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mrel">=</span></span></span><span style="top:-1.21em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mrel">=</span></span></span><span style="top:-0.01em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mrel">=</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:3.35em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.85em;"><span style="top:-6.01em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">4</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">3</span></span></span><span style="top:-4.81em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">4</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">4</span><span class="mord mathnormal">x</span></span></span><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">−</span><span class="mord">3</span></span></span><span style="top:-2.41em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">−</span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">5</span></span></span><span style="top:-1.21em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">−</span><span class="mord">8</span></span></span><span style="top:-0.01em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">4</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:3.35em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.85em;"><span style="top:-5.85em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"></span></span><span style="top:-4.65em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"></span></span><span style="top:-3.45em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"></span></span><span style="top:-2.25em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"></span></span><span style="top:-1.05em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"></span></span><span style="top:0.15em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:3.35em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:3.85em;"><span style="top:-5.85em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"></span></span><span style="top:-4.65em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"></span></span><span style="top:-3.45em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"></span></span><span style="top:-2.25em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"></span></span><span style="top:-1.05em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"></span></span><span style="top:0.15em;"><span class="pstrut" style="height:2.84em;"></span><span class="mord"></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:3.35em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span></span></span></span></span></span></span></p>
 <h3 id="proof-tree">proof tree</h3>
-<p><span class="math display">
-\dfrac{
-  \dfrac{A \qquad B}{A \land B} \quad C
-}{(A \land B) \land C}
-</span></p>
+<p><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:3.3723em;vertical-align:-0.936em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.4363em;"><span style="top:-2.6743em;"><span class="pstrut" style="height:3.3603em;"></span><span class="mord"><span class="mopen">(</span><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∧</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal" style="margin-right:0.0502em;">B</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∧</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal" style="margin-right:0.0715em;">C</span></span></span><span style="top:-3.5903em;"><span class="pstrut" style="height:3.3603em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-4.4363em;"><span class="pstrut" style="height:3.3603em;"></span><span class="mord"><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3603em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">∧</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal" style="margin-right:0.0502em;">B</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:2em;"></span><span class="mord mathnormal" style="margin-right:0.0502em;">B</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:1em;"></span><span class="mord mathnormal" style="margin-right:0.0715em;">C</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.936em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
 <p><strong>不支持</strong> code block math display</p>
 <pre><code>```math
 x = {-b \pm \sqrt{b^2-4ac} \over 2a}
@@ -2785,13 +2724,284 @@ class="sourceCode numberSource haskell numberLines"><code class="sourceCode hask
 <span id="mycode-102"><a href="#mycode-102"></a>               qsort (<span class="fu">filter</span> (<span class="op">&gt;=</span> x) xs)</span></code></pre></div>
 </div>
 </div>
-<h2 id="table">Table</h2>
+<h2 id="mermaid-diagrams">Mermaid diagrams</h2>
+<p>用 <code>```mermaid</code> 围栏代码块声明，构建时由 beautiful-mermaid
+在 quickjs 中同步渲染为内联 SVG。</p>
+<p>流程图：</p>
 <div class="demo-container">
 <div class="demo-source">
 <div class="sourceCode" id="cb8"><pre
-class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>                              <span class="pp">|</span> Sites                               <span class="pp">|</span> <span class="dv">&amp;nbsp;</span>                              <span class="pp">|</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="pp">| ----------------------------</span> <span class="pp">| -----------------------------------</span> <span class="pp">| -----------------------------------</span> <span class="pp">|</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="co">[</span><span class="ot">Github</span><span class="co">](https://github.com)</span> <span class="pp">|</span> <span class="co">[</span><span class="ot">Koka</span><span class="co">](https://koka-lang.github.io)</span> <span class="pp">|</span> <span class="co">[</span><span class="ot">Haskell</span><span class="co">](https://www.haskell.org/)</span> <span class="pp">|</span></span></code></pre></div>
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="in">```mermaid</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="in">graph TD</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="in">  A[Start] --&gt; B{Decision}</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="in">  B --&gt;|Yes| C[Action]</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="in">  B --&gt;|No| D[End]</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+</div>
+<div class="demo-result">
+<div class="mermaid"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 279.69000000000005 435.91999999999996" width="279.69000000000005" height="435.91999999999996" style="--bg:var(--pico-background-color);--fg:var(--pico-color)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<polyline class="edge" data-from="A" data-to="B" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="129.6655,76.9 129.6655,124.9" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="B" data-to="C" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="Yes" points="110.02883333333335,223.08333333333334 110.02883333333335,278.72 79.5,278.72 79.5,359.02" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="B" data-to="D" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="No" points="149.30216666666666,223.08333333333334 149.30216666666666,278.72 179.83100000000002,278.72 179.831,359.02" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="edge-label" data-from="B" data-to="C" data-label="Yes">
+  <rect x="61.00000000000001" y="285.72" width="36.658" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="79.32900000000001" y="300.87" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">Yes</text>
+</g>
+<g class="edge-label" data-from="B" data-to="D" data-label="No">
+  <rect x="164.33100000000002" y="285.72" width="30.718000000000004" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="179.69000000000003" y="300.87" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">No</text>
+</g>
+<g class="node" data-id="A" data-label="Start" data-shape="rectangle">
+  <rect x="94.6115" y="40" width="70.108" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="129.6655" y="58.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Start</text>
+</g>
+<g class="node" data-id="B" data-label="Decision" data-shape="diamond">
+  <polygon points="129.6655,124.9 188.5755,183.81 129.6655,242.72 70.75550000000001,183.81" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="129.6655" y="183.81" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Decision</text>
+</g>
+<g class="node" data-id="C" data-label="Action" data-shape="rectangle">
+  <rect x="40" y="359.02" width="79" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="79.5" y="377.46999999999997" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Action</text>
+</g>
+<g class="node" data-id="D" data-label="End" data-shape="rectangle">
+  <rect x="147" y="359.02" width="65.662" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="179.83100000000002" y="377.46999999999997" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">End</text>
+</g>
+</svg></div>
+</div>
+</div>
+<p>时序图：</p>
+<div class="demo-container">
+<div class="demo-source">
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="in">```mermaid</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="in">sequenceDiagram</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="in">  participant Browser</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="in">  participant hbrush</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="in">  participant quickjs</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="in">  Browser-&gt;&gt;hbrush: request /posts/foo</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="in">  hbrush-&gt;&gt;quickjs: eval mermaid bundle (lazy, once)</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="in">  quickjs--&gt;&gt;hbrush: ready</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="in">  hbrush-&gt;&gt;quickjs: renderMermaidSVG(src)</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="in">  quickjs--&gt;&gt;hbrush: &lt;svg&gt;...&lt;/svg&gt;</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="in">  hbrush--&gt;&gt;Browser: HTML with inline SVG</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+</div>
+<div class="demo-result">
+<div class="mermaid"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 422.90999999999997 360" width="422.90999999999997" height="360" style="--bg:var(--pico-background-color);--fg:var(--pico-color)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="seq-arrow" markerWidth="8" markerHeight="5" refX="8" refY="2.5" orient="auto-start-reverse">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" />
+  </marker>
+  <marker id="seq-arrow-open" markerWidth="8" markerHeight="5" refX="8" refY="2.5" orient="auto-start-reverse">
+    <polyline points="0 0, 8 2.5, 0 5" fill="none" stroke="var(--_arrow)" stroke-width="1" />
+  </marker>
+</defs>
+<line class="lifeline" data-actor="Browser" x1="72.91" y1="70" x2="72.91" y2="330" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<line class="lifeline" data-actor="hbrush" x1="212.91" y1="70" x2="212.91" y2="330" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<line class="lifeline" data-actor="quickjs" x1="352.90999999999997" y1="70" x2="352.90999999999997" y2="330" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<g class="message" data-from="Browser" data-to="hbrush" data-label="request /posts/foo" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="72.91" y1="90" x2="212.91" y2="90" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <text x="142.91" y="80" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">request /posts/foo</text>
+</g>
+<g class="message" data-from="hbrush" data-to="quickjs" data-label="eval mermaid bundle (lazy, once)" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="212.91" y1="130" x2="352.90999999999997" y2="130" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <text x="282.90999999999997" y="120" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">eval mermaid bundle (lazy, once)</text>
+</g>
+<g class="message" data-from="quickjs" data-to="hbrush" data-label="ready" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="352.90999999999997" y1="170" x2="212.91" y2="170" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <text x="282.90999999999997" y="160" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">ready</text>
+</g>
+<g class="message" data-from="hbrush" data-to="quickjs" data-label="renderMermaidSVG(src)" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="212.91" y1="210" x2="352.90999999999997" y2="210" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <text x="282.90999999999997" y="200" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">renderMermaidSVG(src)</text>
+</g>
+<g class="message" data-from="quickjs" data-to="hbrush" data-label="&lt;svg&gt;...&lt;/svg&gt;" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="352.90999999999997" y1="250" x2="212.91" y2="250" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <text x="282.90999999999997" y="240" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">&lt;svg&gt;...&lt;/svg&gt;</text>
+</g>
+<g class="message" data-from="hbrush" data-to="Browser" data-label="HTML with inline SVG" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="212.91" y1="290" x2="72.91" y2="290" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <text x="142.91" y="280" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">HTML with inline SVG</text>
+</g>
+<g class="actor" data-id="Browser" data-label="Browser" data-type="participant">
+  <rect x="30" y="30" width="85.82" height="40" rx="4" ry="4" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="72.91" y="50" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">Browser</text>
+</g>
+<g class="actor" data-id="hbrush" data-label="hbrush" data-type="participant">
+  <rect x="172.91" y="30" width="80" height="40" rx="4" ry="4" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="212.91" y="50" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">hbrush</text>
+</g>
+<g class="actor" data-id="quickjs" data-label="quickjs" data-type="participant">
+  <rect x="312.90999999999997" y="30" width="80" height="40" rx="4" ry="4" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="352.90999999999997" y="50" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">quickjs</text>
+</g>
+</svg></div>
+</div>
+</div>
+<p>类图：</p>
+<div class="demo-container">
+<div class="demo-source">
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="in">```mermaid</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="in">classDiagram</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="in">  class Document {</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="in">    +Text docTitle</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="in">    +Maybe[Text] docDate</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="in">    +Text docContent</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="in">    +read(FilePath) Document</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="in">  class Renderer {</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="in">    &lt;&lt;interface&gt;&gt;</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="in">    +render(Document) Html</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="in">  Renderer &lt;|.. MarkdownRenderer</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="in">  Renderer &lt;|.. AsciidocRenderer</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+</div>
+<div class="demo-result">
+<div class="mermaid"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 386.351 420" width="386.351" height="420" style="--bg:var(--pico-background-color);--fg:var(--pico-color)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap');
+  text { font-family: 'Inter', system-ui, sans-serif; }
+  .mono { font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', ui-monospace, monospace; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="cls-inherit" markerWidth="12" markerHeight="10" refX="12" refY="5" orient="auto-start-reverse">
+    <polygon points="0 0, 12 5, 0 10" fill="var(--bg)" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+  <marker id="cls-composition" markerWidth="12" markerHeight="10" refX="0" refY="5" orient="auto-start-reverse">
+    <polygon points="6 0, 12 5, 6 10, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="1" />
+  </marker>
+  <marker id="cls-aggregation" markerWidth="12" markerHeight="10" refX="0" refY="5" orient="auto-start-reverse">
+    <polygon points="6 0, 12 5, 6 10, 0 5" fill="var(--bg)" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+  <marker id="cls-arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto-start-reverse">
+    <polyline points="0 0, 8 3, 0 6" fill="none" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+</defs>
+<polyline class="class-relationship" data-from="Renderer" data-to="MarkdownRenderer" data-type="realization" data-marker-at="from" points="109.3665,272 109.3665,332" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Renderer" data-to="AsciidocRenderer" data-type="realization" data-marker-at="from" points="167.49983333333333,272 167.49983333333333,282 282.54200000000003,282 282.54200000000003,332" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-start="url(#cls-inherit)" />
+<g class="class-node" data-id="Document" data-label="Document">
+  <rect x="40" y="40" width="187.6" height="128" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="40" y="40" width="187.6" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="133.8" y="56" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Document</text>
+  <line x1="40" y1="72" x2="227.6" y2="72" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="48" y="86" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">docTitle</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Text</tspan></text>
+  <text x="48" y="106" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">docDate</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Maybe[Text]</tspan></text>
+  <text x="48" y="126" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">docContent</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Text</tspan></text>
+  <line x1="40" y1="140" x2="227.6" y2="140" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="48" y="154" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">read(FilePath)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Document</tspan></text>
+</g>
+<g class="class-node" data-id="Renderer" data-label="Renderer" data-annotation="interface">
+  <rect x="51.23316666666667" y="188" width="174.4" height="84" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="51.23316666666667" y="188" width="174.4" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="138.43316666666666" y="200" text-anchor="middle" dy="0.35em" font-size="10" font-weight="500" font-style="italic" fill="var(--_text-muted)">&lt;&lt;interface&gt;&gt;</text>
+  <text x="138.43316666666666" y="218" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Renderer</text>
+  <line x1="51.23316666666667" y1="236" x2="225.63316666666668" y2="236" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <line x1="51.23316666666667" y1="244" x2="225.63316666666668" y2="244" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="59.23316666666667" y="258" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">render(Document)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Html</tspan></text>
+</g>
+<g class="class-node" data-id="MarkdownRenderer" data-label="MarkdownRenderer">
+  <rect x="40" y="332" width="138.733" height="48" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="40" y="332" width="138.733" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="109.3665" y="348" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">MarkdownRenderer</text>
+  <line x1="40" y1="364" x2="178.733" y2="364" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <line x1="40" y1="372" x2="178.733" y2="372" stroke="var(--_node-stroke)" stroke-width="0.75" />
+</g>
+<g class="class-node" data-id="AsciidocRenderer" data-label="AsciidocRenderer">
+  <rect x="218.733" y="332" width="127.618" height="48" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="218.733" y="332" width="127.618" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="282.54200000000003" y="348" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">AsciidocRenderer</text>
+  <line x1="218.733" y1="364" x2="346.351" y2="364" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <line x1="218.733" y1="372" x2="346.351" y2="372" stroke="var(--_node-stroke)" stroke-width="0.75" />
+</g>
+
+
+</svg></div>
+</div>
+</div>
+<p>语法错误会降级为红色占位 SVG，不中断构建：</p>
+<div class="demo-container">
+<div class="demo-source">
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="in">```mermaid</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="in">this is not a valid diagram!@#$</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+</div>
+<div class="demo-result">
+<div class="mermaid"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 88" width="720" height="88"><rect x="0.5" y="0.5" width="719" height="87" fill="#fff5f5" stroke="#c92a2a" stroke-width="1"/><text x="12" y="24" font-family="ui-monospace, monospace" font-size="13" fill="#c92a2a" xml:space="preserve"><tspan x="12" dy="0">Mermaid render error: Invalid mermaid header: &quot;this is not a valid diagram!@#$&quot;. Expected &quot;graph TD&quot;, &quot;flowchart LR&quot;, &quot;stateDiagram-v2&quot;, etc.</tspan><tspan x="12" dy="16"></tspan><tspan x="12" dy="16">--- source ---</tspan><tspan x="12" dy="16">this is not a valid diagram!@#$</tspan></text></svg></div>
+</div>
+</div>
+<h2 id="table">Table</h2>
+<div class="demo-container">
+<div class="demo-source">
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>                              <span class="pp">|</span> Sites                               <span class="pp">|</span> <span class="dv">&amp;nbsp;</span>                              <span class="pp">|</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="pp">| ----------------------------</span> <span class="pp">| -----------------------------------</span> <span class="pp">| -----------------------------------</span> <span class="pp">|</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="co">[</span><span class="ot">Github</span><span class="co">](https://github.com)</span> <span class="pp">|</span> <span class="co">[</span><span class="ot">Koka</span><span class="co">](https://koka-lang.github.io)</span> <span class="pp">|</span> <span class="co">[</span><span class="ot">Haskell</span><span class="co">](https://www.haskell.org/)</span> <span class="pp">|</span></span></code></pre></div>
 </div>
 <div class="demo-result">
 <div class="md-table-wrapper">
@@ -2823,16 +3033,16 @@ class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb8-1"><
 <p>: Sample grid table.</p>
 <div class="demo-container">
 <div class="demo-source">
-<div class="sourceCode" id="cb9"><pre
-class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>+---------------+---------------+--------------------+</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Fruit         <span class="pp">|</span> Price         <span class="pp">|</span> Advantages         <span class="pp">|</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>+=============<span class="al">==+===============+==</span>==================+</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Bananas       <span class="pp">|</span> $1.34         <span class="pp">|</span> - built-in wrapper <span class="pp">|</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>               <span class="pp">|</span>               <span class="pp">|</span> - bright color     <span class="pp">|</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>+---------------+---------------+--------------------+</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Oranges       <span class="pp">|</span> $2.10         <span class="pp">|</span> - cures scurvy     <span class="pp">|</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>               <span class="pp">|</span>               <span class="pp">|</span> - tasty            <span class="pp">|</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>+---------------+---------------+--------------------+</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>+---------------+---------------+--------------------+</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Fruit         <span class="pp">|</span> Price         <span class="pp">|</span> Advantages         <span class="pp">|</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>+=============<span class="al">==+===============+==</span>==================+</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Bananas       <span class="pp">|</span> $1.34         <span class="pp">|</span> - built-in wrapper <span class="pp">|</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>               <span class="pp">|</span>               <span class="pp">|</span> - bright color     <span class="pp">|</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>+---------------+---------------+--------------------+</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Oranges       <span class="pp">|</span> $2.10         <span class="pp">|</span> - cures scurvy     <span class="pp">|</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>               <span class="pp">|</span>               <span class="pp">|</span> - tasty            <span class="pp">|</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>+---------------+---------------+--------------------+</span></code></pre></div>
 </div>
 <div class="demo-result">
 <div class="md-table-wrapper">
@@ -2874,16 +3084,16 @@ class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb9-1"><
 <p>Cells can span multiple columns or rows:</p>
 <div class="demo-container">
 <div class="demo-source">
-<div class="sourceCode" id="cb10"><pre
-class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>+---------------------+----------+</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Property            <span class="pp">|</span> Earth    <span class="pp">|</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>+===========<span class="al">==+=======+==</span>========+</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>             <span class="pp">|</span> min   <span class="pp">|</span> -89.2 °C <span class="pp">|</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Temperature +-------+----------+</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 1961-1990   <span class="pp">|</span> mean  <span class="pp">|</span> 14 °C    <span class="pp">|</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>             +-------+----------+</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>             <span class="pp">|</span> max   <span class="pp">|</span> 56.7 °C  <span class="pp">|</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>+-------------+-------+----------+</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>+---------------------+----------+</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Property            <span class="pp">|</span> Earth    <span class="pp">|</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>+===========<span class="al">==+=======+==</span>========+</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>             <span class="pp">|</span> min   <span class="pp">|</span> -89.2 °C <span class="pp">|</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Temperature +-------+----------+</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 1961-1990   <span class="pp">|</span> mean  <span class="pp">|</span> 14 °C    <span class="pp">|</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>             +-------+----------+</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>             <span class="pp">|</span> max   <span class="pp">|</span> 56.7 °C  <span class="pp">|</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>+-------------+-------+----------+</span></code></pre></div>
 </div>
 <div class="demo-result">
 <div class="md-table-wrapper">
@@ -2921,17 +3131,17 @@ class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb10-1">
 <p>A table header may contain more than one row:</p>
 <div class="demo-container">
 <div class="demo-source">
-<div class="sourceCode" id="cb11"><pre
-class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>+---------------------+-----------------------+</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Location            <span class="pp">|</span> Temperature 1961-1990 <span class="pp">|</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>                     <span class="pp">|</span> in degree Celsius     <span class="pp">|</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>                     +-------+-------+-------+</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>                     <span class="pp">|</span> min   <span class="pp">|</span> mean  <span class="pp">|</span> max   <span class="pp">|</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>+===================<span class="al">==+=======+=======+==</span>=====+</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Antarctica          <span class="pp">|</span> -89.2 <span class="pp">|</span> N/A   <span class="pp">|</span> 19.8  <span class="pp">|</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>+---------------------+-------+-------+-------+</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Earth               <span class="pp">|</span> -89.2 <span class="pp">|</span> 14    <span class="pp">|</span> 56.7  <span class="pp">|</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>+---------------------+-------+-------+-------+</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>+---------------------+-----------------------+</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Location            <span class="pp">|</span> Temperature 1961-1990 <span class="pp">|</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>                     <span class="pp">|</span> in degree Celsius     <span class="pp">|</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>                     +-------+-------+-------+</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>                     <span class="pp">|</span> min   <span class="pp">|</span> mean  <span class="pp">|</span> max   <span class="pp">|</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>+===================<span class="al">==+=======+=======+==</span>=====+</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Antarctica          <span class="pp">|</span> -89.2 <span class="pp">|</span> N/A   <span class="pp">|</span> 19.8  <span class="pp">|</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>+---------------------+-------+-------+-------+</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Earth               <span class="pp">|</span> -89.2 <span class="pp">|</span> 14    <span class="pp">|</span> 56.7  <span class="pp">|</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>+---------------------+-------+-------+-------+</span></code></pre></div>
 </div>
 <div class="demo-result">
 <div class="md-table-wrapper">
@@ -2974,8 +3184,8 @@ class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb11-1">
 <h2 id="quoting-text">Quoting text</h2>
 <div class="demo-container">
 <div class="demo-source">
-<div class="sourceCode" id="cb12"><pre
-class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Text that is a quote</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Text that is a quote</span></span></code></pre></div>
 </div>
 <div class="demo-result">
 <blockquote>
@@ -2986,19 +3196,19 @@ class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb12-1">
 <h2 id="definitions">Definitions</h2>
 <div class="demo-container">
 <div class="demo-source">
-<div class="sourceCode" id="cb13"><pre
-class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>Term 1</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>:   Definition 1</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="in">`Term 2 with *inline markup*`</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>:   Definition 2</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="in">        { some code, part of Definition 2 }</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="in">    Third paragraph of definition 2.</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Term 1</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>:   Definition 1</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="in">`Term 2 with *inline markup*`</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>:   Definition 2</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="in">        { some code, part of Definition 2 }</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="in">    Third paragraph of definition 2.</span></span></code></pre></div>
 </div>
 <div class="demo-result">
 <dl>
@@ -3020,12 +3230,12 @@ class="uri">https://pandoc.org/MANUAL.html#definition-lists</a></p>
 <h2 id="numbered-example-lists">Numbered example lists</h2>
 <div class="demo-container">
 <div class="demo-source">
-<div class="sourceCode" id="cb15"><pre
-class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>(@)  My first example will be numbered.</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>(@)  My second example will be numbered.</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>(@good)  This is a good example.</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>As (@good) illustrates, ...</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>(@)  My first example will be numbered.</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>(@)  My second example will be numbered.</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>(@good)  This is a good example.</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>As (@good) illustrates, ...</span></code></pre></div>
 </div>
 <div class="demo-result">
 <ol class="example" type="1">
@@ -3039,9 +3249,9 @@ class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb15-1">
 <h2 id="task-list-items">Task list items</h2>
 <div class="demo-container">
 <div class="demo-source">
-<div class="sourceCode" id="cb16"><pre
-class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> foo</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[x]</span> bar</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> foo</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[x]</span> bar</span></code></pre></div>
 </div>
 <div class="demo-result">
 <ul class="task-list">
@@ -3052,11 +3262,11 @@ class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb16-1">
 </div>
 <div class="demo-container">
 <div class="demo-source">
-<div class="sourceCode" id="cb17"><pre
-class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[x]</span> foo</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> bar</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[x]</span> baz</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> bim</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[x]</span> foo</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[ ]</span> bar</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="va">[x]</span> baz</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="va">[ ]</span> bim</span></code></pre></div>
 </div>
 <div class="demo-result">
 <ul class="task-list">
@@ -3072,12 +3282,12 @@ class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb17-1">
 <h2 id="divs-and-spans">Divs and Spans</h2>
 <div class="demo-container">
 <div class="demo-source">
-<div class="sourceCode" id="cb18"><pre
-class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>::::: {#special .sidebar}</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>Here is a paragraph.</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>And another.</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>:::::</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>::::: {#special .sidebar}</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>Here is a paragraph.</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>And another.</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>:::::</span></code></pre></div>
 </div>
 <div class="demo-result">
 <div id="special" class="sidebar">
@@ -3090,14 +3300,14 @@ class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb18-1">
 they must have attributes:</p>
 <div class="demo-container">
 <div class="demo-source">
-<div class="sourceCode" id="cb19"><pre
-class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>::: Warning ::::::</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>This is a warning.</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>::: Danger</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>This is a warning within a warning.</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>::::::::::::::::::</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>::: Warning ::::::</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>This is a warning.</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>::: Danger</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>This is a warning within a warning.</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>::::::::::::::::::</span></code></pre></div>
 </div>
 <div class="demo-result">
 <div class="Warning">
@@ -3112,9 +3322,9 @@ class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb19-1">
 <h3 id="github-style">github style</h3>
 <div class="demo-container">
 <div class="demo-source">
-<div class="sourceCode" id="cb20"><pre
-class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">!NOTE</span><span class="co">]</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Highlights information that users should take into account, even when skimming.</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">!NOTE</span><span class="co">]</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Highlights information that users should take into account, even when skimming.</span></span></code></pre></div>
 </div>
 <div class="demo-result">
 <div class="admonition admonition-note">
@@ -3128,9 +3338,9 @@ skimming.</p>
 </div>
 <div class="demo-container">
 <div class="demo-source">
-<div class="sourceCode" id="cb21"><pre
-class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">!TIP</span><span class="co">]</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Optional information to help a user be more successful.</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">!TIP</span><span class="co">]</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Optional information to help a user be more successful.</span></span></code></pre></div>
 </div>
 <div class="demo-result">
 <div class="admonition admonition-tip">
@@ -3143,9 +3353,9 @@ class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb21-1">
 </div>
 <div class="demo-container">
 <div class="demo-source">
-<div class="sourceCode" id="cb22"><pre
-class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">!IMPORTANT</span><span class="co">]</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Crucial information necessary for users to succeed.</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">!IMPORTANT</span><span class="co">]</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Crucial information necessary for users to succeed.</span></span></code></pre></div>
 </div>
 <div class="demo-result">
 <div class="admonition admonition-important">
@@ -3158,9 +3368,9 @@ class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb22-1">
 </div>
 <div class="demo-container">
 <div class="demo-source">
-<div class="sourceCode" id="cb23"><pre
-class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">!WARNING</span><span class="co">]</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Critical content demanding immediate user attention due to potential risks.</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">!WARNING</span><span class="co">]</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Critical content demanding immediate user attention due to potential risks.</span></span></code></pre></div>
 </div>
 <div class="demo-result">
 <div class="admonition admonition-warning">
@@ -3174,9 +3384,9 @@ risks.</p>
 </div>
 <div class="demo-container">
 <div class="demo-source">
-<div class="sourceCode" id="cb24"><pre
-class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">!CAUTION</span><span class="co">]</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Negative potential consequences of an action.</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">!CAUTION</span><span class="co">]</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Negative potential consequences of an action.</span></span></code></pre></div>
 </div>
 <div class="demo-result">
 <div class="admonition admonition-caution">
@@ -3190,12 +3400,12 @@ class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb24-1">
 <p>嵌套示例：</p>
 <div class="demo-container">
 <div class="demo-source">
-<div class="sourceCode" id="cb25"><pre
-class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">!NOTE</span><span class="co">]</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 这是外层的说明。有时候在一条提示里需要进一步强调一个特殊情形。</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &gt; </span><span class="co">[</span><span class="ot">!WARNING</span><span class="co">]</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &gt; 嵌套在里面的警告，会独立渲染成自己的色带与图标。</span></span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">!NOTE</span><span class="co">]</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 这是外层的说明。有时候在一条提示里需要进一步强调一个特殊情形。</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &gt; </span><span class="co">[</span><span class="ot">!WARNING</span><span class="co">]</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; &gt; 嵌套在里面的警告，会独立渲染成自己的色带与图标。</span></span></code></pre></div>
 </div>
 <div class="demo-result">
 <div class="admonition admonition-note">
@@ -3215,11 +3425,11 @@ class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb25-1">
 <p>自定义小标题（在正文首段用加粗充当标题）：</p>
 <div class="demo-container">
 <div class="demo-source">
-<div class="sourceCode" id="cb26"><pre
-class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">!NOTE</span><span class="co">]</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **关于浮点精度**</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 双精度浮点保证约 15.9 位十进制有效数字，这对大多数科学计算够用，但累加大量小数时需要留意抵消效应。</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="co">[</span><span class="ot">!NOTE</span><span class="co">]</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **关于浮点精度**</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="at">&gt;</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; 双精度浮点保证约 15.9 位十进制有效数字，这对大多数科学计算够用，但累加大量小数时需要留意抵消效应。</span></span></code></pre></div>
 </div>
 <div class="demo-result">
 <div class="admonition admonition-note">
@@ -3238,17 +3448,17 @@ class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb26-1">
 语法。</p>
 <div class="demo-container">
 <div class="demo-source">
-<div class="sourceCode" id="cb27"><pre
-class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>::: note</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>第一段内容。</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>支持列表</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>多段正文</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="in">```haskell</span></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="fu">putStrLn</span> <span class="st">&quot;甚至可以嵌入代码块&quot;</span></span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>::: note</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>第一段内容。</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>支持列表</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>多段正文</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="in">```haskell</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="fu">putStrLn</span> <span class="st">&quot;甚至可以嵌入代码块&quot;</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div>
 </div>
 <div class="demo-result">
 <div class="admonition admonition-note">
@@ -3260,17 +3470,17 @@ class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb27-1">
 <li>支持列表</li>
 <li>多段正文</li>
 </ul>
-<div class="sourceCode" id="cb28"><pre
-class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">putStrLn</span> <span class="st">&quot;甚至可以嵌入代码块&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre
+class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">putStrLn</span> <span class="st">&quot;甚至可以嵌入代码块&quot;</span></span></code></pre></div>
 </div>
 </div>
 </div>
 <div class="demo-container">
 <div class="demo-source">
-<div class="sourceCode" id="cb29"><pre
-class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>::: warning</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>裸名写法，效果一样。</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>::: warning</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>裸名写法，效果一样。</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div>
 </div>
 <div class="demo-result">
 <div class="admonition admonition-warning">
@@ -3284,11 +3494,11 @@ class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb29-1">
 <h2 id="links">Links</h2>
 <div class="demo-container">
 <div class="demo-source">
-<div class="sourceCode" id="cb30"><pre
-class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>这是一个访问 <span class="co">[</span><span class="ot">Google</span><span class="co">][Google]</span> 的链接， 你也可以在 <span class="co">[</span><span class="ot">GitHub</span><span class="co">][GitHub]</span> 上找到开源项目。</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="ot">[Google]: https://www.google.com  &quot;Google 搜索&quot;</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="ot">[GitHub]: https://github.com  &quot;GitHub 代码托管&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>这是一个访问 <span class="co">[</span><span class="ot">Google</span><span class="co">][Google]</span> 的链接， 你也可以在 <span class="co">[</span><span class="ot">GitHub</span><span class="co">][GitHub]</span> 上找到开源项目。</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="ot">[Google]: https://www.google.com  &quot;Google 搜索&quot;</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="ot">[GitHub]: https://github.com  &quot;GitHub 代码托管&quot;</span></span></code></pre></div>
 </div>
 <div class="demo-result">
 <p>这是一个访问 <a href="https://www.google.com"
