@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://penglei.github.io/</loc></url>
+  <url><loc>https://penglei.github.io/archive/</loc></url>
+  <url><loc>https://penglei.github.io/tags/</loc></url>
+  <url><loc>https://penglei.github.io/tags/arithmetic/</loc></url>
+  <url><loc>https://penglei.github.io/tags/blog/</loc></url>
+  <url><loc>https://penglei.github.io/tags/dubbo/</loc></url>
+  <url><loc>https://penglei.github.io/tags/envoy/</loc></url>
+  <url><loc>https://penglei.github.io/tags/floating%20point/</loc></url>
+  <url><loc>https://penglei.github.io/tags/formal/</loc></url>
+  <url><loc>https://penglei.github.io/tags/homelab/</loc></url>
+  <url><loc>https://penglei.github.io/tags/istio/</loc></url>
+  <url><loc>https://penglei.github.io/tags/logic/</loc></url>
+  <url><loc>https://penglei.github.io/tags/macos/</loc></url>
+  <url><loc>https://penglei.github.io/tags/performance/</loc></url>
+  <url><loc>https://penglei.github.io/tags/pf/</loc></url>
+  <url><loc>https://penglei.github.io/tags/redsocks2/</loc></url>
+  <url><loc>https://penglei.github.io/tags/servicemesh/</loc></url>
+  <url><loc>https://penglei.github.io/tags/sidecar/</loc></url>
+  <url><loc>https://penglei.github.io/tags/socks5/</loc></url>
+  <url><loc>https://penglei.github.io/tags/tla+/</loc></url>
+  <url><loc>https://penglei.github.io/posts/ai-difficulty-map-differs-from-humans/</loc><lastmod>2026-03-24</lastmod></url>
+  <url><loc>https://penglei.github.io/posts/coredump-breakpad-tech/</loc><lastmod>2025-11-24</lastmod></url>
+  <url><loc>https://penglei.github.io/posts/install-nixos/</loc><lastmod>2024-01-24</lastmod></url>
+  <url><loc>https://penglei.github.io/posts/markdown-syntax-demo/</loc><lastmod>2023-10-19</lastmod></url>
+  <url><loc>https://penglei.github.io/posts/neovim-keymap-design/</loc><lastmod>2024-02-15</lastmod></url>
+  <url><loc>https://penglei.github.io/posts/transparent-proxy-on-macosx/</loc><lastmod>2019-02-17</lastmod></url>
+  <url><loc>https://penglei.github.io/posts/welcome/</loc><lastmod>2019-01-20</lastmod></url>
+  <url><loc>https://penglei.github.io/posts/dubbo-integrate-with-istio/</loc><lastmod>2020-06-05</lastmod></url>
+  <url><loc>https://penglei.github.io/posts/latency-optimization-for-istio-proxy-based-on-envoy/</loc><lastmod>2020-02-28</lastmod></url>
+  <url><loc>https://penglei.github.io/posts/logic/</loc><lastmod>2020-09</lastmod></url>
+  <url><loc>https://penglei.github.io/posts/new-equipment-r630-to-my-homelab/</loc><lastmod>2020-05-23</lastmod></url>
+  <url><loc>https://penglei.github.io/posts/specifying-systems-notes-2/</loc><lastmod>2020-09-08</lastmod></url>
+  <url><loc>https://penglei.github.io/posts/understanding-float/</loc><lastmod>2026-04-04</lastmod></url>
+  <url><loc>https://penglei.github.io/about/</loc></url>
+</urlset>
