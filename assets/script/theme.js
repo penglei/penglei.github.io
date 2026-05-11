@@ -65,6 +65,13 @@
     if (document.body) {
       setMode(document.body, usesSystem);
     }
+    notifyThemeChange();
+  }
+
+  function notifyThemeChange() {
+    document.dispatchEvent(
+      new CustomEvent("site:theme", { detail: { theme: currentResolvedTheme() } })
+    );
   }
 
   function systemChangeHandler() {
@@ -72,6 +79,7 @@
       // Pico v2 already reacts to prefers-color-scheme automatically, so we
       // only need to keep `data-theme` absent (which it already is).
       applySystem();
+      notifyThemeChange();
     }
   }
 
@@ -148,4 +156,8 @@
     const btn = document.getElementById("toggle-theme");
     if (btn) btn.addEventListener("click", toggle);
   });
+
+  // Read-only handle for other scripts (e.g. comments) that need the
+  // current resolved theme without re-implementing the resolution.
+  window.siteTheme = { current: currentResolvedTheme };
 })();

@@ -22,6 +22,7 @@
     href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦥</text></svg>" />
   <script src="/assets/script/theme.js"></script>
   <script src="/assets/script/copy-code.js" defer></script>
+  <script src="/assets/script/comments.js" defer></script>
 
     
 </head>
@@ -810,41 +811,6 @@ object + hop 组合后，更容易选择需要的内容。</p>
           async>
   </script>
 </section>
-
-<script>
-  (() => {
-    function giscusFrame() {
-      return document.querySelector("iframe.giscus-frame");
-    }
-    function resolvedTheme() {
-      const attr = document.documentElement.getAttribute("data-theme");
-      if (attr === "light" || attr === "dark") return attr;
-      return window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light";
-    }
-    function pushTheme() {
-      const frame = giscusFrame();
-      if (!frame) return;
-      frame.contentWindow.postMessage(
-        { giscus: { setConfig: { theme: resolvedTheme() } } },
-        "https://giscus.app"
-      );
-    }
-    // Re-sync theme when the user toggles via the site header. The
-    // toggle script in theme.js mutates html[data-theme]; observe
-    // that attribute and forward changes into the iframe.
-    new MutationObserver(pushTheme).observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["data-theme"],
-    });
-    // Also follow OS-level changes when the site is in "system" mode
-    // (data-theme attribute is then absent).
-    window
-      .matchMedia("(prefers-color-scheme: dark)")
-      .addEventListener("change", pushTheme);
-  })();
-</script>
   </main>
   <footer class="site-footer">
     <p>© 2026 All rights reserved</p>
