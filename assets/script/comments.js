@@ -1,15 +1,22 @@
 (() => {
   /*
-   * Bridges the site's light/dark choice into the giscus comments iframe.
-   * giscus boots with `data-theme="preferred_color_scheme"`, which only
-   * tracks the OS preference; the bridge overrides that with the user's
-   * actual site-level choice (which may disagree with the OS) and keeps
-   * the iframe in sync when the user toggles the theme.
+   * Glue between the giscus comments iframe and the host page. Two jobs:
+   *
+   *   1. Bridge the site's light/dark choice into the iframe. giscus
+   *      boots with `data-theme="preferred_color_scheme"`, which only
+   *      tracks the OS preference; we override it with the user's
+   *      actual site-level choice and keep it in sync on toggle.
+   *   2. Hide the `.post-comments` section until the iframe actually
+   *      boots. The SCSS default is `display: none`; we add `is-ready`
+   *      once giscus posts its first message back to us, so a failed
+   *      script load (offline, CDN blocked) leaves no bare "Comments"
+   *      heading behind.
    *
    * Idempotent on pages without comments: bails out if no `.post-comments`
    * section exists, so it is safe to load globally from head.html.
    */
-  if (!document.querySelector(".post-comments")) return;
+  const section = document.querySelector(".post-comments");
+  if (!section) return;
 
   // The iframe loads lazily and only navigates to giscus.app some time
   // after `<iframe>` insertion. Calling `postMessage(msg, "https://giscus.app")`
@@ -36,11 +43,13 @@
   }
 
   // The iframe loads lazily; giscus posts a message once it is ready.
-  // Treat that as the readiness cue and do an initial sync.
+  // Treat that as the readiness cue: reveal the section and do an
+  // initial theme sync.
   window.addEventListener("message", (event) => {
     if (event.origin !== "https://giscus.app") return;
     if (event.data && event.data.giscus) {
       ready = true;
+      section.classList.add("is-ready");
       pushTheme();
     }
   });

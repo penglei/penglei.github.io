@@ -137,7 +137,7 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code>┌───────────────────────macOS────────────────────────────┐
+<pre class="nowrap">┌───────────────────────macOS────────────────────────────┐
 │                (userspace)                             │
 │                                 127.0.0.1:12345        │
 │ ┌─────────┐                   ┌──────────────────┐     │   ┌──────────────────┐
@@ -153,7 +153,7 @@
 │ │   en0   ├───────────────►│ lo0 │                     │
 │ └─────────┘   pf route-to  └─────┘                     │
 │                                                        │
-└────────────────────────────────────────────────────────┘</code></pre>
+└────────────────────────────────────────────────────────┘</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -227,7 +227,7 @@ pass out route-to (lo0 127.0.0.1) proto tcp from any to 1.2.3.4</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code>┌────────────────────────────macOS──────────────────────────────┐
+<pre class="nowrap">┌────────────────────────────macOS──────────────────────────────┐
 │                                                               │
 │ +----------+                                                  │
 │ |   APP    |                                                  │
@@ -244,7 +244,7 @@ pass out route-to (lo0 127.0.0.1) proto tcp from any to 1.2.3.4</code></pre>
 │                                          |     ss-local     +----&gt;|  ss-server    +---&gt;outside world
 │                                          +------------------+ │   +---------------+    (eg: 1.2.3.4)
 │                                                               │   SERVER_IP:PORT
-└───────────────────────────────────────────────────────────────┘</code></pre>
+└───────────────────────────────────────────────────────────────┘</pre>
 </div>
 </div>
 <div class="sect2">
