@@ -6,11 +6,11 @@
    *      boots with `data-theme="preferred_color_scheme"`, which only
    *      tracks the OS preference; we override it with the user's
    *      actual site-level choice and keep it in sync on toggle.
-   *   2. Hide the `.post-comments` section until the iframe actually
-   *      boots. The SCSS default is `display: none`; we add `is-ready`
-   *      once giscus posts its first message back to us, so a failed
-   *      script load (offline, CDN blocked) leaves no bare "Comments"
-   *      heading behind.
+   *   2. Hide only the comments heading and decoration until the iframe
+   *      actually boots. The section itself must stay renderable so the
+   *      lazy giscus iframe can load. We add `is-ready` once giscus posts
+   *      its first message back to us, so a failed script load leaves no
+   *      bare "Comments" heading behind.
    *
    * Idempotent on pages without comments: bails out if no `.post-comments`
    * section exists, so it is safe to load globally from head.html.
