@@ -78,8 +78,10 @@ id="toc-配置硬件磁盘和网络">配置硬件(磁盘和网络)</a></li>
 </ul></li>
 <li><a href="#执行安装" id="toc-执行安装">执行安装</a>
 <ul>
-<li><a href="#lustrate" id="toc-lustrate">lustrate</a></li>
-<li><a href="#kexec" id="toc-kexec">kexec</a></li>
+<li><a href="#lustrate仅适用于-25.05-及更早的版本"
+id="toc-lustrate仅适用于-25.05-及更早的版本">lustrate（仅适用于 25.05
+及更早的版本）</a></li>
+<li><a href="#kexec推荐" id="toc-kexec推荐">kexec（推荐）</a></li>
 </ul></li>
 <li><a href="#一些安装探索" id="toc-一些安装探索">一些安装探索</a>
 <ul>
@@ -96,13 +98,24 @@ id="toc-已有的系统中进入copytoram模式">已有的系统中进入copytor
       <div class="post-content"><p>nix是一个基于函数式语言的声明式包管理器，几年前我把macOS上面的包管理器从brew切换到nix，实现了
 Configuration-as-Code
 的方式来管理环境。有了nix这样一个可编程层，基本上所有的配置都可以提交到git仓库：任何时候都可以稳定复现日常使用的环境，这极大地降低了维护个人开发环境的心理负担，尝试不同的技术生态也变得更加容易。</p>
-<p>NixOS是以nix为基础实现的Linux发现版。得益于nix的设计原则，NixOS也具有Declarative、Reproducible、
+<p>NixOS是以nix为基础实现的Linux发行版。得益于nix的设计原则，NixOS也具有Declarative、Reproducible、
 Reliable的优点。除此之外，NixOS可以高度定制化，基本上可以积木式地搭建自己独特的Linux系统，这一点是使用ArchLinux、Debian、RedHat系等发行版时无法想象的。尤其对于Server端环境，从引导程序、内核到系统服务，完全可按需定制成最小的Linux系统。同时，系统整体上的配置是声明式风格，将系统维护融合进自动化管理流程也容易得多。因此，我逐步将所有的Linux
 Server全部切换到NixOS。</p>
 <p>要使用NixOS，当然先得把它安装到机器上。NixOS的文档跟不上它的发展速度，安装手册跟最佳实践相去甚远，官方文档也没有仔细说明如何使用flake配置和安装NixOS，多少有点对不起它
 「声明式」、「可重现性」的slogan。在nixpkgs 仓库中，至今这个使用”<a
 href="https://nixos.org/manual/nixos/stable/#sec-installing-from-other-distro">驱逐</a>”方式进行安装的<a
 href="https://github.com/NixOS/nixpkgs/issues/49520">issue</a>都还没解决。因此，本文记录一下我在使用NixOS时摸索的安装方式和常见问题。</p>
+<blockquote>
+<p>本文最初写于 NixOS 24.11 时代。26.11 已经移除 scripted
+initrd，<code>boot.initrd.systemd.enable</code>
+这个选项也已经删掉。lustrate 的实现只存在于旧版 initrd的 bash 脚本
+<code>stage-1-init.sh</code> 中（它在开机时它读取
+<code>/etc/NIXOS_LUSTRATE</code>，把旧发行版的目录挪到
+<code>/old-root</code>）。换成 systemd 实现的 stage-1
+之后，没有代码再去读这个标记文件，驱逐安装因此失效，NixOS手册也改成推荐
+kexec 安装。下面的lustrate 一节只适用于 25.05
+及更早的版本，当前可用的完整流程请看后文的 kexec 一节。</p>
+</blockquote>
 <!-- 我常在本地虚拟机、nas、云服务上使用NixOS， -->
 <!-- 这些场景下使用标准方式(如USB或者光驱)进行安装比较麻烦， -->
 <!-- 更多是在机器上已存在其它发行版的情况下进行替换安装。 -->
@@ -119,7 +132,7 @@ href="https://github.com/NixOS/nixpkgs/issues/49520">issue</a>都还没解决。
 <p>安装一个操作系统和一个软件包没有太大的区别：无外乎是把一堆软件/文件持久放置到某个地方，等待将来点击/开机即可使用。不过，安装操作系统大概会复杂一点：需要对硬件和系统软件两部分进行配置。硬件配置包括设置BIOS、磁盘分区等。在准备好硬件之后，则需要进行比较复杂的软件配置过程，包括安装系统内核、配置硬件驱动、安装必要的软件包、设置网络、初始化用户等等。</p>
 <p>nix
 flake可以看作是一个用nix语言描述的”声明式配置包”，有了flake规范之后，我们可以用一个锁定依赖版本、可复现的”程序包”来定义和维护我们的NixOS配置。使用flake时，通过执行命令
-<code>nixos-rebuild switch --falke &lt;flake-uri&gt;</code>实现更新升级NixOS系统。每次执行<code>switch</code>命令时，NixOS会自动为系统生成一个新配置版本，如果使用过程中发现新配置有问题，我们可以选择回滚到上一个版本的系统配置，不再有系统升级的烦恼。</p>
+<code>nixos-rebuild switch --flake &lt;flake-uri&gt;</code>实现更新升级NixOS系统。每次执行<code>switch</code>命令时，NixOS会自动为系统生成一个新配置版本，如果使用过程中发现新配置有问题，我们可以选择回滚到上一个版本的系统配置，不再有系统升级的烦恼。</p>
 <h3 id="准备flake仓库">准备flake仓库</h3>
 <p>在本地<a
 href="https://nixos.org/download/">安装nix</a>，注意，我们提前配置nix打开flake和新风格命令行特性：</p>
@@ -131,7 +144,7 @@ href="https://nixos.org/download/">安装nix</a>，注意，我们提前配置ni
 <pre data-lang="terminal"><code>❯ mkdir nixos-example &amp;&amp; cd nixos-example 
 ❯ nix flake init -t github:penglei/nixos-example --refresh
 ❯ git init &amp;&amp; git add .
-❯ git comimit -m &quot;mynixos configuration&quot;
+❯ git commit -m &quot;mynixos configuration&quot;
 ❯ cat flake.nix
 {
   description = &quot;nixos configuration example&quot;;
@@ -145,7 +158,7 @@ href="https://nixos.org/download/">安装nix</a>，注意，我们提前配置ni
       hostname = &quot;mynixos&quot;;
     in {
       packages = flake-utils.lib.eachDefaultSystemMap (system: {
-        nixosConfigurations.&quot;${hostname} &quot; = nixpkgs.lib.nixosSystem {
+        nixosConfigurations.&quot;${hostname}&quot; = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = { inherit nixpkgs username hostname; };
           modules = [
@@ -168,65 +181,43 @@ href="https://nixos.org/download/">安装nix</a>，注意，我们提前配置ni
 是NixOS非常重要的特性，一方面它将不同软件的配置组织在内聚的模块中，另一方面通过
 <code>module</code>
 系统，可以在不同配置之间建立依赖关系，实现配置复用和统一。在这个例子中，当前它们的内容都是一个空模块(<code>{ }</code>)，我们接下来将其逐步完善。</p>
+<p><a
+href="https://github.com/penglei/nixos-example">示例仓库</a>比这个骨架多了几个文件：<code>nix.nix</code>
+配置 nix 本身，<code>disko-config.nix</code>
+声明磁盘分区，<code>readme.md</code> 给出 kexec
+安装的三个步骤，<code>templates/</code> 是可直接
+<code>nix flake init</code> 的模板。后文的 kexec
+安装流程就以这个仓库为准。</p>
 <h3 id="基础配置">基础配置</h3>
 <p>将如下内容填写到 <code>configuration.nix</code> 配置模块中:</p>
-<div class="nix" data-lang="nix"><div style="min-width: auto">
-<div style="display: flex;">
-  <div class="syn-highlight-line-number" style="text-align:right;">
-    <pre style="margin: 0"><code><span>1</span>
-<span>2</span>
-<span>3</span>
-<span>4</span>
-<span>5</span>
-<span>6</span>
-<span>7</span>
-<span>8</span>
-<span>9</span>
-<span>10</span>
-<span>11</span>
-<span>12</span>
-<span>13</span>
-<span>14</span>
-<span>15</span>
-<span>16</span>
-<span>17</span>
-<span>18</span>
-<span>19</span>
-<span>20</span>
-<span>21</span>
-<span>22</span>
-<span>23</span>
-<span>24</span>
-<span>25</span>
-<span>26</span>
-<span>27</span>
-</code></pre></div><div class="sync-highlight-content" style="flex: 1; overflow-x: auto;"><pre style="margin:0"><code class="syn-code-block"><span class="line"><span class="syn-punctuation syn-bracket">{</span> <span class="syn-variable syn-parameter">pkgs</span><span class="syn-punctuation syn-delimiter">,</span> <span class="syn-variable syn-parameter">username</span><span class="syn-punctuation syn-delimiter">,</span> <span class="syn-variable syn-parameter syn-builtin">...</span> <span class="syn-punctuation syn-bracket">}</span><span class="syn-punctuation syn-delimiter">:</span></span>
-<span class="line"></span>
-<span class="line"><span class="syn-punctuation syn-bracket">{</span></span>
-<span class="line">  <span class="syn-variable syn-member">system</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">stateVersion</span> <span class="syn-operator">=</span> <span class="syn-string">&quot;</span><span class="syn-string">23.05</span><span class="syn-string">&quot;</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line"></span>
-<span class="line">  <span class="syn-variable syn-member">time</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">timeZone</span> <span class="syn-operator">=</span> <span class="syn-string">&quot;</span><span class="syn-string">Asia/Shanghai</span><span class="syn-string">&quot;</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line"></span>
-<span class="line">  <span class="syn-variable syn-member">users</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">users</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-punctuation syn-special">${</span><span class="syn-variable">username</span><span class="syn-punctuation syn-bracket">}</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">{</span></span>
-<span class="line">    <span class="syn-variable syn-member">isNormalUser</span> <span class="syn-operator">=</span> <span class="syn-variable">true</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line">    <span class="syn-variable syn-member">extraGroups</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">[</span> <span class="syn-string">&quot;</span><span class="syn-string">wheel</span><span class="syn-string">&quot;</span> <span class="syn-punctuation syn-bracket">]</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line">    <span class="syn-variable syn-member">openssh</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">authorizedKeys</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">keys</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">[</span></span>
-<span class="line">      <span class="syn-string">&quot;</span><span class="syn-string">ssh-ed25519 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</span><span class="syn-string">&quot;</span></span>
-<span class="line">    <span class="syn-punctuation syn-bracket">]</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line">  <span class="syn-punctuation syn-bracket">}</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line"></span>
-<span class="line">  <span class="syn-variable syn-member">security</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">sudo</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">extraRules</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">[</span><span class="syn-punctuation syn-bracket">{</span></span>
-<span class="line">    <span class="syn-variable syn-member">users</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">[</span> <span class="syn-variable">username</span> <span class="syn-punctuation syn-bracket">]</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line">    <span class="syn-variable syn-member">commands</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">[</span><span class="syn-punctuation syn-bracket">{</span></span>
-<span class="line">      <span class="syn-variable syn-member">command</span> <span class="syn-operator">=</span> <span class="syn-string">&quot;</span><span class="syn-string">ALL</span><span class="syn-string">&quot;</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line">      <span class="syn-variable syn-member">options</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">[</span> <span class="syn-string">&quot;</span><span class="syn-string">NOPASSWD</span><span class="syn-string">&quot;</span> <span class="syn-string">&quot;</span><span class="syn-string">SETENV</span><span class="syn-string">&quot;</span> <span class="syn-punctuation syn-bracket">]</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line">    <span class="syn-punctuation syn-bracket">}</span><span class="syn-punctuation syn-bracket">]</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line">  <span class="syn-punctuation syn-bracket">}</span><span class="syn-punctuation syn-bracket">]</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line"></span>
-<span class="line">  <span class="syn-variable syn-member">services</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">openssh</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">enable</span> <span class="syn-operator">=</span> <span class="syn-variable">true</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line"></span>
-<span class="line">  <span class="syn-variable syn-member">environment</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">systemPackages</span> <span class="syn-operator">=</span> <span class="syn-keyword">with</span> <span class="syn-variable">pkgs</span><span class="syn-punctuation syn-delimiter">;</span> <span class="syn-punctuation syn-bracket">[</span> <span class="syn-variable">git</span> <span class="syn-variable">vim</span> <span class="syn-variable">curl</span> <span class="syn-variable">pstree</span> <span class="syn-variable">htop</span> <span class="syn-variable">tree</span> <span class="syn-punctuation syn-bracket">]</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line"><span class="syn-punctuation syn-bracket">}</span></span></code></pre></div></div></div></div>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode nix"><code class="sourceCode nix"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">{</span> <span class="va">pkgs</span><span class="op">,</span> <span class="va">username</span><span class="op">,</span> <span class="op">...</span> <span class="op">}</span>:</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="va">system</span>.<span class="va">stateVersion</span> <span class="op">=</span> <span class="st">&quot;23.05&quot;</span><span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="va">time</span>.<span class="va">timeZone</span> <span class="op">=</span> <span class="st">&quot;Asia/Shanghai&quot;</span><span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="va">users</span>.<span class="va">users</span>.<span class="sc">${</span>username<span class="sc">}</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="va">isNormalUser</span> <span class="op">=</span> <span class="cn">true</span><span class="op">;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="va">extraGroups</span> <span class="op">=</span> <span class="op">[</span> <span class="st">&quot;wheel&quot;</span> <span class="op">];</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="va">openssh</span>.<span class="va">authorizedKeys</span>.<span class="va">keys</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;ssh-ed25519 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&quot;</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">];</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="op">};</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="va">security</span>.<span class="va">sudo</span>.<span class="va">extraRules</span> <span class="op">=</span> <span class="op">[{</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="va">users</span> <span class="op">=</span> <span class="op">[</span> username <span class="op">];</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="va">commands</span> <span class="op">=</span> <span class="op">[{</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>      <span class="va">command</span> <span class="op">=</span> <span class="st">&quot;ALL&quot;</span><span class="op">;</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>      <span class="va">options</span> <span class="op">=</span> <span class="op">[</span> <span class="st">&quot;NOPASSWD&quot;</span> <span class="st">&quot;SETENV&quot;</span> <span class="op">];</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="op">}];</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="op">}];</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  <span class="va">services</span>.<span class="va">openssh</span>.<span class="va">enable</span> <span class="op">=</span> <span class="cn">true</span><span class="op">;</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="va">environment</span>.<span class="va">systemPackages</span> <span class="op">=</span> <span class="kw">with</span> pkgs<span class="op">;</span> <span class="op">[</span> git vim curl pstree htop tree <span class="op">];</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>这个模块包含多个部份:</p>
 <ul>
 <li>第6行声明了系统的时区；</li>
@@ -251,74 +242,43 @@ label即可，而不用去修改仓库中的NixOS配置。</p>
 <li><p>btrfs 使用
 <code>btrfs filesystem label &lt;device/mountpoint&gt; &lt;label&gt;</code></p></li>
 </ul>
+<p>用 disko 安装时不必手工打 label，直接在 <code>extraArgs</code> 里给
+mkfs 传 <code>-L</code> 即可，效果一样。</p>
 <p><strong>注意:</strong>
 由于我们还没有安装好NixOS，准备磁盘这些操作可以临时启动一个Live系统完成，如果可行的话，也可以将磁盘挂载到其它机器上进行操作。</p>
 <h3 id="配置硬件磁盘和网络">配置硬件(磁盘和网络)</h3>
 <p>准备好磁盘后，我们需要在NixOS的配置中定义文件系统和启动方式等。同时，我们还需要定义网络配置，才能比较方便用ssh登录系统，下面我们在<code>hardware.nix</code>中对硬件部份进行配置：</p>
-<div class="nix" data-lang="nix"><div style="min-width: auto">
-<div style="display: flex;">
-  <div class="syn-highlight-line-number" style="text-align:right;">
-    <pre style="margin: 0"><code><span>1</span>
-<span>2</span>
-<span>3</span>
-<span>4</span>
-<span>5</span>
-<span>6</span>
-<span>7</span>
-<span>8</span>
-<span>9</span>
-<span>10</span>
-<span>11</span>
-<span>12</span>
-<span>13</span>
-<span>14</span>
-<span>15</span>
-<span>16</span>
-<span>17</span>
-<span>18</span>
-<span>19</span>
-<span>20</span>
-<span>21</span>
-<span>22</span>
-<span>23</span>
-<span>24</span>
-<span>25</span>
-<span>26</span>
-<span>27</span>
-<span>28</span>
-<span>29</span>
-<span>30</span>
-</code></pre></div><div class="sync-highlight-content" style="flex: 1; overflow-x: auto;"><pre style="margin:0"><code class="syn-code-block"><span class="line"><span class="syn-punctuation syn-bracket">{</span> <span class="syn-variable syn-parameter">hostname</span><span class="syn-punctuation syn-delimiter">,</span> <span class="syn-variable syn-parameter syn-builtin">...</span> <span class="syn-punctuation syn-bracket">}</span><span class="syn-punctuation syn-delimiter">:</span> <span class="syn-punctuation syn-bracket">{</span></span>
-<span class="line">  <span class="syn-variable syn-member">boot</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">{</span></span>
-<span class="line">    <span class="syn-variable syn-member">initrd</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">availableKernelModules</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">[</span> <span class="syn-string">&quot;</span><span class="syn-string">nvme</span><span class="syn-string">&quot;</span> <span class="syn-string">&quot;</span><span class="syn-string">xhci_pci</span><span class="syn-string">&quot;</span> <span class="syn-punctuation syn-bracket">]</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line">    <span class="syn-variable syn-member">loader</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">{</span></span>
-<span class="line">      <span class="syn-variable syn-member">timeout</span> <span class="syn-operator">=</span> <span class="syn-number">1</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line">      <span class="syn-variable syn-member">systemd-boot</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">enable</span> <span class="syn-operator">=</span> <span class="syn-variable">true</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line">      <span class="syn-variable syn-member">efi</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">efiSysMountPoint</span> <span class="syn-operator">=</span> <span class="syn-string">&quot;</span><span class="syn-string">/boot</span><span class="syn-string">&quot;</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line">      <span class="syn-variable syn-member">efi</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">canTouchEfiVariables</span> <span class="syn-operator">=</span> <span class="syn-variable">true</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line">    <span class="syn-punctuation syn-bracket">}</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line">  <span class="syn-punctuation syn-bracket">}</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line"></span>
-<span class="line">  <span class="syn-variable syn-member">fileSystems</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-string">&quot;</span><span class="syn-string">/boot</span><span class="syn-string">&quot;</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">{</span></span>
-<span class="line">    <span class="syn-variable syn-member">device</span> <span class="syn-operator">=</span> <span class="syn-string">&quot;</span><span class="syn-string">/dev/nvme0n1p1</span><span class="syn-string">&quot;</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line">    <span class="syn-variable syn-member">fsType</span> <span class="syn-operator">=</span> <span class="syn-string">&quot;</span><span class="syn-string">vfat</span><span class="syn-string">&quot;</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line">    <span class="syn-variable syn-member">options</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">[</span> <span class="syn-string">&quot;</span><span class="syn-string">fmask=0077</span><span class="syn-string">&quot;</span> <span class="syn-string">&quot;</span><span class="syn-string">dmask=0077</span><span class="syn-string">&quot;</span> <span class="syn-punctuation syn-bracket">]</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line">  <span class="syn-punctuation syn-bracket">}</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line">  <span class="syn-variable syn-member">fileSystems</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-string">&quot;</span><span class="syn-string">/</span><span class="syn-string">&quot;</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">{</span></span>
-<span class="line">    <span class="syn-variable syn-member">device</span> <span class="syn-operator">=</span> <span class="syn-string">&quot;</span><span class="syn-string">/dev/disk/by-label/nixos</span><span class="syn-string">&quot;</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line">    <span class="syn-variable syn-member">fsType</span> <span class="syn-operator">=</span> <span class="syn-string">&quot;</span><span class="syn-string">ext4</span><span class="syn-string">&quot;</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line">  <span class="syn-punctuation syn-bracket">}</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line"></span>
-<span class="line">  <span class="syn-variable syn-member">networking</span> <span class="syn-operator">=</span> <span class="syn-punctuation syn-bracket">{</span></span>
-<span class="line">    <span class="syn-comment">#使用 dhcpcd, resolvconf 管理网络配置，因此打开这两个配置。</span></span>
-<span class="line">    <span class="syn-variable syn-member">dhcpcd</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">enable</span> <span class="syn-operator">=</span> <span class="syn-variable">true</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line">    <span class="syn-variable syn-member">resolvconf</span><span class="syn-punctuation syn-delimiter">.</span><span class="syn-variable syn-member">enable</span> <span class="syn-operator">=</span> <span class="syn-variable">true</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line"></span>
-<span class="line">    <span class="syn-variable syn-member">useDHCP</span> <span class="syn-operator">=</span> <span class="syn-variable">true</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line">    <span class="syn-variable syn-member">hostName</span> <span class="syn-operator">=</span> <span class="syn-variable">hostname</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line">  <span class="syn-punctuation syn-bracket">}</span><span class="syn-punctuation syn-delimiter">;</span></span>
-<span class="line"><span class="syn-punctuation syn-bracket">}</span></span>
-</code></pre></div></div></div></div>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode nix"><code class="sourceCode nix"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">{</span> <span class="va">hostname</span><span class="op">,</span> <span class="op">...</span> <span class="op">}</span>: <span class="op">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="va">boot</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">initrd</span>.<span class="va">availableKernelModules</span> <span class="op">=</span> <span class="op">[</span> <span class="st">&quot;nvme&quot;</span> <span class="st">&quot;xhci_pci&quot;</span> <span class="op">];</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">loader</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>      <span class="va">timeout</span> <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>      <span class="va">systemd-boot</span>.<span class="va">enable</span> <span class="op">=</span> <span class="cn">true</span><span class="op">;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>      <span class="va">efi</span>.<span class="va">efiSysMountPoint</span> <span class="op">=</span> <span class="st">&quot;/boot&quot;</span><span class="op">;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>      <span class="va">efi</span>.<span class="va">canTouchEfiVariables</span> <span class="op">=</span> <span class="cn">true</span><span class="op">;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">};</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="op">};</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="va">fileSystems</span>.<span class="st">&quot;/boot&quot;</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="va">device</span> <span class="op">=</span> <span class="st">&quot;/dev/nvme0n1p1&quot;</span><span class="op">;</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="va">fsType</span> <span class="op">=</span> <span class="st">&quot;vfat&quot;</span><span class="op">;</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="va">options</span> <span class="op">=</span> <span class="op">[</span> <span class="st">&quot;fmask=0077&quot;</span> <span class="st">&quot;dmask=0077&quot;</span> <span class="op">];</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="op">};</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="va">fileSystems</span>.<span class="st">&quot;/&quot;</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="va">device</span> <span class="op">=</span> <span class="st">&quot;/dev/disk/by-label/nixos&quot;</span><span class="op">;</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    <span class="va">fsType</span> <span class="op">=</span> <span class="st">&quot;ext4&quot;</span><span class="op">;</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="op">};</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  <span class="va">networking</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="co">#使用 dhcpcd, resolvconf 管理网络配置，因此打开这两个配置。</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    <span class="va">dhcpcd</span>.<span class="va">enable</span> <span class="op">=</span> <span class="cn">true</span><span class="op">;</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    <span class="va">resolvconf</span>.<span class="va">enable</span> <span class="op">=</span> <span class="cn">true</span><span class="op">;</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    <span class="va">useDHCP</span> <span class="op">=</span> <span class="cn">true</span><span class="op">;</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    <span class="va">hostName</span> <span class="op">=</span> hostname<span class="op">;</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>  <span class="op">};</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>硬件部份配置主要是三部份：</p>
 <ul>
 <li><p>bootloader</p>
@@ -331,6 +291,16 @@ module才能正确识别磁盘，进而找到文件系统，运行stage2启动1�
 <li><p>网络</p>
 <p>22行至结束，主要是用DHCP配置网络，以及启用resolvconf来维护DNS配置</p></li>
 </ul>
+<p>换成 BIOS 启动的机器时（不少云上的 KVM 虚拟机没有 EFI），把
+<code>systemd-boot</code>
+换成<code>boot.loader.grub.enable = true</code> 加上
+<code>boot.loader.grub.devices = [ "/dev/vda" ]</code>，并在 GPT
+分区表里留一个 1M 的 <code>EF02</code> BIOS boot 分区，grub 的 core.img
+要写在这里。网络配置也可以改用
+<code>networking.useNetworkd = true</code> 配合
+<code>systemd.network.enable = true</code>，它会生成匹配所有以太网卡的
+<code>99-ethernet-default-dhcp.network</code>，不用预先知道网卡叫
+<code>ens5</code> 还是 <code>eth1</code>，在云端换机器时省事得多。</p>
 <p>很多时候我们都不知道机器有什么硬件配置，如果我们能在机器上运行nix(无论是iso
 live还是已经存在的其它发行版)，则可以使用工具
 <code>nixos-install-tools</code>
@@ -396,13 +366,25 @@ $6$tlas$bwAx2Uxe2FPdQnrOaXZv.jsxia5mD14Db3Ymdbk2MAZomqIaT1YJgeWeQZQGnDxSf/YjjRGJ
 <p>补齐用户名(root)和其它字段，写入/etc/shadow文件，root用户便可使用密码<code>123456</code>登录认证。</p>
 <pre><code>root:$6$tlas$bwAx2Uxe2FPdQnrOaXZv.jsxia5mD14Db3Ymdbk2MAZomqIaT1YJgeWeQZQGnDxSf/YjjRGJ8SfwzvdakPMpr1:1::::::
 </code></pre>
-<!-- 在NixOS中如何配置? -->
+<p>在 NixOS 里不必手工改
+<code>/etc/shadow</code>，直接声明<code>users.users.root.initialHashedPassword = "$6$...";</code>
+就能把上面生成的 MCF 写进系统。不过哈希会随配置进 git
+仓库，公开仓库里更稳妥的做法是用<code>users.users.root.hashedPasswordFile</code>
+指向机器上单独保存的文件，或者装好之后用 <code>passwd</code>
+设置。这个密码只在 ssh 连不上、需要走控制台时才用得上。</p>
 <h2 id="执行安装">执行安装</h2>
 <!-- 安装方法有多种，比较传统的方式是用*光驱*或者*usb设备*或者*iPEX*启动一个临时系统执行安装过程。
 这些方式对于云服务器以及缺少辅助设备的场景都不够灵活，我更常用的是驱逐安装或者kexec快速启动临时系统。
 -->
 <p>有了NixOS的完整定义，我们便可以将其安装到系统中。最方便的安装方式是
 <strong>将一个已经运行的Linux发行版替换为NixOS</strong> 。</p>
+<p>按 nixpkgs 版本分，这条路径有两种走法：25.05
+及更早、且磁盘分区不需要调整时，可以用 lustrate
+原地替换；需要重新分区，或者目标系统已经是 26.11 及更新版本时，必须走
+kexec 进入纯内存系统，再用 disko
+分区并安装。后者是目前唯一通用、也长期可用的方式。</p>
+<p><strong>动手之前先备份</strong>。下面两种方式都会格式化目标磁盘，旧发行版上的
+<code>/root</code>、<code>/home</code>、数据盘内容都不会保留。云主机没有控制台密码兜底时尤其要先把备份拷到另一台机器上。</p>
 <p>准备：</p>
 <ul>
 <li><p>目标机器上运行着一个Linux系统，比如常见的ubuntu、debian、arch等。</p>
@@ -418,21 +400,33 @@ experimental-features = nix-command flakes
 build-users-group =
 EOF
 # sh &lt;(curl -L https://nixos.org/nix/install) --no-daemon</code></pre>
-<h3 id="lustrate">lustrate</h3>
+<h3 id="lustrate仅适用于-25.05-及更早的版本">lustrate（仅适用于 25.05
+及更早的版本）</h3>
+<blockquote>
+<p>这一节从 26.11 起已经不可用。lustrate
+实现在<code>nixos/modules/system/boot/stage-1-init.sh</code>
+里，只有脚本式 stage-1 会执行它。26.11 移除了 scripted
+initrd，<code>boot.initrd.systemd.enable</code>
+成为被删除的选项，手册也明确写着 lustrate 在 systemd initrd
+下不工作，并建议改用 kexec
+安装。强行按下面步骤做的话，<code>/etc/NIXOS_LUSTRATE</code>
+在开机时会被忽略，旧系统不会被清理，机器也进不了
+NixOS。下面内容作为旧版本的历史记录保留。</p>
+</blockquote>
 <p>NixOS
 boot支持一种延迟安装模式，特别适用于不需要重新调整磁盘分区的情况下直接替换当前的系统。</p>
 <ol type="1">
 <li><p>构建系统</p>
 <p>假设我们把flake nixos配置存放在github上，通过如下命令先构建系统：</p>
-<div class="sourceCode" id="cb13"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> <span class="co"># git clone github:penglei/nixos-example</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> cd nixos-example</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> nix profile install <span class="at">--profile</span> /nix/var/nix/profiles/system .#nixosConfigurations.<span class="st">&quot;mynixos&quot;</span>.config.system.build.toplevel</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> <span class="co"># git clone github:penglei/nixos-example</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> cd nixos-example</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> nix profile install <span class="at">--profile</span> /nix/var/nix/profiles/system .#nixosConfigurations.<span class="st">&quot;mynixos&quot;</span>.config.system.build.toplevel</span></code></pre></div>
 <p>Tips</p>
 <ul>
 <li><p>多次执行命令会提醒profile中已经存在该package。使用执行如下命令进行删除：</p>
 <pre><code># nix profile remove toplevel --profile /nix/var/nix/profiles/system</code></pre></li>
-<li><p>如果一直调整配置，构建出系统的多个版本，占用当前系统过多的存储空间，可使用如下命令进行清理清理：</p>
+<li><p>如果一直调整配置，构建出系统的多个版本，占用当前系统过多的存储空间，可使用如下命令进行清理：</p>
 <pre><code># nix profile wipe-history --profile /nix/var/nix/profiles/system</code></pre></li>
 </ul></li>
 <li><p>标记重启安装</p>
@@ -457,15 +451,162 @@ loader有两种选择，<code>grub</code> 或者
 <code>systemd-boot</code></p></li>
 </ol>
 <!-- 复杂的部份是理解 boot loader和磁盘分区。 -->
-<h3 id="kexec">kexec</h3>
+<h3 id="kexec推荐">kexec（推荐）</h3>
 <p>如果我们要格式化磁盘，则需要进入一个临时系统，才能卸载掉磁盘，然后对其进行格式化操作。传统发行版通常在iso镜像中提供一个isolinux系统和installer程序(NixOS也有这种方式)，安装系统时先通过光驱或者网络或者USB设备启动这个临时系统，执行安装程序，实现配置硬件如磁盘分区等动作。</p>
-<p>这中方式总是比较麻烦，它通常需要我们直接接触硬件(否则我们不方面进入installer)。进入这些installer具有非常明显的Imperative风格，配置BIOS或网络等等，显得和NixOS格格不如。</p>
+<p>这种方式总是比较麻烦，它通常需要我们直接接触硬件(否则我们不方便进入installer)。进入这些installer具有非常明显的Imperative风格，配置BIOS或网络等等，显得和NixOS格格不入。</p>
 <p>从运行时看来，操作系统(内核)不过是内存中的一段运行着的程序，如果我们已经有Linux系统了，那其实可以把自己替换掉：在内存中开一个临时文件系统，将操作系统保存到这个临时文件系统中，然后加载运行一个新的内核，重新从头执行运行1号进程的程序，跳过硬件完全运行一个临时的新的系统。这就是kexec的作用。</p>
 <p>nixos-kexec
-封装了运行临时系统的initrd，可以非常方便地拉起一个临时的纯内存NixOS系统。在拉起临时系统前，我们还可以为其申明网络配置、账户、密码、SSH公钥等，这让我们在这个临时系统启动后，可过当前网络进入这个临时系统，进而执行前面的安装流程！</p>
+封装了运行临时系统的initrd，可以非常方便地拉起一个临时的纯内存NixOS系统。在拉起临时系统前，我们还可以为其申明网络配置、账户、密码、SSH公钥等，这让我们在这个临时系统启动后，可通过当前网络进入这个临时系统，进而执行前面的安装流程！</p>
 <p>另外，NixOS社区提供了一个申明式工具(<a
-href="https://github.com/nix-community/disko">disko</a>)来实现划分磁盘，这里我提供了一个的<a
+href="https://github.com/nix-community/disko">disko</a>)来实现划分磁盘，这里我提供了一个<a
 href="https://github.com/penglei/nixos-example/blob/main/disko-config.nix">示例</a>。</p>
+<p>下面把我们详细说明使用流程。示例仓库<a
+href="https://github.com/penglei/nixos-example/blob/main/readme.md">README</a>
+记录了关键的三步。</p>
+<h4 id="第一步进入纯内存系统">第一步：进入纯内存系统</h4>
+<p><a
+href="https://github.com/nix-community/nixos-images">nixos-images</a>
+发布的 kexec 镜像自带内核、initrd 和一个最小 NixOS。它的
+<code>run</code> 脚本会把当前的 IP 地址、路由、root
+的<code>authorized_keys</code> 以及 <code>/etc/ssh/ssh_host_*</code>
+一起塞进 initrd，所以 kexec 之后网络配置和 ssh
+登录都保持原样，不需要云厂商的 VNC 控制台。</p>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># curl -L https://github.com/nix-community/nixos-images/releases/download/nixos-unstable/nixos-kexec-installer-noninteractive-x86_64-linux.tar.gz | tar -xzf- -C /root</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># /root/kexec/run</span></span></code></pre></div>
+<p><code>run</code> 会先加载新内核，几秒后执行 kexec，当前的 ssh
+连接随即断开。等机器在 22 端口重新出现即可。如果旧系统的 sshd 不在 22
+端口，记得把连接参数换掉；镜像也可以先下载到安装发起端再传给目标机，避免目标机直连
+GitHub。发布标签建议固定成具体版本而不是
+<code>nixos-unstable</code>，重装时拿到的是同一个内核。</p>
+<h4 id="第二步用-disko-准备磁盘">第二步：用 disko 准备磁盘</h4>
+<p>disko 生成的脚本默认把文件系统挂到 <code>/mnt</code>，正好是
+<code>nixos-install --root /mnt</code> 期待的位置：</p>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># nix run github:nix-community/disko/latest -- --mode disko ./disko-config.nix</span></span></code></pre></div>
+<p><code>disko-config.nix</code> 声明 GPT
+分区表、引导分区和根文件系统。用 <code>mkfs</code> 的额外参数顺便把
+label 打上，<code>hardware.nix</code>
+里的<code>/dev/disk/by-label/nixos</code> 就不用跟着机器改。</p>
+<p>替换一个已经装过别的发行版的磁盘时，有三处容易翻车：</p>
+<ul>
+<li><p>旧文件系统的备份超块还留在新分区里，<code>mkfs.btrfs</code>
+会要求 <code>-f</code>，<code>mke2fs</code>
+则会弹出交互确认，非交互环境下直接失败，需要 <code>-F</code>。</p></li>
+<li><p>disko 默认用 <code>/dev/disk/by-partlabel/...</code>
+找分区，刚分完区时 udev 软链接不一定已经生成，脚本会报
+<code>cannot open /dev/disk/by-partlabel/...</code>。分区显式写
+<code>device</code> 更稳定。</p></li>
+<li><p>BIOS 启动的机器没有 EFI，需要 <code>EF02</code> 类型的 1M BIOS
+boot 分区，配合
+<code>boot.loader.grub.devices = [ "/dev/vda" ]</code>。</p></li>
+</ul>
+<p>对应的写法：</p>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode nix"><code class="sourceCode nix"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="va">disko</span>.<span class="va">devices</span>.<span class="va">disk</span>.<span class="va">main</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">type</span> <span class="op">=</span> <span class="st">&quot;disk&quot;</span><span class="op">;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">device</span> <span class="op">=</span> <span class="st">&quot;/dev/vda&quot;</span><span class="op">;</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">content</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>      <span class="va">type</span> <span class="op">=</span> <span class="st">&quot;gpt&quot;</span><span class="op">;</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>      <span class="va">partitions</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">biosboot</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>          <span class="va">size</span> <span class="op">=</span> <span class="st">&quot;1M&quot;</span><span class="op">;</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>          <span class="va">type</span> <span class="op">=</span> <span class="st">&quot;EF02&quot;</span><span class="op">;</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>          <span class="va">attributes</span> <span class="op">=</span> <span class="op">[</span> <span class="dv">0</span> <span class="op">];</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>        <span class="op">};</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">root</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>          <span class="va">size</span> <span class="op">=</span> <span class="st">&quot;100%&quot;</span><span class="op">;</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>          <span class="va">device</span> <span class="op">=</span> <span class="st">&quot;/dev/vda2&quot;</span><span class="op">;</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>          <span class="va">content</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>            <span class="va">type</span> <span class="op">=</span> <span class="st">&quot;filesystem&quot;</span><span class="op">;</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>            <span class="va">format</span> <span class="op">=</span> <span class="st">&quot;ext4&quot;</span><span class="op">;</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>            <span class="va">extraArgs</span> <span class="op">=</span> <span class="op">[</span> <span class="st">&quot;-F&quot;</span> <span class="st">&quot;-L&quot;</span> <span class="st">&quot;nixos&quot;</span> <span class="op">];</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>            <span class="va">mountpoint</span> <span class="op">=</span> <span class="st">&quot;/&quot;</span><span class="op">;</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>          <span class="op">};</span></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>        <span class="op">};</span></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>      <span class="op">};</span></span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>    <span class="op">};</span></span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>  <span class="op">};</span></span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>btrfs 的 <code>extraArgs</code> 换成
+<code>[ "-f" "-L" "data" ]</code> 即可。如果 <code>hardware.nix</code>
+已经自己声明了 <code>fileSystems</code>，还要加一句
+<code>disko.enableConfig = false;</code>，否则两边给出冲突的定义会导致失败。</p>
+<h4 id="第三步安装系统">第三步：安装系统</h4>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># nixos-install --root /mnt --flake .#mynixos</span></span></code></pre></div>
+<p>flake 里的主机名要和这里的 <code>#mynixos</code> 一致。这一步会安装
+bootloader、生成 <code>/etc/NIXOS</code>，并把系统 closure 写进
+<code>/mnt/nix/var/nix/profiles/system</code>。有 TTY 时它还会提示设置
+root 密码，建议设一个，作为网络没起来时的控制台兜底；非交互执行或者带
+<code>--no-root-passwd</code> 就不会有这个密码。</p>
+<h4 id="nixos-anywhere">nixos-anywhere</h4>
+<p>上面三步可以用 <a
+href="https://github.com/nix-community/nixos-anywhere">nixos-anywhere</a>
+串起来。它要求 disko 配置成为目标 nixosConfiguration 的一部份，这样才有
+<code>system.build.diskoScript</code> 可用。在 flake 的
+<code>inputs</code>
+里加上<code>disko.url = "github:nix-community/disko"</code> 并把
+<code>disko</code> 加进 <code>outputs</code>
+的参数列表，然后给目标机器的 <code>modules</code> 加上下面两项：</p>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode nix"><code class="sourceCode nix"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>modules = <span class="op">[</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="ss">./configuration.nix</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="ss">./hardware.nix</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="ss">./nix.nix</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  disko<span class="op">.</span>nixosModules<span class="op">.</span>disko</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="ss">./disko-config.nix</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="op">]</span>;</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> nix run nixpkgs#nixos-anywhere <span class="at">--</span> <span class="dt">\</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">--flake</span> <span class="st">&#39;.#mynixos&#39;</span> <span class="dt">\</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--target-host</span> root@10.2.3.4 <span class="dt">\</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--ssh-port</span> 36000 <span class="dt">\</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">--post-kexec-ssh-port</span> 22 <span class="dt">\</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">--ssh-option</span> StrictHostKeyChecking=accept-new <span class="dt">\</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">--build-on</span> local <span class="dt">\</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">--copy-host-keys</span> <span class="dt">\</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">--kexec</span> ./nixos-kexec-installer-noninteractive-x86_64-linux.tar.gz <span class="dt">\</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">--phases</span> kexec,disko,install</span></code></pre></div>
+<p>几个参数的取舍：</p>
+<ul>
+<li><p><code>--build-on local</code> 在安装发起端求值并构建
+closure，再用 <code>nix copy</code>
+推到目标机，纯内存的安装环境里不会去求值
+flake。配置里若有绝对路径的输入，这一点是必需的。</p></li>
+<li><p><code>--kexec</code> 指向本地文件时，镜像由 ssh
+上传，不要求目标机能访问 GitHub。</p></li>
+<li><p><code>--ssh-port</code>
+是旧系统的端口，<code>--post-kexec-ssh-port</code> 是内存系统里 sshd
+的端口，两者不同时一定要分别写清楚。</p></li>
+<li><p><code>--copy-host-keys</code> 把旧的 ssh host key
+带进新系统，安装发起端的 <code>known_hosts</code>
+不用改；<code>--ssh-option StrictHostKeyChecking=accept-new</code> 则让
+kexec 后 22 端口的新条目自动写入。</p></li>
+<li><p><code>--phases</code> 里故意不写
+<code>reboot</code>，留一个检查点。</p></li>
+</ul>
+<h4 id="重启前的检查点">重启前的检查点</h4>
+<p>连进内存系统，确认下面几项之后再重启：</p>
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># blkid /dev/vda2</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ls /mnt/boot/grub/grub.cfg</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co"># readlink -f /mnt/nix/var/nix/profiles/system</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># cat /mnt/etc/ssh/authorized_keys.d/root</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># find /mnt/etc/systemd/network -name &#39;*.network&#39;</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co"># chroot /mnt cat /etc/fstab</span></span></code></pre></div>
+<p>注意 <code>/mnt/etc/fstab</code> 是链到
+<code>/etc/static/fstab</code>
+的绝对软链接，在内存系统里直接读会落到安装环境自己的
+<code>/etc</code>，用 <code>chroot /mnt</code>
+读到的才是新系统的内容。重点看 fstab 里的
+<code>by-label/nixos</code>、grub.cfg 里的内核与 initrd、以及 networkd
+的 DHCP 规则。nixos-anywhere 走的是
+<code>--no-root-passwd</code>，装好的系统只有 ssh key
+能登录，一旦网络配置写错，重启后就只能靠云控制台或者重装，所以这一遍检查不能省。确认无误后
+<code>reboot</code>，之后从本机执行<code>nixos-rebuild switch --flake .#mynixos --target-host root@mynixos</code>
+做日常更新。</p>
 <h2 id="一些安装探索">一些安装探索</h2>
 <h3 id="nixos-iso-image-系统启动流程">NixOS iso-image 系统启动流程</h3>
 <p>现代Linux系统的启动比较灵活，它可以粗略地分为两个阶段：</p>
@@ -491,7 +632,11 @@ href="https://systemd.io/">Systemd</a>太复杂，难以审计，进而导致系
 /sbin/init (SysV Init)作为1号进程。</p>
 </blockquote></li>
 </ol>
-<p>NixOS使用Systemd作为1号进程和服务管理工具。它的阶段1和阶段2都是使用bash脚本实现，阶段2最终会启动执行Systemd。NixOS如何为准备stage2使用的rootfs?
+<p>NixOS使用Systemd作为1号进程和服务管理工具。在本文写作时，它的阶段1和阶段2都是用bash脚本实现，阶段2最终会启动执行Systemd。26.11
+之后 stage-1 换成了 systemd 实现，<code>stage-1-init.sh</code>
+以及其中的 lustrate 逻辑不再参与启动。下面这几张挂载表描述的是旧版 ISO
+的行为，用来理解 stage-1
+需要完成哪些准备工作仍然合适。NixOS如何为准备stage2使用的rootfs?
 它首先创建 <code>/mnt-root</code>
 作为stage2的根目录(下表中使用<code>@R</code>表示)，然后在这个目录中进行初始化，挂载设备。NixOS通过nix
 生成 stage-1
@@ -557,7 +702,7 @@ data-cites="R/nix/store">@R/nix/store</span></td>
 </tbody>
 </table>
 </div>
-<p>每一步的挂在可能会依赖前一步的挂载，例如 <code>/nix/.ro-store</code>
+<p>每一步的挂载可能会依赖前一步的挂载，例如 <code>/nix/.ro-store</code>
 依赖 <code>/iso</code>，它要求这个目录中存在后续使用的
 <code>nix-store.squashfs</code> 文件。<a
 href="https://github.com/NixOS/nixpkgs/blob/5aa9fc927306617ad428e50a54c638224c37bf5c/nixos/modules/installer/cd-dvd/iso-image.nix#L723">device的路径</a>是相对于
@@ -598,12 +743,18 @@ href="https://github.com/NixOS/nixpkgs/blob/5aa9fc927306617ad428e50a54c638224c37
 href="https://github.com/brgl/busybox/blob/master/util-linux/switch_root.c">switch_root</a>切换到新的rootfs，执行stage2的初始化，最终启动Systemd。</p>
 <h3
 id="已有的系统中进入copytoram模式">已有的系统中进入copytoram模式</h3>
+<blockquote>
+<p>这一节记录的是早期用 ISO 的 copytoram 模式绕开已挂载 rootfs
+的做法。前面 kexec
+一节里的纯内存安装环境已经把这件事做得更干净，现在实际安装不需要再改
+grub 或者编辑 initrd，这里保留作原理参考。</p>
+</blockquote>
 <p>有时候我们想重新格式化磁盘，驱逐安装的模式很难这样做，因为某个分区已经被挂载到rootfs，我们无法将其卸载再调整分区。这时候我们只能使用传统方式进行安装：先进入live
 installer系统对磁盘执行分区，再安装系统。</p>
 <p>NixOS的iso
 installer提供了一种copytoram模式，可以完全在内存中启动iso上的NixOS系统。这是通过将iso镜像中的内容拷贝到tmpfs中实现的：如果配置的mountPoint为
-<code>$R/iso</code> 以及 device 为
-<code>/dev/root</code>是，stage1不会挂载iso，而是将整个iso进行copy：首先将<code>/dev/root</code>
+<code>$R/iso</code> 以及 device 为 <code>/dev/root</code>
+时，stage1不会挂载iso，而是将整个iso进行copy：首先将<code>/dev/root</code>
 挂载到 <code>/tmp-iso</code> 目录，然后拷贝到 <code>/mnt-root/iso</code>
 目录中。拷贝完成后就会释放(umount) <code>/dev/root</code> 。</p>
 <pre><code>menuentry nixos-installer-iso {
@@ -614,7 +765,7 @@ installer提供了一种copytoram模式，可以完全在内存中启动iso上�
   search --fs-uuid --set=rootpart b54d0269-01ce-4956-a4e9-6cccd2ea5e35
   loopback isoloop ($rootpart)$isopath
 
-  set image=Image #shoule be &quot;bzImage&quot; if arch is x86_64
+  set image=Image #should be &quot;bzImage&quot; if arch is x86_64
   linux (isoloop)/boot/$image findiso=$isopath copytoram init=$stage2init boot.shell_on_fail loglevel=4
   initrd (isoloop)/boot/initrd
 }
@@ -623,16 +774,16 @@ installer提供了一种copytoram模式，可以完全在内存中启动iso上�
 <p>nixos-rebuild switch –install-bootloader –flake .</p>
 </blockquote>
 <h4 id="编辑initrd">编辑initrd</h4>
-<div class="sourceCode" id="cb20"><pre
-class="sourceCode sh"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> mount /nixos.iso /mnt</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> mkdir ~/edit-initrd <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> ~/edit-initrd</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> cp /mnt/boot/initrd initrd.zst</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> umount /mnt</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> unzstd initrd.zst</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> mkdir initrd-root <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> initrd-root</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> cpio <span class="at">-imdv</span> <span class="op">&lt;</span> ../initrd</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> find <span class="kw">|</span> <span class="fu">cpio</span> <span class="at">-o</span> <span class="at">-H</span> newc <span class="op">&gt;</span> ../initrd-new</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> zstd ../initrd-new</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre
+class="sourceCode sh"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> mount /nixos.iso /mnt</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> mkdir ~/edit-initrd <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> ~/edit-initrd</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> cp /mnt/boot/initrd initrd.zst</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> umount /mnt</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> unzstd initrd.zst</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> mkdir initrd-root <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> initrd-root</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> cpio <span class="at">-imdv</span> <span class="op">&lt;</span> ../initrd</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> find <span class="kw">|</span> <span class="fu">cpio</span> <span class="at">-o</span> <span class="at">-H</span> newc <span class="op">&gt;</span> ../initrd-new</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="ex">❯</span> zstd ../initrd-new</span></code></pre></div>
 <h2 id="错误记录">错误记录</h2>
 <ul>
 <li><p>安装nix时提示build-users-group不存在</p>
@@ -642,6 +793,39 @@ exist</p>
 </blockquote>
 <p>解决方案：禁用 build-users-group。在 <code>/etc/nix/nix.conf</code>
 中配置 <code>build-users-group =</code></p></li>
+<li><p>26.11 上想关掉 systemd initrd 来做 lustrate</p>
+<blockquote>
+<p>error: The option <code>boot.initrd.systemd.enable</code> can no
+longer be used since it’s been removed. Scripted initrd has been
+removed.</p>
+</blockquote>
+<p>scripted initrd 已经删除，<code>NIXOS_LUSTRATE</code>
+没有执行者，这条路走不通了。改走 kexec 加 disko，或者用很旧的 nixpkgs
+装完再升级。</p></li>
+<li><p>替换已有发行版时 <code>mkfs</code> 不肯覆盖磁盘</p>
+<blockquote>
+<p>ERROR: use the -f option to force overwrite of
+/dev/disk/by-partlabel/disk-data-data</p>
+</blockquote>
+<p><code>wipefs</code> 只清掉磁盘头部的签名，ext4 和 xfs
+的备份超块还散落在新分区里。给 btrfs 的 <code>extraArgs</code> 加
+<code>-f</code>，给 ext4 加 <code>-F</code>，否则 <code>mke2fs</code>
+会在非交互环境里因为等待确认而失败。</p></li>
+<li><p>disko 报找不到分区设备</p>
+<blockquote>
+<p>mount check: cannot open /dev/disk/by-partlabel/disk-data-data: No
+such file or directory</p>
+</blockquote>
+<p><code>sgdisk</code> 建完分区后 <code>udevadm settle</code>
+返回时，<code>by-partlabel</code> 软链接未必已经建好，重复执行 disko
+时尤其容易碰到。在分区上显式写 <code>device = "/dev/vda2"</code>
+这类固定路径，或者先手工跑一次 <code>partprobe</code> 再继续。</p></li>
+<li><p>装完重启进不了系统</p>
+<p>先检查 <code>/mnt/etc/fstab</code> 里的设备路径和 label
+是否都存在、grub.cfg 是否指向真实的内核与initrd、networkd 的 DHCP
+规则是否匹配目标网卡。带 <code>--no-root-passwd</code>
+安装时（nixos-anywhere 默认如此）root
+没有密码，网络没起来时云控制台也登不进去，所以务必在重启前把这几项查完。</p></li>
 </ul>
 <h2 id="拷贝构建">拷贝构建</h2>
 <p>如果安装NixOS系统的机器性能比较差，可以在一台高性能机器上构建系统，再拷贝到目标机器上:</p>
@@ -651,7 +835,17 @@ exist</p>
 # nix copy --from ssh://192.168.101.100 /nix/store/22130zprm2nqhz6jwlpk3v226saj5yzg-nixos-system-ganger-25.05.20250319.a84ebe2 --no-check-sigs</code></pre>
 <p>拷贝完成之后，更新profile以及切换系统:</p>
 <pre><code># ssh root@192.168.101.1 nix-env -p /nix/var/nix/profiles/system --set $(realpath ./result)
-# ssh root@192.168.101.1 /nix/var/nix/profiles/system/bin/switch-to-configuration switch</code></pre></div>
+# ssh root@192.168.101.1 /nix/var/nix/profiles/system/bin/switch-to-configuration switch</code></pre>
+<p>nixos-anywhere 内部也是这个思路，只是把目标 store
+指向挂载中的新系统，所以拷贝路径要带上 <code>remote-store</code>：</p>
+<pre><code># nix copy --to &#39;ssh://root@10.2.3.4?remote-store=local%3Froot=%2Fmnt&#39; $(realpath ./result)</code></pre>
+<p>系统装好之后，日常更新不必再手工切
+profile，直接从本机远程执行即可：</p>
+<pre><code>❯ nixos-rebuild switch --flake .#mynixos --target-host root@mynixos</code></pre>
+<p>反过来，如果想在目标机上本地
+<code>nixos-rebuild --flake .</code>，记得把 flake
+里引用的绝对路径输入（例如云厂商 agent
+的安装包）一起拷到相同位置，否则求值时会直接报路径不存在。</p></div>
    
     </article>
     <section class="post-comments" aria-label="Comments">
